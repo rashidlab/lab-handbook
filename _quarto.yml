@@ -40,6 +40,8 @@ website:
     - title: "Lab Meetings"
       contents:
         - policies/meetings.qmd
+        - policies/meeting-leader-guide.qmd
+        - policies/meeting-templates.qmd
         - policies/schedule.qmd
 
     - title: "Coding Standards"

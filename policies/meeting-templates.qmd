@@ -1,0 +1,290 @@
+---
+title: "Meeting Templates"
+subtitle: "Agenda, notes, and action item templates"
+---
+
+Copy-paste these templates when creating meeting agendas and notes.
+
+---
+
+## Agenda Template {#agenda-template}
+
+The meeting lead should copy this template when creating the weekly Discussion thread:
+
+```markdown
+## Lab Meeting - [DATE]
+
+**Lead:** @[github-username]
+**Time:** Thursday [DATE] 9:30-11:00 AM
+**Location:** [Room / Teams Link]
+
+---
+
+### Attendees
+- [ ] @person1
+- [ ] @person2
+- [ ] @person3
+(check off as people confirm attendance)
+
+---
+
+### Agenda
+
+#### Standing Items (10 min)
+- [ ] Review action items from last week
+- [ ] Announcements
+
+#### Research Updates (40 min)
+
+| Presenter | Topic | Time |
+|-----------|-------|------|
+| @presenter1 | [Topic] | 15 min |
+| @presenter2 | [Topic] | 15 min |
+| Open discussion | | 10 min |
+
+#### New Business (10 min)
+- [ ] [Add items here]
+
+---
+
+### Discussion Items
+(Team members: add your items below by Wednesday 5pm)
+
+---
+
+### Parking Lot
+(Items to revisit later or defer to future meetings)
+
+```
+
+### Adding Your Agenda Items
+
+To add an agenda item, reply to the Discussion thread with:
+
+```markdown
+### [Your Name] - Agenda Item
+
+**Topic:** [Brief title]
+**Time needed:** [5/10/15 min]
+**Type:** [Update / Discussion / Decision needed / FYI]
+
+**Summary:**
+[2-3 sentences describing what you want to share or discuss]
+
+**Questions for the group:** (if any)
+1. [Question 1]
+2. [Question 2]
+```
+
+---
+
+## Meeting Notes Template {#meeting-notes-template}
+
+After the meeting, the lead updates the original Discussion post with notes:
+
+```markdown
+---
+
+## Meeting Notes
+
+### Decisions Made
+1. [Decision 1 - brief description]
+2. [Decision 2 - brief description]
+
+### Key Discussion Points
+- **[Topic 1]:** [Summary of discussion and outcome]
+- **[Topic 2]:** [Summary of discussion and outcome]
+
+### Action Items
+
+| Task | Assignee | Due Date | Status |
+|------|----------|----------|--------|
+| [Specific task description] | @username | YYYY-MM-DD | [ ] |
+| [Specific task description] | @username | YYYY-MM-DD | [ ] |
+
+### Parking Lot (for future meetings)
+- [Item deferred to later]
+
+### Next Meeting
+- **Date:** [Next Thursday]
+- **Lead:** @[next-lead]
+- **Presenter(s):** @[name1], @[name2]
+```
+
+---
+
+## Committed Notes Template {#committed-notes-template}
+
+Save this as `meeting-notes/TEMPLATE.md` and copy for each meeting:
+
+```markdown
+# Lab Meeting - YYYY-MM-DD
+
+**Lead:** @username
+**Attendees:** @person1, @person2, @person3
+
+## Agenda
+
+1. Item 1
+2. Item 2
+
+## Decisions Made
+
+- Decision 1
+- Decision 2
+
+## Discussion Summary
+
+### Topic 1
+Summary of discussion...
+
+### Topic 2
+Summary of discussion...
+
+## Action Items
+
+- [ ] **Task description** - @assignee - Due: YYYY-MM-DD
+- [ ] **Task description** - @assignee - Due: YYYY-MM-DD
+
+## Parking Lot
+
+- Deferred item
+
+## Next Meeting
+
+- **Date:** YYYY-MM-DD
+- **Lead:** @username
+```
+
+::: {.callout-tip}
+## Quick Commit
+You can copy-paste directly from the GitHub Discussion into the markdown file. The format is identical.
+:::
+
+---
+
+## Action Items Best Practices
+
+Effective action items follow the **SMART** criteria:
+
+### Writing Good Action Items
+
+| Element | Bad Example | Good Example |
+|---------|-------------|--------------|
+| **Specific** | "Work on analysis" | "Run sensitivity analysis for Table 2 scenarios" |
+| **Measurable** | "Make progress" | "Complete first draft of Methods section" |
+| **Assignable** | "Someone should..." | "@jsmith will..." |
+| **Realistic** | "Finish entire paper" | "Write Results section (3 pages)" |
+| **Time-bound** | "Soon" | "By Friday Feb 14" |
+
+### Action Item Format
+
+Each action item should include:
+
+```markdown
+- [ ] **[Action verb] [specific task]** - @assignee - Due: YYYY-MM-DD
+```
+
+**Examples:**
+```markdown
+- [ ] **Submit IRB amendment for protocol change** - @jsmith - Due: 2026-02-10
+- [ ] **Review and comment on manuscript draft** - @mjones - Due: 2026-02-12
+- [ ] **Run power analysis with updated parameters** - @klee - Due: 2026-02-14
+```
+
+### Tracking Status
+
+Update action items with status indicators:
+
+| Status | Markdown | Meaning |
+|--------|----------|---------|
+| Not started | `- [ ]` | Work not begun |
+| In progress | `- [ ] :hourglass:` | Actively working |
+| Blocked | `- [ ] :red_circle:` | Waiting on something |
+| Complete | `- [x]` | Done |
+
+### Weekly Review
+
+At each meeting:
+
+1. **Review last week's action items** (first 5 minutes)
+2. **Update statuses** in the Discussion thread
+3. **Discuss blockers** and reassign if needed
+4. **Carry forward** incomplete items with new due dates
+
+---
+
+## Presentation Guidelines
+
+### Research Update Presentations
+
+When presenting at lab meeting:
+
+| Element | Guideline |
+|---------|-----------|
+| **Length** | 10-15 minutes + 5 min questions |
+| **Slides** | Optional; screen share code/results is fine |
+| **Focus** | What you did, what you found, where you're stuck |
+| **Feedback** | Be specific about what feedback you want |
+
+### Presentation Structure
+
+1. **Context** (1-2 min): Remind us of the project goals
+2. **Progress** (5-7 min): What you've done since last update
+3. **Results** (3-5 min): Key findings, figures, tables
+4. **Challenges** (2-3 min): Where you're stuck or need input
+5. **Next steps** (1 min): What you plan to do next
+6. **Questions** (5 min): Specific questions for the group
+
+### Giving Feedback
+
+When providing feedback:
+
+- **Be constructive**: Suggest alternatives, not just problems
+- **Be specific**: Point to exact issues
+- **Prioritize**: Distinguish major concerns from minor suggestions
+- **Be supportive**: Research is hard; acknowledge good work
+
+---
+
+## File Structure
+
+Meeting notes are stored in `meeting-notes/` organized by year:
+
+```
+meeting-notes/
+├── 2026/
+│   ├── 2026-01-31-lab-meeting.md
+│   └── 2026-02-07-lab-meeting.md
+├── TEMPLATE.md
+└── README.md
+```
+
+---
+
+## Automated Reminders
+
+The lab-handbook repository includes GitHub Actions workflows that send reminders to Microsoft Teams.
+
+### Reminder Schedule
+
+| Reminder | When | Recipients |
+|----------|------|------------|
+| Create agenda thread | Tuesday 9am | Meeting lead |
+| Add agenda items | Wednesday 9am | All lab members |
+| Meeting tomorrow | Wednesday 5pm | All lab members |
+| Action items due | Monday 9am | Assignees with items due that week |
+
+### Setup Requirements
+
+1. **Teams Incoming Webhook**: Created in your Teams channel
+2. **GitHub Secret**: `MS_TEAMS_WEBHOOK_URI` stored in repository secrets
+3. **Meeting Schedule**: `.github/meeting-rotation.yml` with rotation schedule
+
+### Workflow Files
+
+Located in `.github/workflows/`:
+
+- `meeting-reminder-create.yml` - Reminds lead to create agenda
+- `meeting-reminder-contribute.yml` - Reminds all to add items
+- `action-item-reminder.yml` - Weekly action item reminders
