@@ -1,0 +1,151 @@
+---
+title: "Lab Glossary"
+subtitle: "Key terms, acronyms, and concepts"
+---
+
+## Overview
+
+This glossary covers terminology commonly used in the Rashid Lab. If you encounter unfamiliar terms, check here first.
+
+## Computing & HPC
+
+| Term | Definition |
+|------|------------|
+| **Longleaf** | UNC's high-performance computing (HPC) cluster |
+| **OnDemand** | Web interface for Longleaf (RStudio, Jupyter, file browser) |
+| **Slurm** | Job scheduler on Longleaf; manages resource allocation |
+| **Partition** | Queue for jobs (e.g., `general`, `debug`, `bigmem`) |
+| **sbatch** | Command to submit a batch job script |
+| **srun** | Command to run an interactive job |
+| **Node** | Individual server in the cluster |
+| **Core/CPU** | Single processing unit; request more for parallel work |
+| **Job array** | Running many similar jobs efficiently |
+
+## R Programming
+
+| Term | Definition |
+|------|------------|
+| **data.table** | High-performance data manipulation package (lab standard) |
+| **targets** | Pipeline toolkit for reproducible workflows |
+| **crew** | Worker framework for distributed computing with targets |
+| **DESCRIPTION** | File listing package dependencies |
+| **.Rprofile** | User configuration file that runs when R starts |
+| **here::here()** | Function to create project-relative paths |
+| **roxygen2** | Documentation system for R packages |
+
+## Git & GitHub
+
+| Term | Definition |
+|------|------------|
+| **Repository (repo)** | Project folder tracked by Git |
+| **Commit** | Snapshot of code at a point in time |
+| **Branch** | Parallel version of code for feature development |
+| **Pull Request (PR)** | Proposal to merge changes; requires review |
+| **Issue** | Tracked task, bug, or discussion |
+| **Discussion** | Forum-style conversation (we use for meeting agendas) |
+| **Fork** | Personal copy of someone else's repository |
+| **Clone** | Download a repository to your local machine |
+| **Push/Pull** | Send/receive commits to/from remote repository |
+| **Merge** | Combine branches together |
+| **Squash** | Combine multiple commits into one |
+
+## Statistical Methods
+
+| Term | Definition |
+|------|------------|
+| **Bayesian Optimization (BO)** | Method for efficiently optimizing expensive functions |
+| **Gaussian Process (GP)** | Probabilistic model; provides uncertainty estimates |
+| **Acquisition function** | Guides where to sample next (e.g., Expected Improvement) |
+| **Adaptive trial** | Clinical trial that modifies based on interim data |
+| **Operating characteristics** | Performance metrics (power, type I error, sample size) |
+| **Calibration** | Finding design parameters that meet statistical constraints |
+| **Multi-fidelity** | Using low/high accuracy simulations strategically |
+| **Warmstart** | Beginning optimization with prior information |
+| **Posterior probability** | Updated belief after seeing data |
+| **Prior** | Initial belief before seeing data |
+| **Futility** | Stopping early because treatment effect unlikely |
+| **Efficacy** | Stopping early because treatment clearly works |
+
+## Clinical Trials
+
+| Term | Definition |
+|------|------------|
+| **Platform trial** | Multi-arm trial that adds/drops treatments over time |
+| **Single-arm (SA)** | Trial comparing treatment to historical control |
+| **Between-arm (BA)** | Trial with concurrent control group |
+| **Hybrid SA→BA** | Trial starting single-arm, adding control if promising |
+| **Type I error** | False positive rate (rejecting null when true) |
+| **Power** | True positive rate (rejecting null when false) |
+| **Expected sample size (EN)** | Average patients enrolled under a scenario |
+| **N_max** | Maximum sample size cap |
+| **Interim analysis** | Looking at data before trial ends |
+| **Stopping boundary** | Threshold for early termination |
+| **IRB** | Institutional Review Board (ethics approval) |
+| **DSMB** | Data Safety Monitoring Board |
+
+## Lab Workflow
+
+| Term | Definition |
+|------|------------|
+| **Meeting lead** | Person facilitating that week's lab meeting |
+| **1:1** | One-on-one meeting with Dr. Rashid |
+| **Action item** | Task assigned during a meeting |
+| **Parking lot** | Items deferred to discuss later |
+| **Discussion thread** | GitHub Discussions post for meeting agenda/notes |
+| **Project handoff** | Transferring a project to another lab member |
+
+## Reproducibility
+
+| Term | Definition |
+|------|------------|
+| **Seed** | Number ensuring random processes are reproducible |
+| **Pipeline** | Automated sequence of analysis steps |
+| **Provenance** | Record of where data came from and how it was processed |
+| **Config file** | Central place for project parameters (e.g., `globals.yml`) |
+| **YAML** | Human-readable configuration format |
+| **Symlink** | Shortcut linking to a file/folder elsewhere |
+
+## UNC Resources
+
+| Term | Definition |
+|------|------------|
+| **Onyen** | UNC username |
+| **ConnectCarolina** | UNC administrative portal |
+| **ITS** | Information Technology Services |
+| **Research Computing** | Team managing Longleaf and HPC resources |
+| **Gillings** | UNC Gillings School of Global Public Health |
+| **BIOS** | Department of Biostatistics |
+| **LCCC** | Lineberger Comprehensive Cancer Center |
+
+## Acronyms
+
+| Acronym | Meaning |
+|---------|---------|
+| **HPC** | High-Performance Computing |
+| **BO** | Bayesian Optimization |
+| **GP** | Gaussian Process |
+| **EI** | Expected Improvement (acquisition function) |
+| **LHS** | Latin Hypercube Sampling |
+| **CI** | Confidence Interval |
+| **EN** | Expected sample size under null/alternative |
+| **SA** | Single-Arm |
+| **BA** | Between-Arm |
+| **PR** | Pull Request |
+| **PHI** | Protected Health Information |
+| **HIPAA** | Health Insurance Portability and Accountability Act |
+| **IRB** | Institutional Review Board |
+| **CITI** | Collaborative Institutional Training Initiative |
+| **JASA** | Journal of the American Statistical Association |
+| **Biometrics** | Biostatistics journal |
+
+## Adding Terms
+
+If you encounter a term that should be here:
+
+1. Edit this file and add the term
+2. Submit a PR or mention it in lab meeting
+3. Help the next person who joins!
+
+---
+
+See also: [Tools Setup](tools-setup.qmd) | [R Style Guide](../coding-standards/r-style.qmd) | [Git Practices](../coding-standards/git-practices.qmd)

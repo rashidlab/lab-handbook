@@ -35,6 +35,7 @@ website:
         - onboarding/tools-setup.qmd
         - onboarding/github-fundamentals.qmd
         - onboarding/first-project.qmd
+        - onboarding/glossary.qmd
 
     - title: "Lab Meetings"
       contents:
