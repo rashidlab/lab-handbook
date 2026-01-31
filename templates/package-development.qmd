@@ -517,6 +517,277 @@ for (i in seq_len(n_iterations)) {
 }
 ```
 
+For computationally intensive code, consider [Rcpp integration](#rcpp-integration) below.
+
+## Rcpp Integration {#rcpp-integration}
+
+When R code is too slow even after vectorization, **Rcpp** lets you write performance-critical sections in C++.
+
+### When to Use Rcpp
+
+| Scenario | Use Rcpp? |
+|----------|-----------|
+| Loops that can't be vectorized | Yes |
+| Recursive algorithms | Yes |
+| Operations on millions of elements | Consider |
+| Code already fast enough | No |
+| One-time analysis script | Probably no |
+
+**Rule of thumb:** Profile first. Only optimize bottlenecks that matter.
+
+### Setup
+
+```r
+# Install Rcpp
+install.packages("Rcpp")
+
+# Add to your package
+usethis::use_rcpp()
+```
+
+This creates:
+- `src/` directory for C++ files
+- Updates DESCRIPTION with `LinkingTo: Rcpp`
+- Adds `@useDynLib` and `@importFrom Rcpp sourceCpp` to package documentation
+
+### Package Structure with Rcpp
+
+```
+MyPackage/
+├── DESCRIPTION
+├── NAMESPACE
+├── R/
+│   ├── RcppExports.R    # Auto-generated
+│   └── wrapper.R        # R wrappers for C++ functions
+├── src/
+│   ├── RcppExports.cpp  # Auto-generated
+│   ├── fast_functions.cpp
+│   └── Makevars         # Compiler flags (optional)
+└── ...
+```
+
+### Basic Rcpp Example
+
+**`src/fast_functions.cpp`:**
+
+```cpp
+#include <Rcpp.h>
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+NumericVector cumsum_cpp(NumericVector x) {
+
+
+  int n = x.size();
+  NumericVector result(n);
+
+  result[0] = x[0];
+  for (int i = 1; i < n; i++) {
+    result[i] = result[i-1] + x[i];
+  }
+
+  return result;
+}
+
+// [[Rcpp::export]]
+double weighted_mean_cpp(NumericVector x, NumericVector w) {
+
+  int n = x.size();
+  double sum_xw = 0.0;
+  double sum_w = 0.0;
+
+  for (int i = 0; i < n; i++) {
+    sum_xw += x[i] * w[i];
+    sum_w += w[i];
+  }
+
+  return sum_xw / sum_w;
+}
+```
+
+After running `devtools::document()`, these functions become available in R:
+
+```r
+library(MyPackage)
+cumsum_cpp(1:10)
+weighted_mean_cpp(c(1, 2, 3), c(0.5, 0.3, 0.2))
+```
+
+### Simulation-Specific Example
+
+For adaptive trial simulations with many iterations:
+
+```cpp
+#include <Rcpp.h>
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+List simulate_trial_cpp(int n_patients,
+                        double true_rate,
+                        double threshold,
+                        int n_sims) {
+
+  NumericVector successes(n_sims);
+  NumericVector stopped_early(n_sims);
+
+  for (int sim = 0; sim < n_sims; sim++) {
+    int n_success = 0;
+    bool stopped = false;
+
+    for (int i = 0; i < n_patients; i++) {
+      // Simulate patient outcome
+      if (R::runif(0, 1) < true_rate) {
+        n_success++;
+      }
+
+      // Interim analysis (example: futility check)
+      if (i == n_patients / 2) {
+        double current_rate = (double)n_success / (i + 1);
+        if (current_rate < threshold * 0.5) {
+          stopped = true;
+          break;
+        }
+      }
+    }
+
+    successes[sim] = n_success;
+    stopped_early[sim] = stopped ? 1.0 : 0.0;
+  }
+
+  return List::create(
+    Named("successes") = successes,
+    Named("stopped_early") = stopped_early
+  );
+}
+```
+
+### R Wrapper Functions
+
+Create user-friendly R wrappers with input validation:
+
+**`R/simulate.R`:**
+
+```r
+#' Simulate adaptive trial
+#'
+#' @param n_patients Total patients to enroll
+#' @param true_rate True response rate
+#' @param threshold Efficacy threshold
+#' @param n_sims Number of simulations
+#' @return List with simulation results
+#' @export
+simulate_trial <- function(n_patients, true_rate, threshold, n_sims = 10000) {
+  # Validate inputs in R (easier error messages)
+  stopifnot(
+    is.numeric(n_patients), n_patients > 0,
+    is.numeric(true_rate), true_rate >= 0, true_rate <= 1,
+    is.numeric(threshold), threshold >= 0, threshold <= 1,
+    is.numeric(n_sims), n_sims > 0
+  )
+
+
+  # Call C++ implementation
+  result <- simulate_trial_cpp(
+    as.integer(n_patients),
+    as.double(true_rate),
+    as.double(threshold),
+    as.integer(n_sims)
+  )
+
+  # Post-process in R
+  result$power <- mean(result$successes >= threshold * n_patients)
+  result$early_stop_rate <- mean(result$stopped_early)
+
+  class(result) <- "trial_sim"
+  result
+}
+```
+
+### RcppArmadillo for Linear Algebra
+
+For matrix operations, use RcppArmadillo:
+
+```r
+usethis::use_rcpp_armadillo()
+```
+
+```cpp
+// [[Rcpp::depends(RcppArmadillo)]]
+#include <RcppArmadillo.h>
+using namespace Rcpp;
+using namespace arma;
+
+// [[Rcpp::export]]
+arma::mat fast_crossprod(arma::mat X) {
+  return X.t() * X;
+}
+
+// [[Rcpp::export]]
+arma::vec solve_system(arma::mat A, arma::vec b) {
+  return arma::solve(A, b);
+}
+```
+
+### DESCRIPTION for Rcpp Packages
+
+```
+Package: MyPackage
+Type: Package
+Title: Fast Simulation Tools
+Version: 0.1.0
+Authors@R: person("First", "Last", email = "email@unc.edu", role = c("aut", "cre"))
+Description: Efficient simulation tools using Rcpp.
+License: MIT + file LICENSE
+Imports:
+    Rcpp (>= 1.0.0)
+LinkingTo:
+    Rcpp,
+    RcppArmadillo
+SystemRequirements: C++11
+Encoding: UTF-8
+RoxygenNote: 7.3.0
+```
+
+### Compilation on Longleaf
+
+On Longleaf, load the appropriate compiler:
+
+```bash
+module load gcc/11.2.0
+module load r/4.3.0
+
+# Then in R
+devtools::install()
+```
+
+### Debugging Rcpp Code
+
+```r
+# Compile with debug symbols
+Sys.setenv("PKG_CXXFLAGS" = "-g -O0")
+devtools::clean_dll()
+devtools::load_all()
+
+# Print debugging (appears in R console)
+# In C++: Rcpp::Rcout << "value: " << x << std::endl;
+```
+
+### Common Pitfalls
+
+| Issue | Solution |
+|-------|----------|
+| Segfault | Check array bounds; R uses 1-indexing, C++ uses 0 |
+| Wrong results | Ensure integer vs double types match |
+| Slow compilation | Split large files; use `// [[Rcpp::export]]` sparingly |
+| Memory leaks | Rcpp handles most memory; avoid raw `new`/`delete` |
+| RNG issues | Use `R::runif()`, `R::rnorm()` for reproducibility with `set.seed()` |
+
+### Learning Resources
+
+- [Rcpp for Everyone](https://teuder.github.io/rcpp4everyone_en/) - Comprehensive guide
+- [Rcpp Gallery](https://gallery.rcpp.org/) - Code examples
+- [Advanced R - Rcpp Chapter](https://adv-r.hadley.nz/rcpp.html) - Hadley Wickham's introduction
+
 ## Reference Package
 
 See [BATON](https://github.com/naimurashid/BATON) for a complete example of:

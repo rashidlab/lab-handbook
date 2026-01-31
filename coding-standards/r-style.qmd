@@ -354,6 +354,11 @@ Rprof(NULL)
 summaryRprof("profile.out")
 ```
 
+::: {.callout-tip}
+## When R Isn't Fast Enough
+For computationally intensive loops that can't be vectorized (e.g., simulation studies with millions of iterations), consider **Rcpp** to write C++ code called from R. See the [Rcpp Integration Guide](../templates/package-development.qmd#rcpp-integration) for setup, examples, and best practices.
+:::
+
 ## Documentation Requirements
 
 ### README.md (every project)

@@ -30,6 +30,11 @@ These standards ensure code consistency, reproducibility, and maintainability ac
 - [Git Practices](git-practices.qmd) - Commits, branches, PRs
 - [Targets Pipeline](targets-pipeline.qmd) - Workflow automation
 
+::: {.callout-tip}
+## R Package Development
+For creating reusable R packages (structure, roxygen2, testing, Rcpp), see the [Package Development Guide](../templates/package-development.qmd).
+:::
+
 ## R Example
 
 ```r
