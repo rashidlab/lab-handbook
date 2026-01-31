@@ -7,8 +7,9 @@ website:
   description: "Documentation, standards, and resources for the Rashid Lab at UNC Chapel Hill"
 
   navbar:
-    background: "#4B9CD3"  # Carolina Blue
-    foreground: white
+    logo: assets/images/RLlogoA.png
+    logo-alt: "Rashid Lab"
+    background: light
     left:
       - text: "Home"
         href: index.qmd

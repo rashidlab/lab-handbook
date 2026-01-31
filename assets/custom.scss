@@ -1,33 +1,36 @@
 /*-- scss:defaults --*/
 
-// UNC Carolina Blue palette - refined
+// UNC Carolina Blue palette - warmer tones
 $primary: #4B9CD3;       // Carolina Blue
+$primary-light: #7BAFD4; // Lighter blue
+$primary-pale: #E8F4FA;  // Very pale blue for backgrounds
 $secondary: #13294B;     // Navy
-$success: #2E7D5A;       // Muted green
-$info: #7BAFD4;          // Light blue
-$warning: #D4A84B;       // Warm gold
-$danger: #C44536;        // Muted red
+$success: #2E8B6D;       // Warmer green
+$info: #5BA4CF;          // Softer info blue
+$warning: #E6A756;       // Warm amber
+$danger: #D45B54;        // Softer red
 
-// Neutral palette for readability
-$gray-100: #F8FAFB;
-$gray-200: #EEF2F5;
-$gray-300: #DCE3E8;
-$gray-400: #B8C4CE;
-$gray-500: #8A99A6;
-$gray-600: #5C6B78;
+// Warm neutral palette
+$gray-50:  #FAFBFC;
+$gray-100: #F5F7F9;
+$gray-200: #E8ECF0;
+$gray-300: #D1D9E0;
+$gray-400: #A8B5C2;
+$gray-500: #7A8B9A;
+$gray-600: #566573;
 $gray-700: #3D4852;
-$gray-800: #2D3439;
+$gray-800: #2C353D;
 
-// Typography - academic/editorial feel
+// Typography - warmer, more inviting
 $font-family-sans-serif: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 $font-family-monospace: "Fira Code", "Source Code Pro", Consolas, monospace;
 
-// Improved readability defaults
+// Improved readability
 $font-size-base: 1.05rem;
 $line-height-base: 1.7;
 $paragraph-margin-bottom: 1.25rem;
 
-// Headings with better hierarchy
+// Headings
 $headings-font-weight: 600;
 $headings-line-height: 1.3;
 $headings-margin-bottom: 0.75rem;
@@ -38,16 +41,30 @@ $code-block-bg: $gray-100;
 /*-- scss:rules --*/
 
 // ============================================
-// GLOBAL TYPOGRAPHY & SPACING
+// GLOBAL STYLES
 // ============================================
 
 body {
   color: $gray-800;
+  background: linear-gradient(180deg, $primary-pale 0%, white 300px);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-// Better heading spacing
+// Main content area - floating card effect
+.page-layout-full .content {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  margin: 1.5rem auto;
+  padding: 2.5rem;
+  max-width: 1100px;
+}
+
+// ============================================
+// TYPOGRAPHY
+// ============================================
+
 h1, h2, h3, h4, h5, h6 {
   color: $secondary;
   margin-top: 2rem;
@@ -58,28 +75,50 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 2.25rem;
+  font-size: 2.5rem;
   font-weight: 700;
   letter-spacing: -0.02em;
+  color: $secondary;
+}
+
+// Page subtitle styling
+.subtitle {
+  font-size: 1.2rem;
+  color: $gray-500;
+  font-weight: 400;
+  margin-top: -0.5rem;
 }
 
 h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: $secondary;
   padding-bottom: 0.5rem;
-  border-bottom: 2px solid $gray-200;
+  border-bottom: none;
   margin-bottom: 1.25rem;
+  position: relative;
+  padding-left: 1rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.2rem;
+    bottom: 0.7rem;
+    width: 4px;
+    background: linear-gradient(180deg, $primary 0%, $primary-light 100%);
+    border-radius: 2px;
+  }
 }
 
 h3 {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: $gray-700;
 }
 
-// Improved paragraph readability
 p {
-  max-width: 70ch; // Optimal reading width
+  max-width: 70ch;
 }
 
 // ============================================
@@ -87,24 +126,29 @@ p {
 // ============================================
 
 .navbar {
-  background-color: white !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px);
   border-bottom: 1px solid $gray-200;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
   padding: 0.75rem 0;
 }
 
 .navbar-brand {
   font-weight: 700;
   color: $secondary !important;
+  font-size: 1.1rem;
 }
 
 .nav-link {
   font-weight: 500;
   color: $gray-600 !important;
   transition: color 0.15s ease;
+  padding: 0.5rem 1rem !important;
+  border-radius: 6px;
 
   &:hover {
     color: $primary !important;
+    background: rgba($primary, 0.05);
   }
 }
 
@@ -115,68 +159,55 @@ p {
 .hero-card {
   background: white;
   border: 1px solid $gray-200;
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 1.75rem;
   height: 100%;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
   position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: $primary;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 
   &:hover {
-    border-color: $gray-300;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-    transform: translateY(-2px);
-
-    &::before {
-      opacity: 1;
-    }
+    border-color: $primary-light;
+    box-shadow: 0 12px 32px rgba($primary, 0.12);
+    transform: translateY(-4px);
   }
 
-  &.hero-dashboard::before { background: $primary; }
-  &.hero-meetings::before { background: $success; }
-  &.hero-handbook::before { background: $secondary; }
+  &.hero-dashboard {
+    border-top: 4px solid $primary;
+  }
+  &.hero-meetings {
+    border-top: 4px solid $success;
+  }
+  &.hero-handbook {
+    border-top: 4px solid $secondary;
+  }
 }
 
 .hero-card-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 10px;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+  font-size: 1.75rem;
 
   &.icon-dashboard {
-    background: rgba($primary, 0.1);
-    color: $primary;
+    background: linear-gradient(135deg, rgba($primary, 0.15) 0%, rgba($primary, 0.05) 100%);
   }
 
   &.icon-meetings {
-    background: rgba($success, 0.1);
-    color: $success;
+    background: linear-gradient(135deg, rgba($success, 0.15) 0%, rgba($success, 0.05) 100%);
   }
 
   &.icon-handbook {
-    background: rgba($secondary, 0.1);
-    color: $secondary;
+    background: linear-gradient(135deg, rgba($secondary, 0.15) 0%, rgba($secondary, 0.05) 100%);
   }
 }
 
 .hero-card-title {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: $secondary;
   margin-bottom: 0.5rem;
@@ -184,30 +215,31 @@ p {
 
 .hero-card-desc {
   font-size: 0.95rem;
-  color: $gray-600;
-  margin-bottom: 1.25rem;
-  line-height: 1.5;
+  color: $gray-500;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
 }
 
 .hero-card-link {
   display: inline-flex;
   align-items: center;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: $primary;
   text-decoration: none;
+  padding: 0.5rem 0;
 
   &:hover {
     color: darken($primary, 10%);
 
     .arrow {
-      transform: translateX(4px);
+      transform: translateX(6px);
     }
   }
 
   .arrow {
     margin-left: 0.5rem;
-    transition: transform 0.15s ease;
+    transition: transform 0.2s ease;
   }
 }
 
@@ -217,23 +249,24 @@ p {
 
 .quick-links {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   margin: 1.5rem 0;
 }
 
 .quick-link {
-  background: $gray-100;
-  border: 1px solid transparent;
-  border-radius: 8px;
+  background: linear-gradient(135deg, $gray-50 0%, white 100%);
+  border: 1px solid $gray-200;
+  border-radius: 12px;
   padding: 1.25rem;
   text-decoration: none;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
 
   &:hover {
     background: white;
-    border-color: $gray-200;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    border-color: $primary-light;
+    box-shadow: 0 8px 24px rgba($primary, 0.1);
+    transform: translateY(-2px);
 
     .quick-link-title {
       color: $primary;
@@ -242,17 +275,18 @@ p {
 }
 
 .quick-link-title {
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 600;
   color: $secondary;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.35rem;
   transition: color 0.15s ease;
 }
 
 .quick-link-desc {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   color: $gray-500;
   margin: 0;
+  line-height: 1.4;
 }
 
 // ============================================
@@ -260,15 +294,18 @@ p {
 // ============================================
 
 .resource-section {
-  margin: 2.5rem 0;
+  margin: 2rem 0;
+  background: $gray-50;
+  border-radius: 12px;
+  padding: 1.5rem;
 }
 
 .resource-section-title {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: $gray-500;
+  letter-spacing: 0.1em;
+  color: $primary;
   margin-bottom: 1rem;
   padding-bottom: 0;
   border-bottom: none;
@@ -277,17 +314,22 @@ p {
 .resource-list {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0;
 }
 
 .resource-item {
   display: flex;
   align-items: baseline;
   padding: 0.75rem 0;
-  border-bottom: 1px solid $gray-100;
+  border-bottom: 1px solid $gray-200;
 
   &:last-child {
     border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  &:first-child {
+    padding-top: 0;
   }
 }
 
@@ -296,6 +338,7 @@ p {
   color: $secondary;
   text-decoration: none;
   flex-shrink: 0;
+  transition: color 0.15s ease;
 
   &:hover {
     color: $primary;
@@ -304,28 +347,29 @@ p {
 
 .resource-desc {
   color: $gray-500;
-  font-size: 0.9rem;
-  margin-left: 0.75rem;
+  font-size: 0.875rem;
+  margin-left: 0.5rem;
 
   &::before {
     content: '—';
-    margin-right: 0.75rem;
+    margin-right: 0.5rem;
     color: $gray-300;
   }
 }
 
 // ============================================
-// LEGACY CARDS (Bootstrap-style)
+// CARDS (General)
 // ============================================
 
 .card {
   border: 1px solid $gray-200;
-  border-radius: 10px;
+  border-radius: 12px;
   transition: all 0.2s ease;
   overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 
   &:hover {
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   }
 }
 
@@ -345,51 +389,52 @@ p {
 
 .btn {
   font-weight: 600;
-  border-radius: 8px;
-  padding: 0.625rem 1.25rem;
-  transition: all 0.15s ease;
+  border-radius: 10px;
+  padding: 0.65rem 1.35rem;
+  transition: all 0.2s ease;
 }
 
 .btn-primary {
-  background-color: $primary;
-  border-color: $primary;
+  background: linear-gradient(135deg, $primary 0%, darken($primary, 5%) 100%);
+  border: none;
+  box-shadow: 0 2px 8px rgba($primary, 0.3);
 
   &:hover {
-    background-color: darken($primary, 8%);
-    border-color: darken($primary, 8%);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba($primary, 0.3);
+    background: linear-gradient(135deg, darken($primary, 5%) 0%, darken($primary, 10%) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba($primary, 0.35);
   }
 }
 
 .btn-success {
-  background-color: $success;
-  border-color: $success;
+  background: linear-gradient(135deg, $success 0%, darken($success, 5%) 100%);
+  border: none;
 
   &:hover {
-    background-color: darken($success, 8%);
-    border-color: darken($success, 8%);
+    background: linear-gradient(135deg, darken($success, 5%) 0%, darken($success, 10%) 100%);
   }
 }
 
 .btn-outline-primary {
   color: $primary;
-  border-color: $primary;
-  border-width: 2px;
+  border: 2px solid $primary;
+  background: transparent;
 
   &:hover {
-    background-color: $primary;
+    background: $primary;
     color: white;
   }
 }
 
 // ============================================
-// TABLES - Cleaner look
+// TABLES
 // ============================================
 
 .table {
-  --bs-table-striped-bg: #{$gray-100};
+  --bs-table-striped-bg: #{$gray-50};
   font-size: 0.95rem;
+  border-radius: 8px;
+  overflow: hidden;
 
   th {
     font-weight: 600;
@@ -397,7 +442,8 @@ p {
     text-transform: uppercase;
     font-size: 0.75rem;
     letter-spacing: 0.05em;
-    border-bottom-width: 2px;
+    border-bottom: 2px solid $gray-200;
+    background: $gray-50;
   }
 
   td {
@@ -407,21 +453,21 @@ p {
 }
 
 // ============================================
-// CODE STYLING
+// CODE
 // ============================================
 
 pre.sourceCode {
   background: $gray-100;
   border: 1px solid $gray-200;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 1rem;
 }
 
 code {
-  color: $secondary;
-  background-color: $gray-100;
-  padding: 0.15em 0.4em;
-  border-radius: 4px;
+  color: $primary;
+  background-color: rgba($primary, 0.08);
+  padding: 0.15em 0.45em;
+  border-radius: 5px;
   font-size: 0.9em;
 }
 
@@ -439,8 +485,8 @@ code {
   .sidebar-link {
     color: $gray-600;
     font-weight: 500;
-    padding: 0.4rem 0.75rem;
-    border-radius: 6px;
+    padding: 0.45rem 0.85rem;
+    border-radius: 8px;
     transition: all 0.15s ease;
 
     &:hover {
@@ -461,9 +507,10 @@ code {
 // ============================================
 
 .callout {
-  border-radius: 8px;
+  border-radius: 12px;
   border-left-width: 4px;
-  background: $gray-100;
+  background: $gray-50;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 
   .callout-title {
     font-weight: 700;
@@ -472,35 +519,22 @@ code {
 
 .callout-note {
   border-left-color: $primary;
-  background: rgba($primary, 0.05);
+  background: rgba($primary, 0.04);
 }
 
 .callout-tip {
   border-left-color: $success;
-  background: rgba($success, 0.05);
+  background: rgba($success, 0.04);
 }
 
 .callout-warning {
   border-left-color: $warning;
-  background: rgba($warning, 0.08);
+  background: rgba($warning, 0.06);
 }
 
 .callout-important {
   border-left-color: $danger;
-  background: rgba($danger, 0.05);
-}
-
-// ============================================
-// FOOTER
-// ============================================
-
-.page-footer {
-  background-color: $gray-100;
-  border-top: 1px solid $gray-200;
-  padding: 1.5rem 0;
-  font-size: 0.9rem;
-  color: $gray-600;
-  margin-top: 3rem;
+  background: rgba($danger, 0.04);
 }
 
 // ============================================
@@ -508,33 +542,35 @@ code {
 // ============================================
 
 .home-welcome {
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   color: $gray-600;
-  max-width: 60ch;
-  margin-bottom: 2rem;
+  max-width: 55ch;
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
 }
 
 .section-divider {
   height: 1px;
-  background: linear-gradient(to right, $gray-200, transparent);
-  margin: 2.5rem 0;
+  background: linear-gradient(to right, $gray-200, transparent 80%);
+  margin: 3rem 0;
   border: none;
 }
 
-// External links section
+// External links
 .external-links {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin: 1rem 0;
+  margin: 1.25rem 0;
 }
 
 .external-link {
   display: inline-flex;
   align-items: center;
-  padding: 0.5rem 1rem;
-  background: $gray-100;
-  border-radius: 6px;
+  padding: 0.6rem 1.1rem;
+  background: white;
+  border: 1px solid $gray-200;
+  border-radius: 8px;
   font-size: 0.9rem;
   font-weight: 500;
   color: $gray-700;
@@ -542,13 +578,9 @@ code {
   transition: all 0.15s ease;
 
   &:hover {
-    background: $gray-200;
-    color: $secondary;
-  }
-
-  .icon {
-    margin-right: 0.5rem;
-    opacity: 0.7;
+    border-color: $primary-light;
+    color: $primary;
+    box-shadow: 0 4px 12px rgba($primary, 0.1);
   }
 }
 
@@ -557,19 +589,32 @@ code {
   list-style: none;
   padding: 0;
   margin: 0;
+  background: $gray-50;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
 }
 
 .update-item {
   display: flex;
   align-items: baseline;
-  padding: 0.5rem 0;
+  padding: 0.6rem 0;
   font-size: 0.9rem;
+  border-bottom: 1px solid $gray-200;
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  &:first-child {
+    padding-top: 0;
+  }
 
   .update-date {
-    font-weight: 600;
-    color: $gray-500;
+    font-weight: 700;
+    color: $primary;
     font-size: 0.8rem;
-    min-width: 90px;
+    min-width: 70px;
     flex-shrink: 0;
   }
 
@@ -579,12 +624,31 @@ code {
 }
 
 // ============================================
-// RESPONSIVE ADJUSTMENTS
+// FOOTER
+// ============================================
+
+.page-footer {
+  background: transparent;
+  border-top: 1px solid $gray-200;
+  padding: 1.5rem 0;
+  font-size: 0.9rem;
+  color: $gray-500;
+  margin-top: 2rem;
+}
+
+// ============================================
+// RESPONSIVE
 // ============================================
 
 @media (max-width: 768px) {
-  h1 { font-size: 1.75rem; }
-  h2 { font-size: 1.35rem; }
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.25rem; }
+
+  .page-layout-full .content {
+    margin: 0.75rem;
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
 
   .hero-card {
     padding: 1.25rem;
@@ -592,6 +656,10 @@ code {
 
   .quick-links {
     grid-template-columns: 1fr;
+  }
+
+  .resource-section {
+    padding: 1rem;
   }
 
   .resource-item {
