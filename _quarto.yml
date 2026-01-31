@@ -30,9 +30,7 @@ website:
         href: computing/index.qmd
     right:
       - icon: github
-        href: https://github.com/rashid-lab
-      - text: "Dashboard"
-        href: https://rashid-lab.github.io/lab-dashboard/
+        href: https://github.com/rashidlab
 
   sidebar:
     - title: "Getting Started"
