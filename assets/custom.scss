@@ -46,13 +46,18 @@ $code-block-bg: $gray-100;
 
 body {
   color: $gray-800;
-  background: linear-gradient(180deg, $primary-pale 0%, white 300px);
+  background: white;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-// Main content area - floating card effect
-.page-layout-full .content {
+// Homepage-only gradient background
+body.homepage {
+  background: linear-gradient(180deg, $primary-pale 0%, white 400px);
+}
+
+// Main content area - floating card effect (homepage only)
+body.homepage .page-layout-full .content {
   background: white;
   border-radius: 16px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);

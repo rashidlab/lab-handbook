@@ -9,6 +9,7 @@ website:
   navbar:
     logo: assets/images/RLlogoA.png
     logo-alt: "Rashid Lab"
+    title: false
     background: light
     left:
       - text: "Home"

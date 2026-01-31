@@ -3,6 +3,7 @@ title: "Rashid Lab"
 subtitle: "UNC Chapel Hill · Department of Biostatistics"
 page-layout: full
 toc: false
+body-classes: homepage
 ---
 
 ::: {.home-welcome}
