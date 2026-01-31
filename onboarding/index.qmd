@@ -9,8 +9,10 @@ Welcome to the Rashid Lab! This guide will help you get set up and productive in
 
 1. **Complete administrative tasks** - HR paperwork, building access, etc.
 2. **Set up your computing environment** - See [Tools Setup](tools-setup.qmd)
-3. **Read the coding standards** - [Coding Standards](../coding-standards/index.qmd)
-4. **Clone the starter template** - Get your first project going
+3. **Learn GitHub basics** - See [GitHub Fundamentals](github-fundamentals.qmd) (essential for collaboration!)
+4. **Read the coding standards** - [Coding Standards](../coding-standards/index.qmd)
+5. **Understand our meeting workflow** - See [Lab Meetings](../policies/meetings.qmd)
+6. **Clone the starter template** - Get your first project going
 
 ## Key Resources
 
@@ -18,7 +20,8 @@ Welcome to the Rashid Lab! This guide will help you get set up and productive in
 |----------|---------|
 | [Lab Teams](#) | Daily communication |
 | [GitHub Organization](https://github.com/rashidlab) | All code repositories |
-| [Lab Meetings](https://github.com/rashidlab/lab-meetings) | Weekly schedule |
+| [Lab Meeting Discussions](https://github.com/rashidlab/lab-handbook/discussions/categories/lab-meetings) | Weekly agendas & notes |
+| [Meeting Schedule](../policies/schedule.qmd) | Rotation and calendar |
 | [Longleaf Docs](https://help.rc.unc.edu/longleaf-cluster/) | UNC HPC cluster |
 
 ## Your First Week

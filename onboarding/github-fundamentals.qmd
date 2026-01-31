@@ -1,0 +1,458 @@
+---
+title: "GitHub Fundamentals"
+subtitle: "A beginner's guide to GitHub for research collaboration"
+---
+
+## What is GitHub?
+
+GitHub is a platform for storing, sharing, and collaborating on code and documents. Think of it as:
+
+- **Google Drive for code** - Store and sync files across computers
+- **Track Changes on steroids** - See every edit ever made, by whom, and why
+- **A collaboration hub** - Discuss ideas, review each other's work, track tasks
+
+For our lab, GitHub is where we:
+
+- Store analysis code and manuscripts
+- Track tasks and bugs
+- Discuss research decisions
+- Review each other's code before it's finalized
+
+---
+
+## Key Concepts
+
+### Repository (Repo)
+
+A **repository** is a project folder that Git tracks. It contains:
+
+- Your files (code, documents, data)
+- The complete history of all changes
+- Issues, discussions, and other project management tools
+
+**Our main repositories:**
+
+| Repository | Purpose |
+|------------|---------|
+| [lab-handbook](https://github.com/rashidlab/lab-handbook) | Lab documentation, meeting notes |
+| Project-specific repos | Individual research projects |
+
+### Commits
+
+A **commit** is a snapshot of your files at a specific point in time. Each commit has:
+
+- **Changes**: What files were modified
+- **Message**: A brief description of what changed
+- **Author**: Who made the change
+- **Timestamp**: When it happened
+
+Think of commits like "Save points" in a video game - you can always go back to any previous save.
+
+```
+Commit 1: "Initial draft of methods section"
+    ↓
+Commit 2: "Add power calculation results"
+    ↓
+Commit 3: "Fix typo in Table 2"
+    ↓
+Commit 4: "Revise based on Dr. Rashid's feedback"
+```
+
+### Branches
+
+A **branch** is a parallel version of your code. Branches let you:
+
+- Work on new features without affecting the main code
+- Experiment safely
+- Collaborate without stepping on each other's toes
+
+```
+main ─────●─────●─────●─────●─────●───────●─────
+                \                       /
+feature-branch   ●─────●─────●─────────●
+                 (work on new feature)  (merge back)
+```
+
+**Key branches:**
+
+| Branch | Purpose |
+|--------|---------|
+| `main` | The "official" version - always working |
+| `feat/...` | New features being developed |
+| `fix/...` | Bug fixes in progress |
+
+---
+
+## The Four GitHub Tools We Use
+
+### 1. Issues: Task Tracking
+
+**Issues** are for tracking work, bugs, and ideas - like a shared to-do list.
+
+#### What Issues Look Like
+
+```
+┌─────────────────────────────────────────────────────┐
+│ #42 Bug: Power calculation fails for small n        │
+├─────────────────────────────────────────────────────┤
+│ Labels: [bug] [high-priority]                       │
+│ Assignee: @jsmith                                   │
+│ Status: Open                                        │
+├─────────────────────────────────────────────────────┤
+│ When n < 10, the power calculation returns NA...    │
+│                                                     │
+│ Steps to reproduce:                                 │
+│ 1. Run calculate_power(n=5)                         │
+│ 2. See error                                        │
+└─────────────────────────────────────────────────────┘
+```
+
+#### When to Create an Issue
+
+| Situation | Create an Issue? |
+|-----------|------------------|
+| Found a bug in the code | Yes |
+| Have an idea for improvement | Yes |
+| Question about how something works | Yes |
+| Need to track a task | Yes |
+| Ready to submit code changes | No - use a Pull Request |
+
+#### How to Create an Issue
+
+1. Go to the repository on GitHub
+2. Click **Issues** tab
+3. Click **New Issue**
+4. Fill in:
+   - **Title**: Brief, descriptive (e.g., "Bug: CI calculation wrong for n<20")
+   - **Description**: Details, steps to reproduce, expected behavior
+5. Add labels if appropriate (bug, enhancement, question)
+6. Click **Submit new issue**
+
+---
+
+### 2. Pull Requests: Code Review
+
+**Pull Requests (PRs)** are how you propose changes and get them reviewed before they become official.
+
+#### The PR Workflow
+
+```
+┌─────────────────────────────────────────────────────┐
+│                    PR WORKFLOW                       │
+├─────────────────────────────────────────────────────┤
+│                                                     │
+│   1. Create branch    →  Work on your own copy      │
+│          ↓                                          │
+│   2. Make changes     →  Edit, test, commit         │
+│          ↓                                          │
+│   3. Open PR          →  "Hey, review my changes!"  │
+│          ↓                                          │
+│   4. Review           →  Others comment & suggest   │
+│          ↓                                          │
+│   5. Revise           →  Address feedback           │
+│          ↓                                          │
+│   6. Approve          →  Reviewer says "looks good" │
+│          ↓                                          │
+│   7. Merge            →  Changes go into main       │
+│                                                     │
+└─────────────────────────────────────────────────────┘
+```
+
+#### Why We Use PRs
+
+- **Catch mistakes** before they affect everyone
+- **Learn from each other** through code review
+- **Document decisions** - PR discussions explain *why* changes were made
+- **Maintain quality** - nothing goes into main without review
+
+#### What a PR Looks Like
+
+```
+┌─────────────────────────────────────────────────────┐
+│ PR #15: Fix confidence interval for small samples   │
+├─────────────────────────────────────────────────────┤
+│ jsmith wants to merge 3 commits into main from      │
+│ fix/small-sample-ci                                 │
+├─────────────────────────────────────────────────────┤
+│ ## Summary                                          │
+│ Fixes the CI calculation when n < 20.               │
+│                                                     │
+│ ## Changes                                          │
+│ - Added sample size check                           │
+│ - Use t-distribution for small n                    │
+│ - Added 3 new tests                                 │
+│                                                     │
+│ Fixes #42                                           │
+├─────────────────────────────────────────────────────┤
+│ Files changed: 2    Commits: 3    Comments: 5       │
+└─────────────────────────────────────────────────────┘
+```
+
+#### How to Create a PR
+
+1. Create a branch and make your changes (see [Git Practices](../coding-standards/git-practices.qmd))
+2. Push your branch to GitHub
+3. Go to the repository → **Pull Requests** → **New Pull Request**
+4. Select your branch
+5. Fill in:
+   - **Title**: What this PR does
+   - **Description**: Summary, changes made, testing done
+   - **Link to issues**: "Fixes #42" auto-closes the issue when merged
+6. Request reviewers
+7. Click **Create Pull Request**
+
+---
+
+### 3. Discussions: Conversations
+
+**Discussions** are for open-ended conversations that don't need to track as tasks. We use them for:
+
+- **Meeting agendas and notes**
+- **Announcements**
+- **Q&A**
+- **General discussions**
+
+#### Discussions vs Issues
+
+| Use Discussions for... | Use Issues for... |
+|------------------------|-------------------|
+| Meeting agendas | Bug reports |
+| Open-ended questions | Feature requests |
+| Announcements | Tasks to complete |
+| Brainstorming | Things with a "done" state |
+
+#### How Discussions Work
+
+Discussions are organized by **categories**:
+
+| Category | Purpose | Example |
+|----------|---------|---------|
+| Lab Meetings | Weekly meeting threads | "Lab Meeting - 2026-02-07" |
+| Journal Club | Paper discussions | "Discussion: Smith et al. 2025" |
+| Announcements | Lab-wide news | "New server access procedure" |
+| Q&A | Questions & answers | "How do I run the power analysis?" |
+
+#### Anatomy of a Discussion Thread
+
+```
+┌─────────────────────────────────────────────────────┐
+│ 📣 Lab Meeting - 2026-02-07                         │
+│ Category: Lab Meetings                              │
+├─────────────────────────────────────────────────────┤
+│ @jsmith (meeting lead)                    Feb 5     │
+│ ─────────────────────────────────────────────────── │
+│ ## Agenda                                           │
+│ - Review action items                               │
+│ - @bjones: Project X update (15 min)                │
+│ - Discussion: New analysis approach                 │
+│                                                     │
+│ **Add your items by Thursday 5pm!**                 │
+├─────────────────────────────────────────────────────┤
+│ 💬 3 replies                                        │
+├─────────────────────────────────────────────────────┤
+│ @bjones                                   Feb 5     │
+│ Adding: Quick update on simulation results          │
+│                                                     │
+│ @klee                                     Feb 6     │
+│ Question: Can we discuss the IRB timeline?          │
+│                                                     │
+│ @jsmith                                   Feb 7     │
+│ ## Meeting Notes                                    │
+│ [Notes from the meeting...]                         │
+└─────────────────────────────────────────────────────┘
+```
+
+#### How to Participate in Discussions
+
+**To reply to a discussion:**
+1. Scroll to the bottom
+2. Type your comment
+3. Click **Comment**
+
+**To start a new discussion:**
+1. Go to **Discussions** tab
+2. Click **New Discussion**
+3. Select the appropriate category
+4. Write your post
+5. Click **Start Discussion**
+
+**To subscribe to a discussion:**
+- Click the **Subscribe** button to get notifications for new replies
+
+---
+
+### 4. Branches: Parallel Development
+
+**Branches** let multiple people work on different things simultaneously without conflicts.
+
+#### Why Branches Matter
+
+Without branches:
+```
+Alice edits file.R
+Bob edits file.R at the same time
+💥 Conflict! Someone's work gets lost
+```
+
+With branches:
+```
+main:          ●─────────────────────●
+                \                   /
+alice-feature:  ●────●────●────────●  (Alice's work)
+                 \                /
+bob-fix:          ●────●─────────●    (Bob's work)
+
+Both merge cleanly into main!
+```
+
+#### Branch Naming
+
+We use prefixes to indicate what kind of work:
+
+| Prefix | Purpose | Example |
+|--------|---------|---------|
+| `feat/` | New feature | `feat/add-bootstrap-ci` |
+| `fix/` | Bug fix | `fix/small-sample-error` |
+| `docs/` | Documentation | `docs/update-readme` |
+| `refactor/` | Code cleanup | `refactor/simplify-power-calc` |
+
+#### Basic Branch Workflow
+
+```bash
+# 1. Start from main
+git checkout main
+git pull origin main
+
+# 2. Create your branch
+git checkout -b feat/my-new-feature
+
+# 3. Make changes, commit
+git add myfile.R
+git commit -m "feat: add new analysis function"
+
+# 4. Push to GitHub
+git push -u origin feat/my-new-feature
+
+# 5. Open a PR on GitHub (see above)
+```
+
+---
+
+## Putting It All Together
+
+Here's how these tools work together in a typical workflow:
+
+### Example: Fixing a Bug
+
+```
+┌────────────────────────────────────────────────────────────┐
+│ 1. ISSUE CREATED                                           │
+│    "Bug: Power calculation wrong for n<10"                 │
+│    → Tracks the problem, assigns to you                    │
+└────────────────────────────────────────────────────────────┘
+                          ↓
+┌────────────────────────────────────────────────────────────┐
+│ 2. CREATE BRANCH                                           │
+│    git checkout -b fix/power-calc-small-n                  │
+│    → Work in isolation                                     │
+└────────────────────────────────────────────────────────────┘
+                          ↓
+┌────────────────────────────────────────────────────────────┐
+│ 3. MAKE COMMITS                                            │
+│    "fix: handle n<10 edge case"                            │
+│    "test: add small sample tests"                          │
+│    → Save your progress                                    │
+└────────────────────────────────────────────────────────────┘
+                          ↓
+┌────────────────────────────────────────────────────────────┐
+│ 4. OPEN PULL REQUEST                                       │
+│    "Fix power calculation for small n"                     │
+│    "Fixes #42"                                             │
+│    → Request review                                        │
+└────────────────────────────────────────────────────────────┘
+                          ↓
+┌────────────────────────────────────────────────────────────┐
+│ 5. CODE REVIEW                                             │
+│    Reviewer: "Can you add a test for n=1?"                 │
+│    You: Add test, push update                              │
+│    Reviewer: "Approved!"                                   │
+└────────────────────────────────────────────────────────────┘
+                          ↓
+┌────────────────────────────────────────────────────────────┐
+│ 6. MERGE                                                   │
+│    PR merged into main                                     │
+│    Issue #42 automatically closed                          │
+│    → Done!                                                 │
+└────────────────────────────────────────────────────────────┘
+```
+
+### Example: Lab Meeting
+
+```
+┌────────────────────────────────────────────────────────────┐
+│ WEDNESDAY: Meeting lead creates Discussion                 │
+│ "Lab Meeting - 2026-02-07"                                 │
+│ Posts agenda template                                      │
+└────────────────────────────────────────────────────────────┘
+                          ↓
+┌────────────────────────────────────────────────────────────┐
+│ THURSDAY: Team adds items                                  │
+│ @alice: "Update on simulation study"                       │
+│ @bob: "Question about analysis approach"                   │
+└────────────────────────────────────────────────────────────┘
+                          ↓
+┌────────────────────────────────────────────────────────────┐
+│ FRIDAY: Meeting happens                                    │
+│ Lead takes notes                                           │
+│ Action items identified                                    │
+└────────────────────────────────────────────────────────────┘
+                          ↓
+┌────────────────────────────────────────────────────────────┐
+│ FRIDAY EOD: Lead posts notes                               │
+│ Updates Discussion with notes & action items               │
+│ Commits notes to meeting-notes/2026/                       │
+└────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Quick Reference
+
+### When to Use What
+
+| I want to... | Use |
+|--------------|-----|
+| Report a bug | Issue |
+| Propose a new feature | Issue |
+| Submit code for review | Pull Request |
+| Discuss meeting agenda | Discussion (Lab Meetings) |
+| Ask a technical question | Discussion (Q&A) or Issue |
+| Make an announcement | Discussion (Announcements) |
+| Work on something without affecting others | Branch |
+
+### GitHub Keyboard Shortcuts
+
+Press `?` on any GitHub page to see shortcuts. Useful ones:
+
+| Shortcut | Action |
+|----------|--------|
+| `g` `i` | Go to Issues |
+| `g` `p` | Go to Pull Requests |
+| `c` | Create new issue (on Issues page) |
+| `/` | Focus search bar |
+
+### Getting Help
+
+- **GitHub Docs**: [docs.github.com](https://docs.github.com)
+- **Lab handbook**: [Git Practices](../coding-standards/git-practices.qmd)
+- **Ask in Teams**: `#computing` channel
+- **Ask Dr. Rashid**: 1:1 meetings
+
+---
+
+## Next Steps
+
+1. [Watch the lab-handbook repository](https://github.com/rashidlab/lab-handbook) to get notifications
+2. Read the [Git Practices](../coding-standards/git-practices.qmd) guide for detailed workflows
+3. Read the [Lab Meetings](../policies/meetings.qmd) guide to understand our meeting process
+4. Practice by commenting on an existing Discussion!

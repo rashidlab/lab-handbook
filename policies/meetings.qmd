@@ -71,6 +71,303 @@ Every lab member should:
 
 ---
 
+## Discussion Leader Walkthrough {#leader-walkthrough}
+
+This is a complete step-by-step guide for the meeting lead. Follow this checklist each week you're the lead.
+
+::: {.callout-tip}
+## First Time Leading?
+Read [GitHub Fundamentals](../onboarding/github-fundamentals.qmd) first to understand how Discussions, Issues, and PRs work.
+:::
+
+### Phase 1: Create the Agenda (Wednesday)
+
+**Goal:** Create a GitHub Discussion thread where everyone can add agenda items.
+
+#### Step 1.1: Navigate to Discussions
+
+1. Go to [github.com/rashidlab/lab-handbook](https://github.com/rashidlab/lab-handbook)
+2. Click the **Discussions** tab at the top
+3. Click **New discussion** (green button)
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  Code   Issues   Pull requests   Discussions   ...      │
+│                                  ^^^^^^^^^^^            │
+│                                  Click here             │
+└─────────────────────────────────────────────────────────┘
+```
+
+#### Step 1.2: Select Category
+
+1. Select **Lab Meetings** category
+2. This ensures the discussion appears in the right place
+
+```
+┌─────────────────────────────────────────────────────────┐
+│ Select a category                                       │
+│ ┌─────────────────────────────────────────────────────┐ │
+│ │ ○ Announcements                                     │ │
+│ │ ○ General                                           │ │
+│ │ ● Lab Meetings  ← Select this                       │ │
+│ │ ○ Journal Club                                      │ │
+│ │ ○ Q&A                                               │ │
+│ └─────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────┘
+```
+
+#### Step 1.3: Create the Thread
+
+1. **Title:** `Lab Meeting - YYYY-MM-DD` (use this Friday's date)
+   - Example: `Lab Meeting - 2026-02-07`
+
+2. **Body:** Copy the [Agenda Template](#agenda-template) below and paste it
+
+3. **Fill in the template:**
+   - Replace `[DATE]` with the meeting date
+   - Replace `@[github-username]` with your GitHub username
+   - Add the confirmed presenter(s) to the Research Updates section
+   - Add the Teams meeting link or room number
+
+4. Click **Start discussion**
+
+#### Step 1.4: Post a Reminder in Teams
+
+Post in the `#general` Teams channel:
+
+```
+📋 Lab meeting agenda is up for Friday [DATE]!
+
+Please add your items by Thursday 5pm:
+https://github.com/rashidlab/lab-handbook/discussions/[DISCUSSION_NUMBER]
+
+This week:
+- Lead: @[your name]
+- Presenter: @[presenter name]
+```
+
+### Phase 2: Monitor Contributions (Thursday)
+
+**Goal:** Ensure everyone has a chance to add items and send a final reminder.
+
+#### Step 2.1: Check the Thread
+
+1. Go to your Discussion thread
+2. See if people have replied with agenda items
+3. Incorporate their items into the main agenda if helpful
+
+#### Step 2.2: Send Final Reminder
+
+If few items have been added, post in Teams:
+
+```
+⏰ Reminder: Add your lab meeting items by 5pm today!
+
+Link: https://github.com/rashidlab/lab-handbook/discussions/[NUMBER]
+
+Topics so far:
+- [List current items]
+
+Anything to add? Drop it in the thread!
+```
+
+#### Step 2.3: Confirm with Presenter(s)
+
+Direct message or tag the presenter(s):
+- Confirm they're prepared
+- Ask how much time they need
+- Ask if they need anything (screen share, etc.)
+
+### Phase 3: Facilitate the Meeting (Friday)
+
+**Goal:** Run an efficient meeting and capture key information.
+
+#### Step 3.1: Before the Meeting (5 min prior)
+
+1. Open the Discussion thread on your screen
+2. Have a note-taking document ready (or note directly in the thread)
+3. Review the agenda one more time
+
+#### Step 3.2: Start the Meeting
+
+1. **Welcome** (1 min)
+   - "Welcome to lab meeting. I'm [name], leading today."
+
+2. **Check attendees** (1 min)
+   - Note who's present (you'll update the thread later)
+
+3. **Review last week's action items** (5 min)
+   - Open last week's Discussion thread
+   - Go through each action item: "Alice, did you complete X?"
+   - Note status: done, in progress, blocked, carried forward
+
+#### Step 3.3: Run Through Agenda
+
+For each agenda item:
+
+1. **Introduce the item** and the person presenting
+2. **Keep time** - give a 2-minute warning
+3. **Capture key points:**
+   - Decisions made
+   - Questions raised
+   - Action items that come up (who, what, when)
+4. **Move on** when time is up
+
+::: {.callout-note}
+## Pro Tip: Action Items
+When someone says "I'll do X" or "We should Y," immediately ask:
+- "By when?"
+- "Who's responsible?"
+
+Write it down immediately!
+:::
+
+#### Step 3.4: Wrap Up (5 min before end)
+
+1. **Summarize decisions** made today
+2. **Read back action items** - confirm assignees and due dates
+3. **Confirm next week's lead and presenter**
+4. **Ask for any final items** for parking lot
+
+### Phase 4: Post Meeting Notes (Friday EOD)
+
+**Goal:** Document what happened so anyone can reference it later.
+
+#### Step 4.1: Update the Discussion Thread
+
+1. Go to your Discussion thread
+2. Click **Edit** on your original post (or add a reply)
+3. Add the Meeting Notes section (see [template below](#meeting-notes-template))
+
+**Include:**
+
+| Section | What to Write |
+|---------|---------------|
+| **Attendees** | Check off who was present |
+| **Decisions Made** | Any decisions the group agreed on |
+| **Discussion Summary** | Key points from each topic |
+| **Action Items** | Task, assignee, due date |
+| **Parking Lot** | Items deferred to later |
+| **Next Meeting** | Date, lead, presenter |
+
+#### Step 4.2: @mention Action Item Owners
+
+For each action item, use `@username` to notify the assignee:
+
+```markdown
+### Action Items
+
+| Task | Assignee | Due Date | Status |
+|------|----------|----------|--------|
+| Run sensitivity analysis | @jsmith | 2026-02-14 | [ ] |
+| Review manuscript draft | @bjones | 2026-02-12 | [ ] |
+```
+
+When you save, GitHub sends notifications to @jsmith and @bjones.
+
+#### Step 4.3: Commit Notes to Repository
+
+The Discussion thread is great, but we also keep a permanent record in the repo.
+
+```bash
+# 1. Go to the lab-handbook directory
+cd ~/lab-handbook  # or wherever you cloned it
+
+# 2. Pull latest changes
+git pull origin main
+
+# 3. Create the notes file
+cp meeting-notes/TEMPLATE.md meeting-notes/2026/2026-02-07-lab-meeting.md
+
+# 4. Edit the file with your notes
+# (Copy from Discussion thread, paste into file)
+
+# 5. Commit and push
+git add meeting-notes/2026/2026-02-07-lab-meeting.md
+git commit -m "notes: lab meeting 2026-02-07"
+git push origin main
+```
+
+**Can't use git?** You can also:
+1. Go to [meeting-notes/2026/](https://github.com/rashidlab/lab-handbook/tree/main/meeting-notes/2026) on GitHub
+2. Click **Add file** → **Create new file**
+3. Name it `2026-02-07-lab-meeting.md`
+4. Paste your notes
+5. Click **Commit new file**
+
+### Phase 5: Follow Up (Next Week)
+
+#### Step 5.1: Hand Off to Next Lead
+
+Post in the Discussion thread or Teams:
+
+```
+@[next-lead] - You're leading next week's meeting!
+
+Reminder: Create the agenda thread by Wednesday 5pm.
+Here's the template: [link to meetings guide]
+```
+
+#### Step 5.2: Monday Action Item Check
+
+Check in on action items mid-week:
+- Review the thread for status updates
+- Ping people who haven't updated their items
+- Offer help if anyone is stuck
+
+---
+
+## How It All Connects
+
+Here's how the GitHub features work together for meetings:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    MEETING WORKFLOW                          │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  DISCUSSION (GitHub Discussions)                            │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │ "Lab Meeting - 2026-02-07"                          │   │
+│  │ - Agenda posted by lead                             │   │
+│  │ - Team replies with their items                     │   │
+│  │ - Notes added after meeting                         │   │
+│  │ - Action items tracked with checkboxes              │   │
+│  └─────────────────────────────────────────────────────┘   │
+│           │                              │                  │
+│           │ references                   │ action items     │
+│           ▼                              ▼ become           │
+│  ┌─────────────────────┐    ┌─────────────────────┐        │
+│  │ COMMITTED NOTES     │    │ ISSUES (optional)   │        │
+│  │ meeting-notes/2026/ │    │ For complex tasks   │        │
+│  │ - Permanent record  │    │ that need tracking  │        │
+│  │ - Searchable        │    │ beyond one week     │        │
+│  │ - Version controlled│    └─────────────────────┘        │
+│  └─────────────────────┘              │                    │
+│                                       │ leads to           │
+│                                       ▼                    │
+│                          ┌─────────────────────┐           │
+│                          │ PULL REQUEST        │           │
+│                          │ When action item    │           │
+│                          │ involves code       │           │
+│                          │ changes             │           │
+│                          └─────────────────────┘           │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+| Feature | Role in Meetings |
+|---------|------------------|
+| **Discussion** | Central hub for agenda, notes, action items |
+| **Replies** | Team members add agenda items as replies |
+| **@mentions** | Notify people of action items |
+| **Checkboxes** | Track action item completion |
+| **Committed files** | Permanent record in `meeting-notes/` |
+| **Issues** | Track complex tasks that span multiple weeks |
+| **PRs** | Submit code that addresses action items |
+
+---
+
 ## Agenda Template
 
 The meeting lead should copy this template when creating the weekly Discussion thread:

@@ -39,6 +39,7 @@ website:
         - onboarding/index.qmd
         - onboarding/first-week.qmd
         - onboarding/tools-setup.qmd
+        - onboarding/github-fundamentals.qmd
         - onboarding/first-project.qmd
 
     - title: "Coding Standards"
