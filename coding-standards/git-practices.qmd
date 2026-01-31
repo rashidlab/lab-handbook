@@ -3,6 +3,474 @@ title: "Git Practices"
 subtitle: "Version control workflows and conventions"
 ---
 
+## Overview
+
+Git is essential for collaborative research. This guide covers:
+
+1. **Commits** - Saving snapshots of your work
+2. **Branches** - Working on features in isolation
+3. **Issues** - Tracking tasks, bugs, and ideas
+4. **Pull Requests** - Proposing and reviewing changes
+
+## Issues vs Pull Requests
+
+Understanding the difference between issues and pull requests is crucial for effective collaboration.
+
+### Issues: Planning and Discussion
+
+**Issues** are for planning, discussion, and tracking work *before* or *independent of* code changes.
+
+**Use issues to:**
+
+- Report bugs ("The power calculation returns NA when n < 10")
+- Request features ("Add support for competing risks")
+- Ask questions ("Should we use Weibull or exponential?")
+- Track tasks ("Implement Section 3 simulations")
+- Document decisions ("We decided to use LHS over Sobol")
+
+**Issue lifecycle:**
+
+```
+Open → Discussion → Assigned → In Progress → Closed (by PR or manually)
+```
+
+**Example issue:**
+
+```markdown
+## Bug: Confidence intervals incorrect for small samples
+
+### Description
+When sample size is < 20, the confidence interval calculation
+in `calculate_ci()` returns intervals that don't contain the
+point estimate.
+
+### Steps to Reproduce
+1. Run `calculate_ci(data[1:15, ])`
+2. Observe that `lower > estimate`
+
+### Expected Behavior
+Lower bound should always be ≤ estimate ≤ upper bound.
+
+### Environment
+- R 4.3.0
+- Package version: 0.2.1
+```
+
+### Pull Requests: Proposing Code Changes
+
+**Pull requests (PRs)** are for proposing *specific code changes* and getting them reviewed before merging.
+
+**Use PRs to:**
+
+- Submit new features for review
+- Fix bugs (often linked to an issue)
+- Update documentation
+- Refactor code
+
+**PR lifecycle:**
+
+```
+Create Branch → Make Changes → Open PR → Review → Revise → Approve → Merge
+```
+
+**Key difference:** Issues are *conversations about work*. PRs are *the work itself* ready for review.
+
+### When to Use Which
+
+| Scenario | Use |
+|----------|-----|
+| "I found a bug" | Issue |
+| "Here's the fix for that bug" | Pull Request |
+| "We should add feature X" | Issue (for discussion) |
+| "I implemented feature X" | Pull Request |
+| "Question about the API design" | Issue |
+| "Updated the API per our discussion" | Pull Request |
+| "Task: run sensitivity analysis" | Issue |
+| "Results of sensitivity analysis" | Pull Request |
+
+### Linking Issues and PRs
+
+Connect PRs to the issues they address:
+
+```markdown
+## Summary
+Fix confidence interval calculation for small samples.
+
+Fixes #42
+Closes #42
+Resolves #42
+```
+
+Any of these keywords automatically closes the issue when the PR is merged.
+
+## GitHub Issues In-Depth
+
+### Creating Effective Issues
+
+**Good issue titles:**
+
+- "Bug: Power calculation fails for n < 10"
+- "Feature: Add bootstrap confidence intervals"
+- "Docs: Update installation instructions for M1 Macs"
+
+**Bad issue titles:**
+
+- "It doesn't work"
+- "Question"
+- "Help"
+
+### Issue Templates
+
+Create `.github/ISSUE_TEMPLATE/bug_report.md`:
+
+```markdown
+---
+name: Bug Report
+about: Report a bug or unexpected behavior
+---
+
+## Description
+A clear description of the bug.
+
+## Steps to Reproduce
+1. Step one
+2. Step two
+3. See error
+
+## Expected Behavior
+What should happen.
+
+## Actual Behavior
+What actually happens.
+
+## Environment
+- R version:
+- OS:
+- Package version:
+
+## Additional Context
+Screenshots, error messages, etc.
+```
+
+### Using Labels
+
+Organize issues with labels:
+
+| Label | Purpose |
+|-------|---------|
+| `bug` | Something isn't working |
+| `enhancement` | New feature request |
+| `documentation` | Documentation improvements |
+| `question` | Questions or discussion |
+| `good first issue` | Good for newcomers |
+| `priority: high` | Needs immediate attention |
+| `status: in progress` | Currently being worked on |
+
+### Milestones
+
+Group issues by milestone (e.g., "v1.0 Release", "JASA Submission"):
+
+```bash
+# View issues for a milestone
+gh issue list --milestone "v1.0"
+```
+
+## Pull Requests In-Depth
+
+### The PR Workflow
+
+#### 1. Create a Branch
+
+```bash
+# Start from updated main
+git checkout main
+git pull origin main
+
+# Create feature branch
+git checkout -b feat/add-bootstrap-ci
+
+# Or fix branch
+git checkout -b fix/small-sample-ci
+```
+
+#### 2. Make Changes
+
+```bash
+# Work on your changes
+# ... edit files ...
+
+# Commit frequently with clear messages
+git add R/confidence_intervals.R
+git commit -m "fix: handle small sample sizes in CI calculation"
+
+git add tests/test-ci.R
+git commit -m "test: add tests for small sample CI edge cases"
+```
+
+#### 3. Push to GitHub
+
+```bash
+# First push: set upstream
+git push -u origin feat/add-bootstrap-ci
+
+# Subsequent pushes
+git push
+```
+
+#### 4. Open the PR
+
+**Via GitHub web interface:**
+
+1. Go to repository on GitHub
+2. Click "Pull requests" → "New pull request"
+3. Select your branch
+4. Fill in the template
+5. Click "Create pull request"
+
+**Via command line:**
+
+```bash
+# Open PR with title and body
+gh pr create --title "Fix CI calculation for small samples" --body "
+## Summary
+Fixes confidence interval calculation when n < 20.
+
+## Changes
+- Added sample size check in calculate_ci()
+- Return NA with warning for n < 5
+- Added unit tests for edge cases
+
+## Testing
+- All existing tests pass
+- Added 3 new tests for small sample behavior
+
+Fixes #42
+"
+```
+
+#### 5. Request Review
+
+```bash
+# Request specific reviewers
+gh pr edit --add-reviewer username
+
+# Or via web interface
+```
+
+#### 6. Address Feedback
+
+Reviewers may request changes:
+
+```bash
+# Make requested changes
+# ... edit files ...
+
+# Commit with clear message
+git add .
+git commit -m "fix: address review feedback - add input validation"
+
+# Push updates (PR automatically updates)
+git push
+```
+
+#### 7. Merge
+
+Once approved:
+
+```bash
+# Merge via CLI
+gh pr merge --squash
+
+# Or via web interface: click "Merge pull request"
+```
+
+### Writing Good PR Descriptions
+
+**Structure:**
+
+```markdown
+## Summary
+One paragraph explaining what this PR does and why.
+
+## Changes
+- Bullet point list of specific changes
+- Be concrete: "Added X" not "Updated stuff"
+
+## Testing
+How did you verify this works?
+- "Ran test suite: all 47 tests pass"
+- "Manually tested with example data"
+- "Verified output matches expected in #42"
+
+## Screenshots (if applicable)
+For UI changes or visualizations.
+
+## Checklist
+- [ ] Code follows style guide
+- [ ] Tests added/updated
+- [ ] Documentation updated
+- [ ] No hardcoded paths
+
+## Related Issues
+Fixes #42
+Related to #38
+```
+
+### PR Review Guidelines
+
+**As a reviewer:**
+
+1. **Be constructive** - Suggest improvements, don't just criticize
+2. **Be specific** - Point to exact lines, suggest fixes
+3. **Prioritize** - Distinguish blocking issues from suggestions
+4. **Test it** - Pull the branch and run the code
+
+**Review comment prefixes:**
+
+| Prefix | Meaning |
+|--------|---------|
+| `blocking:` | Must fix before merge |
+| `suggestion:` | Nice to have, not required |
+| `question:` | Need clarification |
+| `nit:` | Minor style issue |
+
+**Example review comments:**
+
+```markdown
+blocking: This will fail if `data` is NULL. Add a check:
+```r
+if (is.null(data)) stop("data cannot be NULL")
+```
+
+suggestion: Consider using `vapply` instead of `sapply` for type safety.
+
+question: Why did we choose 0.05 as the threshold here?
+
+nit: Extra whitespace on line 42.
+```
+
+**As the author:**
+
+1. **Respond to all comments** - Even if just "Done" or "Good point, fixed"
+2. **Don't take it personally** - Reviews improve code quality
+3. **Ask for clarification** - If feedback is unclear
+4. **Push fixes** - Then re-request review
+
+### Draft PRs
+
+Open a draft PR for early feedback before code is ready:
+
+```bash
+gh pr create --draft --title "WIP: Bootstrap confidence intervals"
+```
+
+Use drafts for:
+
+- Getting early feedback on approach
+- Showing progress on long-running work
+- Discussing design before finishing implementation
+
+Convert to ready when done:
+
+```bash
+gh pr ready
+```
+
+### Merge Strategies
+
+| Strategy | When to Use |
+|----------|-------------|
+| **Merge commit** | Preserve full history (default) |
+| **Squash and merge** | Clean history, combine all commits into one |
+| **Rebase and merge** | Linear history, replay commits on main |
+
+**Lab default: Squash and merge** for clean history.
+
+## Complete Workflow Example
+
+### Scenario: Fix a bug reported in an issue
+
+**1. Issue exists: #42 "CI calculation wrong for small n"**
+
+**2. Assign yourself and start work:**
+
+```bash
+# On GitHub: assign yourself to #42
+# Or via CLI:
+gh issue edit 42 --add-assignee @me
+
+# Create branch
+git checkout main
+git pull origin main
+git checkout -b fix/small-sample-ci-42
+```
+
+**3. Make the fix:**
+
+```bash
+# Edit the code
+# ... fix R/confidence_intervals.R ...
+
+# Add tests
+# ... edit tests/test-ci.R ...
+
+# Commit
+git add R/confidence_intervals.R
+git commit -m "fix: handle n < 20 in CI calculation"
+
+git add tests/test-ci.R
+git commit -m "test: add small sample CI tests"
+```
+
+**4. Push and create PR:**
+
+```bash
+git push -u origin fix/small-sample-ci-42
+
+gh pr create --title "Fix CI calculation for small samples" --body "
+## Summary
+Fixes confidence interval calculation for sample sizes under 20.
+
+## Changes
+- Added sample size validation in calculate_ci()
+- Returns NA with warning for n < 5
+- Uses t-distribution instead of normal for n < 30
+
+## Testing
+- Added 3 new tests covering edge cases
+- All 50 tests pass
+
+Fixes #42
+"
+```
+
+**5. Get review and iterate:**
+
+```bash
+# Reviewer requests changes
+# Make fixes
+git add .
+git commit -m "fix: address review - improve error message"
+git push
+
+# Re-request review
+gh pr edit --add-reviewer reviewer-username
+```
+
+**6. Merge:**
+
+```bash
+# After approval
+gh pr merge --squash
+
+# Clean up local branch
+git checkout main
+git pull origin main
+git branch -d fix/small-sample-ci-42
+```
+
+**7. Issue #42 is automatically closed by the merge.**
+
 ## Commit Messages
 
 Use conventional commit format:
@@ -48,22 +516,6 @@ git commit -m "WIP"
 - `main` - Production-ready code, always stable
 - `develop` - Integration branch for features (optional)
 
-### Feature Branches
-
-```bash
-# Create feature branch
-git checkout -b feat/add-survival-analysis
-
-# Work on feature, commit often
-git add .
-git commit -m "feat: implement Kaplan-Meier estimator"
-
-# Push to remote
-git push -u origin feat/add-survival-analysis
-
-# Create pull request on GitHub
-```
-
 ### Branch Naming
 
 ```
@@ -73,34 +525,11 @@ docs/description      # Documentation
 refactor/description  # Code restructuring
 ```
 
-## Pull Request Workflow
+Include issue number when applicable:
 
-1. **Create branch** from `main`
-2. **Make changes** with frequent commits
-3. **Push** to remote
-4. **Open PR** with description
-5. **Request review** from lab member
-6. **Address feedback**
-7. **Merge** when approved
-
-### PR Template
-
-```markdown
-## Summary
-Brief description of changes.
-
-## Changes
-- Added X
-- Modified Y
-- Fixed Z
-
-## Testing
-How were changes tested?
-
-## Checklist
-- [ ] Code follows style guide
-- [ ] Tests pass
-- [ ] Documentation updated
+```
+fix/small-sample-ci-42
+feat/bootstrap-intervals-38
 ```
 
 ## Common Commands
@@ -109,7 +538,11 @@ How were changes tested?
 
 ```bash
 # Start of day: get latest changes
+git checkout main
 git pull origin main
+
+# Create branch for new work
+git checkout -b feat/my-feature
 
 # Check status
 git status
@@ -122,7 +555,28 @@ git add -A  # All changes (use sparingly)
 git commit -m "type: description"
 
 # Push
-git push
+git push -u origin feat/my-feature
+```
+
+### GitHub CLI (gh) Commands
+
+```bash
+# Issues
+gh issue list                    # List open issues
+gh issue create                  # Create new issue
+gh issue view 42                 # View issue #42
+gh issue close 42                # Close issue
+
+# Pull Requests
+gh pr list                       # List open PRs
+gh pr create                     # Create PR
+gh pr view 15                    # View PR #15
+gh pr checkout 15                # Check out PR branch
+gh pr merge --squash             # Merge current PR
+gh pr review --approve           # Approve PR
+
+# Combined workflow
+gh issue develop 42 --checkout   # Create branch for issue
 ```
 
 ### Viewing History
@@ -160,7 +614,7 @@ git revert commit_hash
 ```bash
 # When pull has conflicts
 git pull origin main
-# Edit conflicted files, remove markers
+# Edit conflicted files, remove markers (<<<<, ====, >>>>)
 git add conflicted_file.R
 git commit -m "fix: resolve merge conflict"
 ```
@@ -198,19 +652,6 @@ config/secrets.yml
 Thumbs.db
 ```
 
-## Large Files
-
-Don't commit large files (>50 MB). Options:
-
-1. **Add to .gitignore** - Best for regenerable files
-2. **Use Git LFS** - For essential large files
-3. **External storage** - Link to Longleaf/shared drives
-
-```bash
-# Check for large files before commit
-find . -size +10M -type f
-```
-
 ## Sensitive Data
 
 Never commit:
@@ -230,8 +671,7 @@ DB_PASSWORD=password_here
 
 ```r
 # In R
-library(dotenv)
-load_dot_env()
+Sys.setenv(API_KEY = "secret")  # Or use dotenv package
 api_key <- Sys.getenv("API_KEY")
 ```
 
