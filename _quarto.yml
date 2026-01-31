@@ -52,6 +52,7 @@ website:
     - title: "Policies"
       contents:
         - policies/index.qmd
+        - policies/project-handoff.qmd
 
     - title: "Project Consistency"
       contents:

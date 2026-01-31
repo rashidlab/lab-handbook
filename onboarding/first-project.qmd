@@ -106,12 +106,21 @@ tar_target(
 
 ```r
 run_my_analysis <- function(data) {
-  # Your analysis code
-  data %>%
-    group_by(group) %>%
-    summarise(mean = mean(value))
+  # Your analysis code (using base R - see R Style Guide)
+  aggregate(value ~ group, data = data, FUN = mean)
 }
 ```
+
+::: {.callout-note}
+## Lab Style: Base R + data.table
+We use base R and `data.table` instead of tidyverse. For large datasets, use:
+```r
+library(data.table)
+dt <- as.data.table(data)
+dt[, .(mean_value = mean(value)), by = group]
+```
+See [R Style Guide](../coding-standards/r-style.qmd) for details.
+:::
 
 3. **Run and verify**:
 

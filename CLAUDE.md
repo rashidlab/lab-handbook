@@ -74,9 +74,10 @@ lab-handbook/
 │   ├── git-practices.qmd    # Git workflow, Issues, PRs
 │   └── targets-pipeline.qmd # {targets} for reproducible pipelines
 ├── policies/                # Lab policies
-│   ├── index.qmd            # Communication, data, publications
+│   ├── index.qmd            # Communication, data, publications, privacy
 │   ├── meetings.qmd         # Lab meetings guide (comprehensive)
-│   └── schedule.qmd         # Meeting rotation
+│   ├── schedule.qmd         # Meeting rotation
+│   └── project-handoff.qmd  # Transitioning projects between members
 ├── templates/               # Project templates
 │   ├── index.qmd            # Template overview
 │   ├── research-project.qmd # General research project
@@ -89,7 +90,13 @@ lab-handbook/
 │   ├── data-provenance.qmd  # Data tracking
 │   └── validation.qmd       # Validation checks
 ├── computing/               # HPC and computing guides
-│   └── index.qmd            # Longleaf, Slurm, environments
+│   └── index.qmd            # Longleaf, Slurm, targets + Slurm
+├── branding/                # Lab visual identity
+│   ├── index.qmd            # Branding overview
+│   ├── presentations.qmd    # Quarto RevealJS slides
+│   ├── colors.qmd           # UNC color palette
+│   ├── assets.qmd           # Logos and downloads
+│   └── claude-template.qmd  # CLAUDE.md template
 ├── meeting-notes/           # Committed meeting notes
 │   ├── README.md            # Quick reference for students
 │   ├── TEMPLATE.md          # Meeting notes template
@@ -128,8 +135,23 @@ lab-handbook/
 
 | Page | Purpose |
 |------|---------|
-| `coding-standards/git-practices.qmd` | Issues vs PRs, review guidelines |
+| `coding-standards/git-practices.qmd` | Issues vs PRs, review guidelines, review expectations |
 | `coding-standards/r-style.qmd` | R code conventions |
+
+### For Presentations
+
+| Page | Purpose |
+|------|---------|
+| `branding/presentations.qmd` | Quarto RevealJS with lab styling |
+| `branding/colors.qmd` | UNC color palette (Carolina Blue, Navy) |
+| `branding/assets.qmd` | Lab logos and downloadable assets |
+
+### For Data & Compliance
+
+| Page | Purpose |
+|------|---------|
+| `policies/index.qmd` | Data privacy, security, HIPAA requirements |
+| `policies/project-handoff.qmd` | Transitioning projects when members leave |
 
 ## GitHub Integration
 

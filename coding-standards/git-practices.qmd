@@ -356,6 +356,36 @@ nit: Extra whitespace on line 42.
 3. **Ask for clarification** - If feedback is unclear
 4. **Push fixes** - Then re-request review
 
+### Review Expectations
+
+**Timeline:**
+
+| PR Size | Expected Review Time |
+|---------|---------------------|
+| Small (< 100 lines) | Within 2 business days |
+| Medium (100-500 lines) | Within 4 business days |
+| Large (500+ lines) | Within 1 week |
+
+**Tips for faster reviews:**
+
+- Keep PRs small and focused (one feature/fix per PR)
+- Write clear descriptions explaining *why*
+- Include screenshots for visual changes
+- Run tests before requesting review
+- Tag appropriate reviewers (not everyone)
+
+**If your PR is blocking:**
+
+1. Add `priority: high` label
+2. Message reviewer directly in Teams
+3. Ask in lab meeting if urgent
+
+**If you're asked to review:**
+
+1. Acknowledge within 24 hours (even if you need more time)
+2. If you can't review in time, say so and suggest someone else
+3. Be thorough but timely—perfect shouldn't block good
+
 ### Draft PRs
 
 Open a draft PR for early feedback before code is ready:

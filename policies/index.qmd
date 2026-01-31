@@ -133,6 +133,90 @@ _targets/
 - **Sensitive data**: Follow IRB protocols strictly
 - **Backups**: Lab project directory (`/proj/rashidlab/`) is backed up
 
+## Data Privacy & Security
+
+Research data—especially clinical and genomic data—requires careful handling to protect patient privacy and comply with regulations.
+
+### Classification Levels
+
+| Level | Examples | Handling |
+|-------|----------|----------|
+| **Public** | Published results, code | Can be shared openly |
+| **Internal** | Unpublished analyses | Lab members only |
+| **Confidential** | De-identified clinical data | IRB-approved users only |
+| **Restricted (PHI)** | Identifiable patient data | Strict access controls |
+
+### Protected Health Information (PHI)
+
+::: {.callout-important}
+## PHI Requires Special Handling
+PHI includes any data that could identify a patient: names, dates, medical record numbers, genomic sequences linked to identifiers, images, etc.
+:::
+
+**Requirements for PHI:**
+
+1. **IRB approval** before any access or analysis
+2. **HIPAA training** completed annually (via UNC)
+3. **Secure storage** only—never on personal devices or cloud storage
+4. **Access logging**—document who accessed what and when
+5. **De-identification** before any sharing or publication
+
+### Secure Computing Practices
+
+**Do:**
+
+- Use UNC-approved systems (Longleaf) for sensitive data
+- Enable two-factor authentication on all accounts
+- Lock your workstation when stepping away
+- Report any suspected breaches immediately
+
+**Never:**
+
+- Store PHI on personal laptops, Dropbox, Google Drive, or GitHub
+- Share credentials or use shared accounts
+- Email datasets containing identifiable information
+- Leave printed materials with PHI unattended
+
+### De-identification
+
+Before sharing data (even internally), remove or transform:
+
+- Direct identifiers (names, MRNs, SSNs)
+- Dates more specific than year
+- Geographic data smaller than state
+- Any unique characteristics
+
+```r
+# Example: basic de-identification
+deidentify <- function(data) {
+  data$patient_id <- seq_len(nrow(data))  # Replace with sequential IDs
+  data$mrn <- NULL                         # Remove MRN
+  data$dob <- NULL                         # Remove birthdate
+  data$age_group <- cut(data$age, breaks = c(0, 40, 60, 80, Inf),
+                        labels = c("<40", "40-59", "60-79", "80+"))
+  data$age <- NULL                         # Replace exact age with range
+  return(data)
+}
+```
+
+### Incident Response
+
+If you suspect a data breach or security incident:
+
+1. **Stop** any ongoing data transfer immediately
+2. **Document** what happened (time, files involved, who was affected)
+3. **Report** to Dr. Rashid and UNC ITS Security within 24 hours
+4. **Do not** attempt to "fix" or hide the issue
+
+### Training Requirements
+
+| Training | Frequency | Link |
+|----------|-----------|------|
+| HIPAA Privacy | Annual | [UNC HIPAA Training](https://www.med.unc.edu/compliance/hipaa/) |
+| CITI Human Subjects | Before research | [CITI Program](https://about.citiprogram.org/) |
+| Responsible Conduct | Once | Graduate school requirement |
+| Information Security | Annual | [UNC ITS Training](https://its.unc.edu/security/training/) |
+
 ### Reproducibility
 
 Every analysis must be reproducible:

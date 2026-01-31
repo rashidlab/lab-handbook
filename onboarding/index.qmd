@@ -18,7 +18,7 @@ Welcome to the Rashid Lab! This guide will help you get set up and productive in
 
 | Resource | Purpose |
 |----------|---------|
-| [Lab Teams](#) | Daily communication |
+| Lab Teams | Daily communication (invite sent by Dr. Rashid) |
 | [GitHub Organization](https://github.com/rashidlab) | All code repositories |
 | [Lab Meeting Discussions](https://github.com/rashidlab/lab-handbook/discussions/categories/lab-meetings) | Weekly agendas & notes |
 | [Meeting Schedule](../policies/schedule.qmd) | Rotation and calendar |

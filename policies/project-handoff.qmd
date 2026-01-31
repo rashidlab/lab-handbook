@@ -1,0 +1,249 @@
+---
+title: "Project Handoff"
+subtitle: "Transferring projects between lab members"
+---
+
+## Overview
+
+Project handoffs occur when:
+
+- A student graduates or leaves the lab
+- Responsibilities shift between team members
+- A project enters a new phase requiring different expertise
+- Someone joins an ongoing project
+
+A good handoff ensures continuity and prevents loss of institutional knowledge.
+
+## Handoff Timeline
+
+Start the handoff process **at least 4 weeks** before departure:
+
+| Week | Activities |
+|------|------------|
+| **4 weeks out** | Identify successor, schedule knowledge transfer sessions |
+| **3 weeks out** | Document current state, update README and CLAUDE.md |
+| **2 weeks out** | Pair programming sessions, code walkthrough |
+| **1 week out** | Successor takes lead with outgoing member as backup |
+| **After** | 2-week grace period for questions via email/Teams |
+
+## Documentation Checklist
+
+Before handoff, ensure these are complete and current:
+
+### Repository Documentation
+
+- [ ] **README.md** - Updated with:
+  - Project overview and goals
+  - Directory structure
+  - Setup instructions that work
+  - How to run the main analyses
+  - Known issues and quirks
+
+- [ ] **CLAUDE.md** - Documents:
+  - Key commands
+  - Architecture decisions
+  - Common workflows
+  - Project-specific conventions
+
+### Code Quality
+
+- [ ] All code runs without errors from a fresh clone
+- [ ] No hardcoded paths specific to your machine
+- [ ] Dependencies documented (DESCRIPTION, requirements.txt)
+- [ ] Seeds set for reproducibility
+- [ ] Comments explain *why*, not just *what*
+
+### Data & Results
+
+- [ ] Data sources documented
+- [ ] Raw data preserved, never modified
+- [ ] Processed data regenerable from scripts
+- [ ] Results match what's in manuscript/reports
+- [ ] Symlinks or paths documented for Longleaf storage
+
+### Project State
+
+- [ ] **Open issues** triaged with current status
+- [ ] **In-progress work** documented (what's done, what remains)
+- [ ] **Blockers** identified (awaiting data, reviewer feedback, etc.)
+- [ ] **Timeline** for paper submission or next milestones
+
+## Knowledge Transfer Sessions
+
+Schedule 2-3 sessions covering:
+
+### Session 1: Architecture Overview (1-2 hours)
+
+Walk through:
+
+- Why the project exists
+- What questions it answers
+- High-level approach and methods
+- Directory structure and key files
+- Where data lives and how it flows
+
+### Session 2: Code Walkthrough (2-3 hours)
+
+Cover:
+
+- Main analysis scripts
+- Key functions and their purpose
+- The `_targets.R` pipeline (if applicable)
+- How to run things end-to-end
+- Common debugging scenarios
+
+### Session 3: Hands-On (1-2 hours)
+
+Let the successor:
+
+- Set up the project from scratch
+- Run the full analysis
+- Make a small change
+- Troubleshoot issues with guidance
+
+## Handoff Document Template
+
+Create a `HANDOFF.md` in the repository:
+
+```markdown
+# Project Handoff: [Project Name]
+
+## Outgoing: [Name]
+## Incoming: [Name]
+## Date: [Date]
+
+---
+
+## Project Status
+
+**Phase:** [Data collection / Analysis / Writing / Revision]
+
+**Next milestone:** [What and when]
+
+**Blocking issues:**
+- [Issue or none]
+
+---
+
+## Key Contacts
+
+| Role | Person | Notes |
+|------|--------|-------|
+| PI | Dr. Rashid | Weekly check-ins |
+| Collaborator | [Name] | Provides clinical data |
+| Co-author | [Name] | Methods expert |
+
+---
+
+## Critical Files
+
+| File | Purpose |
+|------|---------|
+| `_targets.R` | Main analysis pipeline |
+| `R/core_analysis.R` | Primary analysis functions |
+| `manuscript/paper.qmd` | Current draft |
+| `config/globals.yml` | Project configuration |
+
+---
+
+## Current Workflows
+
+### To run the main analysis:
+```bash
+# Full run
+make all
+
+# Quick test
+make quick
+```
+
+### To render the manuscript:
+```bash
+quarto render manuscript/paper.qmd
+```
+
+### To check results:
+```r
+targets::tar_read(final_results)
+```
+
+---
+
+## Known Issues
+
+1. **Issue**: [Description]
+   **Workaround**: [How to deal with it]
+
+2. **Issue**: [Description]
+   **Workaround**: [How to deal with it]
+
+---
+
+## Unfinished Work
+
+- [ ] Complete sensitivity analysis (started in `R/sensitivity.R`)
+- [ ] Address reviewer comment #3 (see Issues)
+- [ ] Final proofreading of manuscript
+
+---
+
+## Questions?
+
+Contact [outgoing person] at [email] until [date].
+After that: [alternative contact or "lab meeting"].
+```
+
+## After Handoff
+
+### For the outgoing member:
+
+1. Archive personal notes that might be useful
+2. Update your contributions in README acknowledgments
+3. Remain available for questions during grace period
+4. Remove yourself from repository notifications (if leaving lab)
+
+### For the incoming member:
+
+1. Attempt full reproduction without help first
+2. Document any unclear steps you discover
+3. Update documentation for the next person
+4. Ask questions early—don't struggle alone
+
+### For the lab:
+
+1. Add handoff to lab meeting agenda
+2. Document lessons learned
+3. Update this guide if process could improve
+
+## Special Cases
+
+### Incomplete Projects
+
+If a project can't be finished before departure:
+
+1. Document exactly where you stopped
+2. Outline what remains (be specific)
+3. Identify any time-sensitive elements
+4. Archive code in a working state
+
+### Sensitive Data Projects
+
+Extra steps for projects with PHI or restricted data:
+
+1. Verify successor has required training and access
+2. Document all data sources and IRB protocols
+3. Transfer data access permissions properly
+4. Update data use agreements if needed
+
+### Publications in Progress
+
+If paper is under review or revision:
+
+1. Clarify who handles revisions
+2. Transfer corresponding author duties if needed
+3. Document submission history and reviewer feedback
+4. Ensure co-authors are informed of transition
+
+## Questions?
+
+Discuss handoffs in 1:1 meetings with Dr. Rashid or bring questions to lab meeting.
