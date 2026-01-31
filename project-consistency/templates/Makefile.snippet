@@ -1,0 +1,43 @@
+# =============================================================================
+# Consistency Validation Targets
+# =============================================================================
+# Add these to your project Makefile
+# =============================================================================
+
+# Quick validation - runs during normal workflow (~2 seconds)
+# Checks config values only
+validate-quick:
+	@echo "Running quick consistency check..."
+	@Rscript scripts/validate_consistency.R --quick
+
+# Full validation - before submissions (~10-30 seconds)
+# Checks config values, method claims, and provenance
+validate-consistency:
+	@echo "Running full consistency check..."
+	@Rscript scripts/validate_consistency.R --full
+
+# Generate HTML report of all consistency checks
+consistency-report:
+	@Rscript scripts/validate_consistency.R --full --report
+
+# =============================================================================
+# Integration Examples
+# =============================================================================
+
+# Integrate quick check with PDF rendering
+# pdf: validate-quick
+# 	quarto render paper/main.qmd --to pdf
+
+# Pre-submission checklist
+# pre-submit: validate-consistency validate-formatting
+# 	@echo ""
+# 	@echo "=== Pre-Submission Checklist ==="
+# 	@echo "[x] Consistency validation passed"
+# 	@echo "[x] Format validation passed"
+# 	@echo ""
+# 	@echo "Ready for submission!"
+
+# Full pipeline with consistency checks
+# all: validate-quick analysis figures paper
+
+.PHONY: validate-quick validate-consistency consistency-report

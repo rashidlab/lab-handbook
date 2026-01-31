@@ -1,0 +1,129 @@
+# =============================================================================
+# Consistency Registry
+# =============================================================================
+# This file maps claims in manuscripts/documentation to their authoritative
+# sources in code and configuration. Run `make validate-consistency` to check.
+#
+# See: lab-handbook/project-consistency/README.md for full documentation
+# =============================================================================
+
+version: "1.0"
+project: "YOUR_PROJECT_NAME"
+
+# =============================================================================
+# Type 1: Config Values
+# =============================================================================
+# Numeric values that appear in both config files and manuscript text.
+# The validator extracts values from manuscript via regex and compares
+# to the authoritative source.
+
+config_values:
+  # Example: Significance level
+  # - id: alpha_level
+  #   description: "Type I error rate for hypothesis tests"
+  #   manuscript_locations:
+  #     - file: paper/methods.qmd
+  #       pattern: 'significance level.{0,20}(\d+\.?\d*)%'
+  #     - file: paper/methods.qmd
+  #       pattern: 'alpha\s*=\s*(\d+\.?\d*)'
+  #   source:
+  #     file: config/analysis.yml
+  #     path: hypothesis_testing.alpha
+  #     transform: "x * 100"  # 0.05 → 5 for percentage match
+  #   code_defaults:
+  #     - file: R/analysis.R
+  #       function: run_hypothesis_test
+  #       param: alpha
+
+  # Example: Sample size
+  # - id: sample_size
+  #   description: "Maximum sample size per arm"
+  #   manuscript_locations:
+  #     - file: paper/design.qmd
+  #       pattern: 'maximum.{0,20}(\d+)\s*(?:patients|subjects)'
+  #   source:
+  #     file: config/trial.yml
+  #     path: design.max_n
+  #   code_defaults:
+  #     - file: R/simulate_trial.R
+  #       function: run_simulation
+  #       param: max_n
+
+  [] # Remove this line and uncomment examples above
+
+# =============================================================================
+# Type 2: Method Claims
+# =============================================================================
+# Verify that manuscript descriptions of methods match the actual code.
+# Catches cases like "we used Sobol sampling" when code actually uses LHS.
+
+method_claims:
+  # Example: Sampling method
+  # - id: initial_sampling
+  #   description: "Experimental design sampling method"
+  #   manuscript_locations:
+  #     - file: paper/methods.qmd
+  #       pattern: '(Latin hypercube|LHS|Sobol|random sampling|grid)'
+  #       expected: "Latin hypercube"
+  #   verification:
+  #     type: code_grep
+  #     file: R/design.R
+  #     pattern: "lhs::|randomLHS|maximinLHS"
+
+  # Example: Statistical model
+  # - id: regression_model
+  #   description: "Primary analysis model"
+  #   manuscript_locations:
+  #     - file: paper/methods.qmd
+  #       pattern: '(logistic regression|Cox model|linear mixed)'
+  #       expected: "logistic regression"
+  #   verification:
+  #     type: code_grep
+  #     file: R/analysis.R
+  #     pattern: "glm\\(.*binomial|brm\\(.*bernoulli"
+
+  [] # Remove this line and uncomment examples above
+
+# =============================================================================
+# Type 3: Results Provenance
+# =============================================================================
+# Verify that figures and tables use the data files they claim to use.
+# Ensures reproducibility and catches stale results.
+
+results_provenance:
+  # Example: Main results figure
+  # - id: fig_main_results
+  #   description: "Figure 1: Primary outcome results"
+  #   manuscript_location:
+  #     file: paper/results.qmd
+  #     label: "fig-primary-results"
+  #   data_source:
+  #     file: results/primary_analysis.csv
+  #     required_columns: [group, estimate, std_error, p_value]
+  #   generation_script: scripts/02_generate_figures.R
+
+  # Example: Summary table
+  # - id: table_demographics
+  #   description: "Table 1: Baseline demographics"
+  #   manuscript_location:
+  #     file: paper/results.qmd
+  #     label: "tbl-demographics"
+  #   data_source:
+  #     file: results/demographics_summary.csv
+  #     required_columns: [variable, n, mean_sd, median_iqr]
+  #   generation_script: scripts/01_summarize_data.R
+
+  [] # Remove this line and uncomment examples above
+
+# =============================================================================
+# Custom Checks (Advanced)
+# =============================================================================
+# Define project-specific validation logic
+
+custom_checks:
+  # Example: Version consistency
+  # - id: package_version
+  #   description: "R package version matches DESCRIPTION"
+  #   check_script: scripts/check_version_consistency.R
+
+  [] # Remove this line when adding custom checks

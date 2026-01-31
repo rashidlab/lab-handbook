@@ -220,3 +220,18 @@ project/
 - All exported functions must have docstrings
 - Include parameter types and descriptions
 - Provide examples where helpful
+
+## Workflow Automation
+
+See [Targets Pipeline Guide](targets-pipeline.md) for:
+- Reproducible computational workflows with `{targets}`
+- Dynamic branching for simulation studies
+- Slurm/Longleaf cluster integration
+- Caching and incremental builds
+
+## Consistency Validation
+
+See [Project Consistency Framework](../project-consistency/README.md) for:
+- Ensuring code, docs, and manuscripts stay synchronized
+- Automatic validation of claims in written text
+- Pre-submission checklist automation

@@ -7,6 +7,8 @@ Welcome to the Rashid Lab! This repository contains our policies, procedures, an
 - **[Policies](./policies/)** - Lab policies and expectations
 - **[Onboarding](./onboarding/)** - New member onboarding guide
 - **[Coding Standards](./coding-standards/)** - Code style and best practices
+  - [Targets Pipeline Guide](./coding-standards/targets-pipeline.md) - Reproducible workflows with `{targets}`
+- **[Project Consistency](./project-consistency/)** - Keeping code, docs, and manuscripts synchronized
 - **[Resources](./resources/)** - Useful links and templates
 
 ## Quick Links

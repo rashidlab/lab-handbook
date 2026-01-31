@@ -1,0 +1,503 @@
+# Targets Pipeline Guide
+
+A comprehensive guide to using the `{targets}` package for reproducible research workflows in R.
+
+## Why Targets?
+
+The `{targets}` package provides:
+
+1. **Automatic dependency tracking** - Only re-runs what changed
+2. **Parallel execution** - Distributes work across cores/nodes
+3. **Caching** - Stores intermediate results for fast iteration
+4. **Reproducibility** - Documents the entire computational workflow
+
+## Quick Start
+
+### Installation
+
+```r
+install.packages("targets")
+install.packages("tarchetypes")  # Useful extensions
+
+# For cluster computing (Longleaf)
+install.packages("crew")
+install.packages("crew.cluster")
+```
+
+### Basic Setup
+
+Create `_targets.R` in your project root:
+
+```r
+# _targets.R
+library(targets)
+library(tarchetypes)
+
+# Source your functions
+tar_source("R/")
+
+# Define pipeline
+list(
+  # Data loading
+  tar_target(raw_data, read_csv("data/raw/dataset.csv")),
+
+  # Processing
+  tar_target(clean_data, clean_dataset(raw_data)),
+
+  # Analysis
+  tar_target(model_fit, fit_model(clean_data)),
+
+  # Results
+  tar_target(results_table, summarize_results(model_fit)),
+
+  # Figures
+  tar_target(fig_main, create_main_figure(model_fit))
+)
+```
+
+### Running the Pipeline
+
+```bash
+# Run full pipeline
+Rscript -e "targets::tar_make()"
+
+# Or interactively in R
+targets::tar_make()
+
+# Visualize dependencies
+targets::tar_visnetwork()
+
+# Check status
+targets::tar_progress()
+```
+
+## Core Concepts
+
+### Targets
+
+A target is a single unit of work with:
+- **Name**: Unique identifier
+- **Command**: R expression to execute
+- **Dependencies**: Automatically detected from the command
+
+```r
+tar_target(
+  name = model_results,
+  command = fit_model(training_data, params)
+  # Dependencies: training_data, params, fit_model()
+)
+```
+
+### Dependency Detection
+
+Targets automatically tracks:
+- Other targets referenced in commands
+- Functions called (and their source code)
+- Files read via `tar_read()` or tracked with `tar_file()`
+
+When any dependency changes, the target is invalidated and re-runs.
+
+### Invalidation
+
+A target re-runs when:
+1. Its command code changes
+2. Any upstream target changes
+3. Any function it uses changes
+4. Tracked files change
+
+## Common Patterns
+
+### Dynamic Branching (Simulation Studies)
+
+Run the same analysis across multiple scenarios:
+
+```r
+# Define scenarios
+tar_target(
+  scenarios,
+  tibble(
+    scenario_id = c("null", "alt_small", "alt_large"),
+    effect_size = c(0, 0.2, 0.5),
+    n_reps = 1000
+  )
+),
+
+# Branch over scenarios
+tar_target(
+  sim_results,
+  run_simulation(
+    effect_size = scenarios$effect_size,
+    n_reps = scenarios$n_reps,
+    scenario_id = scenarios$scenario_id
+  ),
+  pattern = map(scenarios)  # Creates one branch per row
+),
+
+# Combine results
+tar_target(
+  combined_results,
+  bind_rows(sim_results)
+)
+```
+
+### File Tracking
+
+Track external files so pipeline re-runs when they change:
+
+```r
+# Track input file
+tar_target(data_file, "data/raw/dataset.csv", format = "file"),
+tar_target(data, read_csv(data_file)),
+
+# Track output file
+tar_target(
+  report_file,
+  {
+    render("reports/analysis.Rmd")
+    "reports/analysis.html"  # Return the path
+  },
+  format = "file"
+)
+```
+
+### Quarto/RMarkdown Integration
+
+```r
+library(tarchetypes)
+
+# Render Quarto document
+tar_quarto(
+  paper,
+  path = "paper/main.qmd"
+)
+
+# Render with dependencies
+tar_quarto(
+  paper,
+  path = "paper/main.qmd",
+  extra_files = c("paper/references.bib", "paper/template.tex")
+)
+```
+
+### Configuration Management
+
+Load configuration from YAML:
+
+```r
+tar_target(config, yaml::read_yaml("config/settings.yml")),
+
+tar_target(
+  analysis_results,
+  run_analysis(
+    data = clean_data,
+    alpha = config$analysis$alpha,
+    method = config$analysis$method
+  )
+)
+```
+
+## Slurm Integration (Longleaf)
+
+### Setup
+
+```r
+# _targets.R
+library(targets)
+library(crew)
+library(crew.cluster)
+
+# Configure Slurm controller
+tar_option_set(
+  controller = crew_controller_slurm(
+    name = "slurm_workers",
+    workers = 10,                    # Max concurrent jobs
+    slurm_partition = "general",
+    slurm_time_minutes = 60,
+    slurm_cpus_per_task = 4,
+    slurm_memory_gigabytes_per_cpu = 4,
+    slurm_log_output = "logs/slurm_%j.out",
+    slurm_log_error = "logs/slurm_%j.err"
+  ),
+  # Continue on individual failures
+  error = "continue",
+  # Store large objects on workers
+  storage = "worker"
+)
+```
+
+### Worker Deployment
+
+Mark compute-heavy targets for worker execution:
+
+```r
+tar_target(
+  sim_results,
+  run_simulation(scenario),
+  pattern = map(scenarios),
+  deployment = "worker"  # Run on Slurm
+),
+
+tar_target(
+  summary_table,
+  summarize(sim_results),
+  deployment = "main"  # Run locally (fast)
+)
+```
+
+### Running on Cluster
+
+```bash
+# Submit controller job
+sbatch run_pipeline.sh
+```
+
+`run_pipeline.sh`:
+```bash
+#!/bin/bash
+#SBATCH --job-name=targets_controller
+#SBATCH --time=24:00:00
+#SBATCH --mem=8G
+#SBATCH --cpus-per-task=2
+#SBATCH --output=logs/controller_%j.out
+
+module load r/4.3.0
+Rscript -e "targets::tar_make()"
+```
+
+### Monitoring
+
+```bash
+# Check Slurm queue
+squeue -u $USER
+
+# Watch pipeline progress
+watch -n 10 'Rscript -e "targets::tar_progress()"'
+
+# View worker logs
+tail -f logs/slurm_*.out
+```
+
+## Project Structure
+
+Recommended layout for targets projects:
+
+```
+project/
+├── _targets.R           # Pipeline definition
+├── _targets/            # Cache (gitignored)
+├── R/                   # Functions (tar_source loads these)
+│   ├── data_cleaning.R
+│   ├── modeling.R
+│   └── visualization.R
+├── config/
+│   └── settings.yml     # Configuration
+├── data/
+│   ├── raw/             # Input data
+│   └── processed/       # Intermediate (or use targets cache)
+├── results/             # Final outputs
+├── paper/               # Manuscript
+├── logs/                # Slurm logs
+└── Makefile             # Convenience commands
+```
+
+## Makefile Integration
+
+```makefile
+# Run pipeline
+run:
+	Rscript -e "targets::tar_make()"
+
+# Parallel execution (local)
+run-parallel:
+	Rscript -e "targets::tar_make(workers = 4)"
+
+# Visualize
+visualize:
+	Rscript -e "targets::tar_visnetwork()"
+
+# Check outdated
+status:
+	Rscript -e "targets::tar_outdated()"
+
+# Clean cache
+clean:
+	Rscript -e "targets::tar_destroy()"
+
+# Validate pipeline syntax
+validate:
+	Rscript -e "targets::tar_validate()"
+
+.PHONY: run run-parallel visualize status clean validate
+```
+
+## Best Practices
+
+### 1. Keep Targets Small
+
+Each target should do one thing:
+
+```r
+# Good: Separated concerns
+tar_target(clean_data, clean_dataset(raw_data)),
+tar_target(model, fit_model(clean_data)),
+tar_target(predictions, predict(model, test_data)),
+
+# Bad: Monolithic target
+tar_target(everything, {
+  clean <- clean_dataset(raw_data)
+  model <- fit_model(clean)
+  predict(model, test_data)
+})
+```
+
+### 2. Use Functions, Not Scripts
+
+Put logic in functions, not inline:
+
+```r
+# Good: Function in R/modeling.R
+tar_target(model, fit_bayesian_model(data, priors, config)),
+
+# Bad: Inline code
+tar_target(model, {
+  library(brms)
+  formula <- y ~ x1 + x2
+  priors <- c(prior(normal(0, 1), class = "b"))
+  brm(formula, data = data, prior = priors, ...)
+})
+```
+
+### 3. Version Control
+
+Add to `.gitignore`:
+```
+_targets/
+```
+
+Commit `_targets.R` and all `R/*.R` function files.
+
+### 4. Seed Management
+
+Set seeds for reproducibility:
+
+```r
+tar_option_set(seed = 2024)
+
+# Or per-target
+tar_target(sim, run_sim(data), seed = 42)
+```
+
+### 5. Error Handling
+
+Use `error = "continue"` for long-running pipelines:
+
+```r
+tar_option_set(error = "continue")
+```
+
+Check for failures:
+```r
+targets::tar_meta() %>% filter(!is.na(error))
+```
+
+## Debugging
+
+### Inspect Target
+
+```r
+# Load a target's value
+tar_read(model_results)
+
+# Load into environment
+tar_load(model_results)
+```
+
+### Debug Failed Target
+
+```r
+# Get the error
+tar_meta(names = "failed_target", fields = "error")
+
+# Run interactively
+tar_make(names = "failed_target", callr_function = NULL)
+```
+
+### Workspace Recovery
+
+```r
+# Save workspace on error
+tar_option_set(workspace_on_error = TRUE)
+
+# Load failed workspace
+tar_workspace(failed_target)
+# Now debug with all objects available
+```
+
+## Common Issues
+
+### Memory Problems
+
+```r
+# Store large objects as files
+tar_target(
+  big_result,
+  compute_big_thing(data),
+  format = "qs"  # Faster serialization
+)
+
+# Or use external storage
+tar_option_set(storage = "worker", retrieval = "worker")
+```
+
+### Slow Dependency Detection
+
+```r
+# Exclude files from tracking
+tar_option_set(
+  imports = c("R/functions.R"),  # Only track these
+  # OR
+  garbage_collection = TRUE  # Help with memory
+)
+```
+
+### Cluster Job Failures
+
+Check logs and adjust resources:
+```r
+crew_controller_slurm(
+  slurm_time_minutes = 120,  # Increase time
+  slurm_memory_gigabytes_per_cpu = 8  # Increase memory
+)
+```
+
+## Resources
+
+- [Targets User Manual](https://books.ropensci.org/targets/)
+- [Targets R Package](https://docs.ropensci.org/targets/)
+- [crew.cluster Documentation](https://wlandau.github.io/crew.cluster/)
+- [Tarchetypes Extensions](https://docs.ropensci.org/tarchetypes/)
+
+## Lab-Specific Notes
+
+### Longleaf Partition Selection
+
+| Partition | Use Case | Time Limit |
+|-----------|----------|------------|
+| `debug` | Testing | 4 hours |
+| `general` | Standard jobs | 7 days |
+| `gpu` | GPU computing | 7 days |
+
+### Shared Cache
+
+Consider using a shared renv cache for targets projects:
+```r
+# In .Rprofile
+Sys.setenv(RENV_PATHS_CACHE = "/proj/rashidlab/renv-cache")
+```
+
+### Project Templates
+
+See lab templates for pre-configured targets setups:
+- `template-clinical-trial/` - Adaptive trial simulations
+- `template-methods-paper/` - Methodology papers
+- `template-research-project/` - General research
