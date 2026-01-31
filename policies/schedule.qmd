@@ -5,21 +5,42 @@ subtitle: "Lab meeting leads and presentation schedule"
 
 ## Current Rotation
 
-The meeting lead role rotates weekly. The lead is responsible for creating the agenda thread, facilitating the meeting, and posting notes.
+The meeting lead role rotates biweekly. Meetings are held **Thursdays at 9:30am** in **LCCC 20-023**.
 
-### Spring 2026 Rotation
+### Spring/Summer 2026 Schedule
 
-| Date | Meeting Lead | Presenter(s) | Topic |
-|------|--------------|--------------|-------|
-| Feb 6 | TBD | TBD | TBD |
-| Feb 13 | TBD | TBD | TBD |
-| Feb 20 | TBD | TBD | TBD |
-| Feb 27 | TBD | TBD | TBD |
+| Date | Meeting Lead | Type |
+|------|--------------|------|
+| Feb 12 | Naim Rashid | Orientation |
+| Feb 26 | Dinelka Nanayakkara | Research Update |
+| Mar 12 | Jialiu Xie | Research Update |
+| Mar 26 | Tyler Humpherys | Research Update |
+| Apr 9 | Andrew Walther | Research Update |
+| Apr 23 | Amber Young | Research Update |
+| May 7 | Dinelka Nanayakkara | Research Update |
+| May 21 | Jialiu Xie | Research Update |
+| Jun 4 | Tyler Humpherys | Research Update |
+| Jun 18 | Andrew Walther | Research Update |
+| Jul 2 | Amber Young | Research Update |
+| Jul 16 | Dinelka Nanayakkara | Research Update |
+| Jul 30 | Jialiu Xie | Research Update |
+| Aug 13 | Tyler Humpherys | Research Update |
+| Aug 27 | Andrew Walther | Research Update |
 
 ::: {.callout-note}
 ## Updating the Schedule
 Edit this file and submit a PR, or post in `#general` Teams channel to request changes.
 :::
+
+## Lab Members
+
+| Name | GitHub |
+|------|--------|
+| Amber Young | [@ayoung31](https://github.com/ayoung31) |
+| Dinelka Nanayakkara | [@dinelka97](https://github.com/dinelka97) |
+| Jialiu Xie | [@jialiux22](https://github.com/jialiux22) |
+| Tyler Humpherys | [@tylerbhumpherys](https://github.com/tylerbhumpherys) |
+| Andrew Walther | [@andrew-walther](https://github.com/andrew-walther) |
 
 ## How Rotation Works
 
