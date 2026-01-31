@@ -1,0 +1,44 @@
+---
+title: "Lab Branding"
+description: "Visual identity, presentation guidelines, and branding resources for the Rashid Lab"
+---
+
+## Overview
+
+This guide provides resources for maintaining consistent visual identity across Rashid Lab presentations, publications, and software. Our branding incorporates UNC Chapel Hill's official colors alongside lab-specific design elements.
+
+## Quick Links
+
+- [Presentation Guidelines](presentations.qmd) - Quarto RevealJS setup and templates
+- [Color Palette & CSS](colors.qmd) - Official colors and CSS variables
+- [Logos & Assets](assets.qmd) - Lab logos and hex stickers
+- [CLAUDE.md Template](claude-template.qmd) - AI assistant configuration for projects
+
+## UNC Institutional Branding
+
+We operate within UNC's institutional branding framework. Always refer to official guidelines:
+
+- [UNC Gillings School of Global Public Health Brand Guide](https://sph.unc.edu/resource-pages/communications-and-marketing/brand-resources/)
+- [UNC Lineberger Comprehensive Cancer Center Branding](https://unclineberger.org/communications/)
+- [UNC Chapel Hill Brand Guide](https://brand.unc.edu/)
+
+## Primary Colors
+
+Our designs use Carolina Blue as the primary accent with Navy for text and headers:
+
+| Color | Hex | Usage |
+|-------|-----|-------|
+| Carolina Blue | `#4B9CD3` | Primary accent, links |
+| Navy | `#13294B` | Headers, text |
+| Hyperlink Blue | `#007FAE` | Interactive elements |
+| White | `#FFFFFF` | Backgrounds |
+| Light Gray | `#F8F9FA` | Secondary backgrounds |
+
+## Lab Identity
+
+The Rashid Lab focuses on Bayesian methods for clinical trials and cancer genomics. Our visual identity reflects:
+
+- **Precision** - Clean, minimalist design
+- **Academic rigor** - Professional typography
+- **UNC affiliation** - Carolina Blue integration
+- **Accessibility** - High contrast, readable fonts

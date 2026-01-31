@@ -1,0 +1,241 @@
+---
+title: "Presentation Guidelines"
+description: "Creating Quarto RevealJS presentations with Rashid Lab branding"
+---
+
+## Overview
+
+We use [Quarto RevealJS](https://quarto.org/docs/presentations/revealjs/) as our standard presentation format. This provides:
+
+- Version-controlled slides in Markdown/Quarto
+- Code execution and live outputs
+- Export to PDF when needed
+- Consistent branding via CSS
+
+## Quick Start
+
+Create a new presentation with lab branding:
+
+```yaml
+---
+title: "Your Presentation Title"
+author: "Your Name"
+date: today
+format:
+  revealjs:
+    theme: [default, custom.css]
+    logo: assets/RLlogoA.png
+    footer: "Rashid Lab · UNC Chapel Hill"
+    slide-number: true
+    transition: fade
+    width: 1920
+    height: 1080
+---
+```
+
+## Required Files
+
+Download these files to your project:
+
+1. **[custom.css](../assets/branding/presentation-template.css)** - Lab styling
+2. **[RLlogoA.png](../assets/branding/logos/RLlogoA.png)** - Light background logo
+3. **[RLlogoA-dark.png](../assets/branding/logos/RLlogoA-dark.png)** - Dark background logo
+
+## CSS Template
+
+Save this as `custom.css` in your presentation directory:
+
+```css
+/*-- scss:defaults --*/
+$body-bg: #FFFFFF;
+$body-color: #13294B;
+$link-color: #007FAE;
+$presentation-heading-color: #13294B;
+
+/*-- scss:rules --*/
+
+/* Title slide styling */
+#title-slide {
+  text-align: left;
+}
+
+#title-slide .title {
+  color: #13294B;
+  font-size: 2.5em;
+  font-weight: 700;
+}
+
+#title-slide .subtitle {
+  color: #4B9CD3;
+  font-size: 1.5em;
+}
+
+#title-slide .author {
+  color: #13294B;
+  font-size: 1.2em;
+}
+
+/* Section headers */
+.reveal h1 {
+  color: #13294B;
+  border-bottom: 3px solid #4B9CD3;
+  padding-bottom: 0.3em;
+}
+
+.reveal h2 {
+  color: #13294B;
+}
+
+/* Code blocks */
+.reveal pre {
+  background: #F8F9FA;
+  border-left: 4px solid #4B9CD3;
+  border-radius: 4px;
+}
+
+.reveal code {
+  color: #13294B;
+  background: #F8F9FA;
+}
+
+/* Hyperlinks */
+.reveal a {
+  color: #007FAE;
+}
+
+.reveal a:hover {
+  color: #4B9CD3;
+}
+
+/* Tables */
+.reveal table {
+  border-collapse: collapse;
+  margin: 1em auto;
+}
+
+.reveal table th {
+  background: #13294B;
+  color: white;
+  padding: 0.5em 1em;
+}
+
+.reveal table td {
+  border: 1px solid #E5E5E5;
+  padding: 0.5em 1em;
+}
+
+/* Callout boxes */
+.callout-note {
+  border-left-color: #4B9CD3;
+}
+
+.callout-warning {
+  border-left-color: #F8E71C;
+}
+
+.callout-important {
+  border-left-color: #E74C3C;
+}
+
+/* Footer styling */
+.reveal .slide-number {
+  color: #13294B;
+  font-size: 0.7em;
+}
+```
+
+## Slide Structure
+
+### Title Slide
+
+```markdown
+---
+title: "Constrained Bayesian Optimization for Clinical Trials"
+subtitle: "ARPA-H ADAPT Platform Trial"
+author: "Naim Rashid, PhD"
+institute: "UNC Gillings School of Global Public Health"
+date: today
+format:
+  revealjs:
+    theme: [default, custom.css]
+---
+```
+
+### Content Slides
+
+```markdown
+## Background {.smaller}
+
+- Point one with **emphasis**
+- Point two with `code`
+- Point three with [link](https://example.com)
+
+::: {.notes}
+Speaker notes go here
+:::
+```
+
+### Two-Column Layout
+
+```markdown
+## Comparison
+
+:::: {.columns}
+
+::: {.column width="50%"}
+**Method A**
+
+- Feature 1
+- Feature 2
+:::
+
+::: {.column width="50%"}
+**Method B**
+
+- Feature 1
+- Feature 2
+:::
+
+::::
+```
+
+### Code with Output
+
+````markdown
+## R Example
+
+```{r}
+#| echo: true
+#| fig-width: 8
+#| fig-height: 4
+library(ggplot2)
+ggplot(mtcars, aes(wt, mpg)) +
+  geom_point(color = "#4B9CD3") +
+  theme_minimal()
+```
+````
+
+## Example Presentations
+
+Reference presentations from the lab:
+
+- [Data Science Symposium Talk](https://github.com/rashidlab/talks/symposium-2025) - Full example with figures
+- [ADAPT Paper Presentation](https://github.com/naimrashid/adaptive-trial-bo-paper/manuscript/) - Technical methods presentation
+
+## PDF Export
+
+To export slides to PDF:
+
+```bash
+quarto render presentation.qmd --to pdf
+```
+
+Or use the browser's print function (Ctrl/Cmd + P) when viewing the HTML slides.
+
+## Tips
+
+1. **Keep slides minimal** - One idea per slide
+2. **Use high-resolution figures** - Export at 300 DPI minimum
+3. **Test on projector** - Colors may appear differently
+4. **Version control** - Commit slides to GitHub
+5. **Include speaker notes** - Use `::: {.notes}` blocks

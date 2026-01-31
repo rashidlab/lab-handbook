@@ -68,6 +68,14 @@ website:
         - templates/methods-paper.qmd
         - templates/package-development.qmd
 
+    - title: "Branding"
+      contents:
+        - branding/index.qmd
+        - branding/presentations.qmd
+        - branding/colors.qmd
+        - branding/assets.qmd
+        - branding/claude-template.qmd
+
   page-footer:
     center: |
       Rashid Lab · UNC Chapel Hill · Department of Biostatistics

@@ -1,0 +1,221 @@
+---
+title: "CLAUDE.md Template"
+description: "AI assistant configuration file for research projects"
+---
+
+## Overview
+
+A `CLAUDE.md` file provides context and instructions to AI coding assistants (like Claude Code) when working with your project. This ensures consistent coding standards, correct package usage, and awareness of project-specific conventions.
+
+## Download Template
+
+Download the template for your projects:
+
+<a href="../assets/branding/CLAUDE-TEMPLATE.md" download class="btn btn-primary" style="display: inline-block; padding: 0.75rem 1.5rem; background: #4B9CD3; color: white; text-decoration: none; border-radius: 4px; margin: 1rem 0;">
+Download CLAUDE-TEMPLATE.md
+</a>
+
+## What to Include
+
+A good CLAUDE.md contains:
+
+1. **Repository Overview** - What the project does
+2. **Key Dependencies** - Packages and their locations
+3. **Common Commands** - Build, test, run commands
+4. **Architecture** - Directory structure and key files
+5. **Coding Conventions** - Style rules and naming patterns
+6. **Documentation** - Where to find more information
+
+## Template Contents
+
+```markdown
+# CLAUDE.md
+
+This file provides guidance to Claude Code when working with this repository.
+
+## Repository Overview
+
+[Brief description of what this project does and its purpose]
+
+## Key Dependencies
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| BATON | ≥0.3.0 | Bayesian optimization |
+| evolveTrial | latest | Trial simulations |
+| tidyverse | ≥2.0 | Data manipulation |
+
+## Common Commands
+
+### Build/Render
+
+\`\`\`bash
+make pdf          # Render manuscript
+make quick        # Quick build with caching
+\`\`\`
+
+### Testing
+
+\`\`\`bash
+make test         # Run all tests
+Rscript tests/run_tests.R  # R tests only
+\`\`\`
+
+### Running Simulations
+
+\`\`\`bash
+Rscript scripts/run_scenarios.R scenarios/production.csv
+\`\`\`
+
+## Architecture
+
+### Directory Structure
+
+\`\`\`
+├── R/              # Shared R functions
+├── scripts/        # Executable scripts
+├── manuscript/     # Quarto documents
+├── results/        # Output files (gitignored)
+├── figures/        # Generated figures
+└── docs/           # Documentation
+\`\`\`
+
+### Key Files
+
+| File | Purpose |
+|------|---------|
+| `_targets.R` | Pipeline definition |
+| `globals.yml` | Configuration values |
+| `R/utils.R` | Shared utilities |
+
+## Coding Conventions
+
+### R Style
+
+- Tidyverse style guide
+- Two-space indentation
+- `snake_case` for functions and variables
+- Always use `library()` at top of scripts
+
+### Parameter Naming
+
+| Concept | Correct | Incorrect |
+|---------|---------|-----------|
+| Maximum N | `total_n` | `nmax`, `N` |
+| Type I error | `type1` | `alpha` |
+| Power | `power` | `beta` |
+
+### Commits
+
+- Use conventional commits: `feat:`, `fix:`, `docs:`, `refactor:`
+- Reference issues: `fixes #123`
+- Keep commits atomic
+
+## Documentation
+
+- `docs/QUICK_START.md` - Getting started
+- `docs/CODING_STANDARDS.md` - Full style guide
+- `CHANGELOG.md` - Version history
+```
+
+## Best Practices
+
+### Keep It Updated
+
+Update CLAUDE.md when you:
+
+- Add new dependencies
+- Change project structure
+- Modify coding conventions
+- Add new commands or workflows
+
+### Be Specific
+
+Instead of:
+
+```markdown
+Use good coding practices
+```
+
+Write:
+
+```markdown
+### Error Handling
+- Use `tryCatch()` for file operations
+- Log errors with `message()` not `print()`
+- Return `NULL` on recoverable failures
+```
+
+### Include Examples
+
+Show correct usage:
+
+```markdown
+### Correct
+\`\`\`r
+result <- bo_calibrate(
+  sim_fun = my_simulator,
+  bounds = param_bounds,
+  fidelity_levels = c(low = 500, high = 5000)
+)
+\`\`\`
+
+### Incorrect
+\`\`\`r
+# Don't use positional arguments
+result <- bo_calibrate(my_simulator, param_bounds, c(500, 5000))
+\`\`\`
+```
+
+## Lab-Specific Sections
+
+For Rashid Lab projects, include:
+
+### BATON Usage
+
+```markdown
+## BATON Package
+
+Located at `~/Downloads/BATON`. Install with:
+
+\`\`\`r
+devtools::install("~/Downloads/BATON")
+\`\`\`
+
+### Key Functions
+
+- `bo_calibrate()` - Main optimization
+- `benchmark_methods()` - Method comparison
+- `summarise_case_study()` - Extract results
+```
+
+### UNC Computing
+
+```markdown
+## Longleaf Cluster
+
+Submit jobs via Slurm:
+
+\`\`\`bash
+sbatch scripts/run_calibration.sh
+\`\`\`
+
+See `/nas/longleaf/home/$USER/.bashrc` for module loads.
+```
+
+### Manuscript Standards
+
+```markdown
+## JASA Formatting
+
+After rendering, validate:
+
+\`\`\`bash
+Rscript scripts/validate_jasa_formatting.R
+\`\`\`
+
+Required checks:
+- Figures after references
+- Double spacing applied
+- No hardcoded values
+```

@@ -1,0 +1,124 @@
+---
+title: "Logos & Assets"
+description: "Lab logos, hex stickers, and visual assets"
+---
+
+## Lab Logos
+
+Download logos for use in presentations, websites, and publications.
+
+### Primary Logo (Light Backgrounds)
+
+![Rashid Lab Logo](../assets/branding/logos/RLlogoA.png){width="300px"}
+
+- **File:** [RLlogoA.png](../assets/branding/logos/RLlogoA.png)
+- **Use on:** White or light gray backgrounds
+- **Format:** PNG with transparency
+
+### Primary Logo (Dark Backgrounds)
+
+![Rashid Lab Logo Dark](../assets/branding/logos/RLlogoA-dark.png){width="300px"}
+
+- **File:** [RLlogoA-dark.png](../assets/branding/logos/RLlogoA-dark.png)
+- **Use on:** Dark or colored backgrounds
+
+### White Logo (Colored Backgrounds)
+
+![Rashid Lab Logo White](../assets/branding/logos/RLlogoAwhite.png){width="300px" style="background: #13294B; padding: 1rem;"}
+
+- **File:** [RLlogoAwhite.png](../assets/branding/logos/RLlogoAwhite.png)
+- **Use on:** Navy, Carolina Blue, or dark backgrounds
+
+### Alternative Logos
+
+<div style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: center;">
+
+<div>
+![Logo B](../assets/branding/logos/RLlogoB.png){width="200px"}
+
+**RLlogoB.png** - Compact version
+</div>
+
+<div style="background: #13294B; padding: 1rem; border-radius: 8px;">
+![Logo B White](../assets/branding/logos/RLlogoBwhite.png){width="200px"}
+
+**RLlogoBwhite.png** - White compact
+</div>
+
+</div>
+
+## Hex Stickers
+
+Lab hex stickers for R packages and projects:
+
+<div style="display: flex; gap: 2rem; flex-wrap: wrap; margin: 2rem 0;">
+
+<div style="text-align: center;">
+![BATON](../assets/branding/hex-stickers/BATON.png){width="150px"}
+
+**BATON Package**
+
+Bayesian Optimization for Adaptive Trials
+</div>
+
+<div style="text-align: center;">
+![DeSurv](../assets/branding/hex-stickers/DeSurv.png){width="150px"}
+
+**DeSurv Package**
+
+Deep Learning for Survival Analysis
+</div>
+
+<div style="text-align: center;">
+![Lab Hex A](../assets/branding/hex-stickers/RLHexA.png){width="150px"}
+
+**Lab Hex (Style A)**
+
+General lab branding
+</div>
+
+<div style="text-align: center;">
+![Lab Hex B](../assets/branding/hex-stickers/RLHexB.png){width="150px"}
+
+**Lab Hex (Style B)**
+
+Alternative style
+</div>
+
+</div>
+
+## Usage Guidelines
+
+### Do
+
+- Use logos at appropriate sizes (minimum 100px width)
+- Maintain aspect ratio when scaling
+- Use appropriate color version for background
+- Include adequate clear space around logos
+
+### Don't
+
+- Stretch or distort logos
+- Change logo colors
+- Place logo on busy backgrounds
+- Add effects (shadows, glows, etc.)
+- Crop or modify the logo design
+
+## Download All Assets
+
+All branding assets are available in the lab-handbook repository:
+
+```bash
+# Clone the repository
+git clone https://github.com/rashidlab/lab-handbook.git
+
+# Assets location
+ls lab-handbook/assets/branding/
+# logos/
+# hex-stickers/
+# presentation-template.css
+```
+
+## Requesting New Assets
+
+Need a logo in a different format or a new hex sticker? Contact Naim or open an issue in the [lab-handbook repository](https://github.com/rashidlab/lab-handbook/issues).

@@ -1,0 +1,191 @@
+---
+title: "Color Palette & CSS"
+description: "Official colors and CSS variables for Rashid Lab projects"
+---
+## Primary Palette
+
+These are the core colors for all Rashid Lab materials:
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; margin: 1rem 0;">
+<div style="background: #4B9CD3; color: white; padding: 2rem; border-radius: 8px; text-align: center; min-width: 150px;">
+<strong>Carolina Blue</strong><br>#4B9CD3
+</div>
+<div style="background: #13294B; color: white; padding: 2rem; border-radius: 8px; text-align: center; min-width: 150px;">
+<strong>Navy</strong><br>#13294B
+</div>
+<div style="background: #007FAE; color: white; padding: 2rem; border-radius: 8px; text-align: center; min-width: 150px;">
+<strong>Hyperlink Blue</strong><br>#007FAE
+</div>
+</div>
+
+## Extended Palette
+
+Additional colors for accents and data visualization:
+
+| Color | Hex | RGB | Usage |
+|-------|-----|-----|-------|
+| Carolina Blue | `#4B9CD3` | 75, 156, 211 | Primary accent |
+| Navy | `#13294B` | 19, 41, 75 | Headers, text |
+| Hyperlink Blue | `#007FAE` | 0, 127, 174 | Links, interactive |
+| Teal | `#00A5AD` | 0, 165, 173 | Secondary accent |
+| Gold | `#F8E71C` | 248, 231, 28 | Warnings, highlights |
+| Light Gray | `#F8F9FA` | 248, 249, 250 | Backgrounds |
+| Medium Gray | `#6C757D` | 108, 117, 125 | Muted text |
+| Dark Gray | `#343A40` | 52, 58, 64 | Body text alt |
+
+## CSS Variables
+
+Use these CSS custom properties in your projects:
+
+```css
+:root {
+  /* Primary colors */
+  --unc-carolina-blue: #4B9CD3;
+  --unc-navy: #13294B;
+  --unc-hyperlink-blue: #007FAE;
+
+  /* Extended palette */
+  --unc-teal: #00A5AD;
+  --unc-gold: #F8E71C;
+
+  /* Neutrals */
+  --color-bg: #FFFFFF;
+  --color-bg-secondary: #F8F9FA;
+  --color-text: #13294B;
+  --color-text-muted: #6C757D;
+  --color-border: #DEE2E6;
+
+  /* Semantic */
+  --color-primary: var(--unc-carolina-blue);
+  --color-secondary: var(--unc-navy);
+  --color-link: var(--unc-hyperlink-blue);
+  --color-success: #28A745;
+  --color-warning: #F8E71C;
+  --color-danger: #DC3545;
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'Fira Code', 'Monaco', monospace;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 4rem;
+}
+```
+
+## SCSS Variables
+
+For Quarto projects using SCSS:
+
+```scss
+// _variables.scss
+
+// UNC Brand Colors
+$unc-carolina-blue: #4B9CD3;
+$unc-navy: #13294B;
+$unc-hyperlink-blue: #007FAE;
+$unc-teal: #00A5AD;
+
+// Semantic mapping
+$primary: $unc-carolina-blue;
+$secondary: $unc-navy;
+$link-color: $unc-hyperlink-blue;
+$body-color: $unc-navy;
+$body-bg: #FFFFFF;
+
+// Typography
+$font-family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+$font-family-monospace: 'Fira Code', 'Monaco', monospace;
+$headings-font-weight: 600;
+$headings-color: $unc-navy;
+```
+
+## R Color Palette
+
+For ggplot2 and other R visualizations:
+
+```r
+# Define Rashid Lab palette
+rashidlab_colors <- c(
+  carolina_blue = "#4B9CD3",
+  navy = "#13294B",
+  hyperlink_blue = "#007FAE",
+  teal = "#00A5AD",
+  gold = "#F8E71C",
+  light_gray = "#F8F9FA"
+)
+
+# Discrete scale
+scale_color_rashidlab <- function(...) {
+  ggplot2::scale_color_manual(values = rashidlab_colors, ...)
+}
+
+scale_fill_rashidlab <- function(...) {
+  ggplot2::scale_fill_manual(values = rashidlab_colors, ...)
+}
+
+# Example usage
+library(ggplot2)
+ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
+  geom_point(size = 3) +
+  scale_color_manual(values = c("#4B9CD3", "#13294B", "#007FAE")) +
+  theme_minimal() +
+  theme(
+    text = element_text(color = "#13294B"),
+    plot.title = element_text(color = "#13294B", face = "bold")
+  )
+```
+
+## Data Visualization Guidelines
+
+### Categorical Data
+
+Use distinct colors from the palette:
+
+```r
+# 3-category palette
+cat3 <- c("#4B9CD3", "#13294B", "#00A5AD")
+
+# 5-category palette
+cat5 <- c("#4B9CD3", "#13294B", "#007FAE", "#00A5AD", "#6C757D")
+```
+
+### Sequential Data
+
+For continuous scales, use Carolina Blue gradients:
+
+```r
+# Light to dark blue
+scale_fill_gradient(low = "#E8F4FC", high = "#13294B")
+
+# Or use viridis for accessibility
+scale_fill_viridis_c(option = "D")
+```
+
+### Diverging Data
+
+For data with a meaningful center point:
+
+```r
+scale_fill_gradient2(
+  low = "#DC3545",   # Negative
+  mid = "#F8F9FA",   # Neutral
+  high = "#4B9CD3",  # Positive
+  midpoint = 0
+)
+```
+
+## Accessibility
+
+Always ensure sufficient contrast:
+
+| Foreground | Background | Ratio | Pass |
+|------------|------------|-------|------|
+| Navy (#13294B) | White | 13.5:1 | AAA |
+| Carolina Blue (#4B9CD3) | White | 3.2:1 | AA Large |
+| Hyperlink Blue (#007FAE) | White | 4.6:1 | AA |
+| White | Navy (#13294B) | 13.5:1 | AAA |
+
+**Tip:** Use Navy for body text and Carolina Blue for larger headings and accents.
