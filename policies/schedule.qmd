@@ -51,35 +51,17 @@ Edit this file and submit a PR, or post in `#general` Teams channel to request c
 
 ## Meeting Lead Checklist
 
-### Before the Meeting (by Tuesday 5pm)
+::: {.callout-tip}
+## Full Walkthrough Available
+See the [Lab Meetings Guide](meetings.qmd#leader-walkthrough) for the complete step-by-step walkthrough with templates and examples.
+:::
 
-- [ ] Create Discussion thread: `Lab Meeting - YYYY-MM-DD`
-- [ ] Copy [agenda template](meetings.qmd#agenda-template) into thread
-- [ ] Confirm presenter(s) and update agenda
-- [ ] Post reminder in Teams `#general` channel
+**Quick reference:**
 
-### Day Before (Wednesday)
-
-- [ ] Check that agenda items have been added
-- [ ] Send final reminder for contributions
-- [ ] Prepare any standing items or announcements
-
-### During the Meeting
-
-- [ ] Start on time
-- [ ] Check off attendees in the thread
-- [ ] Keep time for each agenda item
-- [ ] Capture key discussion points
-- [ ] Identify action items as they arise
-- [ ] End with action item summary
-
-### After the Meeting (by Thursday EOD)
-
-- [ ] Update Discussion thread with meeting notes
-- [ ] Add all action items with assignees and due dates
-- [ ] @mention people assigned to action items
-- [ ] Update parking lot items
-- [ ] Confirm next week's lead
+- **Tuesday 5pm**: Create Discussion thread with agenda
+- **Wednesday**: Send reminder, confirm presenter
+- **Thursday**: Facilitate meeting, take notes
+- **Thursday EOD**: Post notes and action items to thread
 
 ## Semester Calendar
 

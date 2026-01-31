@@ -170,24 +170,6 @@ Published papers should include:
 - Data availability statement
 - README with reproduction instructions
 
-## Computing Resources
-
-### Longleaf Usage
-
-- Request resources appropriately (don't over-request)
-- Clean up old files periodically
-- Use `/work/` for temporary files
-- Share packages via `/proj/rashidlab/R-packages/`
-
-### Software
-
-Approved tools:
-
-- **R/RStudio**: Primary analysis environment
-- **Python**: Secondary, for specific packages
-- **Quarto**: Manuscripts and documentation
-- **Git/GitHub**: Version control
-
 ## Professional Development
 
 ### Conferences

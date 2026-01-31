@@ -1,43 +1,12 @@
 ---
 title: "Computing Resources"
-subtitle: "Longleaf, Slurm, and environment management"
+subtitle: "Advanced Slurm usage, targets pipelines, and cluster workflows"
 ---
 
-This guide covers computing resources available to lab members.
-
-## Longleaf Cluster
-
-Longleaf is UNC's high-performance computing cluster.
-
-### Access
-
-1. Request account at [ITS Research Computing](https://help.rc.unc.edu/request-a-cluster-account/)
-2. SSH: `ssh your_onyen@longleaf.unc.edu`
-
-### Key Directories
-
-| Path | Purpose |
-|------|---------|
-| `/home/your_onyen/` | Home directory (limited space) |
-| `/work/users/y/o/your_onyen/` | Work directory (larger, not backed up) |
-| `/proj/rashidlab/` | Lab shared space |
-| `/proj/rashidlab/R-packages/` | Shared R package library |
-
-### Module System
-
-```bash
-# List available modules
-module avail
-
-# Load R
-module load r/4.3.0
-
-# Load commonly used stack
-module load r/4.3.0 gcc/11.2.0
-
-# Add to ~/.bashrc for persistence
-echo "module load r/4.3.0" >> ~/.bashrc
-```
+::: {.callout-tip}
+## New to Longleaf?
+Start with [Tools Setup](../onboarding/tools-setup.qmd) for initial access, OnDemand, and basic configuration. This page covers **advanced usage** for production workflows.
+:::
 
 ## Slurm Job Scheduler
 
@@ -95,6 +64,8 @@ Rscript my_analysis.R
 
 ## Targets + Slurm Integration
 
+The `{targets}` package with `{crew.cluster}` enables distributed pipelines on Longleaf.
+
 ### Configuration
 
 ```r
@@ -148,62 +119,68 @@ Rscript -e "targets::tar_progress()"
 tail -f logs/slurm_*.out
 ```
 
-## R Environment Management
+## Array Jobs
 
-### Package Documentation
+For running many similar jobs (e.g., simulation replicates):
 
-Document package dependencies in your project's README or DESCRIPTION file:
+```bash
+#!/bin/bash
+#SBATCH --job-name=sim_array
+#SBATCH --array=1-100
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=4G
+#SBATCH --time=2:00:00
+#SBATCH --output=logs/sim_%A_%a.out
 
-```r
-# List required packages in README.md or create a DESCRIPTION file
-# Check current session info
-sessionInfo()
+module load r/4.3.0
 
-# Save session info to file for reproducibility
-writeLines(capture.output(sessionInfo()), "session_info.txt")
+Rscript run_simulation.R $SLURM_ARRAY_TASK_ID
 ```
 
-### Installing Packages on Longleaf
-
+In R:
 ```r
-# Install to user library
-install.packages("data.table", lib = "~/R/library")
+# run_simulation.R
+args <- commandArgs(trailingOnly = TRUE)
+task_id <- as.integer(args[1])
 
-# Set default library path in ~/.Rprofile
-.libPaths(c("~/R/library", .libPaths()))
+set.seed(task_id)
+# ... run simulation with this seed
 ```
 
-### Shared Package Location (Longleaf)
+## Shared R Package Library
 
-For lab-wide packages, install to shared location:
+### Using Lab Packages
+
+Add to your `~/.Rprofile` on Longleaf:
 
 ```r
-# Install to shared lab directory
+.libPaths(c(
+  "~/R/library",
+  "/proj/rashidlab/R-packages",
+  .libPaths()
+))
+```
+
+### Installing to Shared Library
+
+For packages everyone needs:
+
+```r
+# Install to shared lab directory (ask first!)
 install.packages("mypackage", lib = "/proj/rashidlab/R-packages")
-
-# Add to .Rprofile
-.libPaths(c("/proj/rashidlab/R-packages", .libPaths()))
 ```
 
-## Local Development
+## Quick Mode for Testing
 
-### Desktop Specs
-
-For local development, recommended minimums:
-
-- **RAM**: 16 GB (32 GB preferred)
-- **CPU**: 4+ cores
-- **Storage**: SSD with 100+ GB free
-
-### Quick Mode for Testing
-
-Use reduced parameters for local testing:
+Use reduced parameters for local testing before cluster submission:
 
 ```bash
 # Environment variable approach
 QUICK_MODE=1 Rscript my_analysis.R
+```
 
-# Or in R
+```r
+# In R script
 if (Sys.getenv("QUICK_MODE") == "1") {
   n_reps <- 100
 } else {
@@ -215,4 +192,5 @@ if (Sys.getenv("QUICK_MODE") == "1") {
 
 - **Longleaf issues**: research@unc.edu
 - **Lab computing questions**: `#computing` Teams channel
-- **Targets/pipeline help**: Check [targets documentation](https://books.ropensci.org/targets/)
+- **Targets/pipeline help**: [targets documentation](https://books.ropensci.org/targets/)
+- **Initial setup**: [Tools Setup Guide](../onboarding/tools-setup.qmd)
