@@ -57,6 +57,12 @@ website:
         - project-consistency/data-provenance.qmd
         - project-consistency/validation.qmd
 
+    - title: "Policies"
+      contents:
+        - policies/index.qmd
+        - policies/meetings.qmd
+        - policies/schedule.qmd
+
     - title: "Templates"
       contents:
         - templates/index.qmd

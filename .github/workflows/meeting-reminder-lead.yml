@@ -1,0 +1,104 @@
+# Reminder for meeting lead to create agenda
+# Runs Wednesday 9am ET (14:00 UTC)
+name: Meeting Lead Reminder
+
+on:
+  schedule:
+    - cron: '0 14 * * 3'  # Wednesday 9am ET (14:00 UTC)
+  workflow_dispatch:  # Allow manual trigger for testing
+
+jobs:
+  remind-lead:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install js-yaml
+
+      - name: Determine this week's meeting lead
+        id: get-lead
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const yaml = require('js-yaml');
+
+            // Read rotation config
+            const config = yaml.load(fs.readFileSync('.github/meeting-rotation.yml', 'utf8'));
+
+            // Find next Friday
+            const today = new Date();
+            const daysUntilFriday = (5 - today.getDay() + 7) % 7 || 7;
+            const nextFriday = new Date(today);
+            nextFriday.setDate(today.getDate() + daysUntilFriday);
+            const fridayStr = nextFriday.toISOString().split('T')[0];
+
+            // Check if this date should be skipped
+            if (config.skip_dates && config.skip_dates.includes(fridayStr)) {
+              core.setOutput('skip', 'true');
+              core.info(`Skipping ${fridayStr} - in skip_dates list`);
+              return;
+            }
+
+            // Find meeting for this Friday
+            const meeting = config.meetings.find(m => m.date === fridayStr);
+
+            if (!meeting) {
+              core.setOutput('skip', 'true');
+              core.warning(`No meeting scheduled for ${fridayStr}`);
+              return;
+            }
+
+            // Get lead info
+            const leadInfo = config.lab_members.find(m => m.github === meeting.lead);
+
+            core.setOutput('skip', 'false');
+            core.setOutput('date', fridayStr);
+            core.setOutput('lead', meeting.lead);
+            core.setOutput('lead_email', leadInfo ? leadInfo.email : '');
+            core.setOutput('presenters', meeting.presenters.join(', '));
+
+      - name: Send Teams notification to lead
+        if: steps.get-lead.outputs.skip != 'true'
+        uses: jdcargile/ms-teams-notification@v1.4
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          notification-summary: "Meeting Lead Reminder"
+          notification-color: "0078D4"
+          timezone: "America/New_York"
+        env:
+          MEETING_DATE: ${{ steps.get-lead.outputs.date }}
+          LEAD: ${{ steps.get-lead.outputs.lead }}
+
+      - name: Send custom Teams message
+        if: steps.get-lead.outputs.skip != 'true'
+        run: |
+          curl -H "Content-Type: application/json" -d '{
+            "@type": "MessageCard",
+            "@context": "http://schema.org/extensions",
+            "themeColor": "0078D4",
+            "summary": "Meeting Lead Reminder",
+            "sections": [{
+              "activityTitle": "Lab Meeting Reminder - Create Agenda",
+              "facts": [
+                {"name": "Meeting Date", "value": "${{ steps.get-lead.outputs.date }}"},
+                {"name": "Meeting Lead", "value": "@${{ steps.get-lead.outputs.lead }}"},
+                {"name": "Presenter(s)", "value": "${{ steps.get-lead.outputs.presenters }}"}
+              ],
+              "markdown": true,
+              "text": "**@${{ steps.get-lead.outputs.lead }}** - Please create the lab meeting agenda Discussion thread by **5pm today**.\n\n[Create Discussion](https://github.com/rashidlab/lab-handbook/discussions/new?category=lab-meetings) | [Agenda Template](https://rashidlab.github.io/lab-handbook/policies/meetings.html#agenda-template)"
+            }],
+            "potentialAction": [{
+              "@type": "OpenUri",
+              "name": "Create Agenda Thread",
+              "targets": [{"os": "default", "uri": "https://github.com/rashidlab/lab-handbook/discussions/new?category=lab-meetings"}]
+            }]
+          }' ${{ secrets.MS_TEAMS_WEBHOOK_URI }}

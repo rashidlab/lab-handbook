@@ -1,0 +1,50 @@
+# Meeting Rotation Schedule
+# This file is read by GitHub Actions to determine who to remind
+#
+# Format:
+#   - date: YYYY-MM-DD (Friday meeting date)
+#     lead: GitHub username (without @)
+#     lead_email: Email for Teams mention
+#     presenters: List of presenters
+#
+# To update: Edit this file and commit. Workflows read it automatically.
+
+lab_members:
+  - name: "Lab Member 1"
+    github: "member1"
+    email: "member1@unc.edu"
+  - name: "Lab Member 2"
+    github: "member2"
+    email: "member2@unc.edu"
+  - name: "Lab Member 3"
+    github: "member3"
+    email: "member3@unc.edu"
+  # Add all lab members here
+
+# Upcoming meetings (add 4-6 weeks at a time)
+meetings:
+  - date: "2026-02-07"
+    lead: "member1"
+    presenters:
+      - "member2"
+    topic: "TBD"
+
+  - date: "2026-02-14"
+    lead: "member2"
+    presenters:
+      - "member3"
+    topic: "TBD"
+
+  - date: "2026-02-21"
+    lead: "member3"
+    presenters:
+      - "member1"
+    topic: "TBD"
+
+# Skip these dates (holidays, breaks, conferences)
+skip_dates:
+  - "2026-03-13"  # Spring break
+  - "2026-05-01"  # Finals week
+
+# Teams channel webhook (stored in secrets, referenced here for documentation)
+# Secret name: MS_TEAMS_WEBHOOK_URI

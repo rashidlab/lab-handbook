@@ -28,6 +28,11 @@ Our primary communication tool. Key channels:
 - **1:1s with Dr. Rashid**: Bi-weekly or as scheduled
 - **Working groups**: As needed for projects
 
+::: {.callout-tip}
+## Detailed Meeting Guide
+See the [Lab Meetings](meetings.qmd) page for comprehensive guidance on agendas, notes, action items, and the [Meeting Schedule](schedule.qmd) for the current rotation.
+:::
+
 ## Code and Data
 
 ### Version Control

@@ -1,0 +1,36 @@
+# Weekly reminder for action items due this week
+# Runs Monday 9am ET (14:00 UTC)
+name: Action Items Reminder
+
+on:
+  schedule:
+    - cron: '0 14 * * 1'  # Monday 9am ET (14:00 UTC)
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  remind-action-items:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Send weekly action items reminder
+        run: |
+          curl -H "Content-Type: application/json" -d '{
+            "@type": "MessageCard",
+            "@context": "http://schema.org/extensions",
+            "themeColor": "28A745",
+            "summary": "Weekly Action Items Check",
+            "sections": [{
+              "activityTitle": "Action Items Reminder",
+              "markdown": true,
+              "text": "**Happy Monday!**\n\nThis is your weekly reminder to:\n\n1. Check your **action items** from last Friday'\''s lab meeting\n2. Update the status of completed items (check the box!)\n3. Flag any blockers in the Discussion thread\n\nAction items due this week should be completed by **Friday**."
+            }],
+            "potentialAction": [
+              {
+                "@type": "OpenUri",
+                "name": "View Lab Meeting Discussions",
+                "targets": [{"os": "default", "uri": "https://github.com/rashidlab/lab-handbook/discussions/categories/lab-meetings"}]
+              }
+            ]
+          }' ${{ secrets.MS_TEAMS_WEBHOOK_URI }}

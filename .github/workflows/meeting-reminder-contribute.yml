@@ -1,0 +1,86 @@
+# Reminder for all lab members to add agenda items
+# Runs Thursday 9am ET (14:00 UTC)
+name: Agenda Contribution Reminder
+
+on:
+  schedule:
+    - cron: '0 14 * * 4'  # Thursday 9am ET (14:00 UTC)
+  workflow_dispatch:  # Allow manual trigger for testing
+
+jobs:
+  remind-all:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install js-yaml
+
+      - name: Get meeting info
+        id: get-meeting
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const yaml = require('js-yaml');
+
+            const config = yaml.load(fs.readFileSync('.github/meeting-rotation.yml', 'utf8'));
+
+            // Tomorrow is Friday
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const fridayStr = tomorrow.toISOString().split('T')[0];
+
+            // Check skip dates
+            if (config.skip_dates && config.skip_dates.includes(fridayStr)) {
+              core.setOutput('skip', 'true');
+              return;
+            }
+
+            const meeting = config.meetings.find(m => m.date === fridayStr);
+
+            if (!meeting) {
+              core.setOutput('skip', 'true');
+              return;
+            }
+
+            // Get all member emails for @mentions
+            const allEmails = config.lab_members.map(m => m.email).join(', ');
+            const allGithub = config.lab_members.map(m => `@${m.github}`).join(' ');
+
+            core.setOutput('skip', 'false');
+            core.setOutput('date', fridayStr);
+            core.setOutput('lead', meeting.lead);
+            core.setOutput('presenters', meeting.presenters.join(', @'));
+            core.setOutput('all_members', allGithub);
+
+      - name: Send Teams reminder to all
+        if: steps.get-meeting.outputs.skip != 'true'
+        run: |
+          curl -H "Content-Type: application/json" -d '{
+            "@type": "MessageCard",
+            "@context": "http://schema.org/extensions",
+            "themeColor": "FFC107",
+            "summary": "Add Your Agenda Items",
+            "sections": [{
+              "activityTitle": "Lab Meeting Tomorrow - Add Agenda Items",
+              "facts": [
+                {"name": "Meeting Date", "value": "${{ steps.get-meeting.outputs.date }}"},
+                {"name": "Meeting Lead", "value": "@${{ steps.get-meeting.outputs.lead }}"},
+                {"name": "Presenter(s)", "value": "@${{ steps.get-meeting.outputs.presenters }}"}
+              ],
+              "markdown": true,
+              "text": "**Reminder:** Lab meeting is **tomorrow**!\n\nPlease add your agenda items to the Discussion thread by **5pm today**.\n\nIf you have:\n- Research updates\n- Questions for the group\n- Announcements\n- Items for discussion\n\n...add them now!"
+            }],
+            "potentialAction": [{
+              "@type": "OpenUri",
+              "name": "View Agenda Thread",
+              "targets": [{"os": "default", "uri": "https://github.com/rashidlab/lab-handbook/discussions/categories/lab-meetings"}]
+            }]
+          }' ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
