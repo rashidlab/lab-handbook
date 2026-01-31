@@ -1,197 +1,172 @@
 ---
 title: "Lab Handbook"
-subtitle: "Standards, policies, and best practices for the Rashid Lab"
+subtitle: "Standards, policies, and best practices"
+page-layout: full
+toc: false
 ---
 
-The Lab Handbook contains everything you need to know about how we work: coding conventions, collaboration workflows, project templates, and lab policies. Use this page to find what you need.
-
----
-
-## Getting Started
-
-**For new lab members** - Start here to get set up and productive.
-
-::: {.callout-tip}
-## New to the lab?
-Complete these in your first week: [First Week Checklist](onboarding/first-week.qmd)
+::: {.home-welcome}
+Everything you need to work effectively in the Rashid Lab. Click any section to explore.
 :::
 
-| Guide | What You'll Learn |
-|-------|-------------------|
-| [Welcome & Overview](onboarding/index.qmd) | Lab orientation and key resources |
-| [First Week](onboarding/first-week.qmd) | Day-by-day checklist for your first week |
-| [Tools Setup](onboarding/tools-setup.qmd) | Install R, Git, configure Longleaf access |
-| [GitHub Fundamentals](onboarding/github-fundamentals.qmd) | Issues, PRs, Discussions, Branches - explained simply |
-| [First Project](onboarding/first-project.qmd) | Clone a template and run your first analysis |
+## Browse by Topic
 
----
+::: {.grid style="gap: 1.5rem;"}
 
-## Lab Meetings & Policies
+::: {.g-col-12 .g-col-md-4}
+::: {.hero-card .hero-dashboard}
+::: {.hero-card-icon}
+🚀
+:::
+::: {.hero-card-title}
+Getting Started
+:::
+::: {.hero-card-desc}
+New to the lab? First week checklist, tools setup, and GitHub fundamentals.
+:::
+[Start Here <span class="arrow">→</span>](onboarding/index.qmd){.hero-card-link}
+:::
+:::
 
-**How we communicate and collaborate** - Meeting workflows, communication norms, and lab policies.
+::: {.g-col-12 .g-col-md-4}
+::: {.hero-card .hero-meetings}
+::: {.hero-card-icon}
+📅
+:::
+::: {.hero-card-title}
+Lab Meetings
+:::
+::: {.hero-card-desc}
+Weekly workflow, agendas, notes, and how to lead meetings.
+:::
+[View Guide <span class="arrow">→</span>](policies/meetings.qmd){.hero-card-link}
+:::
+:::
 
-| Guide | What You'll Learn |
-|-------|-------------------|
-| [Lab Meetings](policies/meetings.qmd) | Complete guide to agendas, notes, action items, and leading meetings |
-| [Meeting Schedule](policies/schedule.qmd) | Rotation, calendar, and who's presenting when |
-| [Lab Policies](policies/index.qmd) | Communication, data management, publications, authorship |
+::: {.g-col-12 .g-col-md-4}
+::: {.hero-card .hero-handbook}
+::: {.hero-card-icon}
+💻
+:::
+::: {.hero-card-title}
+Coding Standards
+:::
+::: {.hero-card-desc}
+R style guide, Git practices, and reproducible pipelines with {targets}.
+:::
+[View Standards <span class="arrow">→</span>](coding-standards/index.qmd){.hero-card-link}
+:::
+:::
 
-**Key meeting info:**
+::: {.g-col-12 .g-col-md-4}
+::: {.hero-card .hero-dashboard}
+::: {.hero-card-icon}
+📁
+:::
+::: {.hero-card-title}
+Project Templates
+:::
+::: {.hero-card-desc}
+Starter templates for research projects, methods papers, and R packages.
+:::
+[Browse Templates <span class="arrow">→</span>](templates/index.qmd){.hero-card-link}
+:::
+:::
 
-- **When:** Thursdays 9:30-11:00am
-- **Agenda deadline:** Wednesday 5pm
-- **Where to find agendas:** [GitHub Discussions](https://github.com/rashidlab/lab-handbook/discussions/categories/lab-meetings)
+::: {.g-col-12 .g-col-md-4}
+::: {.hero-card .hero-meetings}
+::: {.hero-card-icon}
+🎨
+:::
+::: {.hero-card-title}
+Branding & Slides
+:::
+::: {.hero-card-desc}
+Lab colors, logos, and Quarto RevealJS presentation templates.
+:::
+[View Branding <span class="arrow">→</span>](branding/index.qmd){.hero-card-link}
+:::
+:::
 
----
+::: {.g-col-12 .g-col-md-4}
+::: {.hero-card .hero-handbook}
+::: {.hero-card-icon}
+🖥️
+:::
+::: {.hero-card-title}
+Computing
+:::
+::: {.hero-card-desc}
+Longleaf HPC access, Slurm job submission, and environment setup.
+:::
+[View Guide <span class="arrow">→</span>](computing/index.qmd){.hero-card-link}
+:::
+:::
 
-## Coding Standards
+:::
 
-**How we write code** - Style guides, version control, and reproducible pipelines.
+<div class="section-divider"></div>
 
-Our code should be readable, reproducible, and maintainable. These guides establish lab conventions.
+## More Resources
 
-| Guide | What You'll Learn |
-|-------|-------------------|
-| [R Style Guide](coding-standards/r-style.qmd) | Base R + data.table conventions, naming, documentation |
-| [Python Style Guide](coding-standards/python-style.qmd) | Python conventions for the rare Python project |
-| [Git Practices](coding-standards/git-practices.qmd) | Commits, branches, Issues, Pull Requests, code review |
-| [Targets Pipeline](coding-standards/targets-pipeline.qmd) | Reproducible workflows with `{targets}` and Slurm |
+::: {.grid style="gap: 2rem;"}
+
+::: {.g-col-12 .g-col-md-6}
+::: {.resource-section}
+<div class="resource-section-title">Policies & Consistency</div>
+::: {.resource-list}
+::: {.resource-item}
+[Lab Policies](policies/index.qmd){.resource-link}
+<span class="resource-desc">Communication, data, publications</span>
+:::
+::: {.resource-item}
+[Project Consistency](project-consistency/index.qmd){.resource-link}
+<span class="resource-desc">Keep code and manuscripts in sync</span>
+:::
+::: {.resource-item}
+[Meeting Schedule](policies/schedule.qmd){.resource-link}
+<span class="resource-desc">Rotation and upcoming dates</span>
+:::
+::: {.resource-item}
+[Project Handoff](policies/project-handoff.qmd){.resource-link}
+<span class="resource-desc">Transferring projects to others</span>
+:::
+:::
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6}
+::: {.resource-section}
+<div class="resource-section-title">Quick Links</div>
+::: {.resource-list}
+::: {.resource-item}
+[GitHub Organization](https://github.com/rashidlab){.resource-link}
+<span class="resource-desc">All lab repositories</span>
+:::
+::: {.resource-item}
+[Meeting Discussions](https://github.com/rashidlab/lab-handbook/discussions/categories/lab-meetings){.resource-link}
+<span class="resource-desc">Weekly agenda threads</span>
+:::
+::: {.resource-item}
+[Lab Dashboard](https://rashidlab.github.io/lab-dashboard/){.resource-link}
+<span class="resource-desc">Schedules and status</span>
+:::
+::: {.resource-item}
+[Glossary](onboarding/glossary.qmd){.resource-link}
+<span class="resource-desc">Terms and definitions</span>
+:::
+:::
+:::
+:::
+
+:::
+
+<div class="section-divider"></div>
 
 ::: {.callout-note}
 ## Key Conventions
 - **Data manipulation:** Base R + `data.table` (not tidyverse)
-- **Dependencies:** DESCRIPTION file (not renv)
 - **Version control:** Git + GitHub for everything
-- **Reproducibility:** `{targets}` for computational pipelines
+- **Meetings:** Thursdays 9:30am, agendas via GitHub Discussions
+- **HPC:** Run production work on Longleaf
 :::
-
----
-
-## Project Templates
-
-**How we structure projects** - Starter templates for common research workflows.
-
-Don't start from scratch. Use these templates to ensure consistency and completeness.
-
-| Template | Use When |
-|----------|----------|
-| [Research Project](templates/research-project.qmd) | General analysis project with data, code, and results |
-| [Methods Paper](templates/methods-paper.qmd) | Methodology paper with simulations and Quarto manuscript |
-| [R Package](templates/package-development.qmd) | Developing an R package for reuse |
-
-Each template includes:
-- Directory structure
-- README template
-- Essential files (DESCRIPTION, .gitignore, etc.)
-- Instructions for getting started
-
----
-
-## Project Consistency
-
-**How we keep things in sync** - Ensuring code matches manuscripts.
-
-When code changes, manuscripts can become inconsistent. This framework prevents that.
-
-| Guide | What You'll Learn |
-|-------|-------------------|
-| [Overview](project-consistency/index.qmd) | Why consistency matters and how the framework works |
-| [Config Values](project-consistency/config-values.qmd) | Single source of truth for parameters |
-| [Method Claims](project-consistency/method-claims.qmd) | Registry for claims that must match code output |
-| [Data Provenance](project-consistency/data-provenance.qmd) | Track where data comes from |
-| [Validation](project-consistency/validation.qmd) | Automated checks before submission |
-
----
-
-## Branding & Presentations
-
-**How we present our work** - Slides, colors, and visual identity.
-
-| Guide | What You'll Learn |
-|-------|-------------------|
-| [Branding Overview](branding/index.qmd) | Lab visual identity guidelines |
-| [Presentations](branding/presentations.qmd) | Quarto RevealJS slides with lab styling |
-| [Color Palette](branding/colors.qmd) | UNC colors (Carolina Blue, Navy) |
-| [Assets](branding/assets.qmd) | Logos and downloadable files |
-| [CLAUDE.md Template](branding/claude-template.qmd) | AI assistant guidance template |
-
----
-
-## Computing Resources
-
-**How we use HPC** - Longleaf, Slurm, and computational environments.
-
-Most production work runs on UNC's Longleaf cluster. This guide covers setup and usage.
-
-| Topic | What You'll Learn |
-|-------|-------------------|
-| [Computing Guide](computing/index.qmd) | Longleaf access, Slurm basics, job submission |
-| [Tools Setup](onboarding/tools-setup.qmd) | Module system, VS Code Remote SSH |
-| [Targets Pipeline](coding-standards/targets-pipeline.qmd) | Running `{targets}` with `crew.cluster` on Slurm |
-
-::: {.callout-important}
-## Production Work → Longleaf
-Develop locally if you prefer, but run production analyses on Longleaf for reproducibility and collaboration.
-:::
-
----
-
-## Quick Reference
-
-### Most-Used Pages
-
-1. [Lab Meetings](policies/meetings.qmd) - Weekly meeting workflow
-2. [GitHub Fundamentals](onboarding/github-fundamentals.qmd) - How we use GitHub
-3. [Git Practices](coding-standards/git-practices.qmd) - Commits, PRs, code review
-4. [R Style Guide](coding-standards/r-style.qmd) - Code conventions
-5. [Meeting Schedule](policies/schedule.qmd) - Who's leading/presenting
-
-### External Links
-
-- [GitHub Organization](https://github.com/rashidlab) - All lab repos
-- [Meeting Discussions](https://github.com/rashidlab/lab-handbook/discussions/categories/lab-meetings) - Weekly threads
-- [Lab Dashboard](https://rashidlab.github.io/lab-dashboard/) - Schedules and status
-- [Longleaf Docs](https://help.rc.unc.edu/longleaf-cluster/) - UNC HPC
-
----
-
-## Site Map
-
-```
-Rashid Lab Handbook
-├── Getting Started
-│   ├── Welcome & Overview
-│   ├── First Week Checklist
-│   ├── Tools Setup
-│   ├── GitHub Fundamentals
-│   ├── First Project
-│   └── Glossary
-├── Lab Meetings & Policies
-│   ├── Lab Meetings Guide
-│   ├── Meeting Schedule
-│   ├── Lab Policies
-│   └── Project Handoff
-├── Coding Standards
-│   ├── R Style Guide
-│   ├── Python Style Guide
-│   ├── Git Practices
-│   └── Targets Pipeline
-├── Branding & Presentations
-│   ├── Overview
-│   ├── Presentations (RevealJS)
-│   ├── Color Palette
-│   ├── Assets & Logos
-│   └── CLAUDE.md Template
-├── Project Templates
-│   ├── Research Project
-│   ├── Methods Paper
-│   └── R Package Development
-├── Project Consistency
-│   ├── Overview
-│   ├── Config Values
-│   ├── Method Claims
-│   ├── Data Provenance
-│   └── Validation
-└── Computing
-    └── Longleaf & Slurm Guide
-```
