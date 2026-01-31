@@ -142,6 +142,11 @@ p {
   font-weight: 700;
   color: $secondary !important;
   font-size: 1.1rem;
+
+  img {
+    height: 45px !important;
+    max-height: 45px !important;
+  }
 }
 
 .nav-link {
