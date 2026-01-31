@@ -215,13 +215,6 @@ ggplot(mtcars, aes(wt, mpg)) +
 ```
 ````
 
-## Example Presentations
-
-Reference presentations from the lab:
-
-- [Data Science Symposium Talk](https://github.com/rashidlab/talks/symposium-2025) - Full example with figures
-- [ADAPT Paper Presentation](https://github.com/naimrashid/adaptive-trial-bo-paper/manuscript/) - Technical methods presentation
-
 ## PDF Export
 
 To export slides to PDF:
