@@ -178,6 +178,208 @@ quarto render manuscript.qmd --to pdf
 
 ---
 
+## Open OnDemand (Web Interface) {#ondemand}
+
+[Open OnDemand](https://ondemand.rc.unc.edu) provides a web-based interface to Longleaf—no SSH client required. This is often the easiest way to get started.
+
+### Access
+
+1. Go to [ondemand.rc.unc.edu](https://ondemand.rc.unc.edu)
+2. Log in with your Onyen and password
+3. You'll see the OnDemand dashboard
+
+::: {.callout-note}
+You must have a Longleaf account before using OnDemand. See [Request Access](#longleaf-setup) above.
+:::
+
+### Key Features
+
+| Feature | Description |
+|---------|-------------|
+| **Files** | Browse, upload, download, edit files on Longleaf |
+| **Shell** | Terminal access in your browser (no SSH needed) |
+| **RStudio Server** | Full RStudio IDE running on cluster |
+| **Jupyter** | Jupyter notebooks with Python/R kernels |
+| **Job Composer** | Submit and manage Slurm batch jobs |
+
+### File Management
+
+The **Files** menu provides a web-based file browser:
+
+- **Navigate** to any directory you have access to
+- **Upload** files via drag-and-drop (useful for small files)
+- **Download** files or entire directories
+- **Edit** text files directly in the browser
+- **Access** lab shared space at `/proj/rashidlab/`
+
+**Tip:** For large files, use `scp` or `rsync` instead of the web uploader.
+
+### Launching RStudio Server
+
+This is the recommended way to use RStudio on Longleaf:
+
+1. Go to **Interactive Apps → RStudio Server**
+2. Fill in the resource request form:
+   - **Number of hours:** Start with 4-8 hours
+   - **Number of cores:** 1-4 for interactive work
+   - **Memory (GB):** 8-16 GB is usually sufficient
+   - **Partition:** `general` (or `gpu` if needed)
+3. Click **Launch**
+4. Wait for job to start (usually 1-5 minutes)
+5. Click **Connect to RStudio Server**
+
+```
+# Example resource request for typical development work:
+Hours: 8
+Cores: 4
+Memory: 16 GB
+Partition: general
+```
+
+### Launching Jupyter Notebooks
+
+For Python work or R via IRkernel:
+
+1. Go to **Interactive Apps → Jupyter Notebook**
+2. Fill in resources (similar to RStudio)
+3. Select Python version or load R kernel
+4. Click **Launch** then **Connect**
+
+### Browser-Based Terminal
+
+Access a shell without any local software:
+
+1. Go to **Clusters → Longleaf Shell Access**
+2. A terminal opens in your browser
+3. You're on a login node—same as SSH
+
+**Use cases:**
+- Quick file operations
+- Running `git` commands
+- Checking job status with `squeue`
+- Module loading and environment setup
+
+### Using OnDemand for Development with Git
+
+OnDemand + RStudio provides a complete development environment:
+
+#### Initial Setup (One Time)
+
+1. Launch RStudio Server via OnDemand
+2. Open Terminal tab in RStudio (or use Shell Access)
+3. Configure Git:
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "your_onyen@unc.edu"
+```
+
+4. Set up GitHub authentication (choose one):
+
+**Option A: HTTPS with credential caching**
+```bash
+# Cache credentials for 8 hours
+git config --global credential.helper 'cache --timeout=28800'
+
+# First clone will prompt for GitHub username/token
+git clone https://github.com/rashidlab/your-repo.git
+```
+
+**Option B: SSH keys (more permanent)**
+```bash
+# Generate SSH key on Longleaf
+ssh-keygen -t ed25519 -C "your_onyen@unc.edu"
+
+# Display public key
+cat ~/.ssh/id_ed25519.pub
+```
+Copy this key to GitHub: Settings → SSH Keys → New SSH Key
+
+#### Daily Workflow
+
+1. **Launch RStudio** via OnDemand
+2. **Open your project** (File → Open Project, or navigate via Files pane)
+3. **Pull latest changes:**
+   ```bash
+   git pull origin main
+   ```
+4. **Work on code** in RStudio editor
+5. **Test interactively** in R console
+6. **Commit and push:**
+   ```bash
+   git add -A
+   git commit -m "feat: add new analysis function"
+   git push origin main
+   ```
+
+#### RStudio Git Integration
+
+RStudio has built-in Git support:
+
+- **Git tab** in top-right pane shows changed files
+- **Diff** button shows changes
+- **Commit** button opens commit dialog
+- **Pull/Push** buttons sync with remote
+
+To enable: Tools → Project Options → Git/SVN → Select Git
+
+### Job Composer for Batch Jobs
+
+For long-running analyses, use Job Composer instead of interactive sessions:
+
+1. Go to **Jobs → Job Composer**
+2. Click **New Job → From Template**
+3. Select a template (or create from scratch)
+4. Edit the job script:
+
+```bash
+#!/bin/bash
+#SBATCH --job-name=my_analysis
+#SBATCH --time=24:00:00
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=32G
+#SBATCH --output=logs/%j.out
+
+module load r/4.3.0
+Rscript scripts/run_analysis.R
+```
+
+5. Click **Submit**
+6. Monitor in **Jobs → Active Jobs**
+
+### OnDemand Tips for Lab Members
+
+::: {.callout-tip}
+## Best Practices
+
+1. **Request appropriate resources** - Don't over-request; it slows queue time
+2. **Save work frequently** - Sessions can timeout
+3. **Use `/work/` for large temp files** - Not `/home/` (quota limited)
+4. **Check job status** - Jobs → Active Jobs shows your running sessions
+5. **Delete completed jobs** - Keeps your dashboard clean
+:::
+
+### Troubleshooting OnDemand
+
+| Issue | Solution |
+|-------|----------|
+| Session won't start | Check if cluster is busy; try smaller resource request |
+| RStudio unresponsive | Delete job, relaunch; check memory limits |
+| Can't find files | Verify path; check you're in correct directory |
+| Git authentication fails | Re-enter credentials; check token hasn't expired |
+| Session timeout | Relaunch; consider batch job for long work |
+
+If sessions consistently fail:
+
+1. Go to **Jobs → Active Jobs**
+2. Delete the problematic job
+3. Clear browser cache
+4. Try launching again
+
+For persistent issues, contact [ITS Research Computing](https://help.rc.unc.edu/).
+
+---
+
 ## VS Code Remote SSH
 
 The recommended way to work on Longleaf with a modern editor.
