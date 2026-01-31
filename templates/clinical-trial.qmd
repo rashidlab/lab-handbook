@@ -7,7 +7,7 @@ subtitle: "Bayesian adaptive trial design and calibration"
 
 Template for Bayesian adaptive clinical trial design, featuring multi-fidelity simulation, Bayesian optimization for calibration, and regulatory documentation.
 
-**Repository**: [github.com/rashid-lab/template-clinical-trial](https://github.com/rashid-lab/template-clinical-trial)
+**Repository**: [github.com/rashidlab/template-clinical-trial](https://github.com/rashidlab/template-clinical-trial)
 
 ## Features
 
@@ -22,7 +22,7 @@ Template for Bayesian adaptive clinical trial design, featuring multi-fidelity s
 
 ```bash
 # Clone
-git clone git@github.com:rashid-lab/template-clinical-trial.git my-trial
+git clone git@github.com:rashidlab/template-clinical-trial.git my-trial
 
 # Set up
 cd my-trial

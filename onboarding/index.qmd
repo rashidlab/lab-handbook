@@ -17,8 +17,8 @@ Welcome to the Rashid Lab! This guide will help you get set up and productive in
 | Resource | Purpose |
 |----------|---------|
 | [Lab Teams](#) | Daily communication |
-| [GitHub Organization](https://github.com/rashid-lab) | All code repositories |
-| [Lab Meetings](https://github.com/rashid-lab/lab-meetings) | Weekly schedule |
+| [GitHub Organization](https://github.com/rashidlab) | All code repositories |
+| [Lab Meetings](https://github.com/rashidlab/lab-meetings) | Weekly schedule |
 | [Longleaf Docs](https://help.rc.unc.edu/longleaf-cluster/) | UNC HPC cluster |
 
 ## Your First Week

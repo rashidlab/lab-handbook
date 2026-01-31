@@ -77,8 +77,8 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-URL: https://github.com/rashid-lab/MyPackage
-BugReports: https://github.com/rashid-lab/MyPackage/issues
+URL: https://github.com/rashidlab/MyPackage
+BugReports: https://github.com/rashidlab/MyPackage/issues
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.0
@@ -189,7 +189,7 @@ In your paper repository, install the package from GitHub:
 
 ```r
 # In paper repo's setup
-devtools::install_github("rashid-lab/BATON")
+devtools::install_github("rashidlab/BATON")
 
 # Or from local source during development
 devtools::install("~/Downloads/BATON")
@@ -201,7 +201,7 @@ Document the package version in your paper repo's README:
 ## Dependencies
 
 This analysis requires:
-- BATON >= 0.3.0 (`devtools::install_github("rashid-lab/BATON@v0.3.0")`)
+- BATON >= 0.3.0 (`devtools::install_github("rashidlab/BATON@v0.3.0")`)
 ```
 
 ## README Structure for Packages
@@ -212,7 +212,7 @@ A good package README should help users install and use your package quickly:
 # PackageName
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/rashid-lab/PackageName/workflows/R-CMD-check/badge.svg)](https://github.com/rashid-lab/PackageName/actions)
+[![R-CMD-check](https://github.com/rashidlab/PackageName/workflows/R-CMD-check/badge.svg)](https://github.com/rashidlab/PackageName/actions)
 <!-- badges: end -->
 
 Brief one-line description of what the package does.
@@ -221,7 +221,7 @@ Brief one-line description of what the package does.
 
 ```r
 # From GitHub
-devtools::install_github("rashid-lab/PackageName")
+devtools::install_github("rashidlab/PackageName")
 
 # From local source (during development)
 devtools::install("path/to/PackageName")

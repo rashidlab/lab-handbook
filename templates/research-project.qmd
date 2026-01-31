@@ -7,7 +7,7 @@ subtitle: "General-purpose data analysis template"
 
 A flexible template for exploratory data analysis, statistical modeling, and one-off research projects.
 
-**Repository**: [github.com/rashid-lab/template-research-project](https://github.com/rashid-lab/template-research-project)
+**Repository**: [github.com/rashidlab/template-research-project](https://github.com/rashidlab/template-research-project)
 
 ## Features
 
@@ -21,7 +21,7 @@ A flexible template for exploratory data analysis, statistical modeling, and one
 
 ```bash
 # Clone
-git clone git@github.com:rashid-lab/template-research-project.git my-project
+git clone git@github.com:rashidlab/template-research-project.git my-project
 
 # Set up
 cd my-project

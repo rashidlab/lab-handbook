@@ -33,7 +33,7 @@ General-purpose template for data analysis projects.
 - Package dependencies documented
 - Basic reporting with Quarto
 
-[Learn More →](research-project.qmd) | [GitHub](https://github.com/rashid-lab/template-research-project)
+[Learn More →](research-project.qmd) | [GitHub](https://github.com/rashidlab/template-research-project)
 :::
 
 ::: {.template-card}
@@ -57,7 +57,7 @@ Template for methodology papers with simulation studies.
 - LaTeX/Quarto manuscript
 - Reviewer response tracking
 
-[Learn More →](methods-paper.qmd) | [GitHub](https://github.com/rashid-lab/template-methods-paper)
+[Learn More →](methods-paper.qmd) | [GitHub](https://github.com/rashidlab/template-methods-paper)
 :::
 
 ::: {.template-card}
@@ -81,7 +81,7 @@ Template for Bayesian adaptive clinical trial design.
 - SAP generation
 - Protocol documentation
 
-[Learn More →](clinical-trial.qmd) | [GitHub](https://github.com/rashid-lab/template-clinical-trial)
+[Learn More →](clinical-trial.qmd) | [GitHub](https://github.com/rashidlab/template-clinical-trial)
 :::
 
 ::: {.template-card}
@@ -111,7 +111,7 @@ Standards for creating reusable R packages separate from paper repositories.
 
 ```bash
 # 1. Clone the template
-git clone git@github.com:rashid-lab/template-research-project.git my-project
+git clone git@github.com:rashidlab/template-research-project.git my-project
 
 # 2. Remove template history
 cd my-project

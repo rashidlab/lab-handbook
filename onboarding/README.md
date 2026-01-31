@@ -5,7 +5,7 @@ Welcome to the Rashid Lab! Follow this checklist to get set up.
 ## Week 1: Accounts & Access
 
 - [ ] UNC ONYEN activated
-- [ ] GitHub account created and added to rashid-lab organization
+- [ ] GitHub account created and added to rashidlab organization
 - [ ] Longleaf HPC access requested ([ITS Help](https://help.unc.edu))
 - [ ] Teams workspace joined
 - [ ] Added to lab calendar
@@ -43,8 +43,8 @@ Welcome to the Rashid Lab! Follow this checklist to get set up.
 
 ## Resources
 
-- [Lab Computing Guide](https://github.com/rashid-lab/lab-computing)
-- [Lab Meetings](https://github.com/rashid-lab/lab-meetings)
+- [Lab Computing Guide](https://github.com/rashidlab/lab-computing)
+- [Lab Meetings](https://github.com/rashidlab/lab-meetings)
 - [Longleaf Documentation](https://help.rc.unc.edu/longleaf-cluster/)
 
 ## Questions?

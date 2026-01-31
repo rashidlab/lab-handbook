@@ -7,7 +7,7 @@ subtitle: "Methodology development with simulation studies"
 
 Template for methodology papers featuring simulation studies, designed for journal submission with full reproducibility.
 
-**Repository**: [github.com/rashid-lab/template-methods-paper](https://github.com/rashid-lab/template-methods-paper)
+**Repository**: [github.com/rashidlab/template-methods-paper](https://github.com/rashidlab/template-methods-paper)
 
 ## Features
 
@@ -22,7 +22,7 @@ Template for methodology papers featuring simulation studies, designed for journ
 
 ```bash
 # Clone
-git clone git@github.com:rashid-lab/template-methods-paper.git my-paper
+git clone git@github.com:rashidlab/template-methods-paper.git my-paper
 
 # Set up
 cd my-paper
@@ -212,7 +212,7 @@ Brief summary of the paper (2-3 sentences).
 install.packages(c("targets", "data.table", "survival", ...))
 
 # Install lab packages from GitHub
-devtools::install_github("rashid-lab/BATON")
+devtools::install_github("rashidlab/BATON")
 ```
 
 ## Reproducing Results

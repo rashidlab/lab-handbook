@@ -1,5 +1,5 @@
 # Lab Handbook CODEOWNERS
 # Policy changes require PI approval
 
-* @rashid-lab/pi-admin
-/policies/ @rashid-lab/pi-admin
+* @rashidlab/pi-admin
+/policies/ @rashidlab/pi-admin

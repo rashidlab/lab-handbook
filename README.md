@@ -13,9 +13,9 @@ Welcome to the Rashid Lab! This repository contains our policies, procedures, an
 
 ## Quick Links
 
-- [Lab Meetings](https://github.com/rashid-lab/lab-meetings)
-- [Computing Resources](https://github.com/rashid-lab/lab-computing)
-- [Lab Dashboard](https://rashid-lab.github.io/lab-dashboard/)
+- [Lab Meetings](https://github.com/rashidlab/lab-meetings)
+- [Computing Resources](https://github.com/rashidlab/lab-computing)
+- [Lab Dashboard](https://rashidlab.github.io/lab-dashboard/)
 
 ---
 

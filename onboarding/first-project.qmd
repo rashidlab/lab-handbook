@@ -19,7 +19,7 @@ We have three main templates:
 
 ```bash
 # Clone research project template
-git clone git@github.com:rashid-lab/template-research-project.git my-first-project
+git clone git@github.com:rashidlab/template-research-project.git my-first-project
 
 # Navigate into project
 cd my-first-project
