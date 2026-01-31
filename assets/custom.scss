@@ -257,6 +257,17 @@ p {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   margin: 1.5rem 0;
+
+  // Hide duplicate empty elements created by Quarto's markdown processing
+  > p {
+    display: none !important;
+  }
+
+  // Hide empty quick-link elements (Quarto creates duplicates)
+  > a.quick-link:empty,
+  > p > a.quick-link:empty {
+    display: none !important;
+  }
 }
 
 .quick-link {
