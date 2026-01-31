@@ -1,0 +1,80 @@
+---
+title: "Coding Standards"
+subtitle: "Lab conventions for R, Python, and Git"
+---
+
+These standards ensure code consistency, reproducibility, and maintainability across lab projects.
+
+## General Principles
+
+1. **Reproducibility first** - Anyone should be able to run your code and get the same results
+2. **Document as you go** - Comments, README files, and docstrings
+3. **Version control everything** - Frequent, meaningful commits
+4. **Never hardcode paths** - Use `here::here()` in R, `pathlib` in Python
+
+## Quick Reference
+
+| Topic | Standard |
+|-------|----------|
+| **Variable names** | `snake_case` |
+| **Function names** | `snake_case` verbs |
+| **Constants** | `SCREAMING_SNAKE_CASE` |
+| **Indentation** | 2 spaces (R), 4 spaces (Python) |
+| **Line length** | ≤80 characters |
+| **Commits** | `type: description` format |
+
+## Sections
+
+- [R Style Guide](r-style.qmd) - Base R conventions, function documentation
+- [Python Style Guide](python-style.qmd) - PEP 8, type hints
+- [Git Practices](git-practices.qmd) - Commits, branches, PRs
+- [Targets Pipeline](targets-pipeline.qmd) - Workflow automation
+
+## R Example
+
+```r
+#' Calculate hazard ratio with confidence interval
+#'
+#' @param data A data frame with time, status, treatment columns
+#' @param alpha Significance level (default 0.05)
+#' @return A tibble with hr, lower, upper columns
+calculate_hr <- function(data, alpha = 0.05) {
+  # Validate inputs
+stopifnot(
+    is.data.frame(data),
+    all(c("time", "status", "treatment") %in% names(data))
+  )
+
+  # Fit model
+  fit <- coxph(Surv(time, status) ~ treatment, data = data)
+
+  # Extract results
+  tibble(
+    hr = exp(coef(fit)),
+    lower = exp(confint(fit, level = 1 - alpha)[1]),
+    upper = exp(confint(fit, level = 1 - alpha)[2])
+  )
+}
+```
+
+## Git Commit Example
+
+```
+feat: add Cox model with time-varying covariates
+
+- Implement time-varying coefficient estimation
+- Add unit tests for edge cases
+- Update documentation with examples
+
+Closes #42
+```
+
+## Code Review Checklist
+
+Before submitting a PR:
+
+- [ ] Code follows style guidelines
+- [ ] Functions have documentation
+- [ ] Tests pass locally
+- [ ] No hardcoded paths or credentials
+- [ ] README updated if behavior changed

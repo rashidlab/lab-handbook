@@ -1,0 +1,163 @@
+---
+title: "Project Templates"
+subtitle: "Starter projects for common workflows"
+---
+
+These templates provide a consistent starting point for lab projects. Each includes:
+
+- Pre-configured `_targets.R` pipeline
+- Standard directory structure
+- Example analysis code
+- Configuration management
+- Consistency validation framework
+
+## Available Templates
+
+::: {.template-card}
+### Research Project
+
+General-purpose template for data analysis projects.
+
+<span class="badge badge-r">R</span>
+<span class="badge badge-targets">targets</span>
+
+**Best for:**
+
+- Exploratory data analysis
+- Statistical modeling
+- One-off analyses
+
+**Features:**
+
+- Base R + data.table workflow
+- Package dependencies documented
+- Basic reporting with Quarto
+
+[Learn More →](research-project.qmd) | [GitHub](https://github.com/rashid-lab/template-research-project)
+:::
+
+::: {.template-card}
+### Methods Paper
+
+Template for methodology papers with simulation studies.
+
+<span class="badge badge-r">R</span>
+<span class="badge badge-targets">targets</span>
+
+**Best for:**
+
+- Methodology development
+- Simulation studies
+- Journal submissions
+
+**Features:**
+
+- Dynamic branching over scenarios
+- Slurm/Longleaf integration
+- LaTeX/Quarto manuscript
+- Reviewer response tracking
+
+[Learn More →](methods-paper.qmd) | [GitHub](https://github.com/rashid-lab/template-methods-paper)
+:::
+
+::: {.template-card}
+### Clinical Trial
+
+Template for Bayesian adaptive clinical trial design.
+
+<span class="badge badge-r">R</span>
+<span class="badge badge-targets">targets</span>
+
+**Best for:**
+
+- Trial design calibration
+- Operating characteristics
+- Regulatory submissions
+
+**Features:**
+
+- Multi-fidelity simulation
+- Bayesian optimization
+- SAP generation
+- Protocol documentation
+
+[Learn More →](clinical-trial.qmd) | [GitHub](https://github.com/rashid-lab/template-clinical-trial)
+:::
+
+::: {.template-card}
+### R Package Development
+
+Standards for creating reusable R packages separate from paper repositories.
+
+<span class="badge badge-r">R</span>
+
+**Best for:**
+
+- Reusable methodology
+- Functions shared across projects
+- CRAN/Bioconductor packages
+
+**Features:**
+
+- DESCRIPTION-based dependencies
+- Roxygen2 documentation
+- testthat testing
+- Reference: BATON package
+
+[Learn More →](package-development.qmd) | [Reference: BATON](https://github.com/naimurashid/BATON)
+:::
+
+## Quick Start
+
+```bash
+# 1. Clone the template
+git clone git@github.com:rashid-lab/template-research-project.git my-project
+
+# 2. Remove template history
+cd my-project
+rm -rf .git
+git init
+
+# 3. Install dependencies
+# In R:
+# Install packages listed in DESCRIPTION or README
+
+# 4. Run the example
+targets::tar_make()
+```
+
+## Common Files Across Templates
+
+| File | Purpose |
+|------|---------|
+| `_targets.R` | Pipeline definition |
+| `config/globals.yml` | Centralized configuration |
+| `R/` | Reusable functions |
+| `DESCRIPTION` | Package dependencies |
+| `CLAUDE.md` | Project guidance |
+
+## Consistency Framework
+
+All templates include the [consistency validation framework](../project-consistency/index.qmd):
+
+```bash
+# Validate code-manuscript alignment
+make validate-consistency
+
+# Quick check during development
+make validate-quick
+```
+
+## Customizing Templates
+
+After cloning:
+
+1. **Update `config/globals.yml`** with your parameters
+2. **Modify `_targets.R`** to define your pipeline
+3. **Add functions** to `R/` directory
+4. **Update documentation** in `CLAUDE.md` and `README.md`
+
+::: {.callout-tip}
+## Keep Templates Updated
+Periodically check the template repos for improvements. You can cherry-pick useful changes into your project.
+:::

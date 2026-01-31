@@ -1,0 +1,240 @@
+---
+title: "Method Claims Registry"
+subtitle: "Tracking manuscript statements for validation"
+---
+
+## Overview
+
+The method claims registry tracks specific statements in your manuscript that can be validated against code or configuration.
+
+## Registry Format
+
+Create `config/consistency_registry.yml`:
+
+```yaml
+# Consistency Registry
+# Tracks claims in manuscript that must match code/config
+
+claims:
+  # Simulation parameters
+  - id: n_replications
+    category: simulation
+    manuscript_text: "10,000 Monte Carlo replications"
+    config_key: simulation.n_reps_high
+    expected_value: 10000
+    locations:
+      - manuscript/paper.qmd:Methods:Simulation Study
+
+  - id: significance_level
+    category: analysis
+    manuscript_text: "significance level of 0.05"
+    config_key: analysis.alpha
+    expected_value: 0.05
+    locations:
+      - manuscript/paper.qmd:Methods:Statistical Analysis
+      - manuscript/paper.qmd:Results
+
+  # Method descriptions
+  - id: sampling_method
+    category: method
+    manuscript_text: "Latin hypercube sampling"
+    code_pattern: "randomLHS|lhs::randomLHS"
+    locations:
+      - manuscript/paper.qmd:Methods:Design of Experiments
+    verification:
+      file: R/sampling.R
+      function: generate_design
+
+  - id: optimizer
+    category: method
+    manuscript_text: "L-BFGS-B optimization"
+    code_pattern: 'method\\s*=\\s*["\']L-BFGS-B["\']'
+    locations:
+      - manuscript/paper.qmd:Methods:Optimization
+    verification:
+      file: R/optimization.R
+      function: fit_model
+
+  # Figure sources
+  - id: fig1_data
+    category: figure
+    manuscript_text: "Figure 1"
+    data_source: results/simulation_summary.csv
+    generating_script: scripts/generate_figures.R
+    locations:
+      - manuscript/paper.qmd:Results:Figure 1
+```
+
+## Claim Categories
+
+### Configuration Claims
+
+Link manuscript text to config values:
+
+```yaml
+- id: power_target
+  category: config
+  manuscript_text: "80% power"
+  config_key: analysis.power_target
+  expected_value: 0.80
+  tolerance: 0.001  # For floating point comparison
+```
+
+### Method Claims
+
+Verify described methods match implementation:
+
+```yaml
+- id: model_type
+  category: method
+  manuscript_text: "Cox proportional hazards model"
+  code_pattern: "coxph|survival::coxph"
+  locations:
+    - manuscript/paper.qmd:Methods
+  verification:
+    file: R/models.R
+    function: fit_survival_model
+```
+
+### Data Provenance Claims
+
+Track figure and table sources:
+
+```yaml
+- id: table2_source
+  category: table
+  manuscript_text: "Table 2"
+  data_source: results/model_comparison.csv
+  generating_script: scripts/create_tables.R
+  generating_target: table2_data  # targets pipeline target
+```
+
+## Validation Script
+
+Create `scripts/validate_consistency.R`:
+
+```r
+#!/usr/bin/env Rscript
+
+library(yaml)
+library(stringr)
+
+validate_consistency <- function(registry_path = "config/consistency_registry.yml") {
+  registry <- yaml::read_yaml(registry_path)
+  cfg <- load_globals()
+
+  results <- list()
+
+  for (claim in registry$claims) {
+    result <- validate_claim(claim, cfg)
+    results[[claim$id]] <- result
+  }
+
+  # Report
+  failures <- Filter(function(x) !x$valid, results)
+
+  if (length(failures) > 0) {
+    cat("VALIDATION FAILURES:\n")
+    for (id in names(failures)) {
+      cat(sprintf("  - %s: %s\n", id, failures[[id]]$message))
+    }
+    quit(status = 1)
+  }
+
+  cat(sprintf("All %d claims validated successfully.\n", length(results)))
+}
+
+validate_claim <- function(claim, cfg) {
+  switch(claim$category,
+    config = validate_config_claim(claim, cfg),
+    method = validate_method_claim(claim),
+    figure = validate_figure_claim(claim),
+    table = validate_table_claim(claim),
+    list(valid = FALSE, message = "Unknown category")
+  )
+}
+
+validate_config_claim <- function(claim, cfg) {
+  # Navigate nested config
+  keys <- strsplit(claim$config_key, "\\.")[[1]]
+  value <- cfg
+  for (key in keys) {
+    value <- value[[key]]
+  }
+
+  tolerance <- claim$tolerance %||% 0
+  valid <- abs(value - claim$expected_value) <= tolerance
+
+  list(
+    valid = valid,
+    message = if (!valid) {
+      sprintf("Expected %s but config has %s",
+              claim$expected_value, value)
+    } else NULL
+  )
+}
+
+validate_method_claim <- function(claim) {
+  if (is.null(claim$verification$file)) {
+    return(list(valid = TRUE, message = NULL))
+  }
+
+  code <- readLines(claim$verification$file)
+  code_text <- paste(code, collapse = "\n")
+
+  valid <- grepl(claim$code_pattern, code_text, perl = TRUE)
+
+  list(
+    valid = valid,
+    message = if (!valid) {
+      sprintf("Pattern '%s' not found in %s",
+              claim$code_pattern, claim$verification$file)
+    } else NULL
+  )
+}
+
+# Run if executed directly
+if (!interactive()) {
+  validate_consistency()
+}
+```
+
+## Integration
+
+### Makefile Target
+
+```makefile
+validate-consistency:
+	Rscript scripts/validate_consistency.R
+
+validate-quick:
+	Rscript scripts/validate_consistency.R --quick
+
+submit: validate-consistency
+	quarto render manuscript/paper.qmd
+```
+
+### GitHub Actions
+
+```yaml
+# .github/workflows/consistency.yml
+name: Consistency Check
+
+on: [push, pull_request]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: r-lib/actions/setup-r@v2
+      - run: Rscript scripts/validate_consistency.R
+```
+
+## Best Practices
+
+1. **Add claims incrementally** - Register claims as you write
+2. **Be specific** - Use exact text from manuscript
+3. **Include locations** - Track where claims appear
+4. **Verify methods** - Link to actual implementation files
+5. **Review before submission** - Run full validation

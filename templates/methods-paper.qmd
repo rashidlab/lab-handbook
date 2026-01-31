@@ -1,0 +1,277 @@
+---
+title: "Methods Paper Template"
+subtitle: "Methodology development with simulation studies"
+---
+
+## Overview
+
+Template for methodology papers featuring simulation studies, designed for journal submission with full reproducibility.
+
+**Repository**: [github.com/rashid-lab/template-methods-paper](https://github.com/rashid-lab/template-methods-paper)
+
+## Features
+
+- Dynamic branching over simulation scenarios
+- Multi-fidelity simulation support
+- Slurm/Longleaf integration
+- LaTeX/Quarto manuscript
+- Reviewer response tracking
+- Consistency validation framework
+
+## Quick Start
+
+```bash
+# Clone
+git clone git@github.com:rashid-lab/template-methods-paper.git my-paper
+
+# Set up
+cd my-paper
+rm -rf .git && git init
+
+# In R
+# Install packages listed in DESCRIPTION
+
+# Quick test
+QUICK_MODE=1 targets::tar_make()
+```
+
+## Directory Structure
+
+```
+my-paper/
+├── _targets.R              # Pipeline with dynamic branching
+├── R/
+│   ├── simulation.R        # Simulation functions
+│   ├── analysis.R          # Analysis methods
+│   ├── visualization.R     # Figure generation
+│   └── globals_loader.R
+├── config/
+│   ├── globals.yml         # Simulation parameters
+│   └── consistency_registry.yml
+├── scenarios/              # Scenario definitions
+│   └── main_scenarios.csv
+├── manuscript/
+│   ├── paper.qmd           # Main manuscript
+│   ├── supplementary.qmd   # Supplement
+│   └── _extensions/        # Journal templates
+├── results/
+├── figures/
+├── scripts/
+│   ├── run_pipeline.sh     # Slurm submission
+│   └── validate_*.R
+├── reviewer_response/      # Revision materials
+├── DESCRIPTION
+└── Makefile
+```
+
+## Simulation Pipeline
+
+```r
+# _targets.R
+library(targets)
+library(tarchetypes)
+library(crew.cluster)
+
+source("R/globals_loader.R")
+cfg <- load_globals()
+
+# Slurm controller for production runs
+slurm_controller <- crew_controller_slurm(
+  name = "simulations",
+  workers = 20,
+  slurm_partition = cfg$slurm$partition,
+  slurm_cpus_per_task = cfg$slurm$cpus_per_task,
+  slurm_memory_gigabytes_per_cpu = cfg$slurm$memory_gb_per_cpu,
+  slurm_time_minutes = cfg$slurm$time_minutes,
+  slurm_log_output = "logs/slurm_%j.out"
+)
+
+tar_option_set(
+  controller = slurm_controller,
+  error = "continue"
+)
+
+list(
+  # Load scenarios
+  tar_target(scenarios, load_scenarios("scenarios/main_scenarios.csv")),
+
+  # Dynamic branching over scenarios
+  tar_target(
+    sim_results,
+    run_simulation(scenarios, n_reps = cfg$simulation$n_reps_high),
+    pattern = map(scenarios),
+    deployment = "worker"
+  ),
+
+  # Consolidate results
+  tar_target(results_summary, consolidate_results(sim_results)),
+
+  # Figures
+  tar_target(fig1, create_fig1(results_summary)),
+  tar_target(fig2, create_fig2(results_summary)),
+
+  # Manuscript
+  tar_quarto(manuscript, path = "manuscript/paper.qmd")
+)
+```
+
+## Scenario Configuration
+
+Define scenarios in CSV:
+
+```csv
+scenario_id,method,n,effect_size,description
+scen_1,proposed,100,0.5,"Small sample, medium effect"
+scen_2,proposed,500,0.5,"Large sample, medium effect"
+scen_3,competitor,100,0.5,"Competitor comparison"
+```
+
+## Running on Longleaf
+
+```bash
+# Submit controller job
+sbatch scripts/run_pipeline.sh
+
+# Monitor
+watch -n 10 squeue -u $USER
+
+# Check progress
+Rscript -e "targets::tar_progress()"
+```
+
+## Manuscript Workflow
+
+```bash
+# Render PDF
+make pdf
+
+# Validate JASA formatting
+make validate-jasa
+
+# Pre-submission
+make submit
+```
+
+## Reviewer Response
+
+After revision requests:
+
+```
+reviewer_response/
+├── response_letter.qmd     # Point-by-point response
+├── diff.pdf                # Track changes
+└── revision_notes.md       # Internal notes
+```
+
+## Common Commands
+
+```bash
+make all              # Full pipeline
+make quick            # Quick mode (reduced reps)
+make pdf              # Render manuscript
+make validate         # Check consistency
+make submit           # Pre-submission checks
+```
+
+## README Structure for Paper Repos
+
+A good paper repository README helps reproducibility:
+
+````markdown
+# Paper Title
+
+Code and data for: "Full Paper Title" by Author et al. (Year).
+
+## Abstract
+
+Brief summary of the paper (2-3 sentences).
+
+## Repository Structure
+
+```
+├── manuscript/          # Quarto source for paper
+├── R/                   # Analysis functions
+├── scenarios/           # Simulation configurations
+├── scripts/             # Runner scripts
+├── results/             # Generated outputs (gitignored)
+├── figures/             # Publication figures
+├── _targets.R           # Pipeline definition
+└── config/globals.yml   # Parameters
+```
+
+## Requirements
+
+- R >= 4.3.0
+- Quarto >= 1.4
+- Required packages: targets, data.table, survival, ...
+
+### Installing Dependencies
+
+```r
+# Install required packages
+install.packages(c("targets", "data.table", "survival", ...))
+
+# Install lab packages from GitHub
+devtools::install_github("rashid-lab/BATON")
+```
+
+## Reproducing Results
+
+### Quick Test (5-10 minutes)
+
+```bash
+# Run with reduced replications
+QUICK_MODE=1 make all
+```
+
+### Full Reproduction
+
+```bash
+# Full pipeline (may take hours on cluster)
+make all
+
+# Or step by step:
+make calibrate          # Run calibrations
+make figures            # Generate figures
+make pdf                # Render manuscript
+```
+
+### On Longleaf/HPC
+
+```bash
+# Submit to cluster
+sbatch scripts/run_pipeline.sh
+
+# Monitor progress
+watch squeue -u $USER
+```
+
+## Key Results
+
+| Figure/Table | Description | Generating Target |
+|--------------|-------------|-------------------|
+| Figure 1 | Main results | `fig1_main` |
+| Figure 2 | Comparison | `fig2_comparison` |
+| Table 1 | Summary | `table1_summary` |
+
+## Data
+
+- **Simulated data**: Generated by pipeline
+- **Real data**: [Describe availability or link to repository]
+
+## Citation
+
+```bibtex
+@article{author2024title,
+  title={Paper Title},
+  author={Author, First and Author, Second},
+  journal={Journal Name},
+  year={2024}
+}
+```
+
+## Contact
+
+- First Author (email@unc.edu)
+- [Lab Website](https://rashidlab.org)
+````

@@ -2,7 +2,7 @@
 
 ## Communication
 
-- **Slack**: Primary day-to-day communication
+- **Teams**: Primary day-to-day communication
 - **Email**: External communication, formal matters
 - **GitHub**: Code reviews, technical discussions
 

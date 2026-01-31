@@ -1,0 +1,20 @@
+# Quarto build output
+_site/
+_freeze/
+
+# R
+.Rhistory
+.Rdata
+.Rproj.user/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+*~
+
+/.quarto/
+**/*.quarto_ipynb

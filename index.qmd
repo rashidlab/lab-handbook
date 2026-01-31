@@ -1,0 +1,85 @@
+---
+title: "Rashid Lab"
+subtitle: "Documentation, Standards & Resources"
+---
+
+Welcome to the Rashid Lab documentation site! This is your central hub for lab policies, coding standards, project templates, and computing resources.
+
+## Quick Links
+
+::: {.grid}
+
+::: {.g-col-6 .g-col-md-3}
+### 🚀 Getting Started
+New to the lab? Start here.
+
+[Onboarding Guide](onboarding/index.qmd){.btn .btn-primary}
+:::
+
+::: {.g-col-6 .g-col-md-3}
+### 📝 Coding Standards
+R/Python style, git practices.
+
+[View Standards](coding-standards/index.qmd){.btn .btn-outline-primary}
+:::
+
+::: {.g-col-6 .g-col-md-3}
+### 📦 Templates
+Project starters for common workflows.
+
+[Browse Templates](templates/index.qmd){.btn .btn-outline-primary}
+:::
+
+::: {.g-col-6 .g-col-md-3}
+### 💻 Computing
+Longleaf, Slurm, environments.
+
+[Computing Guide](computing/index.qmd){.btn .btn-outline-primary}
+:::
+
+:::
+
+---
+
+## Featured Guides
+
+### Targets Pipeline
+
+The `{targets}` package is our standard for reproducible computational workflows. Learn how to:
+
+- Set up pipelines with dynamic branching
+- Integrate with Slurm on Longleaf
+- Use multi-controller architectures for complex jobs
+
+[Read the Targets Guide →](coding-standards/targets-pipeline.qmd)
+
+### Project Consistency Framework
+
+Keep your code, documentation, and manuscripts synchronized:
+
+- Registry-based validation of claims
+- Automated consistency checks
+- Pre-submission checklists
+
+[Learn About Consistency →](project-consistency/index.qmd)
+
+---
+
+## Lab Resources
+
+| Resource | Description |
+|----------|-------------|
+| [Lab Dashboard](https://rashid-lab.github.io/lab-dashboard/) | Weekly activity, action items |
+| [Lab Meetings](https://github.com/rashid-lab/lab-meetings) | Schedule, presentations |
+| [GitHub Organization](https://github.com/rashid-lab) | All lab repositories |
+
+---
+
+## Recent Updates
+
+- **2026-01-31**: Added project consistency framework and targets pipeline guide
+- **2026-01-30**: Initial documentation site launch
+
+---
+
+*Questions? Reach out to Dr. Rashid or post in the lab Teams channel.*

@@ -1,0 +1,163 @@
+---
+title: "Your First Project"
+subtitle: "Getting started with a project template"
+---
+
+This guide walks through setting up your first project using lab templates.
+
+## Choose a Template
+
+We have three main templates:
+
+| Template | Use Case |
+|----------|----------|
+| [Research Project](../templates/research-project.qmd) | General analysis projects |
+| [Methods Paper](../templates/methods-paper.qmd) | Methodology papers with simulations |
+| [Clinical Trial](../templates/clinical-trial.qmd) | Adaptive trial design |
+
+## Clone the Template
+
+```bash
+# Clone research project template
+git clone git@github.com:rashid-lab/template-research-project.git my-first-project
+
+# Navigate into project
+cd my-first-project
+
+# Remove template git history
+rm -rf .git
+
+# Initialize fresh git repo
+git init
+git add .
+git commit -m "Initial commit from template"
+```
+
+## Set Up Dependencies
+
+```r
+# Open project in RStudio
+# Then restore packages:
+# Install required packages listed in DESCRIPTION or README
+```
+
+## Configure the Project
+
+Edit `config/config.yml`:
+
+```yaml
+project:
+  name: "My First Project"
+  author: "Your Name"
+
+seed: 2024
+
+analysis:
+  alpha: 0.05
+```
+
+## Run the Pipeline
+
+```r
+# Load targets
+library(targets)
+
+# Visualize the pipeline
+tar_visnetwork()
+
+# Run the pipeline
+tar_make()
+
+# Check results
+tar_read(results_summary)
+```
+
+## Make Your First Change
+
+1. **Add a new analysis step** in `_targets.R`:
+
+```r
+tar_target(
+  my_analysis,
+  run_my_analysis(clean_data)
+)
+```
+
+2. **Create the function** in `R/analysis.R`:
+
+```r
+run_my_analysis <- function(data) {
+  # Your analysis code
+  data %>%
+    group_by(group) %>%
+    summarise(mean = mean(value))
+}
+```
+
+3. **Run and verify**:
+
+```r
+tar_make()
+tar_read(my_analysis)
+```
+
+## Commit Your Changes
+
+```bash
+# Check status
+git status
+
+# Stage changes
+git add R/analysis.R _targets.R
+
+# Commit with descriptive message
+git commit -m "feat: add group-wise mean analysis"
+
+# Push to GitHub (after creating remote repo)
+git push -u origin main
+```
+
+## Project Structure
+
+After setup, your project looks like:
+
+```
+my-first-project/
+├── _targets.R          # Pipeline definition
+├── R/                  # Your functions
+│   └── analysis.R
+├── config/
+│   └── config.yml      # Configuration
+├── data/               # Data (gitignored)
+├── results/            # Outputs
+├── figures/            # Plots
+├── DESCRIPTION         # Package dependencies
+└── README.md           # Project documentation
+```
+
+## Best Practices
+
+::: {.callout-tip}
+## Keep Functions Small
+Each function should do one thing. If a function is longer than ~50 lines, consider splitting it.
+:::
+
+::: {.callout-tip}
+## Commit Often
+Make small, frequent commits with descriptive messages. It's easier to track changes and revert if needed.
+:::
+
+::: {.callout-tip}
+## Document As You Go
+Add comments explaining *why*, not *what*. Update README when you add features.
+:::
+
+## Getting Help
+
+- **Pipeline issues**: Check `targets::tar_meta()` for errors
+- **Package issues**: Reinstall packages from DESCRIPTION
+- **Git issues**: Ask in `#computing` Teams channel
+
+---
+
+Next: [Coding Standards →](../coding-standards/index.qmd)

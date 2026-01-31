@@ -7,7 +7,7 @@ Welcome to the Rashid Lab! Follow this checklist to get set up.
 - [ ] UNC ONYEN activated
 - [ ] GitHub account created and added to rashid-lab organization
 - [ ] Longleaf HPC access requested ([ITS Help](https://help.unc.edu))
-- [ ] Slack workspace joined
+- [ ] Teams workspace joined
 - [ ] Added to lab calendar
 - [ ] Building/office access arranged
 
@@ -30,7 +30,7 @@ Welcome to the Rashid Lab! Follow this checklist to get set up.
 ## Week 2: Project Setup
 
 - [ ] Create project repo from template
-- [ ] Set up renv/virtual environment
+- [ ] Set up package management/virtual environment
 - [ ] Review example projects from other lab members
 - [ ] Begin initial reading/literature review
 
@@ -49,6 +49,6 @@ Welcome to the Rashid Lab! Follow this checklist to get set up.
 
 ## Questions?
 
-- Slack: #general or #help
+- Teams: #general or #help
 - Lab manager: [Contact]
 - PI: [Contact]

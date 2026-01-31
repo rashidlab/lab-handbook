@@ -1,0 +1,129 @@
+---
+title: "Lab Policies"
+subtitle: "Guidelines for research conduct and collaboration"
+---
+
+## Communication
+
+### Teams
+
+Our primary communication tool. Key channels:
+
+| Channel | Purpose |
+|---------|---------|
+| `#general` | Announcements, lab-wide discussions |
+| `#computing` | Technical questions, Longleaf issues |
+| `#papers` | Paper discussions, writing feedback |
+| `#random` | Non-work chat |
+
+**Response expectations:**
+
+- Direct messages: Within 24 hours
+- Channel mentions: Within 48 hours
+- Urgent matters: Email or call
+
+### Meetings
+
+- **Lab meetings**: Weekly, attendance expected
+- **1:1s with Dr. Rashid**: Bi-weekly or as scheduled
+- **Working groups**: As needed for projects
+
+## Code and Data
+
+### Version Control
+
+All code must be version controlled with Git:
+
+- Public repos on GitHub when possible
+- Private repos for unpublished work
+- No code in email attachments
+
+### Data Management
+
+- **Raw data**: Never modify, always preserve
+- **Processed data**: Document all transformations
+- **Sensitive data**: Follow IRB protocols, never commit to Git
+- **Backups**: Use Longleaf `/proj/rashidlab/` for shared data
+
+### Reproducibility
+
+Every analysis must be reproducible:
+
+1. Document package dependencies (DESCRIPTION file or README)
+2. Set seeds for random processes
+3. Document software versions
+4. Include instructions to rerun
+
+## Publications
+
+### Authorship
+
+Follow [ICMJE guidelines](https://www.icmje.org/recommendations/browse/roles-and-responsibilities/defining-the-role-of-authors-and-contributors.html):
+
+1. Substantial contributions to conception/design or data acquisition/analysis
+2. Drafting or critically revising the manuscript
+3. Final approval of the version to be published
+4. Agreement to be accountable for all aspects
+
+Discuss authorship early and revisit as contributions evolve.
+
+### Writing Process
+
+1. **Outline**: Share structure before writing
+2. **Drafts**: Use tracked changes or Git branches
+3. **Review**: At least one lab member reviews before submission
+4. **Preprints**: Encouraged for most work (arXiv, bioRxiv)
+
+### Code Availability
+
+Published papers should include:
+
+- GitHub repository with analysis code
+- Data availability statement
+- README with reproduction instructions
+
+## Computing Resources
+
+### Longleaf Usage
+
+- Request resources appropriately (don't over-request)
+- Clean up old files periodically
+- Use `/work/` for temporary files
+- Share packages via `/proj/rashidlab/R-packages/`
+
+### Software
+
+Approved tools:
+
+- **R/RStudio**: Primary analysis environment
+- **Python**: Secondary, for specific packages
+- **Quarto**: Manuscripts and documentation
+- **Git/GitHub**: Version control
+
+## Professional Development
+
+### Conferences
+
+- Present work at least once per year
+- Submit abstracts early (discuss with Dr. Rashid)
+- Share travel funding opportunities
+
+### Training
+
+- Complete required compliance training
+- Attend relevant seminars and workshops
+- Share useful resources with the lab
+
+## Work-Life Balance
+
+- Core hours: Generally 10am-4pm for meetings
+- Remote work: Flexible, communicate availability
+- Vacation: Take it! Just coordinate coverage
+- Wellness: Your health comes first
+
+## Getting Help
+
+- **Technical issues**: `#computing` Teams channel
+- **Research questions**: 1:1 or lab meeting
+- **Administrative**: Department staff
+- **Personal concerns**: Dr. Rashid (confidentially)

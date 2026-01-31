@@ -1,0 +1,119 @@
+---
+title: "Research Project Template"
+subtitle: "General-purpose data analysis template"
+---
+
+## Overview
+
+A flexible template for exploratory data analysis, statistical modeling, and one-off research projects.
+
+**Repository**: [github.com/rashid-lab/template-research-project](https://github.com/rashid-lab/template-research-project)
+
+## Features
+
+- Pre-configured `{targets}` pipeline
+- Package dependencies tracked via DESCRIPTION
+- Quarto for reports
+- Consistency validation framework
+- Centralized configuration
+
+## Quick Start
+
+```bash
+# Clone
+git clone git@github.com:rashid-lab/template-research-project.git my-project
+
+# Set up
+cd my-project
+rm -rf .git && git init
+
+# In R
+# Install packages listed in DESCRIPTION
+targets::tar_make()
+```
+
+## Directory Structure
+
+```
+my-project/
+├── _targets.R           # Pipeline definition
+├── R/                   # Functions
+│   ├── analysis.R
+│   ├── visualization.R
+│   └── globals_loader.R
+├── config/
+│   ├── globals.yml      # Parameters
+│   └── consistency_registry.yml
+├── data/
+│   ├── raw/             # Original data (gitignored)
+│   └── processed/       # Cleaned data
+├── results/             # Outputs
+├── figures/             # Plots
+├── reports/             # Quarto documents
+│   └── analysis.qmd
+├── scripts/             # Standalone scripts
+├── DESCRIPTION          # Package dependencies
+├── CLAUDE.md            # Project guidance
+└── Makefile
+```
+
+## Pipeline Structure
+
+```r
+# _targets.R
+library(targets)
+source("R/globals_loader.R")
+
+cfg <- load_globals()
+
+list(
+  # Data
+  tar_target(raw_data, load_data("data/raw/dataset.csv")),
+  tar_target(clean_data, process_data(raw_data)),
+
+  # Analysis
+  tar_target(model_fit, fit_model(clean_data)),
+  tar_target(results, extract_results(model_fit)),
+
+  # Outputs
+  tar_target(fig_main, create_figure(results, "figures/main.pdf")),
+
+  # Report
+  tar_quarto(report, path = "reports/analysis.qmd")
+)
+```
+
+## Configuration
+
+Edit `config/globals.yml`:
+
+```yaml
+project:
+  name: "My Analysis Project"
+  seed: 2024
+
+analysis:
+  alpha: 0.05
+  bootstrap_reps: 1000
+```
+
+## Common Commands
+
+```bash
+# Run pipeline
+make all           # Full pipeline
+make quick         # Quick mode for testing
+
+# Visualize
+make visualize     # Show dependency graph
+
+# Validate
+make validate      # Check consistency
+```
+
+## Best Practices
+
+1. **Keep functions small** - One task per function
+2. **Use the config** - Never hardcode values
+3. **Document as you go** - Update README and CLAUDE.md
+4. **Commit often** - Small, focused commits

@@ -183,7 +183,7 @@ When modifying certain files, related files must also be updated.
 | Config structure | `consistency_registry.yml` |
 | Figure generation | Paper figure references |
 | Analysis method | Methods section of paper |
-| Package dependencies | `renv.lock` / `requirements.txt` |
+| Package dependencies | `DESCRIPTION` / `requirements.txt` |
 
 ---
 

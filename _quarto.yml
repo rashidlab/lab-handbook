@@ -1,0 +1,92 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "Rashid Lab"
+  description: "Documentation, standards, and resources for the Rashid Lab at UNC Chapel Hill"
+
+  navbar:
+    background: "#4B9CD3"  # Carolina Blue
+    foreground: white
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "Getting Started"
+        href: onboarding/index.qmd
+      - text: "Handbook"
+        menu:
+          - text: "Coding Standards"
+            href: coding-standards/index.qmd
+          - text: "Targets Pipeline"
+            href: coding-standards/targets-pipeline.qmd
+          - text: "Project Consistency"
+            href: project-consistency/index.qmd
+          - text: "Policies"
+            href: policies/index.qmd
+      - text: "Templates"
+        href: templates/index.qmd
+      - text: "Computing"
+        href: computing/index.qmd
+    right:
+      - icon: github
+        href: https://github.com/rashid-lab
+      - text: "Dashboard"
+        href: https://rashid-lab.github.io/lab-dashboard/
+
+  sidebar:
+    - title: "Getting Started"
+      style: "docked"
+      contents:
+        - onboarding/index.qmd
+        - onboarding/first-week.qmd
+        - onboarding/tools-setup.qmd
+        - onboarding/first-project.qmd
+
+    - title: "Coding Standards"
+      contents:
+        - coding-standards/index.qmd
+        - coding-standards/r-style.qmd
+        - coding-standards/python-style.qmd
+        - coding-standards/git-practices.qmd
+        - coding-standards/targets-pipeline.qmd
+
+    - title: "Project Consistency"
+      contents:
+        - project-consistency/index.qmd
+        - project-consistency/config-values.qmd
+        - project-consistency/method-claims.qmd
+        - project-consistency/data-provenance.qmd
+        - project-consistency/validation.qmd
+
+    - title: "Templates"
+      contents:
+        - templates/index.qmd
+        - templates/research-project.qmd
+        - templates/methods-paper.qmd
+        - templates/clinical-trial.qmd
+        - templates/package-development.qmd
+
+  page-footer:
+    center: |
+      Rashid Lab · UNC Chapel Hill · Department of Biostatistics
+    right: |
+      Built with [Quarto](https://quarto.org)
+
+  search:
+    location: navbar
+    type: overlay
+
+format:
+  html:
+    theme:
+      light: [cosmo, assets/custom.scss]
+    css: assets/custom.css
+    toc: true
+    toc-depth: 3
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+
+execute:
+  freeze: auto

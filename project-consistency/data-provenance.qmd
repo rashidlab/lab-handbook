@@ -1,0 +1,236 @@
+---
+title: "Data Provenance"
+subtitle: "Tracing figures and tables to their sources"
+---
+
+## Overview
+
+Every figure and table in your manuscript should be traceable back to:
+
+1. The **data file** that contains the plotted/tabulated values
+2. The **script** that generated that data
+3. The **configuration** that controlled the generation
+
+## Provenance Document
+
+Create `docs/DATA_PROVENANCE.md`:
+
+```markdown
+# Data Provenance
+
+Maps manuscript outputs to their generating sources.
+
+## Figures
+
+### Figure 1: Simulation Results
+- **Location**: `figures/fig1_simulation_results.pdf`
+- **Data source**: `results/simulation_summary.csv`
+- **Generating script**: `scripts/generate_figures.R`
+- **Targets target**: `fig1_simulation`
+- **Key parameters**:
+  - `n_reps`: `globals.yml::simulation.n_reps_high`
+
+### Figure 2: Model Comparison
+- **Location**: `figures/fig2_model_comparison.pdf`
+- **Data source**: `results/model_comparison.csv`
+- **Generating script**: `scripts/generate_figures.R`
+- **Targets target**: `fig2_comparison`
+
+## Tables
+
+### Table 1: Operating Characteristics
+- **Location**: Inline in `manuscript/paper.qmd`
+- **Data source**: `results/operating_characteristics.csv`
+- **Generating script**: `scripts/run_simulation.R`
+- **Targets target**: `oc_table`
+
+### Table 2: Parameter Estimates
+- **Location**: Inline in `manuscript/paper.qmd`
+- **Data source**: `results/parameter_estimates.csv`
+- **Generating script**: `scripts/fit_models.R`
+- **Targets target**: `param_estimates`
+
+## Regeneration
+
+To regenerate all outputs:
+```bash
+# Full pipeline
+make all
+
+# Specific figure
+Rscript -e "targets::tar_make(fig1_simulation)"
+
+# All figures
+make figures
+```
+```
+
+## Targets Integration
+
+Structure your pipeline for traceability:
+
+```r
+# _targets.R
+library(targets)
+library(tarchetypes)
+
+list(
+  # Data processing
+  tar_target(raw_data, load_raw_data("data/raw/")),
+  tar_target(clean_data, process_data(raw_data)),
+
+  # Simulations (tracked by config)
+  tar_target(config, load_globals()),
+  tar_target(
+    sim_results,
+    run_simulation(clean_data, n_reps = config$simulation$n_reps_high),
+    format = "qs"  # Fast serialization
+  ),
+
+  # Summary data (intermediate)
+  tar_target(
+    sim_summary,
+    summarize_results(sim_results),
+    format = "qs"
+  ),
+
+  # CSV outputs (for manuscript)
+  tar_target(
+    sim_summary_csv,
+    write_csv_versioned(sim_summary, "results/simulation_summary.csv")
+  ),
+
+  # Figures
+  tar_target(
+    fig1_simulation,
+    create_fig1(sim_summary, output = "figures/fig1_simulation_results.pdf")
+  ),
+
+  # Manuscript
+  tar_quarto(
+    manuscript,
+    path = "manuscript/paper.qmd",
+    extra_deps = c(fig1_simulation, sim_summary_csv)
+  )
+)
+```
+
+## Validation Script
+
+Add to `scripts/validate_consistency.R`:
+
+```r
+validate_provenance <- function(provenance_path = "docs/DATA_PROVENANCE.md") {
+  # Parse provenance document
+  provenance <- parse_provenance(provenance_path)
+
+  issues <- list()
+
+  for (item in provenance$figures) {
+    # Check data file exists
+    if (!file.exists(item$data_source)) {
+      issues <- c(issues, sprintf(
+        "Figure %s: Data source missing: %s",
+        item$name, item$data_source
+      ))
+    }
+
+    # Check figure file exists
+    if (!file.exists(item$location)) {
+      issues <- c(issues, sprintf(
+        "Figure %s: Output missing: %s",
+        item$name, item$location
+      ))
+    }
+
+    # Check figure is newer than data
+    if (file.exists(item$location) && file.exists(item$data_source)) {
+      if (file.mtime(item$location) < file.mtime(item$data_source)) {
+        issues <- c(issues, sprintf(
+          "Figure %s: Output older than data source (needs regeneration)",
+          item$name
+        ))
+      }
+    }
+  }
+
+  issues
+}
+```
+
+## Inline Data References
+
+In Quarto documents, load data explicitly:
+
+```r
+#| label: setup
+#| include: false
+
+# Load results from tracked sources
+sim_summary <- read.csv("../results/simulation_summary.csv")
+model_comparison <- read.csv("../results/model_comparison.csv")
+```
+
+```r
+#| label: tbl-results
+#| tbl-cap: "Simulation Results"
+
+knitr::kable(sim_summary[, c("scenario", "power", "type1_error", "expected_n")],
+             digits = 3)
+```
+
+## File Naming Conventions
+
+Use consistent, descriptive names:
+
+```
+results/
+├── simulation_summary.csv           # Main simulation results
+├── simulation_summary_2024-01-15.csv  # Versioned backup
+├── model_comparison.csv
+└── parameter_estimates.csv
+
+figures/
+├── fig1_simulation_results.pdf
+├── fig1_simulation_results.png      # Web/preview version
+├── fig2_model_comparison.pdf
+└── figS1_supplementary.pdf          # Supplement figures
+```
+
+## Checksums for Verification
+
+For critical results, store checksums:
+
+```r
+write_csv_with_checksum <- function(data, path) {
+  write_csv(data, path)
+
+  # Compute and store checksum
+  checksum <- digest::digest(file = path, algo = "md5")
+  checksum_path <- paste0(path, ".md5")
+  writeLines(checksum, checksum_path)
+
+  invisible(path)
+}
+
+verify_checksum <- function(path) {
+  checksum_path <- paste0(path, ".md5")
+  if (!file.exists(checksum_path)) {
+    warning("No checksum file found for ", path)
+    return(FALSE)
+  }
+
+  stored <- readLines(checksum_path)
+  current <- digest::digest(file = path, algo = "md5")
+
+  identical(stored, current)
+}
+```
+
+## Best Practices
+
+1. **One CSV per major result** - Don't combine unrelated results
+2. **Version important outputs** - Keep dated copies of key results
+3. **Use targets** - Automatic dependency tracking
+4. **Document regeneration** - Clear instructions to recreate any output
+5. **Check file dates** - Outputs should be newer than inputs

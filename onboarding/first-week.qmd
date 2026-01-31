@@ -1,0 +1,74 @@
+---
+title: "First Week Checklist"
+---
+
+A detailed checklist for your first week in the lab.
+
+## Administrative (Day 1)
+
+- [ ] Complete HR onboarding paperwork
+- [ ] Get building/office access
+- [ ] Obtain Onyen and UNC credentials
+- [ ] Set up UNC email
+- [ ] Get added to lab mailing list
+
+## Computing Setup (Days 1-2)
+
+- [ ] Install R (≥4.3.0) and RStudio
+- [ ] Install Git and configure credentials
+- [ ] Set up GitHub SSH keys
+- [ ] Request Longleaf cluster access
+- [ ] Install Quarto
+- [ ] Join lab GitHub organization
+
+## Communication (Day 2)
+
+- [ ] Join lab Teams workspace
+- [ ] Subscribe to relevant channels:
+  - `#general` - Announcements
+  - `#computing` - Technical help
+  - `#papers` - Literature discussion
+  - `#random` - Social
+- [ ] Add lab meeting to calendar
+
+## Orientation (Days 3-4)
+
+- [ ] Meet with Dr. Rashid (1:1)
+- [ ] Get overview of current lab projects
+- [ ] Receive reading list (2-3 key papers)
+- [ ] Identify project mentor
+- [ ] Attend lab meeting
+
+## First Code (Day 5)
+
+- [ ] Clone template repository
+- [ ] Install project dependencies (`install.packages(c("targets", "data.table", "here"))  # Install core packages`)
+- [ ] Run example pipeline (`targets::tar_make()`)
+- [ ] Make a small change
+- [ ] Commit and push
+
+## Documentation to Read
+
+1. [Coding Standards](../coding-standards/index.qmd) - Lab code style
+2. [Targets Pipeline Guide](../coding-standards/targets-pipeline.qmd) - Workflow management
+3. [Project Consistency](../project-consistency/index.qmd) - Keeping code/docs aligned
+
+## Questions to Ask
+
+In your first meeting with Dr. Rashid:
+
+1. What project will I be working on?
+2. Who is my day-to-day mentor?
+3. What are the short-term and long-term goals?
+4. What background reading should I prioritize?
+5. When is my first presentation expected?
+
+## End of Week 1 Goals
+
+By Friday, you should be able to:
+
+- ✅ Log into Longleaf and submit a test job
+- ✅ Clone, modify, and push to a GitHub repo
+- ✅ Run a `targets` pipeline locally
+- ✅ Render a Quarto document to PDF
+- ✅ Know who to ask for different types of help

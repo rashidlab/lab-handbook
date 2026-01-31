@@ -1,0 +1,56 @@
+---
+title: "Getting Started"
+subtitle: "Welcome to the Rashid Lab!"
+---
+
+Welcome to the Rashid Lab! This guide will help you get set up and productive in your first weeks.
+
+## First Steps
+
+1. **Complete administrative tasks** - HR paperwork, building access, etc.
+2. **Set up your computing environment** - See [Tools Setup](tools-setup.qmd)
+3. **Read the coding standards** - [Coding Standards](../coding-standards/index.qmd)
+4. **Clone the starter template** - Get your first project going
+
+## Key Resources
+
+| Resource | Purpose |
+|----------|---------|
+| [Lab Teams](#) | Daily communication |
+| [GitHub Organization](https://github.com/rashid-lab) | All code repositories |
+| [Lab Meetings](https://github.com/rashid-lab/lab-meetings) | Weekly schedule |
+| [Longleaf Docs](https://help.rc.unc.edu/longleaf-cluster/) | UNC HPC cluster |
+
+## Your First Week
+
+### Day 1-2: Environment Setup
+
+- [ ] Get Onyen and UNC credentials
+- [ ] Request Longleaf account
+- [ ] Install R, RStudio, and essential packages
+- [ ] Set up Git and GitHub access
+- [ ] Join lab Teams channels
+
+### Day 3-4: Orientation
+
+- [ ] Meet with Dr. Rashid for project overview
+- [ ] Review existing lab projects
+- [ ] Read 2-3 relevant papers
+- [ ] Attend lab meeting
+
+### Day 5: First Code
+
+- [ ] Clone a project template
+- [ ] Run the example pipeline
+- [ ] Make a small modification
+- [ ] Submit your first commit
+
+## Questions?
+
+- **Technical questions**: Post in `#computing` Teams channel
+- **Project questions**: Ask your project mentor or Dr. Rashid
+- **Administrative**: Contact lab coordinator
+
+---
+
+Next: [Tools Setup →](tools-setup.qmd)

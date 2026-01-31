@@ -1,0 +1,259 @@
+---
+title: "Git Practices"
+subtitle: "Version control workflows and conventions"
+---
+
+## Commit Messages
+
+Use conventional commit format:
+
+```
+type: short description
+
+Longer explanation if needed.
+
+Closes #issue_number
+```
+
+### Types
+
+| Type | Use Case |
+|------|----------|
+| `feat` | New feature |
+| `fix` | Bug fix |
+| `docs` | Documentation only |
+| `style` | Formatting, no code change |
+| `refactor` | Code restructuring |
+| `test` | Adding tests |
+| `chore` | Maintenance tasks |
+
+### Examples
+
+```bash
+# Good commits
+git commit -m "feat: add Cox model with time-varying covariates"
+git commit -m "fix: correct confidence interval calculation"
+git commit -m "docs: add installation instructions"
+
+# Bad commits
+git commit -m "updates"
+git commit -m "fixed stuff"
+git commit -m "WIP"
+```
+
+## Branching Strategy
+
+### Main Branches
+
+- `main` - Production-ready code, always stable
+- `develop` - Integration branch for features (optional)
+
+### Feature Branches
+
+```bash
+# Create feature branch
+git checkout -b feat/add-survival-analysis
+
+# Work on feature, commit often
+git add .
+git commit -m "feat: implement Kaplan-Meier estimator"
+
+# Push to remote
+git push -u origin feat/add-survival-analysis
+
+# Create pull request on GitHub
+```
+
+### Branch Naming
+
+```
+feat/description      # New features
+fix/description       # Bug fixes
+docs/description      # Documentation
+refactor/description  # Code restructuring
+```
+
+## Pull Request Workflow
+
+1. **Create branch** from `main`
+2. **Make changes** with frequent commits
+3. **Push** to remote
+4. **Open PR** with description
+5. **Request review** from lab member
+6. **Address feedback**
+7. **Merge** when approved
+
+### PR Template
+
+```markdown
+## Summary
+Brief description of changes.
+
+## Changes
+- Added X
+- Modified Y
+- Fixed Z
+
+## Testing
+How were changes tested?
+
+## Checklist
+- [ ] Code follows style guide
+- [ ] Tests pass
+- [ ] Documentation updated
+```
+
+## Common Commands
+
+### Daily Workflow
+
+```bash
+# Start of day: get latest changes
+git pull origin main
+
+# Check status
+git status
+
+# Stage changes
+git add filename.R
+git add -A  # All changes (use sparingly)
+
+# Commit
+git commit -m "type: description"
+
+# Push
+git push
+```
+
+### Viewing History
+
+```bash
+# View log
+git log --oneline -10
+
+# View specific file history
+git log --follow -p -- filename.R
+
+# View changes
+git diff
+git diff --staged
+```
+
+### Undoing Changes
+
+```bash
+# Discard unstaged changes
+git checkout -- filename.R
+
+# Unstage file
+git reset HEAD filename.R
+
+# Amend last commit (before push)
+git commit --amend -m "new message"
+
+# Revert a commit (creates new commit)
+git revert commit_hash
+```
+
+### Handling Conflicts
+
+```bash
+# When pull has conflicts
+git pull origin main
+# Edit conflicted files, remove markers
+git add conflicted_file.R
+git commit -m "fix: resolve merge conflict"
+```
+
+## .gitignore
+
+Essential entries for R projects:
+
+```gitignore
+# R
+.Rhistory
+.Rdata
+.RDataTmp
+*.Rproj.user/
+
+# Targets
+_targets/
+_targets_r/
+
+# Data (usually)
+data/raw/
+*.csv
+*.rds
+
+# Results (regenerable)
+results/
+figures/
+
+# Secrets
+.env
+config/secrets.yml
+
+# OS
+.DS_Store
+Thumbs.db
+```
+
+## Large Files
+
+Don't commit large files (>50 MB). Options:
+
+1. **Add to .gitignore** - Best for regenerable files
+2. **Use Git LFS** - For essential large files
+3. **External storage** - Link to Longleaf/shared drives
+
+```bash
+# Check for large files before commit
+find . -size +10M -type f
+```
+
+## Sensitive Data
+
+Never commit:
+
+- Passwords or API keys
+- Patient data or PHI
+- Unpublished results
+- Personal credentials
+
+Use `.env` files with `.gitignore`:
+
+```bash
+# .env (gitignored)
+API_KEY=secret_key_here
+DB_PASSWORD=password_here
+```
+
+```r
+# In R
+library(dotenv)
+load_dot_env()
+api_key <- Sys.getenv("API_KEY")
+```
+
+## Repository Hygiene
+
+### Regular Maintenance
+
+```bash
+# Remove merged branches
+git branch --merged | grep -v main | xargs git branch -d
+
+# Prune remote tracking branches
+git fetch --prune
+
+# Check repository size
+git count-objects -vH
+```
+
+### Before Major Changes
+
+```bash
+# Create backup branch
+git checkout -b backup/before-refactor
+git checkout main
+```

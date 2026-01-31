@@ -305,4 +305,4 @@ cp -r lab-handbook/project-consistency/templates/R/ my-project/R/
 
 - [Coding Standards](../coding-standards/README.md) - General code quality
 - [Targets Pipeline Guide](../coding-standards/targets-pipeline.md) - Workflow automation
-- [renv Setup](../../lab-computing/environments/renv-setup.md) - R environment management
+- Package management via DESCRIPTION files

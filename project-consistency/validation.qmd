@@ -1,0 +1,342 @@
+---
+title: "Running Validation"
+subtitle: "Checking consistency before submission"
+---
+
+## Overview
+
+Validation ensures your manuscript, code, and configuration stay aligned throughout development.
+
+## Quick Start
+
+```bash
+# Full validation
+make validate-consistency
+
+# Quick check (skip slow verifications)
+make validate-quick
+
+# Specific checks
+Rscript scripts/validate_consistency.R --config-only
+Rscript scripts/validate_consistency.R --methods-only
+```
+
+## Validation Levels
+
+### Level 1: Config Validation
+
+Checks that manuscript values match `globals.yml`:
+
+```r
+# Example failures
+# - Manuscript says "10,000 replications" but config has 5000
+# - Manuscript says "alpha = 0.05" but config has 0.10
+```
+
+### Level 2: Method Validation
+
+Verifies described methods exist in code:
+
+```r
+# Example failures
+# - Manuscript describes "Sobol sequences" but code uses "Latin hypercube"
+# - Manuscript says "Cox model" but code uses "Weibull"
+```
+
+### Level 3: Provenance Validation
+
+Confirms data files and figures are current:
+
+```r
+# Example failures
+# - Figure file older than its data source
+# - Referenced CSV doesn't exist
+# - Targets pipeline has outdated objects
+```
+
+### Level 4: Cross-Reference Validation
+
+Ensures internal consistency:
+
+```r
+# Example failures
+# - Same value reported differently in different sections
+# - Table and figure show conflicting numbers
+```
+
+## The Validation Script
+
+```r
+#!/usr/bin/env Rscript
+# scripts/validate_consistency.R
+
+library(yaml)
+library(stringr)
+library(cli)
+
+#' Main validation function
+validate_all <- function(
+  registry_path = "config/consistency_registry.yml",
+  globals_path = "config/globals.yml",
+  quick = FALSE
+) {
+  cli_h1("Consistency Validation")
+
+  # Load resources
+  registry <- yaml::read_yaml(registry_path)
+  source("R/globals_loader.R")
+  cfg <- load_globals(globals_path = globals_path)
+
+  all_results <- list()
+
+  # Level 1: Config
+  cli_h2("Config Claims")
+  config_results <- validate_config_claims(registry, cfg)
+  all_results <- c(all_results, config_results)
+  report_results(config_results)
+
+  # Level 2: Methods
+  cli_h2("Method Claims")
+  method_results <- validate_method_claims(registry)
+  all_results <- c(all_results, method_results)
+  report_results(method_results)
+
+  if (!quick) {
+    # Level 3: Provenance
+    cli_h2("Data Provenance")
+    prov_results <- validate_provenance()
+    all_results <- c(all_results, prov_results)
+    report_results(prov_results)
+  }
+
+  # Summary
+  cli_h1("Summary")
+  failures <- Filter(function(x) !x$valid, all_results)
+
+  if (length(failures) > 0) {
+    cli_alert_danger("{length(failures)} validation failure(s)")
+    for (r in failures) {
+      cli_alert_warning("{r$id}: {r$message}")
+    }
+    quit(status = 1)
+  } else {
+    cli_alert_success("All {length(all_results)} checks passed")
+  }
+}
+
+validate_config_claims <- function(registry, cfg) {
+  claims <- Filter(
+    function(c) c$category %in% c("config", "simulation", "analysis"),
+    registry$claims
+  )
+
+  lapply(claims, function(claim) {
+    # Navigate to config value
+    keys <- strsplit(claim$config_key, "\\.")[[1]]
+    value <- cfg
+    for (key in keys) {
+      value <- value[[key]]
+    }
+
+    tolerance <- claim$tolerance %||% 0.0001
+    valid <- abs(value - claim$expected_value) <= tolerance
+
+    list(
+      id = claim$id,
+      valid = valid,
+      message = if (!valid) {
+        sprintf("Config has %s, expected %s", value, claim$expected_value)
+      } else NULL
+    )
+  })
+}
+
+validate_method_claims <- function(registry) {
+  claims <- Filter(
+    function(c) c$category == "method",
+    registry$claims
+  )
+
+  lapply(claims, function(claim) {
+    if (is.null(claim$verification$file)) {
+      return(list(id = claim$id, valid = TRUE, message = NULL))
+    }
+
+    if (!file.exists(claim$verification$file)) {
+      return(list(
+        id = claim$id,
+        valid = FALSE,
+        message = sprintf("Verification file not found: %s",
+                          claim$verification$file)
+      ))
+    }
+
+    code <- paste(readLines(claim$verification$file), collapse = "\n")
+    valid <- grepl(claim$code_pattern, code, perl = TRUE)
+
+    list(
+      id = claim$id,
+      valid = valid,
+      message = if (!valid) {
+        sprintf("Pattern '%s' not found in %s",
+                claim$code_pattern, claim$verification$file)
+      } else NULL
+    )
+  })
+}
+
+validate_provenance <- function(provenance_path = "docs/DATA_PROVENANCE.md") {
+  # ... implementation from data-provenance.qmd
+}
+
+report_results <- function(results) {
+  for (r in results) {
+    if (r$valid) {
+      cli_alert_success("{r$id}")
+    } else {
+      cli_alert_danger("{r$id}: {r$message}")
+    }
+  }
+}
+
+# CLI handling
+if (!interactive()) {
+  args <- commandArgs(trailingOnly = TRUE)
+  quick <- "--quick" %in% args
+  validate_all(quick = quick)
+}
+```
+
+## Makefile Integration
+
+```makefile
+# Validation targets
+.PHONY: validate validate-quick validate-config validate-methods
+
+validate: validate-consistency validate-provenance
+	@echo "All validations passed"
+
+validate-consistency:
+	Rscript scripts/validate_consistency.R
+
+validate-quick:
+	Rscript scripts/validate_consistency.R --quick
+
+validate-config:
+	Rscript scripts/validate_consistency.R --config-only
+
+validate-methods:
+	Rscript scripts/validate_consistency.R --methods-only
+
+validate-provenance:
+	Rscript scripts/validate_provenance.R
+
+# Pre-submission checklist
+submit: validate
+	@echo "Running pre-submission checks..."
+	quarto render manuscript/paper.qmd
+	@echo "Ready for submission!"
+```
+
+## CI Integration
+
+```yaml
+# .github/workflows/validate.yml
+name: Validate Consistency
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.3.0'
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            yaml
+            cli
+            stringr
+
+      - name: Validate Config Claims
+        run: Rscript scripts/validate_consistency.R --config-only
+
+      - name: Validate Method Claims
+        run: Rscript scripts/validate_consistency.R --methods-only
+
+      - name: Full Validation
+        run: Rscript scripts/validate_consistency.R
+```
+
+## When to Validate
+
+| Trigger | Validation Level |
+|---------|-----------------|
+| After config changes | Full |
+| After code changes | Methods + Provenance |
+| After manuscript edits | Config + Methods |
+| Before PR merge | Full |
+| Before submission | Full + Manual review |
+
+## Handling Failures
+
+### Config Mismatch
+
+```
+FAIL: n_replications
+  Config has 5000, expected 10000
+```
+
+**Fix options:**
+
+1. Update `globals.yml` to match manuscript
+2. Update manuscript to match config
+3. If intentional difference, document in registry
+
+### Method Mismatch
+
+```
+FAIL: sampling_method
+  Pattern 'randomLHS' not found in R/sampling.R
+```
+
+**Fix options:**
+
+1. Update code to use described method
+2. Update manuscript to describe actual method
+3. Add correct pattern to registry
+
+### Provenance Issue
+
+```
+FAIL: fig1_simulation
+  Output older than data source (needs regeneration)
+```
+
+**Fix:**
+
+```bash
+# Regenerate specific figure
+Rscript -e "targets::tar_make(fig1_simulation)"
+
+# Or regenerate all
+make figures
+```
+
+## Best Practices
+
+1. **Validate early, validate often** - Don't wait until submission
+2. **Fix immediately** - Don't let failures accumulate
+3. **Use CI** - Automated checks catch issues early
+4. **Document exceptions** - If something can't be validated, explain why
+5. **Review before submission** - Automated checks + human review

@@ -1,4 +1,7 @@
-# Targets Pipeline Guide
+---
+title: "Targets Pipeline Guide"
+subtitle: "Reproducible workflows with {targets}"
+---
 
 A comprehensive guide to using the `{targets}` package for reproducible research workflows in R.
 
@@ -563,12 +566,12 @@ crew_controller_slurm(
 | `general` | Standard jobs | 7 days |
 | `gpu` | GPU computing | 7 days |
 
-### Shared Cache
+### Shared Package Library
 
-Consider using a shared renv cache for targets projects:
+Consider using a shared package library for targets projects:
 ```r
 # In .Rprofile
-Sys.setenv(RENV_PATHS_CACHE = "/proj/rashidlab/renv-cache")
+.libPaths(c("/proj/rashidlab/R-packages", .libPaths()))
 ```
 
 ### Project Templates

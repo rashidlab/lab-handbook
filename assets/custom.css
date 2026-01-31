@@ -1,0 +1,73 @@
+/* Additional custom styles */
+
+/* Grid cards on homepage */
+.grid {
+  margin: 2rem 0;
+}
+
+.grid > div {
+  padding: 1.5rem;
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.grid > div h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
+/* Template cards */
+.template-card {
+  padding: 1.5rem;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background: white;
+}
+
+.template-card h3 {
+  margin-top: 0;
+  color: #13294B;
+}
+
+.template-card .badge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+}
+
+.badge-r {
+  background-color: #276DC3;
+  color: white;
+}
+
+.badge-python {
+  background-color: #3776AB;
+  color: white;
+}
+
+.badge-targets {
+  background-color: #00A86B;
+  color: white;
+}
+
+/* Keyboard shortcuts */
+kbd {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 0.85em;
+}
+
+/* Copy code button */
+.code-copy-button {
+  opacity: 0.6;
+}
+
+.code-copy-button:hover {
+  opacity: 1;
+}

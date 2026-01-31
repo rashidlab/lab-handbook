@@ -1,0 +1,218 @@
+---
+title: "Computing Resources"
+subtitle: "Longleaf, Slurm, and environment management"
+---
+
+This guide covers computing resources available to lab members.
+
+## Longleaf Cluster
+
+Longleaf is UNC's high-performance computing cluster.
+
+### Access
+
+1. Request account at [ITS Research Computing](https://help.rc.unc.edu/request-a-cluster-account/)
+2. SSH: `ssh your_onyen@longleaf.unc.edu`
+
+### Key Directories
+
+| Path | Purpose |
+|------|---------|
+| `/home/your_onyen/` | Home directory (limited space) |
+| `/work/users/y/o/your_onyen/` | Work directory (larger, not backed up) |
+| `/proj/rashidlab/` | Lab shared space |
+| `/proj/rashidlab/R-packages/` | Shared R package library |
+
+### Module System
+
+```bash
+# List available modules
+module avail
+
+# Load R
+module load r/4.3.0
+
+# Load commonly used stack
+module load r/4.3.0 gcc/11.2.0
+
+# Add to ~/.bashrc for persistence
+echo "module load r/4.3.0" >> ~/.bashrc
+```
+
+## Slurm Job Scheduler
+
+### Basic Commands
+
+```bash
+# Submit a job
+sbatch my_script.sh
+
+# Check queue
+squeue -u $USER
+
+# Cancel a job
+scancel JOB_ID
+
+# Job information
+scontrol show job JOB_ID
+sacct -j JOB_ID
+```
+
+### Example Batch Script
+
+```bash
+#!/bin/bash
+#SBATCH --job-name=my_analysis
+#SBATCH --partition=general
+#SBATCH --time=24:00:00
+#SBATCH --mem=16G
+#SBATCH --cpus-per-task=4
+#SBATCH --output=logs/slurm_%j.out
+#SBATCH --error=logs/slurm_%j.err
+
+module load r/4.3.0
+
+Rscript my_analysis.R
+```
+
+### Partitions
+
+| Partition | Time Limit | Use Case |
+|-----------|------------|----------|
+| `debug` | 4 hours | Testing, quick jobs |
+| `general` | 7 days | Standard jobs |
+| `bigmem` | 7 days | High memory jobs |
+| `gpu` | 7 days | GPU computing |
+
+### Resource Guidelines
+
+| Job Type | CPUs | Memory | Time |
+|----------|------|--------|------|
+| Light analysis | 1-2 | 4-8 GB | 1-4 hours |
+| Simulation (single) | 4 | 8-16 GB | 4-24 hours |
+| Heavy simulation | 8-16 | 32-64 GB | 24-48 hours |
+| Parallel (targets) | 4/worker | 4 GB/CPU | varies |
+
+## Targets + Slurm Integration
+
+### Configuration
+
+```r
+# In _targets.R
+library(crew)
+library(crew.cluster)
+
+tar_option_set(
+  controller = crew_controller_slurm(
+    name = "longleaf",
+    workers = 20,
+    slurm_partition = "general",
+    slurm_time_minutes = 1440,
+    slurm_cpus_per_task = 4,
+    slurm_memory_gigabytes_per_cpu = 4,
+    slurm_log_output = "logs/slurm_%j.out"
+  )
+)
+```
+
+### Running Pipeline on Cluster
+
+```bash
+# Submit controller job
+sbatch run_pipeline.sh
+```
+
+`run_pipeline.sh`:
+```bash
+#!/bin/bash
+#SBATCH --job-name=targets_controller
+#SBATCH --time=48:00:00
+#SBATCH --mem=8G
+#SBATCH --cpus-per-task=2
+#SBATCH --output=logs/controller_%j.out
+
+module load r/4.3.0
+Rscript -e "targets::tar_make()"
+```
+
+### Monitoring
+
+```bash
+# Watch queue
+watch -n 10 squeue -u $USER
+
+# Check targets progress
+Rscript -e "targets::tar_progress()"
+
+# View logs
+tail -f logs/slurm_*.out
+```
+
+## R Environment Management
+
+### Package Documentation
+
+Document package dependencies in your project's README or DESCRIPTION file:
+
+```r
+# List required packages in README.md or create a DESCRIPTION file
+# Check current session info
+sessionInfo()
+
+# Save session info to file for reproducibility
+writeLines(capture.output(sessionInfo()), "session_info.txt")
+```
+
+### Installing Packages on Longleaf
+
+```r
+# Install to user library
+install.packages("data.table", lib = "~/R/library")
+
+# Set default library path in ~/.Rprofile
+.libPaths(c("~/R/library", .libPaths()))
+```
+
+### Shared Package Location (Longleaf)
+
+For lab-wide packages, install to shared location:
+
+```r
+# Install to shared lab directory
+install.packages("mypackage", lib = "/proj/rashidlab/R-packages")
+
+# Add to .Rprofile
+.libPaths(c("/proj/rashidlab/R-packages", .libPaths()))
+```
+
+## Local Development
+
+### Desktop Specs
+
+For local development, recommended minimums:
+
+- **RAM**: 16 GB (32 GB preferred)
+- **CPU**: 4+ cores
+- **Storage**: SSD with 100+ GB free
+
+### Quick Mode for Testing
+
+Use reduced parameters for local testing:
+
+```bash
+# Environment variable approach
+QUICK_MODE=1 Rscript my_analysis.R
+
+# Or in R
+if (Sys.getenv("QUICK_MODE") == "1") {
+  n_reps <- 100
+} else {
+  n_reps <- 10000
+}
+```
+
+## Getting Help
+
+- **Longleaf issues**: research@unc.edu
+- **Lab computing questions**: `#computing` Teams channel
+- **Targets/pipeline help**: Check [targets documentation](https://books.ropensci.org/targets/)

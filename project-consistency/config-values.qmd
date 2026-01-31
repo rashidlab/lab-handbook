@@ -1,0 +1,251 @@
+---
+title: "Centralized Configuration"
+subtitle: "Managing parameters with globals.yml"
+---
+
+## Overview
+
+All project parameters live in a single YAML file that code and manuscripts reference.
+
+## The globals.yml File
+
+```yaml
+# config/globals.yml
+
+# Project metadata
+project:
+  name: "My Research Project"
+  author: "Your Name"
+  seed: 2024
+
+# Simulation parameters
+simulation:
+  # Number of replications at each fidelity level
+  n_reps_low: 500
+  n_reps_med: 2000
+  n_reps_high: 10000
+
+  # Parallel workers
+  n_workers: 4
+
+# Analysis parameters
+analysis:
+  alpha: 0.05
+  power_target: 0.80
+  confidence_level: 0.95
+
+# Bayesian settings
+bayes:
+  n_chains: 4
+  n_iter: 2000
+  n_warmup: 1000
+  seed: 42
+
+# Slurm/HPC settings
+slurm:
+  partition: "general"
+  cpus_per_task: 4
+  memory_gb: 8
+  time_hours: 24
+```
+
+## The Loader Function
+
+Create `R/globals_loader.R`:
+
+```r
+# Cached environment for globals
+.globals_cache <- new.env(parent = emptyenv())
+
+#' Load global configuration with caching
+#'
+#' @param force_reload Bypass cache and reload from file
+#' @param globals_path Override default path
+#' @return Named list of configuration values
+load_globals <- function(force_reload = FALSE, globals_path = NULL) {
+  # Find config file
+  if (is.null(globals_path)) {
+    globals_path <- find_globals_path()
+  }
+
+  # Check cache
+  cache_key <- normalizePath(globals_path, mustWork = FALSE)
+  if (!force_reload && exists(cache_key, envir = .globals_cache)) {
+    return(get(cache_key, envir = .globals_cache))
+  }
+
+  # Load and merge with defaults
+  if (file.exists(globals_path)) {
+    user_config <- yaml::read_yaml(globals_path)
+  } else {
+    user_config <- list()
+    warning("No globals.yml found, using defaults")
+  }
+
+  config <- merge_with_defaults(user_config)
+
+  # Cache and return
+  assign(cache_key, config, envir = .globals_cache)
+  config
+}
+
+#' Find globals.yml searching upward from working directory
+find_globals_path <- function() {
+  candidates <- c(
+    "config/globals.yml",
+    "globals.yml",
+    "../config/globals.yml"
+  )
+
+  for (path in candidates) {
+    if (file.exists(path)) return(path)
+  }
+
+  # Try here::here()
+  if (requireNamespace("here", quietly = TRUE)) {
+    here_path <- here::here("config", "globals.yml")
+    if (file.exists(here_path)) return(here_path)
+  }
+
+  NULL
+}
+
+#' Merge user config with hardcoded defaults
+merge_with_defaults <- function(user_config) {
+  defaults <- list(
+    project = list(seed = 2024),
+    simulation = list(
+      n_reps_low = 500,
+      n_reps_med = 2000,
+      n_reps_high = 10000,
+      n_workers = 4
+    ),
+    analysis = list(
+      alpha = 0.05,
+      power_target = 0.80,
+      confidence_level = 0.95
+    )
+  )
+
+  merge_lists(defaults, user_config)
+}
+
+#' Deep merge two nested lists
+merge_lists <- function(base, override) {
+  if (is.null(override)) return(base)
+
+  for (name in names(override)) {
+    if (is.list(base[[name]]) && is.list(override[[name]])) {
+      base[[name]] <- merge_lists(base[[name]], override[[name]])
+    } else {
+      base[[name]] <- override[[name]]
+    }
+  }
+  base
+}
+```
+
+## Usage Patterns
+
+### In R Scripts
+
+```r
+source("R/globals_loader.R")
+cfg <- load_globals()
+
+# Access nested values
+set.seed(cfg$project$seed)
+results <- run_simulation(n_reps = cfg$simulation$n_reps_high)
+```
+
+### In Quarto Documents
+
+```r
+#| label: setup
+#| include: false
+source("../R/globals_loader.R")
+cfg <- load_globals()
+```
+
+We used `r cfg$simulation$n_reps_high` replications with
+$\alpha = `r cfg$analysis$alpha`$.
+
+### In Targets Pipeline
+
+```r
+# _targets.R
+library(targets)
+source("R/globals_loader.R")
+
+cfg <- load_globals()
+
+list(
+  tar_target(config, load_globals()),
+
+  tar_target(
+    simulation_results,
+    run_sim(
+      n_reps = config$simulation$n_reps_high,
+      seed = config$project$seed
+    )
+  )
+)
+```
+
+## Environment Variable Overrides
+
+Support quick mode for development:
+
+```r
+load_globals <- function(...) {
+  config <- # ... normal loading ...
+
+
+  # Environment variable overrides
+  if (Sys.getenv("QUICK_MODE") == "1") {
+    config$simulation$n_reps_high <- 100
+    config$simulation$n_reps_med <- 50
+    config$simulation$n_reps_low <- 25
+  }
+
+  config
+}
+```
+
+```bash
+# Run with reduced replications
+QUICK_MODE=1 Rscript analysis.R
+
+# Or specific override
+N_REPS=500 Rscript analysis.R
+```
+
+## Documentation
+
+Maintain `DEFAULTS.md` explaining each parameter:
+
+```markdown
+# Parameter Defaults
+
+## Simulation
+
+| Parameter | Default | Rationale |
+|-----------|---------|-----------|
+| `n_reps_high` | 10000 | Ensures <1% Monte Carlo error for power estimates |
+| `n_reps_low` | 500 | Quick iteration during development |
+
+## Analysis
+
+| Parameter | Default | Rationale |
+|-----------|---------|-----------|
+| `alpha` | 0.05 | Standard significance level |
+| `power_target` | 0.80 | Conventional power threshold |
+```
+
+## Best Practices
+
+1. **Never hardcode** - Always use the loader
+2. **Document rationale** - Explain why each default was chosen
+3. **Use environment overrides** - For development/testing
+4. **Cache aggressively** - Avoid repeated file reads
+5. **Provide sensible defaults** - Code should work without config file

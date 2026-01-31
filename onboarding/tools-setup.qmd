@@ -1,0 +1,171 @@
+---
+title: "Tools Setup"
+subtitle: "Configure your development environment"
+---
+
+This guide walks through setting up the essential tools for lab work.
+
+## R Environment
+
+### Install R and RStudio
+
+1. Download R from [CRAN](https://cran.r-project.org/)
+2. Download [RStudio Desktop](https://posit.co/download/rstudio-desktop/)
+
+### Essential Packages
+
+```r
+# Core packages
+install.packages(c(
+  "data.table",
+  "targets",
+  "tarchetypes",
+  "crew",
+  "here",
+  "yaml"
+))
+
+# For clinical trial work
+install.packages(c(
+  "survival",
+  "DiceKriging",
+  "lhs"
+))
+```
+
+### Package Management
+
+Document your package dependencies in your project's README or DESCRIPTION file:
+
+```r
+# Save session info for reproducibility
+writeLines(capture.output(sessionInfo()), "session_info.txt")
+```
+
+## Git and GitHub
+
+### Install Git
+
+- **Mac**: `brew install git` or Xcode Command Line Tools
+- **Windows**: [Git for Windows](https://gitforwindows.org/)
+- **Linux**: `sudo apt install git`
+
+### Configure Git
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "your.email@unc.edu"
+```
+
+### SSH Key Setup
+
+```bash
+# Generate SSH key
+ssh-keygen -t ed25519 -C "your.email@unc.edu"
+
+# Start ssh-agent
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+
+# Copy public key
+cat ~/.ssh/id_ed25519.pub
+# Paste into GitHub Settings → SSH Keys
+```
+
+### Clone Lab Repos
+
+```bash
+# Clone a template
+git clone git@github.com:rashid-lab/template-research-project.git my-project
+cd my-project
+```
+
+## Longleaf (UNC HPC)
+
+### Request Access
+
+1. Go to [ITS Research Computing](https://help.rc.unc.edu/request-a-cluster-account/)
+2. Request Longleaf access
+3. Wait for approval email (~1-2 days)
+
+### Connect
+
+```bash
+# SSH to Longleaf
+ssh your_onyen@longleaf.unc.edu
+
+# Or use VS Code Remote SSH extension
+```
+
+### Module System
+
+```bash
+# List available modules
+module avail
+
+# Load R
+module load r/4.3.0
+
+# Load commonly used modules
+module load r/4.3.0 gcc/11.2.0
+```
+
+### Shared Lab Resources
+
+```bash
+# Lab project space
+cd /proj/rashidlab/
+
+# Add to .Rprofile to use shared package library
+# .libPaths(c("/proj/rashidlab/R-packages", .libPaths()))
+```
+
+## Quarto
+
+We use Quarto for manuscripts and documentation.
+
+### Install
+
+Download from [quarto.org](https://quarto.org/docs/get-started/)
+
+### Verify Installation
+
+```bash
+quarto --version
+quarto check
+```
+
+### Render a Document
+
+```bash
+# PDF output
+quarto render paper.qmd --to pdf
+
+# HTML output
+quarto render paper.qmd --to html
+```
+
+## VS Code (Optional)
+
+If you prefer VS Code over RStudio:
+
+### Recommended Extensions
+
+- R Extension for Visual Studio Code
+- Quarto
+- GitLens
+- Remote - SSH (for Longleaf)
+
+### Settings
+
+```json
+{
+  "r.bracketedPaste": true,
+  "r.rterm.linux": "/usr/bin/R",
+  "editor.formatOnSave": true
+}
+```
+
+---
+
+Next: [First Project →](first-project.qmd)

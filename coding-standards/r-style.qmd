@@ -1,0 +1,382 @@
+---
+title: "R Style Guide"
+subtitle: "Base R conventions for lab code"
+---
+
+## General Principles
+
+1. **Reproducibility first**: Anyone should be able to run your code and get the same results
+2. **Document as you go**: Comments, README files, and roxygen2 docstrings
+3. **Version control everything**: Frequent, meaningful commits
+4. **Never hardcode paths**: Use `here::here()` or project-relative paths
+
+## Naming Conventions
+
+```r
+# Variables: snake_case
+patient_data <- read.csv("data.csv")
+mean_survival_time <- mean(data$time)
+
+# Functions: snake_case verbs
+calculate_hazard_ratio <- function(data, ...) { }
+fit_cox_model <- function(...) { }
+
+# Constants: SCREAMING_SNAKE_CASE
+MAX_ITERATIONS <- 1000
+DEFAULT_ALPHA <- 0.05
+
+# S3/S4 classes: PascalCase (following R convention)
+SurvivalModel <- setClass("SurvivalModel", ...)
+```
+
+## File Organization
+
+```r
+# Top of script
+# =============================================================================
+# Project: [Name]
+# Script: 01-data-prep.R
+# Author: [Name]
+# Date: [Date]
+# Description: [What this script does]
+# =============================================================================
+
+# Load packages (alphabetical, base R preferred)
+library(data.table)
+library(here)
+library(survival)
+
+# Source functions
+source(here("R/functions.R"))
+
+# Load configuration
+config <- yaml::read_yaml(here("config/globals.yml"))
+
+# Set seed for reproducibility
+set.seed(config$project$seed)
+```
+
+## Data Manipulation (Base R)
+
+Prefer base R and `data.table` over tidyverse:
+
+```r
+# Reading data
+df <- read.csv("data/raw/patients.csv", stringsAsFactors = FALSE)
+# Or with data.table for large files:
+dt <- data.table::fread("data/raw/patients.csv")
+
+# Subsetting
+subset_df <- df[df$age > 50 & df$treatment == "A", ]
+# Or:
+subset_df <- subset(df, age > 50 & treatment == "A")
+
+# Column selection
+selected <- df[, c("id", "age", "outcome")]
+
+# Adding columns
+df$log_dose <- log(df$dose)
+df$age_group <- ifelse(df$age < 50, "young", "old")
+
+# Aggregation
+means_by_group <- aggregate(outcome ~ treatment, data = df, FUN = mean)
+# Or with tapply:
+means <- tapply(df$outcome, df$treatment, mean)
+
+# Merging
+merged <- merge(df1, df2, by = "patient_id", all.x = TRUE)
+
+# Sorting
+df_sorted <- df[order(df$time, -df$status), ]
+```
+
+## Data.table for Performance
+
+For large datasets, use `data.table`:
+
+```r
+library(data.table)
+
+# Convert
+dt <- as.data.table(df)
+
+# Subset
+dt[age > 50 & treatment == "A"]
+
+# Select columns
+dt[, .(id, age, outcome)]
+
+# Add columns
+dt[, log_dose := log(dose)]
+
+# Aggregate
+dt[, .(mean_outcome = mean(outcome)), by = treatment]
+
+# Chain operations
+dt[age > 50][, .(mean = mean(outcome)), by = treatment][order(-mean)]
+```
+
+## Function Design
+
+```r
+#' Calculate hazard ratio with confidence interval
+#'
+#' @param data A data frame with time, status, treatment columns
+#' @param alpha Significance level (default 0.05)
+#' @return A data frame with hr, lower, upper columns
+#' @examples
+#' calculate_hr(survival_data)
+#' @export
+calculate_hr <- function(data, alpha = 0.05) {
+  # Validate inputs
+  stopifnot(
+    is.data.frame(data),
+    all(c("time", "status", "treatment") %in% names(data))
+  )
+
+  # Fit model
+  fit <- survival::coxph(
+    survival::Surv(time, status) ~ treatment,
+    data = data
+  )
+
+  # Extract results
+  ci <- confint(fit, level = 1 - alpha)
+  data.frame(
+    hr = exp(coef(fit)),
+    lower = exp(ci[1]),
+    upper = exp(ci[2])
+  )
+}
+```
+
+## Function Best Practices
+
+```r
+# Use explicit returns for clarity
+compute_metric <- function(x) {
+  if (length(x) == 0) {
+    return(NA_real_)
+  }
+  result <- sum(x) / length(x)
+  return(result)
+}
+
+# Default arguments should be simple values
+process_data <- function(data,
+                         alpha = 0.05,
+                         method = "holm",
+                         verbose = FALSE) {
+  # ...
+}
+
+# Avoid side effects - functions should not modify global state
+# BAD:
+bad_function <- function(x) {
+  result <<- x * 2  # Modifies global variable
+}
+
+# GOOD:
+good_function <- function(x) {
+  return(x * 2)
+}
+```
+
+## Apply Family (Avoid Loops When Possible)
+
+```r
+# lapply for lists
+results <- lapply(file_list, read.csv)
+
+# sapply when you want simplified output
+means <- sapply(df[, numeric_cols], mean, na.rm = TRUE)
+
+# vapply for type safety
+lengths <- vapply(my_list, length, integer(1))
+
+# mapply for multiple inputs
+combined <- mapply(paste, vec1, vec2, MoreArgs = list(sep = "_"))
+
+# For data frames, use apply
+row_means <- apply(matrix_data, 1, mean)
+col_sums <- apply(matrix_data, 2, sum)
+```
+
+## Error Handling
+
+```r
+# Use tryCatch for graceful error handling
+safe_read <- function(path) {
+  tryCatch(
+    {
+      read.csv(path)
+    },
+    error = function(e) {
+      warning(sprintf("Failed to read %s: %s", path, e$message))
+      return(NULL)
+    }
+  )
+}
+
+# Use stop() for fatal errors
+validate_inputs <- function(data, required_cols) {
+  missing <- setdiff(required_cols, names(data))
+  if (length(missing) > 0) {
+    stop(sprintf("Missing required columns: %s",
+                 paste(missing, collapse = ", ")))
+  }
+}
+
+# Use warning() for non-fatal issues
+if (any(is.na(data$outcome))) {
+  warning("NA values present in outcome - will be excluded")
+}
+```
+
+## Code Formatting
+
+```r
+# Indentation: 2 spaces (R standard)
+if (condition) {
+  do_something()
+}
+
+# Line length: max 80 characters
+# Break long function calls
+result <- long_function_name(
+  argument_one = value1,
+  argument_two = value2,
+  argument_three = value3
+)
+
+# Spacing around operators
+x <- 1 + 2
+y <- a * b / c
+
+# No spaces inside parentheses/brackets
+mean(x)  # Good
+mean( x )  # Bad
+
+# Spaces after commas
+c(1, 2, 3)  # Good
+c(1,2,3)    # Bad
+```
+
+## Comments
+
+```r
+# Explain WHY, not WHAT
+# BAD: Calculate the mean
+mean_val <- mean(x)
+
+# GOOD: Use trimmed mean to reduce influence of outliers
+mean_val <- mean(x, trim = 0.1)
+
+# Section headers for long scripts
+# -----------------------------------------------------------------------------
+# Data Preprocessing
+# -----------------------------------------------------------------------------
+
+# TODO markers for future work
+# TODO(naim): Add handling for edge case when n < 10
+```
+
+## Package Namespacing
+
+```r
+# Prefer explicit namespacing to avoid conflicts
+survival::coxph(...)
+data.table::fread(...)
+
+# Only use library() for packages used extensively
+library(data.table)  # Used throughout script
+survival::coxph(...)  # Used once
+
+# In packages, always use ::
+#' @importFrom stats lm predict confint
+```
+
+## Testing with testthat
+
+```r
+# tests/testthat/test-functions.R
+library(testthat)
+
+test_that("calculate_hr returns correct structure", {
+  data <- data.frame(
+    time = c(1, 2, 3, 4, 5),
+    status = c(1, 0, 1, 1, 0),
+    treatment = c(0, 0, 1, 1, 1)
+  )
+
+  result <- calculate_hr(data)
+
+  expect_s3_class(result, "data.frame")
+  expect_named(result, c("hr", "lower", "upper"))
+  expect_true(result$lower < result$hr)
+  expect_true(result$hr < result$upper)
+})
+
+test_that("calculate_hr handles invalid input", {
+  expect_error(calculate_hr(NULL))
+  expect_error(calculate_hr(data.frame(x = 1:5)))
+})
+```
+
+## Performance Tips
+
+```r
+# Pre-allocate vectors
+results <- vector("list", n)
+for (i in seq_len(n)) {
+  results[[i]] <- process(data[[i]])
+}
+
+# Avoid growing objects
+# BAD:
+results <- c()
+for (i in 1:n) {
+  results <- c(results, compute(i))  # Copies entire vector each time
+}
+
+# Use vectorized operations
+# BAD:
+for (i in seq_along(x)) {
+  y[i] <- x[i] * 2
+}
+# GOOD:
+y <- x * 2
+
+# Profile before optimizing
+Rprof("profile.out")
+# ... code to profile ...
+Rprof(NULL)
+summaryRprof("profile.out")
+```
+
+## Documentation Requirements
+
+### README.md (every project)
+- Project description
+- Directory structure
+- Setup instructions
+- How to run
+- Data sources
+- Contact info
+
+### Code Comments
+- Explain *why*, not *what*
+- Document assumptions
+- Note sources for formulas
+- Mark TODOs clearly
+
+### Function Documentation
+- All exported functions must have roxygen2 docstrings
+- Include parameter types and descriptions
+- Provide examples where helpful
+
+## See Also
+
+- [Targets Pipeline Guide](targets-pipeline.qmd) - Reproducible workflows
+- [Git Practices](git-practices.qmd) - Version control conventions
+- [Project Consistency](../project-consistency/index.qmd) - Keeping code and docs aligned

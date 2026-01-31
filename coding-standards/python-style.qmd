@@ -1,0 +1,207 @@
+---
+title: "Python Style Guide"
+subtitle: "PEP 8 conventions and type hints"
+---
+
+Follow [PEP 8](https://pep8.org/) with these lab-specific additions.
+
+## Naming Conventions
+
+```python
+# Variables and functions: snake_case
+patient_data = load_data()
+mean_survival = calculate_mean(data)
+
+def calculate_hazard_ratio(data: pd.DataFrame) -> float:
+    """Calculate hazard ratio from survival data."""
+    pass
+
+# Constants: SCREAMING_SNAKE_CASE
+MAX_ITERATIONS = 1000
+DEFAULT_ALPHA = 0.05
+
+# Classes: PascalCase
+class CoxModel:
+    pass
+```
+
+## Type Hints
+
+Always use type hints for function signatures:
+
+```python
+from typing import Optional, List, Dict
+import pandas as pd
+import numpy as np
+
+def fit_model(
+    data: pd.DataFrame,
+    covariates: List[str],
+    alpha: float = 0.05,
+    seed: Optional[int] = None
+) -> Dict[str, np.ndarray]:
+    """
+    Fit a survival model.
+
+    Args:
+        data: DataFrame with time, status, and covariate columns
+        covariates: List of covariate column names
+        alpha: Significance level
+        seed: Random seed for reproducibility
+
+    Returns:
+        Dictionary with model coefficients and confidence intervals
+    """
+    pass
+```
+
+## Project Structure
+
+```
+my_project/
+├── src/
+│   └── my_package/
+│       ├── __init__.py
+│       ├── models.py
+│       └── utils.py
+├── tests/
+│   └── test_models.py
+├── pyproject.toml
+├── requirements.txt
+└── README.md
+```
+
+## Path Handling
+
+Never hardcode paths. Use `pathlib`:
+
+```python
+from pathlib import Path
+
+# Project root
+PROJECT_ROOT = Path(__file__).parent.parent
+
+# Data paths
+DATA_DIR = PROJECT_ROOT / "data"
+RESULTS_DIR = PROJECT_ROOT / "results"
+
+# Load data
+df = pd.read_csv(DATA_DIR / "raw" / "patients.csv")
+```
+
+## Virtual Environments
+
+Always use virtual environments:
+
+```bash
+# Create environment
+python -m venv .venv
+
+# Activate (Linux/Mac)
+source .venv/bin/activate
+
+# Activate (Windows)
+.venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+## Docstrings
+
+Use Google-style docstrings:
+
+```python
+def calculate_survival_probability(
+    time: float,
+    hazard_rate: float,
+    baseline_survival: float = 1.0
+) -> float:
+    """
+    Calculate survival probability at a given time point.
+
+    Uses the exponential survival model S(t) = S_0 * exp(-lambda * t).
+
+    Args:
+        time: Time point to evaluate
+        hazard_rate: Constant hazard rate (lambda)
+        baseline_survival: Survival probability at time 0
+
+    Returns:
+        Survival probability at the specified time
+
+    Raises:
+        ValueError: If time or hazard_rate is negative
+
+    Example:
+        >>> calculate_survival_probability(1.0, 0.1)
+        0.9048374180359595
+    """
+    if time < 0 or hazard_rate < 0:
+        raise ValueError("Time and hazard rate must be non-negative")
+    return baseline_survival * np.exp(-hazard_rate * time)
+```
+
+## Formatting Tools
+
+Use these tools for consistent formatting:
+
+```bash
+# Install formatters
+pip install black isort flake8 mypy
+
+# Format code
+black src/
+isort src/
+
+# Check style
+flake8 src/
+mypy src/
+```
+
+Add to `pyproject.toml`:
+
+```toml
+[tool.black]
+line-length = 88
+target-version = ['py310']
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+```
+
+## Testing
+
+Use `pytest` for testing:
+
+```python
+# tests/test_models.py
+import pytest
+from my_package.models import calculate_survival_probability
+
+def test_survival_at_zero():
+    """Survival at time 0 should equal baseline."""
+    assert calculate_survival_probability(0, 0.1) == 1.0
+
+def test_survival_decreases():
+    """Survival should decrease with time."""
+    s1 = calculate_survival_probability(1.0, 0.1)
+    s2 = calculate_survival_probability(2.0, 0.1)
+    assert s2 < s1
+
+def test_negative_time_raises():
+    """Negative time should raise ValueError."""
+    with pytest.raises(ValueError):
+        calculate_survival_probability(-1.0, 0.1)
+```
+
+Run tests:
+
+```bash
+pytest tests/ -v --cov=src/
+```
