@@ -142,10 +142,14 @@ p {
   font-weight: 700;
   color: $secondary !important;
   font-size: 1.1rem;
+  padding: 0 !important;
+  margin: 0 !important;
 
   img {
-    height: 45px !important;
-    max-height: 45px !important;
+    height: 36px !important;
+    max-height: 36px !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
 }
 
