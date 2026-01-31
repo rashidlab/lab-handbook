@@ -1,6 +1,7 @@
 ---
 title: "Tools Setup"
 subtitle: "Configure your development environment"
+number-sections: true
 ---
 
 ## Overview
