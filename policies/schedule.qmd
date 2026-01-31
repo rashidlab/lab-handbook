@@ -11,10 +11,10 @@ The meeting lead role rotates weekly. The lead is responsible for creating the a
 
 | Date | Meeting Lead | Presenter(s) | Topic |
 |------|--------------|--------------|-------|
-| Feb 7 | TBD | TBD | TBD |
-| Feb 14 | TBD | TBD | TBD |
-| Feb 21 | TBD | TBD | TBD |
-| Feb 28 | TBD | TBD | TBD |
+| Feb 6 | TBD | TBD | TBD |
+| Feb 13 | TBD | TBD | TBD |
+| Feb 20 | TBD | TBD | TBD |
+| Feb 27 | TBD | TBD | TBD |
 
 ::: {.callout-note}
 ## Updating the Schedule
@@ -30,14 +30,14 @@ Edit this file and submit a PR, or post in `#general` Teams channel to request c
 
 ## Meeting Lead Checklist
 
-### Before the Meeting (by Wednesday 5pm)
+### Before the Meeting (by Tuesday 5pm)
 
 - [ ] Create Discussion thread: `Lab Meeting - YYYY-MM-DD`
 - [ ] Copy [agenda template](meetings.qmd#agenda-template) into thread
 - [ ] Confirm presenter(s) and update agenda
 - [ ] Post reminder in Teams `#general` channel
 
-### Day Before (Thursday)
+### Day Before (Wednesday)
 
 - [ ] Check that agenda items have been added
 - [ ] Send final reminder for contributions
@@ -52,7 +52,7 @@ Edit this file and submit a PR, or post in `#general` Teams channel to request c
 - [ ] Identify action items as they arise
 - [ ] End with action item summary
 
-### After the Meeting (by Friday EOD)
+### After the Meeting (by Thursday EOD)
 
 - [ ] Update Discussion thread with meeting notes
 - [ ] Add all action items with assignees and due dates
@@ -84,21 +84,3 @@ To sign up for a presentation slot:
 1. Check available dates above
 2. Edit this page and add your name/topic
 3. Submit a PR or post in Teams
-
-## Journal Club Schedule
-
-Journal club meets **first Friday of each month**.
-
-| Date | Paper Lead | Paper |
-|------|------------|-------|
-| Feb 7 | TBD | TBD |
-| Mar 7 | TBD | TBD |
-| Apr 4 | TBD | TBD |
-| May 2 | TBD | TBD |
-
-### Nominating Papers
-
-1. Post paper suggestion in `#papers` Teams channel
-2. Include: citation, DOI, and 1-2 sentence summary
-3. Lab votes via emoji reactions
-4. Most votes wins; paper lead assigned

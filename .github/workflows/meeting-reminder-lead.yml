@@ -1,10 +1,10 @@
 # Reminder for meeting lead to create agenda
-# Runs Wednesday 9am ET (14:00 UTC)
+# Runs Tuesday 9am ET (14:00 UTC)
 name: Meeting Lead Reminder
 
 on:
   schedule:
-    - cron: '0 14 * * 3'  # Wednesday 9am ET (14:00 UTC)
+    - cron: '0 14 * * 2'  # Tuesday 9am ET (14:00 UTC)
   workflow_dispatch:  # Allow manual trigger for testing
 
 jobs:
@@ -33,26 +33,26 @@ jobs:
             // Read rotation config
             const config = yaml.load(fs.readFileSync('.github/meeting-rotation.yml', 'utf8'));
 
-            // Find next Friday
+            // Find next Thursday
             const today = new Date();
-            const daysUntilFriday = (5 - today.getDay() + 7) % 7 || 7;
-            const nextFriday = new Date(today);
-            nextFriday.setDate(today.getDate() + daysUntilFriday);
-            const fridayStr = nextFriday.toISOString().split('T')[0];
+            const daysUntilThursday = (4 - today.getDay() + 7) % 7 || 7;
+            const nextThursday = new Date(today);
+            nextThursday.setDate(today.getDate() + daysUntilThursday);
+            const thursdayStr = nextThursday.toISOString().split('T')[0];
 
             // Check if this date should be skipped
-            if (config.skip_dates && config.skip_dates.includes(fridayStr)) {
+            if (config.skip_dates && config.skip_dates.includes(thursdayStr)) {
               core.setOutput('skip', 'true');
-              core.info(`Skipping ${fridayStr} - in skip_dates list`);
+              core.info(`Skipping ${thursdayStr} - in skip_dates list`);
               return;
             }
 
             // Find meeting for this Friday
-            const meeting = config.meetings.find(m => m.date === fridayStr);
+            const meeting = config.meetings.find(m => m.date === thursdayStr);
 
             if (!meeting) {
               core.setOutput('skip', 'true');
-              core.warning(`No meeting scheduled for ${fridayStr}`);
+              core.warning(`No meeting scheduled for ${thursdayStr}`);
               return;
             }
 
@@ -60,7 +60,7 @@ jobs:
             const leadInfo = config.lab_members.find(m => m.github === meeting.lead);
 
             core.setOutput('skip', 'false');
-            core.setOutput('date', fridayStr);
+            core.setOutput('date', thursdayStr);
             core.setOutput('lead', meeting.lead);
             core.setOutput('lead_email', leadInfo ? leadInfo.email : '');
             core.setOutput('presenters', meeting.presenters.join(', '));

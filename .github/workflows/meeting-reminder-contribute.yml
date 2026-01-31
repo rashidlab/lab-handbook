@@ -1,10 +1,10 @@
 # Reminder for all lab members to add agenda items
-# Runs Thursday 9am ET (14:00 UTC)
+# Runs Wednesday 9am ET (14:00 UTC)
 name: Agenda Contribution Reminder
 
 on:
   schedule:
-    - cron: '0 14 * * 4'  # Thursday 9am ET (14:00 UTC)
+    - cron: '0 14 * * 3'  # Wednesday 9am ET (14:00 UTC)
   workflow_dispatch:  # Allow manual trigger for testing
 
 jobs:
@@ -32,18 +32,18 @@ jobs:
 
             const config = yaml.load(fs.readFileSync('.github/meeting-rotation.yml', 'utf8'));
 
-            // Tomorrow is Friday
+            // Tomorrow is Thursday
             const tomorrow = new Date();
             tomorrow.setDate(tomorrow.getDate() + 1);
-            const fridayStr = tomorrow.toISOString().split('T')[0];
+            const thursdayStr = tomorrow.toISOString().split('T')[0];
 
             // Check skip dates
-            if (config.skip_dates && config.skip_dates.includes(fridayStr)) {
+            if (config.skip_dates && config.skip_dates.includes(thursdayStr)) {
               core.setOutput('skip', 'true');
               return;
             }
 
-            const meeting = config.meetings.find(m => m.date === fridayStr);
+            const meeting = config.meetings.find(m => m.date === thursdayStr);
 
             if (!meeting) {
               core.setOutput('skip', 'true');
@@ -55,7 +55,7 @@ jobs:
             const allGithub = config.lab_members.map(m => `@${m.github}`).join(' ');
 
             core.setOutput('skip', 'false');
-            core.setOutput('date', fridayStr);
+            core.setOutput('date', thursdayStr);
             core.setOutput('lead', meeting.lead);
             core.setOutput('presenters', meeting.presenters.join(', @'));
             core.setOutput('all_members', allGithub);
@@ -76,7 +76,7 @@ jobs:
                 {"name": "Presenter(s)", "value": "@${{ steps.get-meeting.outputs.presenters }}"}
               ],
               "markdown": true,
-              "text": "**Reminder:** Lab meeting is **tomorrow**!\n\nPlease add your agenda items to the Discussion thread by **5pm today**.\n\nIf you have:\n- Research updates\n- Questions for the group\n- Announcements\n- Items for discussion\n\n...add them now!"
+              "text": "**Reminder:** Lab meeting is **tomorrow at 9:30am**!\n\nPlease add your agenda items to the Discussion thread by **5pm today**.\n\nIf you have:\n- Research updates\n- Questions for the group\n- Announcements\n- Items for discussion\n\n...add them now!"
             }],
             "potentialAction": [{
               "@type": "OpenUri",

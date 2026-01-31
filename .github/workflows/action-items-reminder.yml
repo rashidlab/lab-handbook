@@ -24,7 +24,7 @@ jobs:
             "sections": [{
               "activityTitle": "Action Items Reminder",
               "markdown": true,
-              "text": "**Happy Monday!**\n\nThis is your weekly reminder to:\n\n1. Check your **action items** from last Friday'\''s lab meeting\n2. Update the status of completed items (check the box!)\n3. Flag any blockers in the Discussion thread\n\nAction items due this week should be completed by **Friday**."
+              "text": "**Happy Monday!**\n\nThis is your weekly reminder to:\n\n1. Check your **action items** from last Thursday'\''s lab meeting\n2. Update the status of completed items (check the box!)\n3. Flag any blockers in the Discussion thread\n\nAction items due this week should be completed by **Thursday**."
             }],
             "potentialAction": [
               {

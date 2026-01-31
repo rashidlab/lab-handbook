@@ -2,7 +2,7 @@
 # This file is read by GitHub Actions to determine who to remind
 #
 # Format:
-#   - date: YYYY-MM-DD (Friday meeting date)
+#   - date: YYYY-MM-DD (Thursday meeting date)
 #     lead: GitHub username (without @)
 #     lead_email: Email for Teams mention
 #     presenters: List of presenters
@@ -23,19 +23,19 @@ lab_members:
 
 # Upcoming meetings (add 4-6 weeks at a time)
 meetings:
-  - date: "2026-02-07"
+  - date: "2026-02-06"
     lead: "member1"
     presenters:
       - "member2"
     topic: "TBD"
 
-  - date: "2026-02-14"
+  - date: "2026-02-13"
     lead: "member2"
     presenters:
       - "member3"
     topic: "TBD"
 
-  - date: "2026-02-21"
+  - date: "2026-02-20"
     lead: "member3"
     presenters:
       - "member1"

@@ -137,7 +137,7 @@ lab-handbook/
 Lab meetings use GitHub Discussions:
 - **Category:** Lab Meetings
 - **Thread format:** `Lab Meeting - YYYY-MM-DD`
-- **Workflow:** Agenda (Wed) → Contributions (Thu) → Meeting (Fri) → Notes (Fri EOD)
+- **Workflow:** Agenda (Tue) → Contributions (Wed) → Meeting (Thu 9:30-11am) → Notes (Thu EOD)
 
 ### Automated Reminders
 
@@ -145,8 +145,8 @@ GitHub Actions send Teams notifications:
 
 | Workflow | Schedule | Purpose |
 |----------|----------|---------|
-| `meeting-reminder-lead.yml` | Wed 9am ET | Remind lead to create agenda |
-| `meeting-reminder-contribute.yml` | Thu 9am ET | Remind all to add items |
+| `meeting-reminder-lead.yml` | Tue 9am ET | Remind lead to create agenda |
+| `meeting-reminder-contribute.yml` | Wed 9am ET | Remind all to add items |
 | `action-items-reminder.yml` | Mon 9am ET | Weekly action item check |
 
 **Required secret:** `MS_TEAMS_WEBHOOK_URI` (Teams incoming webhook URL)

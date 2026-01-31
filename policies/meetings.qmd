@@ -18,10 +18,9 @@ This approach provides:
 
 | Meeting | Frequency | Duration | Purpose |
 |---------|-----------|----------|---------|
-| **Lab Meeting** | Weekly (Fridays 2pm) | 60 min | Research presentations, paper discussions |
+| **Lab Meeting** | Weekly (Thursdays 9:30am) | 90 min | Research presentations, paper discussions |
 | **1:1 with Dr. Rashid** | Bi-weekly | 30 min | Individual progress, mentorship |
 | **Working Groups** | As needed | 30-60 min | Project-specific collaboration |
-| **Journal Club** | Monthly | 45 min | Discuss recent papers in the field |
 
 ## GitHub Discussions Workflow
 
@@ -32,7 +31,6 @@ We use the following Discussion categories:
 | Category | Purpose |
 |----------|---------|
 | **Lab Meetings** | Weekly lab meeting threads |
-| **Journal Club** | Paper discussion threads |
 | **Announcements** | Lab-wide announcements |
 | **Q&A** | Technical questions and answers |
 
@@ -52,9 +50,9 @@ Each lab meeting gets its own Discussion thread, created by that week's **meetin
 
 The meeting lead is responsible for:
 
-1. **Create the Discussion thread** by Wednesday 5pm
+1. **Create the Discussion thread** by Tuesday 5pm
 2. **Post the agenda template** (see below)
-3. **Remind team members** to add their items by Thursday 5pm
+3. **Remind team members** to add their items by Tuesday 5pm
 4. **Facilitate the meeting** and keep time
 5. **Take notes** during the meeting (or designate a note-taker)
 6. **Update the Discussion thread** with notes and action items after the meeting
@@ -64,7 +62,7 @@ The meeting lead is responsible for:
 
 Every lab member should:
 
-1. **Add agenda items** by Thursday 5pm if you have updates
+1. **Add agenda items** by Tuesday 5pm if you have updates
 2. **Review the agenda** before the meeting
 3. **Complete action items** by their due dates
 4. **Update action item status** in the Discussion thread
@@ -80,7 +78,7 @@ This is a complete step-by-step guide for the meeting lead. Follow this checklis
 Read [GitHub Fundamentals](../onboarding/github-fundamentals.qmd) first to understand how Discussions, Issues, and PRs work.
 :::
 
-### Phase 1: Create the Agenda (Wednesday)
+### Phase 1: Create the Agenda (Tuesday)
 
 **Goal:** Create a GitHub Discussion thread where everyone can add agenda items.
 
@@ -118,7 +116,7 @@ Read [GitHub Fundamentals](../onboarding/github-fundamentals.qmd) first to under
 
 #### Step 1.3: Create the Thread
 
-1. **Title:** `Lab Meeting - YYYY-MM-DD` (use this Friday's date)
+1. **Title:** `Lab Meeting - YYYY-MM-DD` (use this Thursday's date)
    - Example: `Lab Meeting - 2026-02-07`
 
 2. **Body:** Copy the [Agenda Template](#agenda-template) below and paste it
@@ -136,9 +134,9 @@ Read [GitHub Fundamentals](../onboarding/github-fundamentals.qmd) first to under
 Post in the `#general` Teams channel:
 
 ```
-📋 Lab meeting agenda is up for Friday [DATE]!
+📋 Lab meeting agenda is up for Thursday [DATE]!
 
-Please add your items by Thursday 5pm:
+Please add your items by Wednesday 5pm:
 https://github.com/rashidlab/lab-handbook/discussions/[DISCUSSION_NUMBER]
 
 This week:
@@ -146,7 +144,7 @@ This week:
 - Presenter: @[presenter name]
 ```
 
-### Phase 2: Monitor Contributions (Thursday)
+### Phase 2: Monitor Contributions (Wednesday)
 
 **Goal:** Ensure everyone has a chance to add items and send a final reminder.
 
@@ -178,7 +176,7 @@ Direct message or tag the presenter(s):
 - Ask how much time they need
 - Ask if they need anything (screen share, etc.)
 
-### Phase 3: Facilitate the Meeting (Friday)
+### Phase 3: Facilitate the Meeting (Thursday)
 
 **Goal:** Run an efficient meeting and capture key information.
 
@@ -229,7 +227,7 @@ Write it down immediately!
 3. **Confirm next week's lead and presenter**
 4. **Ask for any final items** for parking lot
 
-### Phase 4: Post Meeting Notes (Friday EOD)
+### Phase 4: Post Meeting Notes (Thursday EOD)
 
 **Goal:** Document what happened so anyone can reference it later.
 
@@ -304,7 +302,7 @@ Post in the Discussion thread or Teams:
 ```
 @[next-lead] - You're leading next week's meeting!
 
-Reminder: Create the agenda thread by Wednesday 5pm.
+Reminder: Create the agenda thread by Tuesday 5pm.
 Here's the template: [link to meetings guide]
 ```
 
@@ -376,7 +374,7 @@ The meeting lead should copy this template when creating the weekly Discussion t
 ## Lab Meeting - [DATE]
 
 **Lead:** @[github-username]
-**Time:** Friday [DATE] 2:00-3:00 PM
+**Time:** Thursday [DATE] 9:30-11:00 AM
 **Location:** [Room / Teams Link]
 
 ---
@@ -409,7 +407,7 @@ The meeting lead should copy this template when creating the weekly Discussion t
 ---
 
 ### Discussion Items
-(Team members: add your items below by Thursday 5pm)
+(Team members: add your items below by Wednesday 5pm)
 
 ---
 
@@ -467,7 +465,7 @@ After the meeting, the lead updates the original Discussion post with notes:
 - [Item deferred to later]
 
 ### Next Meeting
-- **Date:** [Next Friday]
+- **Date:** [Next Thursday]
 - **Lead:** @[next-lead]
 - **Presenter(s):** @[name1], @[name2]
 ```
@@ -491,8 +489,7 @@ Meeting notes are stored in `meeting-notes/` organized by year:
 meeting-notes/
 ├── 2026/
 │   ├── 2026-01-31-lab-meeting.md
-│   ├── 2026-02-07-lab-meeting.md
-│   └── 2026-02-07-journal-club.md
+│   └── 2026-02-07-lab-meeting.md
 └── README.md
 ```
 
@@ -647,49 +644,15 @@ When providing feedback:
 
 ---
 
-## Journal Club Format
-
-Monthly journal club follows a different format:
-
-### Paper Selection
-
-- **Nominate papers** in the `#papers` Teams channel
-- **Vote** by emoji reactions
-- **Lead** assigned 2 weeks before discussion
-
-### Discussion Thread Template
-
-```markdown
-## Journal Club - [DATE]
-
-**Paper:** [Full citation]
-**DOI:** [link]
-**Lead:** @[username]
-
-### Pre-Reading Questions
-Consider these while reading:
-1. What is the main contribution?
-2. What are the key assumptions?
-3. How does this relate to our work?
-
-### Discussion Points
-(Add your thoughts and questions below)
-
-### Summary
-(Lead adds after discussion)
-```
-
----
-
 ## Reminders and Notifications
 
 Automated reminders are sent via Microsoft Teams:
 
 | Reminder | When | Recipients |
 |----------|------|------------|
-| Create agenda thread | Wednesday 9am | Meeting lead |
-| Add agenda items | Thursday 9am | All lab members |
-| Meeting tomorrow | Thursday 5pm | All lab members |
+| Create agenda thread | Tuesday 9am | Meeting lead |
+| Add agenda items | Wednesday 9am | All lab members |
+| Meeting tomorrow | Wednesday 5pm | All lab members |
 | Action items due | Monday 9am | Assignees with items due that week |
 
 See [GitHub Actions workflow](#github-actions-reminders) for implementation details.
@@ -722,15 +685,14 @@ Located in `.github/workflows/`:
 
 | Task | Deadline |
 |------|----------|
-| Meeting lead creates Discussion thread | Wednesday 5pm |
-| All members add agenda items | Thursday 5pm |
-| Meeting lead posts notes & action items | Friday EOD |
+| Meeting lead creates Discussion thread | Tuesday 5pm |
+| All members add agenda items | Wednesday 5pm |
+| Meeting lead posts notes & action items | Thursday EOD |
 | Action items from meeting | As assigned (typically 1-2 weeks) |
 
 ### Links
 
 - [Lab Meeting Discussions](https://github.com/rashidlab/lab-handbook/discussions/categories/lab-meetings)
-- [Journal Club Discussions](https://github.com/rashidlab/lab-handbook/discussions/categories/journal-club)
 - [Meeting Schedule & Rotation](schedule.qmd)
 
 ---

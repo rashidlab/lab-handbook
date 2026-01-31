@@ -10,10 +10,10 @@ This directory contains committed meeting notes for all lab meetings.
 
 | Day | Who | What |
 |-----|-----|------|
-| **Wednesday 5pm** | Meeting Lead | Create the Discussion thread with agenda |
-| **Thursday 5pm** | Everyone | Add your agenda items to the thread |
-| **Friday** | Everyone | Attend lab meeting |
-| **Friday EOD** | Meeting Lead | Post notes to Discussion AND commit here |
+| **Tuesday 5pm** | Meeting Lead | Create the Discussion thread with agenda |
+| **Wednesday 5pm** | Everyone | Add your agenda items to the thread |
+| **Thursday 9:30-11am** | Everyone | Attend lab meeting |
+| **Thursday EOD** | Meeting Lead | Post notes to Discussion AND commit here |
 
 ---
 
@@ -119,8 +119,7 @@ git push origin main
 meeting-notes/
 ├── 2026/
 │   ├── 2026-02-07-lab-meeting.md
-│   ├── 2026-02-14-lab-meeting.md
-│   └── 2026-02-07-journal-club.md
+│   └── 2026-02-14-lab-meeting.md
 ├── TEMPLATE.md
 └── README.md
 ```
@@ -130,7 +129,6 @@ meeting-notes/
 | Meeting Type | Format |
 |--------------|--------|
 | Lab meetings | `YYYY-MM-DD-lab-meeting.md` |
-| Journal club | `YYYY-MM-DD-journal-club.md` |
 | Working groups | `YYYY-MM-DD-wg-[project-name].md` |
 
 ---
