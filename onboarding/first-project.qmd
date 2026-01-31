@@ -32,6 +32,26 @@ git add .
 git commit -m "Initial commit from template"
 ```
 
+## Set Up Data Directory
+
+::: {.callout-important}
+## Data Storage Rule
+Data files are **never committed** to Git. Use the lab project directory and symlinks.
+:::
+
+```bash
+# Create your project's data folder on Longleaf
+mkdir -p /proj/rashidlab/my-first-project/data/raw
+mkdir -p /proj/rashidlab/my-first-project/data/processed
+
+# Create a symlink from your repo to the data
+ln -s /proj/rashidlab/my-first-project/data data
+
+# Your .gitignore already excludes data/
+```
+
+Now place any data files in `/proj/rashidlab/my-first-project/data/raw/` and they'll be accessible via `data/raw/` in your code.
+
 ## Set Up Dependencies
 
 ```r
@@ -127,10 +147,13 @@ my-first-project/
 │   └── analysis.R
 ├── config/
 │   └── config.yml      # Configuration
-├── data/               # Data (gitignored)
-├── results/            # Outputs
+├── data -> /proj/rashidlab/my-first-project/data  # Symlink (gitignored)
+├── results/            # Outputs (gitignored)
 ├── figures/            # Plots
+├── scripts/
+│   └── download_data.sh  # For external users
 ├── DESCRIPTION         # Package dependencies
+├── .gitignore          # Excludes data/, results/, _targets/
 └── README.md           # Project documentation
 ```
 

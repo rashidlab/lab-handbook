@@ -44,16 +44,18 @@ my-project/
 ├── config/
 │   ├── globals.yml      # Parameters
 │   └── consistency_registry.yml
-├── data/
-│   ├── raw/             # Original data (gitignored)
+├── data -> /proj/rashidlab/my-project/data  # Symlink (gitignored)
+│   ├── raw/             # Original data
 │   └── processed/       # Cleaned data
-├── results/             # Outputs
+├── results/             # Outputs (gitignored)
 ├── figures/             # Plots
 ├── reports/             # Quarto documents
 │   └── analysis.qmd
-├── scripts/             # Standalone scripts
+├── scripts/
+│   └── download_data.sh # For external users after publication
 ├── DESCRIPTION          # Package dependencies
 ├── CLAUDE.md            # Project guidance
+├── .gitignore           # Excludes data/, results/, _targets/
 └── Makefile
 ```
 
@@ -111,9 +113,80 @@ make visualize     # Show dependency graph
 make validate      # Check consistency
 ```
 
+## Data Setup
+
+::: {.callout-important}
+## Data Files Are NOT in the Repository
+Data files are stored in `/proj/rashidlab/` and must be downloaded or symlinked after cloning.
+:::
+
+### For Lab Members (Longleaf)
+
+```bash
+# After cloning, create symlink to lab data
+cd my-project
+ln -s /proj/rashidlab/my-project/data data
+
+# Or copy if you need a local copy
+cp -r /proj/rashidlab/my-project/data .
+```
+
+### For External Users (After Publication)
+
+Add a `scripts/download_data.sh` to your repo:
+
+```bash
+#!/bin/bash
+# Download data for reproduction
+
+mkdir -p data/raw
+
+# Example: Download from GEO/Zenodo/figshare
+wget -O data/raw/dataset.csv "https://example.com/data.csv"
+
+echo "Data ready. Run 'make all' to reproduce."
+```
+
+### README Data Section Template
+
+Include this in your project README:
+
+```markdown
+## Data
+
+**Note:** Data files are not included in this repository.
+
+### Lab Members
+Data is available at `/proj/rashidlab/<project>/data/`.
+Create a symlink: `ln -s /proj/rashidlab/<project>/data data`
+
+### External Reproduction
+After cloning, download the data:
+```bash
+bash scripts/download_data.sh
+```
+
+Data sources:
+- `dataset.csv`: [GEO GSE12345](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE12345)
+- `clinical.csv`: [Zenodo 10.5281/zenodo.12345](https://zenodo.org/record/12345)
+```
+
+### Gitignore for Data
+
+Your `.gitignore` should include:
+```
+data/
+*.csv
+*.rds
+*.RData
+results/
+_targets/
+```
+
 ## Best Practices
 
 1. **Keep functions small** - One task per function
 2. **Use the config** - Never hardcode values
 3. **Document as you go** - Update README and CLAUDE.md
 4. **Commit often** - Small, focused commits
+5. **Never commit data** - Use symlinks to `/proj/rashidlab/`

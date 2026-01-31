@@ -1,139 +1,206 @@
 ---
 title: "Rashid Lab"
 subtitle: "UNC Chapel Hill · Department of Biostatistics"
+page-layout: full
+toc: false
 ---
 
-Welcome to the Rashid Lab! This site is your central hub for lab resources, documentation, and standards.
+::: {.home-welcome}
+Welcome to the Rashid Lab. This site is your central hub for lab resources, standards, and documentation.
+:::
 
 ## Quick Access
 
-::: {.grid}
+::: {.grid style="gap: 1.5rem;"}
 
 ::: {.g-col-12 .g-col-md-4}
-::: {.card .h-100}
-::: {.card-header .bg-primary .text-white}
-**Lab Dashboard**
+::: {.hero-card .hero-dashboard}
+::: {.hero-card-icon .icon-dashboard}
+📊
 :::
-::: {.card-body}
+::: {.hero-card-title}
+Lab Dashboard
+:::
+::: {.hero-card-desc}
 Meeting schedules, project status, and lab announcements.
-
-[Open Dashboard](https://rashidlab.github.io/lab-dashboard/){.btn .btn-primary .btn-lg .w-100}
 :::
+[Open Dashboard <span class="arrow">→</span>](https://rashidlab.github.io/lab-dashboard/){.hero-card-link}
 :::
 :::
 
 ::: {.g-col-12 .g-col-md-4}
-::: {.card .h-100}
-::: {.card-header .bg-success .text-white}
-**Lab Meetings**
+::: {.hero-card .hero-meetings}
+::: {.hero-card-icon .icon-meetings}
+📅
 :::
-::: {.card-body}
+::: {.hero-card-title}
+Lab Meetings
+:::
+::: {.hero-card-desc}
 Agendas, notes, action items, and the meeting schedule.
-
-[View Meetings](policies/meetings.qmd){.btn .btn-success .btn-lg .w-100}
 :::
+[View Meetings <span class="arrow">→</span>](policies/meetings.qmd){.hero-card-link}
 :::
 :::
 
 ::: {.g-col-12 .g-col-md-4}
-::: {.card .h-100}
-::: {.card-header .bg-info .text-white}
-**Lab Handbook**
+::: {.hero-card .hero-handbook}
+::: {.hero-card-icon .icon-handbook}
+📖
 :::
-::: {.card-body}
+::: {.hero-card-title}
+Lab Handbook
+:::
+::: {.hero-card-desc}
 Coding standards, policies, templates, and best practices.
-
-[Browse Handbook](handbook.qmd){.btn .btn-info .btn-lg .w-100}
 :::
+[Browse Handbook <span class="arrow">→</span>](handbook.qmd){.hero-card-link}
 :::
-:::
-
 :::
 
----
+:::
+
+<div class="section-divider"></div>
 
 ## I'm Looking For...
 
-::: {.grid}
+::: {.quick-links}
 
-::: {.g-col-6 .g-col-md-3}
-### New to the Lab?
-Start with onboarding.
+<a href="onboarding/index.qmd" class="quick-link">
+<div class="quick-link-title">New to the Lab?</div>
+<div class="quick-link-desc">Start with onboarding guides</div>
+</a>
 
-[Get Started →](onboarding/index.qmd)
-:::
+<a href="https://github.com/rashidlab/lab-handbook/discussions/categories/lab-meetings" class="quick-link">
+<div class="quick-link-title">This Week's Meeting?</div>
+<div class="quick-link-desc">Find the current agenda thread</div>
+</a>
 
-::: {.g-col-6 .g-col-md-3}
-### This Week's Meeting?
-Find the agenda thread.
+<a href="templates/index.qmd" class="quick-link">
+<div class="quick-link-title">Starting a Project?</div>
+<div class="quick-link-desc">Use our project templates</div>
+</a>
 
-[Meeting Agenda →](https://github.com/rashidlab/lab-handbook/discussions/categories/lab-meetings)
-:::
-
-::: {.g-col-6 .g-col-md-3}
-### Starting a Project?
-Use our templates.
-
-[Templates →](templates/index.qmd)
-:::
-
-::: {.g-col-6 .g-col-md-3}
-### Running on Longleaf?
-Computing resources.
-
-[Computing →](computing/index.qmd)
-:::
+<a href="computing/index.qmd" class="quick-link">
+<div class="quick-link-title">Running on Longleaf?</div>
+<div class="quick-link-desc">HPC computing resources</div>
+</a>
 
 :::
 
----
+<div class="section-divider"></div>
 
 ## Key Resources
 
-### For Students
+::: {.grid style="gap: 2rem;"}
 
-| Resource | Description |
-|----------|-------------|
-| [GitHub Fundamentals](onboarding/github-fundamentals.qmd) | Learn Issues, PRs, Discussions, and Branches |
-| [Meeting Guide](policies/meetings.qmd) | How to participate in and lead lab meetings |
-| [Meeting Schedule](policies/schedule.qmd) | Rotation and upcoming meetings |
-| [Tools Setup](onboarding/tools-setup.qmd) | Configure your development environment |
+::: {.g-col-12 .g-col-md-4}
+::: {.resource-section}
+<div class="resource-section-title">For Students</div>
+::: {.resource-list}
+::: {.resource-item}
+[GitHub Fundamentals](onboarding/github-fundamentals.qmd){.resource-link}
+<span class="resource-desc">Issues, PRs, Discussions</span>
+:::
+::: {.resource-item}
+[Meeting Guide](policies/meetings.qmd){.resource-link}
+<span class="resource-desc">How to lead and participate</span>
+:::
+::: {.resource-item}
+[Meeting Schedule](policies/schedule.qmd){.resource-link}
+<span class="resource-desc">Rotation and upcoming dates</span>
+:::
+::: {.resource-item}
+[Tools Setup](onboarding/tools-setup.qmd){.resource-link}
+<span class="resource-desc">Configure your environment</span>
+:::
+:::
+:::
+:::
 
-### For Development
+::: {.g-col-12 .g-col-md-4}
+::: {.resource-section}
+<div class="resource-section-title">For Development</div>
+::: {.resource-list}
+::: {.resource-item}
+[R Style Guide](coding-standards/r-style.qmd){.resource-link}
+<span class="resource-desc">Base R + data.table</span>
+:::
+::: {.resource-item}
+[Git Practices](coding-standards/git-practices.qmd){.resource-link}
+<span class="resource-desc">Commits, branches, PRs</span>
+:::
+::: {.resource-item}
+[Targets Pipeline](coding-standards/targets-pipeline.qmd){.resource-link}
+<span class="resource-desc">Reproducible workflows</span>
+:::
+::: {.resource-item}
+[Computing Guide](computing/index.qmd){.resource-link}
+<span class="resource-desc">Longleaf and Slurm</span>
+:::
+:::
+:::
+:::
 
-| Resource | Description |
-|----------|-------------|
-| [R Style Guide](coding-standards/r-style.qmd) | Base R + data.table conventions |
-| [Git Practices](coding-standards/git-practices.qmd) | Commits, branches, PRs, and code review |
-| [Targets Pipeline](coding-standards/targets-pipeline.qmd) | Reproducible workflows with `{targets}` |
-| [Computing Guide](computing/index.qmd) | Longleaf, Slurm, and HPC resources |
+::: {.g-col-12 .g-col-md-4}
+::: {.resource-section}
+<div class="resource-section-title">For Projects</div>
+::: {.resource-list}
+::: {.resource-item}
+[Project Templates](templates/index.qmd){.resource-link}
+<span class="resource-desc">Starters for papers & packages</span>
+:::
+::: {.resource-item}
+[Project Consistency](project-consistency/index.qmd){.resource-link}
+<span class="resource-desc">Keep code and docs in sync</span>
+:::
+::: {.resource-item}
+[Methods Paper](templates/methods-paper.qmd){.resource-link}
+<span class="resource-desc">Template for methodology work</span>
+:::
+::: {.resource-item}
+[Data Management](policies/index.qmd#data-management){.resource-link}
+<span class="resource-desc">Storage and sharing guidelines</span>
+:::
+:::
+:::
+:::
 
-### For Projects
+:::
 
-| Resource | Description |
-|----------|-------------|
-| [Project Templates](templates/index.qmd) | Starters for papers, packages, trials |
-| [Project Consistency](project-consistency/index.qmd) | Keep code and manuscripts in sync |
-| [Methods Paper Template](templates/methods-paper.qmd) | Structure for methodology papers |
-
----
+<div class="section-divider"></div>
 
 ## External Links
 
-| Link | Description |
-|------|-------------|
-| [GitHub Organization](https://github.com/rashidlab) | All lab repositories |
-| [Lab Dashboard](https://rashidlab.github.io/lab-dashboard/) | Schedules and announcements |
-| [Meeting Discussions](https://github.com/rashidlab/lab-handbook/discussions/categories/lab-meetings) | Weekly meeting threads |
-| [Longleaf Docs](https://help.rc.unc.edu/longleaf-cluster/) | UNC HPC documentation |
+::: {.external-links}
+[GitHub Organization](https://github.com/rashidlab){.external-link}
+[Lab Dashboard](https://rashidlab.github.io/lab-dashboard/){.external-link}
+[Meeting Discussions](https://github.com/rashidlab/lab-handbook/discussions/categories/lab-meetings){.external-link}
+[Longleaf Docs](https://help.rc.unc.edu/longleaf-cluster/){.external-link}
+:::
 
----
+<div class="section-divider"></div>
 
 ## Recent Updates
 
-- **2026-01-31**: Comprehensive meeting workflow with GitHub Discussions
-- **2026-01-31**: GitHub Fundamentals guide for new students
-- **2026-01-30**: Initial documentation site launch
+::: {.updates-list}
+::: {.update-item}
+<span class="update-date">Jan 31</span>
+<span class="update-text">Added data management guidelines and storage conventions</span>
+:::
+::: {.update-item}
+<span class="update-date">Jan 31</span>
+<span class="update-text">Comprehensive meeting workflow with GitHub Discussions</span>
+:::
+::: {.update-item}
+<span class="update-date">Jan 31</span>
+<span class="update-text">GitHub Fundamentals guide for new students</span>
+:::
+::: {.update-item}
+<span class="update-date">Jan 30</span>
+<span class="update-text">Initial documentation site launch</span>
+:::
+:::
 
 ---
 

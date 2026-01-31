@@ -29,6 +29,7 @@ The lab uses specific conventions - be aware when writing examples:
 | **Dependencies** | DESCRIPTION file | renv.lock |
 | **Communication** | Microsoft Teams | Slack |
 | **HPC** | Longleaf (UNC cluster) | Local for production |
+| **Data storage** | `/proj/rashidlab/` + symlinks | Committing data to Git |
 
 ## Common Commands
 

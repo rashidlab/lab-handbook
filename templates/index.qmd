@@ -94,11 +94,18 @@ cd my-project
 rm -rf .git
 git init
 
-# 3. Install dependencies
+# 3. Set up data directory (choose one)
+# Option A: Symlink to lab storage (Longleaf)
+ln -s /proj/rashidlab/my-project/data data
+
+# Option B: Create local data folder (will be gitignored)
+mkdir -p data/raw data/processed
+
+# 4. Install dependencies
 # In R:
 # Install packages listed in DESCRIPTION or README
 
-# 4. Run the example
+# 5. Run the example
 targets::tar_make()
 ```
 
@@ -111,6 +118,13 @@ targets::tar_make()
 | `R/` | Reusable functions |
 | `DESCRIPTION` | Package dependencies |
 | `CLAUDE.md` | Project guidance |
+| `.gitignore` | Excludes data/, results/, _targets/ |
+| `scripts/download_data.sh` | Data setup for external users |
+
+::: {.callout-important}
+## Data Storage Convention
+Data files are **never committed** to repositories. Store data in `/proj/rashidlab/<project>/data/` and use symlinks from your repo. See [Data Management](../policies/index.qmd#data-management) for details.
+:::
 
 ## Consistency Framework
 

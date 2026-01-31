@@ -45,10 +45,93 @@ All code must be version controlled with Git:
 
 ### Data Management
 
-- **Raw data**: Never modify, always preserve
-- **Processed data**: Document all transformations
-- **Sensitive data**: Follow IRB protocols, never commit to Git
-- **Backups**: Use Longleaf `/proj/rashidlab/` for shared data
+::: {.callout-important}
+## Never Push Data to Git
+Data files—especially large ones—should **never** be committed to repositories. Use the lab project directory for data storage and symlinks for access.
+:::
+
+#### Storage Principles
+
+| Data Type | Location | Git Status |
+|-----------|----------|------------|
+| **Raw data** | `/proj/rashidlab/<project>/data/raw/` | Never commit |
+| **Processed data** | `/proj/rashidlab/<project>/data/processed/` | Never commit |
+| **Small configs** | `config/` in repo | Commit |
+| **Results** | `results/` in repo | Usually gitignore |
+
+#### Why Not in Repos?
+
+1. **Size limits**: GitHub has a 100MB file limit; data often exceeds this
+2. **History bloat**: Binary files in Git history cause repo bloat
+3. **Sensitive data**: PHI and identifiable data must never be in public repos
+4. **Collaboration**: Large files slow down `git clone` for collaborators
+
+#### Recommended Workflow
+
+```bash
+# 1. Store data in lab project directory
+cp dataset.csv /proj/rashidlab/my-project/data/raw/
+
+# 2. Create symlink from your repo (optional, for convenience)
+cd my-project
+ln -s /proj/rashidlab/my-project/data data
+
+# 3. Ensure data/ is in .gitignore
+echo "data/" >> .gitignore
+```
+
+#### After Publication
+
+When the paper is accepted:
+
+1. **Public data**: Upload to appropriate repository (GEO, Zenodo, figshare)
+2. **Update README**: Add data download instructions with URLs
+3. **Include setup script**: `scripts/download_data.sh` to automate retrieval
+
+Example setup script:
+```bash
+#!/bin/bash
+# scripts/download_data.sh - Download data after cloning repo
+
+mkdir -p data/raw
+
+# Download from GEO
+wget -O data/raw/expression.csv "https://geo.example.com/GSE12345/data.csv"
+
+# Download from Zenodo
+wget -O data/raw/clinical.csv "https://zenodo.org/record/12345/files/clinical.csv"
+
+echo "Data download complete. Run 'make all' to reproduce results."
+```
+
+#### Gitignore Template
+
+Your `.gitignore` should include:
+```
+# Data (never commit)
+data/
+*.csv
+*.tsv
+*.xlsx
+*.rds
+*.RData
+
+# Large outputs
+results/
+_targets/
+
+# Sensitive
+*.pem
+*.key
+.env
+```
+
+#### Key Principles
+
+- **Raw data**: Never modify, always preserve original
+- **Processed data**: Document all transformations in code
+- **Sensitive data**: Follow IRB protocols strictly
+- **Backups**: Lab project directory (`/proj/rashidlab/`) is backed up
 
 ### Reproducibility
 
