@@ -201,10 +201,10 @@ Speaker notes go here
 
 ### Code with Output
 
-````markdown
+````
 ## R Example
 
-```{r}
+```{{r}}
 #| echo: true
 #| fig-width: 8
 #| fig-height: 4
