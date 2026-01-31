@@ -55,6 +55,14 @@ website:
         - policies/index.qmd
         - policies/project-handoff.qmd
 
+    - title: "Branding"
+      contents:
+        - branding/index.qmd
+        - branding/presentations.qmd
+        - branding/colors.qmd
+        - branding/assets.qmd
+        - branding/claude-template.qmd
+
     - title: "Project Consistency"
       contents:
         - project-consistency/index.qmd
@@ -69,14 +77,6 @@ website:
         - templates/research-project.qmd
         - templates/methods-paper.qmd
         - templates/package-development.qmd
-
-    - title: "Branding"
-      contents:
-        - branding/index.qmd
-        - branding/presentations.qmd
-        - branding/colors.qmd
-        - branding/assets.qmd
-        - branding/claude-template.qmd
 
   page-footer:
     center: |
