@@ -13,7 +13,6 @@ We have three main templates:
 |----------|----------|
 | [Research Project](../templates/research-project.qmd) | General analysis projects |
 | [Methods Paper](../templates/methods-paper.qmd) | Methodology papers with simulations |
-| [Clinical Trial](../templates/clinical-trial.qmd) | Adaptive trial design |
 
 ## Clone the Template
 

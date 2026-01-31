@@ -61,30 +61,6 @@ Template for methodology papers with simulation studies.
 :::
 
 ::: {.template-card}
-### Clinical Trial
-
-Template for Bayesian adaptive clinical trial design.
-
-<span class="badge badge-r">R</span>
-<span class="badge badge-targets">targets</span>
-
-**Best for:**
-
-- Trial design calibration
-- Operating characteristics
-- Regulatory submissions
-
-**Features:**
-
-- Multi-fidelity simulation
-- Bayesian optimization
-- SAP generation
-- Protocol documentation
-
-[Learn More →](clinical-trial.qmd) | [GitHub](https://github.com/rashidlab/template-clinical-trial)
-:::
-
-::: {.template-card}
 ### R Package Development
 
 Standards for creating reusable R packages separate from paper repositories.

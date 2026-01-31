@@ -577,6 +577,5 @@ Consider using a shared package library for targets projects:
 ### Project Templates
 
 See lab templates for pre-configured targets setups:
-- `template-clinical-trial/` - Adaptive trial simulations
 - `template-methods-paper/` - Methodology papers
 - `template-research-project/` - General research

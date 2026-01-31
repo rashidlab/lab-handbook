@@ -77,7 +77,6 @@ Don't start from scratch. Use these templates to ensure consistency and complete
 |----------|----------|
 | [Research Project](templates/research-project.qmd) | General analysis project with data, code, and results |
 | [Methods Paper](templates/methods-paper.qmd) | Methodology paper with simulations and Quarto manuscript |
-| [Clinical Trial](templates/clinical-trial.qmd) | Trial simulation and calibration (BATON-style) |
 | [R Package](templates/package-development.qmd) | Developing an R package for reuse |
 
 Each template includes:
@@ -164,7 +163,6 @@ Rashid Lab Handbook
 ├── Project Templates
 │   ├── Research Project
 │   ├── Methods Paper
-│   ├── Clinical Trial
 │   └── R Package
 ├── Project Consistency
 │   ├── Overview

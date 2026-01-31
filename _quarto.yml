@@ -64,7 +64,6 @@ website:
         - templates/index.qmd
         - templates/research-project.qmd
         - templates/methods-paper.qmd
-        - templates/clinical-trial.qmd
         - templates/package-development.qmd
 
   page-footer:

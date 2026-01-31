@@ -80,7 +80,6 @@ lab-handbook/
 │   ├── index.qmd            # Template overview
 │   ├── research-project.qmd # General research project
 │   ├── methods-paper.qmd    # Methods paper repo structure
-│   ├── clinical-trial.qmd   # Clinical trial simulation
 │   └── package-development.qmd  # R package development
 ├── project-consistency/     # Reproducibility framework
 │   ├── index.qmd            # Overview
