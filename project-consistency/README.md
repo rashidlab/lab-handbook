@@ -253,6 +253,54 @@ method_claims:
 | `scripts/validate_consistency.R` | Validation logic |
 | `Makefile` | Integration targets |
 
+## Template Files
+
+All templates are in `templates/` directory:
+
+### Documentation Templates
+
+| Template | Purpose |
+|----------|---------|
+| `CLAUDE.md` | Project guidance for Claude Code |
+| `DEFAULTS.md` | Parameter defaults registry |
+| `CONSISTENCY_STANDARDS.md` | Alignment rules and checklists |
+| `docs/DATA_PROVENANCE.md` | Figure/table traceability |
+
+### Configuration Templates
+
+| Template | Purpose |
+|----------|---------|
+| `config/globals.yml` | Centralized project configuration |
+| `config/consistency_registry.yml` | Manuscript claim registry |
+| `R/globals_loader.R` | Config loader with caching |
+
+### Validation Templates
+
+| Template | Purpose |
+|----------|---------|
+| `scripts/validate_consistency.R` | Consistency validation script |
+| `Makefile.snippet` | Make target integration |
+
+### Mode Switching (from DeSurv-paper)
+
+| Template | Purpose |
+|----------|---------|
+| `local_config/setup.sh` | Quick/full mode switching |
+| `local_config/quick/` | Development settings |
+| `local_config/full/` | Production settings |
+
+## Copying Templates to New Project
+
+```bash
+# Copy all templates
+cp -r lab-handbook/project-consistency/templates/* my-project/
+
+# Or copy specific files
+cp lab-handbook/project-consistency/templates/CLAUDE.md my-project/
+cp lab-handbook/project-consistency/templates/config/globals.yml my-project/config/
+cp -r lab-handbook/project-consistency/templates/R/ my-project/R/
+```
+
 ## Related Documentation
 
 - [Coding Standards](../coding-standards/README.md) - General code quality

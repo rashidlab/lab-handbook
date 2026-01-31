@@ -198,7 +198,7 @@ tar_target(
 
 ## Slurm Integration (Longleaf)
 
-### Setup
+### Basic Setup
 
 ```r
 # _targets.R
@@ -223,6 +223,82 @@ tar_option_set(
   # Store large objects on workers
   storage = "worker"
 )
+```
+
+### Multi-Controller Architecture (Recommended)
+
+For pipelines with heterogeneous tasks (some memory-intensive, some CPU-intensive), use multiple controllers:
+
+```r
+library(crew)
+
+# Controller for general tasks (more workers, less memory)
+default_controller <- crew_controller_local(
+  name = "default",
+  workers = 8,
+  seconds_idle = 120
+)
+
+# Controller for memory-intensive tasks (fewer workers, more memory)
+heavy_controller <- crew_controller_local(
+  name = "heavy",
+  workers = 2,
+  seconds_idle = 300
+)
+
+# Controller for I/O-bound tasks
+io_controller <- crew_controller_local(
+  name = "io",
+  workers = 4,
+  seconds_idle = 120
+)
+
+# Combine into controller group
+tar_option_set(
+  controller = crew_controller_group(
+    default_controller,
+    heavy_controller,
+    io_controller
+  ),
+  error = "continue"
+)
+
+# Then assign tasks to appropriate controllers:
+tar_target(
+  heavy_computation,
+  run_memory_intensive_task(data),
+  resources = tar_resources(crew = tar_resources_crew(controller = "heavy"))
+)
+```
+
+### Longleaf-Specific Configuration
+
+```r
+# Longleaf Slurm controller with UNC-specific settings
+longleaf_controller <- crew_controller_slurm(
+  name = "longleaf",
+  workers = 50,                          # Adjust based on fairshare
+  slurm_partition = "general",           # or "gpu", "bigmem"
+  slurm_time_minutes = 1440,             # 24 hours max for general
+  slurm_cpus_per_task = 4,
+  slurm_memory_gigabytes_per_cpu = 4,    # 16GB total per job
+  slurm_log_output = "logs/slurm_%A_%a.out",
+  slurm_log_error = "logs/slurm_%A_%a.err",
+  # Longleaf-specific options
+slurm_partition = "general"
+)
+
+# For GPU jobs
+gpu_controller <- crew_controller_slurm(
+  name = "gpu",
+  workers = 4,
+  slurm_partition = "gpu",
+  slurm_time_minutes = 1440,
+  slurm_cpus_per_task = 8,
+  slurm_memory_gigabytes_per_cpu = 8,
+  slurm_gres = "gpu:1"                   # Request 1 GPU
+)
+```
 ```
 
 ### Worker Deployment

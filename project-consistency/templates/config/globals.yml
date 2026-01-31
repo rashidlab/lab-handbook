@@ -1,0 +1,113 @@
+# =============================================================================
+# Global Configuration
+# =============================================================================
+# Single source of truth for all project parameters.
+# Load via: source("R/globals_loader.R"); config <- load_globals()
+# =============================================================================
+
+# Project metadata
+project:
+  name: "PROJECT_NAME"
+  version: "0.1.0"
+  seed: 2024
+
+# =============================================================================
+# Analysis Parameters
+# =============================================================================
+
+analysis:
+  # Statistical settings
+  alpha: 0.05                    # Significance level
+  n_bootstrap: 1000              # Bootstrap replications
+
+  # Convergence criteria
+  max_iter: 2000
+  tolerance: 1.0e-6
+
+# =============================================================================
+# Simulation Parameters
+# =============================================================================
+
+simulation:
+  # Replication counts by fidelity
+  n_reps_low: 500
+  n_reps_med: 2000
+  n_reps_high: 10000
+
+  # Scenario settings
+  n_scenarios: all               # "all" or specific number
+
+# =============================================================================
+# Bayesian Optimization Settings
+# =============================================================================
+
+bo:
+  # Budget allocation
+  n_init: 40                     # Initial design points
+  n_iter: 80                     # BO iterations
+  budget_total: 120              # Total evaluations
+
+  # Acquisition function
+  acquisition: "ECI"             # Expected Constrained Improvement
+
+  # Candidate pool
+  candidate_pool: 4000
+
+# =============================================================================
+# Parameter Bounds (by analysis type)
+# =============================================================================
+
+bounds:
+  default:
+    param1:
+      lower: 0.0
+      upper: 1.0
+    param2:
+      lower: 10
+      upper: 100
+
+# =============================================================================
+# Constraints
+# =============================================================================
+
+constraints:
+  type1_max: 0.10                # Maximum type I error
+  power_min: 0.80                # Minimum power
+
+# =============================================================================
+# Computing Resources
+# =============================================================================
+
+computing:
+  # Local execution
+  local:
+    workers: 4
+    memory_gb: 16
+
+  # Slurm/Longleaf
+  slurm:
+    partition: "general"
+    workers: 20
+    cpus_per_task: 4
+    memory_gb_per_cpu: 4
+    time_minutes: 1440           # 24 hours
+
+# =============================================================================
+# Diagnostics Settings
+# =============================================================================
+
+diagnostics:
+  thresholds:
+    boundary_rate_max: 0.30      # Trigger if >30% hit rate
+    validation_rate_min: 0.50    # Trigger if <50% validation
+    feasibility_rate_min: 0.30   # Recommend narrowing if <30%
+    convergence_improvement_min: 0.05
+
+# =============================================================================
+# Output Directories
+# =============================================================================
+
+output:
+  results: "results/"
+  figures: "figures/"
+  logs: "logs/"

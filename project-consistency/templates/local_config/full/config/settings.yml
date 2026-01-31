@@ -1,0 +1,37 @@
+# =============================================================================
+# Full Mode Configuration
+# =============================================================================
+# Production settings for publication-quality results (~12-48 hours)
+# Use: ./local_config/setup.sh --full
+# =============================================================================
+
+mode: full
+
+# Simulation settings (full for publication)
+simulation:
+  n_reps: 10000      # Full replication count
+  n_scenarios: all   # Run all defined scenarios
+
+# Bayesian Optimization (full budget)
+bo:
+  n_init: 50         # Thorough initial exploration
+  n_iter: 100        # Full optimization budget
+  candidate_pool: 4000  # Large candidate set
+
+# Model fitting
+model:
+  max_iter: 2000     # Allow full convergence
+  n_init: 100        # Multiple initializations
+  tol: 1e-6          # Tight convergence
+
+# Computing resources
+resources:
+  workers: 8         # Full parallelization
+  memory_gb: 16
+  timeout_hours: 48
+
+# Validation (comprehensive)
+validation:
+  run_full_validation: true
+  run_bootstrap: true
+  bootstrap_reps: 1000
