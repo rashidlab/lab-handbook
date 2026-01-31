@@ -58,7 +58,8 @@ quarto publish gh-pages
 ```
 lab-handbook/
 ├── _quarto.yml              # Site configuration
-├── index.qmd                # Home page
+├── index.qmd                # Home page (quick access cards)
+├── handbook.qmd             # Handbook landing page (all sections overview)
 ├── onboarding/              # Getting started guides
 │   ├── index.qmd            # Welcome page
 │   ├── first-week.qmd       # First week checklist

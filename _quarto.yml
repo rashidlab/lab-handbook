@@ -12,23 +12,15 @@ website:
     left:
       - text: "Home"
         href: index.qmd
-      - text: "Getting Started"
-        href: onboarding/index.qmd
+      - text: "Meetings"
+        href: policies/meetings.qmd
       - text: "Handbook"
-        menu:
-          - text: "Coding Standards"
-            href: coding-standards/index.qmd
-          - text: "Targets Pipeline"
-            href: coding-standards/targets-pipeline.qmd
-          - text: "Project Consistency"
-            href: project-consistency/index.qmd
-          - text: "Policies"
-            href: policies/index.qmd
-      - text: "Templates"
-        href: templates/index.qmd
+        href: handbook.qmd
       - text: "Computing"
         href: computing/index.qmd
     right:
+      - text: "Dashboard"
+        href: https://rashidlab.github.io/lab-dashboard/
       - icon: github
         href: https://github.com/rashidlab
 
@@ -42,6 +34,11 @@ website:
         - onboarding/github-fundamentals.qmd
         - onboarding/first-project.qmd
 
+    - title: "Lab Meetings"
+      contents:
+        - policies/meetings.qmd
+        - policies/schedule.qmd
+
     - title: "Coding Standards"
       contents:
         - coding-standards/index.qmd
@@ -50,6 +47,10 @@ website:
         - coding-standards/git-practices.qmd
         - coding-standards/targets-pipeline.qmd
 
+    - title: "Policies"
+      contents:
+        - policies/index.qmd
+
     - title: "Project Consistency"
       contents:
         - project-consistency/index.qmd
@@ -57,12 +58,6 @@ website:
         - project-consistency/method-claims.qmd
         - project-consistency/data-provenance.qmd
         - project-consistency/validation.qmd
-
-    - title: "Policies"
-      contents:
-        - policies/index.qmd
-        - policies/meetings.qmd
-        - policies/schedule.qmd
 
     - title: "Templates"
       contents:

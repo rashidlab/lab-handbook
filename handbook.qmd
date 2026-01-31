@@ -1,0 +1,177 @@
+---
+title: "Lab Handbook"
+subtitle: "Standards, policies, and best practices for the Rashid Lab"
+---
+
+The Lab Handbook contains everything you need to know about how we work: coding conventions, collaboration workflows, project templates, and lab policies. Use this page to find what you need.
+
+---
+
+## Getting Started
+
+**For new lab members** - Start here to get set up and productive.
+
+::: {.callout-tip}
+## New to the lab?
+Complete these in your first week: [First Week Checklist](onboarding/first-week.qmd)
+:::
+
+| Guide | What You'll Learn |
+|-------|-------------------|
+| [Welcome & Overview](onboarding/index.qmd) | Lab orientation and key resources |
+| [First Week](onboarding/first-week.qmd) | Day-by-day checklist for your first week |
+| [Tools Setup](onboarding/tools-setup.qmd) | Install R, Git, configure Longleaf access |
+| [GitHub Fundamentals](onboarding/github-fundamentals.qmd) | Issues, PRs, Discussions, Branches - explained simply |
+| [First Project](onboarding/first-project.qmd) | Clone a template and run your first analysis |
+
+---
+
+## Lab Meetings & Policies
+
+**How we communicate and collaborate** - Meeting workflows, communication norms, and lab policies.
+
+| Guide | What You'll Learn |
+|-------|-------------------|
+| [Lab Meetings](policies/meetings.qmd) | Complete guide to agendas, notes, action items, and leading meetings |
+| [Meeting Schedule](policies/schedule.qmd) | Rotation, calendar, and who's presenting when |
+| [Lab Policies](policies/index.qmd) | Communication, data management, publications, authorship |
+
+**Key meeting info:**
+
+- **When:** Thursdays 9:30-11:00am
+- **Agenda deadline:** Wednesday 5pm
+- **Where to find agendas:** [GitHub Discussions](https://github.com/rashidlab/lab-handbook/discussions/categories/lab-meetings)
+
+---
+
+## Coding Standards
+
+**How we write code** - Style guides, version control, and reproducible pipelines.
+
+Our code should be readable, reproducible, and maintainable. These guides establish lab conventions.
+
+| Guide | What You'll Learn |
+|-------|-------------------|
+| [R Style Guide](coding-standards/r-style.qmd) | Base R + data.table conventions, naming, documentation |
+| [Python Style Guide](coding-standards/python-style.qmd) | Python conventions for the rare Python project |
+| [Git Practices](coding-standards/git-practices.qmd) | Commits, branches, Issues, Pull Requests, code review |
+| [Targets Pipeline](coding-standards/targets-pipeline.qmd) | Reproducible workflows with `{targets}` and Slurm |
+
+::: {.callout-note}
+## Key Conventions
+- **Data manipulation:** Base R + `data.table` (not tidyverse)
+- **Dependencies:** DESCRIPTION file (not renv)
+- **Version control:** Git + GitHub for everything
+- **Reproducibility:** `{targets}` for computational pipelines
+:::
+
+---
+
+## Project Templates
+
+**How we structure projects** - Starter templates for common research workflows.
+
+Don't start from scratch. Use these templates to ensure consistency and completeness.
+
+| Template | Use When |
+|----------|----------|
+| [Research Project](templates/research-project.qmd) | General analysis project with data, code, and results |
+| [Methods Paper](templates/methods-paper.qmd) | Methodology paper with simulations and Quarto manuscript |
+| [Clinical Trial](templates/clinical-trial.qmd) | Trial simulation and calibration (BATON-style) |
+| [R Package](templates/package-development.qmd) | Developing an R package for reuse |
+
+Each template includes:
+- Directory structure
+- README template
+- Essential files (DESCRIPTION, .gitignore, etc.)
+- Instructions for getting started
+
+---
+
+## Project Consistency
+
+**How we keep things in sync** - Ensuring code matches manuscripts.
+
+When code changes, manuscripts can become inconsistent. This framework prevents that.
+
+| Guide | What You'll Learn |
+|-------|-------------------|
+| [Overview](project-consistency/index.qmd) | Why consistency matters and how the framework works |
+| [Config Values](project-consistency/config-values.qmd) | Single source of truth for parameters |
+| [Method Claims](project-consistency/method-claims.qmd) | Registry for claims that must match code output |
+| [Data Provenance](project-consistency/data-provenance.qmd) | Track where data comes from |
+| [Validation](project-consistency/validation.qmd) | Automated checks before submission |
+
+---
+
+## Computing Resources
+
+**How we use HPC** - Longleaf, Slurm, and computational environments.
+
+Most production work runs on UNC's Longleaf cluster. This guide covers setup and usage.
+
+| Topic | What You'll Learn |
+|-------|-------------------|
+| [Computing Guide](computing/index.qmd) | Longleaf access, Slurm basics, job submission |
+| [Tools Setup](onboarding/tools-setup.qmd) | Module system, VS Code Remote SSH |
+| [Targets Pipeline](coding-standards/targets-pipeline.qmd) | Running `{targets}` with `crew.cluster` on Slurm |
+
+::: {.callout-important}
+## Production Work → Longleaf
+Develop locally if you prefer, but run production analyses on Longleaf for reproducibility and collaboration.
+:::
+
+---
+
+## Quick Reference
+
+### Most-Used Pages
+
+1. [Lab Meetings](policies/meetings.qmd) - Weekly meeting workflow
+2. [GitHub Fundamentals](onboarding/github-fundamentals.qmd) - How we use GitHub
+3. [Git Practices](coding-standards/git-practices.qmd) - Commits, PRs, code review
+4. [R Style Guide](coding-standards/r-style.qmd) - Code conventions
+5. [Meeting Schedule](policies/schedule.qmd) - Who's leading/presenting
+
+### External Links
+
+- [GitHub Organization](https://github.com/rashidlab) - All lab repos
+- [Meeting Discussions](https://github.com/rashidlab/lab-handbook/discussions/categories/lab-meetings) - Weekly threads
+- [Lab Dashboard](https://rashidlab.github.io/lab-dashboard/) - Schedules and status
+- [Longleaf Docs](https://help.rc.unc.edu/longleaf-cluster/) - UNC HPC
+
+---
+
+## Site Map
+
+```
+Rashid Lab Handbook
+├── Getting Started
+│   ├── Welcome & Overview
+│   ├── First Week Checklist
+│   ├── Tools Setup
+│   ├── GitHub Fundamentals
+│   └── First Project
+├── Lab Meetings & Policies
+│   ├── Lab Meetings Guide
+│   ├── Meeting Schedule
+│   └── Lab Policies
+├── Coding Standards
+│   ├── R Style Guide
+│   ├── Python Style Guide
+│   ├── Git Practices
+│   └── Targets Pipeline
+├── Project Templates
+│   ├── Research Project
+│   ├── Methods Paper
+│   ├── Clinical Trial
+│   └── R Package
+├── Project Consistency
+│   ├── Overview
+│   ├── Config Values
+│   ├── Method Claims
+│   ├── Data Provenance
+│   └── Validation
+└── Computing
+    └── Longleaf & Slurm Guide
+```
