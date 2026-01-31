@@ -87,6 +87,11 @@ Coding standards, policies, templates, and best practices.
 <div class="quick-link-desc">HPC computing resources</div>
 </a>
 
+<a href="branding/presentations.qmd" class="quick-link">
+<div class="quick-link-title">Making a Presentation?</div>
+<div class="quick-link-desc">Slides with lab branding</div>
+</a>
+
 :::
 
 <div class="section-divider"></div>

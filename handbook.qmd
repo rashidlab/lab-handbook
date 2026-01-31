@@ -103,6 +103,20 @@ When code changes, manuscripts can become inconsistent. This framework prevents 
 
 ---
 
+## Branding & Presentations
+
+**How we present our work** - Slides, colors, and visual identity.
+
+| Guide | What You'll Learn |
+|-------|-------------------|
+| [Branding Overview](branding/index.qmd) | Lab visual identity guidelines |
+| [Presentations](branding/presentations.qmd) | Quarto RevealJS slides with lab styling |
+| [Color Palette](branding/colors.qmd) | UNC colors (Carolina Blue, Navy) |
+| [Assets](branding/assets.qmd) | Logos and downloadable files |
+| [CLAUDE.md Template](branding/claude-template.qmd) | AI assistant guidance template |
+
+---
+
 ## Computing Resources
 
 **How we use HPC** - Longleaf, Slurm, and computational environments.
@@ -150,20 +164,28 @@ Rashid Lab Handbook
 │   ├── First Week Checklist
 │   ├── Tools Setup
 │   ├── GitHub Fundamentals
-│   └── First Project
+│   ├── First Project
+│   └── Glossary
 ├── Lab Meetings & Policies
 │   ├── Lab Meetings Guide
 │   ├── Meeting Schedule
-│   └── Lab Policies
+│   ├── Lab Policies
+│   └── Project Handoff
 ├── Coding Standards
 │   ├── R Style Guide
 │   ├── Python Style Guide
 │   ├── Git Practices
 │   └── Targets Pipeline
+├── Branding & Presentations
+│   ├── Overview
+│   ├── Presentations (RevealJS)
+│   ├── Color Palette
+│   ├── Assets & Logos
+│   └── CLAUDE.md Template
 ├── Project Templates
 │   ├── Research Project
 │   ├── Methods Paper
-│   └── R Package
+│   └── R Package Development
 ├── Project Consistency
 │   ├── Overview
 │   ├── Config Values
