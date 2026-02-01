@@ -1,7 +1,31 @@
 ---
 title: "MCP Servers"
 subtitle: "External tool integrations"
+learning-path:
+  phase: 4
+  order: 6
+  level: advanced
+  time: "10 min"
+  prerequisites:
+    - index.qmd
+date-modified: 2026-02-01
 ---
+
+::: {.breadcrumb-nav}
+[Claude Code](../index.qmd) [/]{.separator} [Advanced](index.qmd) [/]{.separator} [MCP Servers]{.current}
+:::
+
+::: {.learning-path-indicator}
+::: {.path-meta}
+[[Advanced]{.level-badge .level-advanced}]{.meta-item}
+[10 min read]{.meta-item}
+[Phase 4: Advanced]{.meta-item}
+:::
+::: {.path-nav}
+[← Hooks](hooks.qmd)
+[Next: Enforcing Standards →](enforcing-standards.qmd)
+:::
+:::
 
 MCP (Model Context Protocol) servers connect Claude to external tools, databases, and services.
 

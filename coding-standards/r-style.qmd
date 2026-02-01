@@ -1,6 +1,8 @@
 ---
 title: "R Style Guide"
 subtitle: "Base R conventions for lab code"
+reading-time: "8 min"
+date-modified: 2026-02-01
 ---
 
 ::: {.callout-tip}

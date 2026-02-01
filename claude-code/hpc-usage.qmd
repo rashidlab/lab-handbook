@@ -1,7 +1,37 @@
 ---
 title: "HPC Usage"
 subtitle: "Using Claude Code on Longleaf"
+learning-path:
+  phase: 3
+  order: 3
+  level: intermediate
+  time: "10 min"
+  prerequisites:
+    - installation.qmd
+date-modified: 2026-02-01
 ---
+
+::: {.learning-path-indicator}
+::: {.path-meta}
+[[Intermediate]{.level-badge .level-intermediate}]{.meta-item}
+[10 min read]{.meta-item}
+[Phase 3: Daily Work]{.meta-item}
+:::
+::: {.path-nav}
+[← Lab Integration](lab-integration.qmd)
+[Next: Advanced →](advanced/index.qmd)
+:::
+:::
+
+::: {.callout-prereq}
+::: {.prereq-title}
+Prerequisites
+:::
+::: {.prereq-list}
+- [Installation](installation.qmd) (Longleaf section)
+- Longleaf account (see [Computing Resources](../computing/index.qmd))
+:::
+:::
 
 This guide covers using Claude Code on the Longleaf HPC cluster. For general HPC documentation, see [Computing Resources](../computing/index.qmd).
 

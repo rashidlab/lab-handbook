@@ -144,6 +144,7 @@ p {
   font-size: 1.1rem;
   padding: 0 !important;
   margin: 0 !important;
+  margin-right: 1.5rem !important;  // Space between logo and nav items
 
   img {
     height: 36px !important;
@@ -659,6 +660,499 @@ code {
   font-size: 0.9rem;
   color: $gray-500;
   margin-top: 2rem;
+}
+
+// ============================================
+// LEARNING PATH SYSTEM
+// ============================================
+
+// Level badges (beginner/intermediate/advanced)
+.level-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  &.level-beginner {
+    background: rgba($success, 0.12);
+    color: darken($success, 10%);
+  }
+
+  &.level-intermediate {
+    background: rgba($primary, 0.12);
+    color: darken($primary, 15%);
+  }
+
+  &.level-advanced {
+    background: rgba($secondary, 0.12);
+    color: $secondary;
+  }
+}
+
+// Learning path indicator box (appears at top of pages)
+.learning-path-indicator {
+  background: linear-gradient(135deg, $gray-50 0%, rgba($primary, 0.03) 100%);
+  border: 1px solid $gray-200;
+  border-left: 4px solid $primary;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+
+  .path-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    color: $gray-600;
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+
+      .meta-icon {
+        opacity: 0.7;
+      }
+    }
+  }
+
+  .path-nav {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      color: $primary;
+      font-weight: 500;
+      text-decoration: none;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      transition: background 0.15s ease;
+
+      &:hover {
+        background: rgba($primary, 0.08);
+      }
+    }
+  }
+}
+
+// Learning path visual flowchart
+.learning-path-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.path-phase {
+  background: white;
+  border: 1px solid $gray-200;
+  border-radius: 12px;
+  padding: 1.5rem;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 2rem;
+    top: -2rem;
+    height: 2rem;
+    width: 2px;
+    background: $gray-300;
+  }
+
+  &:first-child::before {
+    display: none;
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    .phase-number {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, $primary 0%, darken($primary, 10%) 100%);
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .phase-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: $secondary;
+      margin: 0;
+    }
+
+    .phase-level {
+      margin-left: auto;
+    }
+  }
+
+  .phase-pages {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .path-page {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: $gray-50;
+    border-radius: 8px;
+    text-decoration: none;
+    color: $gray-700;
+    transition: all 0.15s ease;
+
+    &:hover {
+      background: rgba($primary, 0.08);
+      color: $primary;
+    }
+
+    .page-time {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: $gray-400;
+    }
+  }
+}
+
+// Start here button
+.start-here-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, $success 0%, darken($success, 8%) 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba($success, 0.25);
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba($success, 0.3);
+    color: white;
+  }
+
+  .arrow {
+    transition: transform 0.2s ease;
+  }
+
+  &:hover .arrow {
+    transform: translateX(4px);
+  }
+}
+
+// ============================================
+// READING TIME
+// ============================================
+
+.reading-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  color: $gray-500;
+  margin-top: 0.25rem;
+
+  .clock-icon {
+    opacity: 0.7;
+  }
+}
+
+// ============================================
+// BREADCRUMB NAVIGATION
+// ============================================
+
+.breadcrumb-nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: $gray-500;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid $gray-100;
+
+  a {
+    color: $primary;
+    text-decoration: none;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: darken($primary, 15%);
+      text-decoration: underline;
+    }
+  }
+
+  .separator {
+    margin: 0 0.25rem;
+    opacity: 0.5;
+  }
+
+  .current {
+    color: $gray-600;
+    font-weight: 500;
+  }
+}
+
+// ============================================
+// PREREQUISITE CALLOUTS
+// ============================================
+
+.callout-prereq {
+  background: linear-gradient(135deg, rgba($warning, 0.06) 0%, rgba($warning, 0.02) 100%);
+  border: 1px solid rgba($warning, 0.2);
+  border-left: 4px solid $warning;
+  border-radius: 8px;
+  padding: 0.85rem 1.1rem;
+  margin-bottom: 1.5rem;
+
+  .prereq-title {
+    font-weight: 700;
+    color: darken($warning, 20%);
+    font-size: 0.85rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .prereq-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    li {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+
+      a {
+        color: $gray-700;
+        text-decoration: none;
+
+        &:hover {
+          color: $primary;
+          text-decoration: underline;
+        }
+      }
+
+      &::before {
+        content: '→';
+        color: $warning;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+// ============================================
+// DATE MODIFIED FOOTER
+// ============================================
+
+.date-modified {
+  font-size: 0.8rem;
+  color: $gray-400;
+  border-top: 1px solid $gray-100;
+  padding-top: 1rem;
+  margin-top: 3rem;
+
+  .date-label {
+    font-weight: 500;
+  }
+}
+
+// ============================================
+// QUICK START / PRINT STYLES
+// ============================================
+
+.quick-start-page {
+  // Button to print
+  .print-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: $gray-100;
+    color: $gray-700;
+    font-weight: 500;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    border: 1px solid $gray-200;
+    transition: all 0.15s ease;
+    cursor: pointer;
+
+    &:hover {
+      background: $gray-200;
+      color: $secondary;
+    }
+  }
+
+  // Print-optimized sections
+  .qs-section {
+    page-break-inside: avoid;
+    margin-bottom: 1.5rem;
+  }
+
+  .qs-checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      padding: 0.5rem 0;
+      padding-left: 1.75rem;
+      position: relative;
+      border-bottom: 1px solid $gray-100;
+
+      &::before {
+        content: '☐';
+        position: absolute;
+        left: 0;
+        font-size: 1.1rem;
+        color: $gray-400;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  .qs-links {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+
+    .qs-link {
+      background: $gray-50;
+      padding: 0.75rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+
+      .link-label {
+        font-weight: 600;
+        color: $secondary;
+        display: block;
+      }
+
+      .link-url {
+        font-size: 0.8rem;
+        color: $gray-500;
+        word-break: break-all;
+      }
+    }
+  }
+
+  .qs-commands {
+    background: $gray-100;
+    padding: 1rem;
+    border-radius: 8px;
+    font-family: $font-family-monospace;
+    font-size: 0.85rem;
+
+    .cmd-row {
+      display: flex;
+      gap: 1rem;
+      padding: 0.35rem 0;
+
+      .cmd-label {
+        color: $gray-500;
+        min-width: 120px;
+      }
+
+      .cmd-code {
+        color: $secondary;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+// Print media query
+@media print {
+  .quick-start-page {
+    font-size: 10pt;
+
+    .print-btn {
+      display: none !important;
+    }
+
+    .navbar,
+    .sidebar,
+    .page-footer,
+    .toc,
+    .breadcrumb-nav {
+      display: none !important;
+    }
+
+    .content {
+      max-width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    h1 {
+      font-size: 18pt;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-size: 12pt;
+      margin-top: 1rem;
+      padding-left: 0;
+
+      &::before {
+        display: none;
+      }
+    }
+
+    .qs-section {
+      page-break-inside: avoid;
+    }
+
+    .qs-links {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    a {
+      text-decoration: none !important;
+      color: inherit !important;
+    }
+
+    .qs-link .link-url {
+      display: block !important;
+    }
+  }
 }
 
 // ============================================

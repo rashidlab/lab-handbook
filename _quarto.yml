@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: _site
+  resources:
+    - robots.txt
 
 website:
   title: "Rashid Lab"
@@ -33,6 +35,7 @@ website:
       style: "docked"
       contents:
         - onboarding/index.qmd
+        - onboarding/quick-start.qmd
         - onboarding/first-week.qmd
         - section: "Tools Setup"
           contents:
@@ -48,6 +51,7 @@ website:
     - title: "Claude Code"
       contents:
         - claude-code/index.qmd
+        - claude-code/learning-path.qmd
         - claude-code/installation.qmd
         - claude-code/first-session.qmd
         - claude-code/daily-workflow.qmd

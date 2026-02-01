@@ -1,5 +1,7 @@
 ---
 title: "First Week Checklist"
+reading-time: "5 min"
+date-modified: 2026-02-01
 ---
 
 A detailed checklist for your first week in the lab.

@@ -1,7 +1,27 @@
 ---
 title: "First Session"
 subtitle: "A hands-on walkthrough with a real project"
+learning-path:
+  phase: 2
+  order: 1
+  level: beginner
+  time: "20 min"
+  prerequisites:
+    - installation.qmd
+date-modified: 2026-02-01
 ---
+
+::: {.learning-path-indicator}
+::: {.path-meta}
+[[Beginner]{.level-badge .level-beginner}]{.meta-item}
+[20 min read]{.meta-item}
+[Phase 2: First Use]{.meta-item}
+:::
+::: {.path-nav}
+[← Installation](installation.qmd)
+[Next: Daily Workflow →](daily-workflow.qmd)
+:::
+:::
 
 This guide walks you through your first Claude Code session using the lab's template-research-project. You'll learn the core patterns for exploring, modifying, and committing code.
 

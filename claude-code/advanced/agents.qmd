@@ -1,7 +1,31 @@
 ---
 title: "Custom Agents"
 subtitle: "Specialized agents for complex tasks"
+learning-path:
+  phase: 4
+  order: 4
+  level: advanced
+  time: "10 min"
+  prerequisites:
+    - skills.qmd
+date-modified: 2026-02-01
 ---
+
+::: {.breadcrumb-nav}
+[Claude Code](../index.qmd) [/]{.separator} [Advanced](index.qmd) [/]{.separator} [Agents]{.current}
+:::
+
+::: {.learning-path-indicator}
+::: {.path-meta}
+[[Advanced]{.level-badge .level-advanced}]{.meta-item}
+[10 min read]{.meta-item}
+[Phase 4: Advanced]{.meta-item}
+:::
+::: {.path-nav}
+[← Skills](skills.qmd)
+[Next: Hooks →](hooks.qmd)
+:::
+:::
 
 Agents are specialized personas with deep knowledge of specific domains. Unlike skills (which are procedural), agents embody expertise.
 

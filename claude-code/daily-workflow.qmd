@@ -1,7 +1,27 @@
 ---
 title: "Daily Workflow"
 subtitle: "Effective patterns for everyday Claude Code use"
+learning-path:
+  phase: 3
+  order: 1
+  level: intermediate
+  time: "12 min"
+  prerequisites:
+    - first-session.qmd
+date-modified: 2026-02-01
 ---
+
+::: {.learning-path-indicator}
+::: {.path-meta}
+[[Intermediate]{.level-badge .level-intermediate}]{.meta-item}
+[12 min read]{.meta-item}
+[Phase 3: Daily Work]{.meta-item}
+:::
+::: {.path-nav}
+[← First Session](first-session.qmd)
+[Next: Lab Integration →](lab-integration.qmd)
+:::
+:::
 
 This guide covers the patterns and habits that make Claude Code most effective for daily research work.
 

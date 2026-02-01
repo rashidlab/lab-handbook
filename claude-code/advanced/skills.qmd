@@ -1,7 +1,31 @@
 ---
 title: "Custom Skills"
 subtitle: "Create /commands for common tasks"
+learning-path:
+  phase: 4
+  order: 3
+  level: advanced
+  time: "12 min"
+  prerequisites:
+    - index.qmd
+date-modified: 2026-02-01
 ---
+
+::: {.breadcrumb-nav}
+[Claude Code](../index.qmd) [/]{.separator} [Advanced](index.qmd) [/]{.separator} [Skills]{.current}
+:::
+
+::: {.learning-path-indicator}
+::: {.path-meta}
+[[Advanced]{.level-badge .level-advanced}]{.meta-item}
+[12 min read]{.meta-item}
+[Phase 4: Advanced]{.meta-item}
+:::
+::: {.path-nav}
+[← Global Config](global-config.qmd)
+[Next: Agents →](agents.qmd)
+:::
+:::
 
 Skills are reusable command templates that you invoke with `/skillname`. They encode complex workflows into simple commands.
 

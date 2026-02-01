@@ -1,7 +1,31 @@
 ---
 title: "Global Configuration"
 subtitle: "User-level CLAUDE.md and settings"
+learning-path:
+  phase: 4
+  order: 2
+  level: advanced
+  time: "8 min"
+  prerequisites:
+    - index.qmd
+date-modified: 2026-02-01
 ---
+
+::: {.breadcrumb-nav}
+[Claude Code](../index.qmd) [/]{.separator} [Advanced](index.qmd) [/]{.separator} [Global Config]{.current}
+:::
+
+::: {.learning-path-indicator}
+::: {.path-meta}
+[[Advanced]{.level-badge .level-advanced}]{.meta-item}
+[8 min read]{.meta-item}
+[Phase 4: Advanced]{.meta-item}
+:::
+::: {.path-nav}
+[← Advanced Overview](index.qmd)
+[Next: Skills →](skills.qmd)
+:::
+:::
 
 Global configuration applies to all projects and ensures Claude always knows your preferences.
 

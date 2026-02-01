@@ -1,7 +1,25 @@
 ---
 title: "Installation"
 subtitle: "Setting up Claude Code locally and on Longleaf"
+learning-path:
+  phase: 1
+  order: 1
+  level: beginner
+  time: "15 min"
+  prerequisites: []
+date-modified: 2026-02-01
 ---
+
+::: {.learning-path-indicator}
+::: {.path-meta}
+[[Beginner]{.level-badge .level-beginner}]{.meta-item}
+[15 min read]{.meta-item}
+[Phase 1: Setup]{.meta-item}
+:::
+::: {.path-nav}
+[Next: First Session →](first-session.qmd)
+:::
+:::
 
 ## Local Installation
 

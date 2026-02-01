@@ -1,0 +1,128 @@
+---
+title: "Learning Path"
+subtitle: "Your guided journey through Claude Code"
+---
+
+This page shows the recommended order for learning Claude Code. Follow the phases in sequence for the smoothest onboarding experience.
+
+## How to Use This Guide
+
+::: {.callout-tip appearance="simple"}
+**New to Claude Code?** Start with Phase 1 and work through each phase in order. Each page builds on concepts from earlier pages.
+
+**Already familiar?** Jump to the phase that matches your current knowledge level.
+:::
+
+::: {.learning-path-flow}
+
+::: {.path-phase}
+::: {.phase-header}
+[1]{.phase-number}
+[Setup]{.phase-title}
+[[Beginner]{.level-badge .level-beginner}]{.phase-level}
+:::
+
+Get Claude Code installed and ready to use.
+
+::: {.phase-pages}
+[Installation](installation.qmd){.path-page}
+[15 min]{.page-time}
+:::
+:::
+
+::: {.path-phase}
+::: {.phase-header}
+[2]{.phase-number}
+[First Use]{.phase-title}
+[[Beginner]{.level-badge .level-beginner}]{.phase-level}
+:::
+
+Hands-on walkthrough with a real project. Learn the core patterns for exploring, modifying, and committing code.
+
+::: {.phase-pages}
+[First Session](first-session.qmd){.path-page}
+[20 min]{.page-time}
+:::
+:::
+
+::: {.path-phase}
+::: {.phase-header}
+[3]{.phase-number}
+[Daily Work]{.phase-title}
+[[Intermediate]{.level-badge .level-intermediate}]{.phase-level}
+:::
+
+Patterns and workflows for everyday use. Learn to integrate Claude with lab tools.
+
+::: {.phase-pages}
+[Daily Workflow](daily-workflow.qmd){.path-page}
+[12 min]{.page-time}
+
+[Lab Integration](lab-integration.qmd){.path-page}
+[15 min]{.page-time}
+
+[HPC Usage](hpc-usage.qmd){.path-page}
+[10 min]{.page-time}
+:::
+:::
+
+::: {.path-phase}
+::: {.phase-header}
+[4]{.phase-number}
+[Advanced]{.phase-title}
+[[Advanced]{.level-badge .level-advanced}]{.phase-level}
+:::
+
+Customize Claude Code with skills, hooks, and global configuration. Optional but powerful.
+
+::: {.phase-pages}
+[Advanced Overview](advanced/index.qmd){.path-page}
+[5 min]{.page-time}
+
+[Global Config](advanced/global-config.qmd){.path-page}
+[8 min]{.page-time}
+
+[Skills](advanced/skills.qmd){.path-page}
+[12 min]{.page-time}
+
+[Agents](advanced/agents.qmd){.path-page}
+[10 min]{.page-time}
+
+[Hooks](advanced/hooks.qmd){.path-page}
+[8 min]{.page-time}
+
+[MCP Servers](advanced/mcp-servers.qmd){.path-page}
+[10 min]{.page-time}
+
+[Enforcing Standards](advanced/enforcing-standards.qmd){.path-page}
+[8 min]{.page-time}
+:::
+:::
+
+:::
+
+## Time Investment
+
+| Phase | Focus | Time |
+|-------|-------|------|
+| Phase 1 | Setup | ~15 min |
+| Phase 2 | First Use | ~20 min |
+| Phase 3 | Daily Work | ~40 min |
+| Phase 4 | Advanced | ~60 min |
+
+**Minimum to get started:** Phases 1-2 (~35 min)
+
+**Full proficiency:** All phases (~2.5 hours, spread over first week)
+
+## Quick Reference
+
+After completing the learning path, use these pages for quick lookups:
+
+| Page | Use For |
+|------|---------|
+| [Reference](reference.qmd) | Command cheatsheet |
+| [Troubleshooting](troubleshooting.qmd) | Common issues and solutions |
+
+## Ready to Start?
+
+[Begin with Installation →](installation.qmd){.start-here-btn}

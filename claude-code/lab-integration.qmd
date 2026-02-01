@@ -1,7 +1,37 @@
 ---
 title: "Lab Integration"
 subtitle: "Using Claude Code with targets, git, Quarto, and HPC"
+learning-path:
+  phase: 3
+  order: 2
+  level: intermediate
+  time: "15 min"
+  prerequisites:
+    - first-session.qmd
+date-modified: 2026-02-01
 ---
+
+::: {.learning-path-indicator}
+::: {.path-meta}
+[[Intermediate]{.level-badge .level-intermediate}]{.meta-item}
+[15 min read]{.meta-item}
+[Phase 3: Daily Work]{.meta-item}
+:::
+::: {.path-nav}
+[← Daily Workflow](daily-workflow.qmd)
+[Next: HPC Usage →](hpc-usage.qmd)
+:::
+:::
+
+::: {.callout-prereq}
+::: {.prereq-title}
+Prerequisites
+:::
+::: {.prereq-list}
+- [First Session](first-session.qmd)
+- Basic targets knowledge (see [Targets Pipeline Guide](../coding-standards/targets-pipeline.qmd))
+:::
+:::
 
 This guide shows how Claude Code integrates with the lab's core tools and workflows.
 

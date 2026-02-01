@@ -1,0 +1,111 @@
+---
+title: "Quick Start"
+subtitle: "One-page new student summary"
+date-modified: 2026-02-01
+---
+
+::: {.quick-start-page}
+
+<button class="print-btn" onclick="window.print()">Print This Page</button>
+
+This page provides a condensed summary of everything you need for your first week. Print it and check off items as you complete them.
+
+## Day 1 Checklist {.qs-section}
+
+::: {.qs-checklist}
+- Get Onyen and UNC credentials set up
+- Set up UNC email and check for lab invite
+- Request Longleaf HPC cluster access
+- Join lab Microsoft Teams workspace
+- Complete HR onboarding paperwork
+:::
+
+## Key Links {.qs-section}
+
+::: {.qs-links}
+::: {.qs-link}
+[Lab Handbook]{.link-label}
+[rashidlab.github.io/lab-handbook]{.link-url}
+:::
+
+::: {.qs-link}
+[GitHub Organization]{.link-label}
+[github.com/rashidlab]{.link-url}
+:::
+
+::: {.qs-link}
+[Lab Meetings]{.link-label}
+[GitHub Discussions → Lab Meetings]{.link-url}
+:::
+
+::: {.qs-link}
+[Longleaf HPC]{.link-label}
+[help.rc.unc.edu/longleaf-cluster]{.link-url}
+:::
+:::
+
+## Quick Commands {.qs-section}
+
+::: {.qs-commands}
+::: {.cmd-row}
+[Start Claude]{.cmd-label}
+[`claude`]{.cmd-code}
+:::
+::: {.cmd-row}
+[Run pipeline]{.cmd-label}
+[`Rscript -e "targets::tar_make()"`]{.cmd-code}
+:::
+::: {.cmd-row}
+[Git status]{.cmd-label}
+[`git status`]{.cmd-code}
+:::
+::: {.cmd-row}
+[SSH to Longleaf]{.cmd-label}
+[`ssh <onyen>@longleaf.unc.edu`]{.cmd-code}
+:::
+::: {.cmd-row}
+[Quarto preview]{.cmd-label}
+[`quarto preview`]{.cmd-code}
+:::
+:::
+
+## Lab Standards Summary {.qs-section}
+
+| Area | Standard |
+|------|----------|
+| **Data manipulation** | Base R + data.table (not tidyverse) |
+| **Pipelines** | targets package |
+| **Communication** | Microsoft Teams |
+| **Version control** | GitHub (rashidlab org) |
+| **HPC** | Longleaf cluster |
+| **Meetings** | Thursdays 9:30am |
+
+## Week 1 Goals {.qs-section}
+
+::: {.qs-checklist}
+- Complete computing setup (R, Git, Longleaf)
+- Join GitHub organization and clone a template
+- Attend your first lab meeting
+- Meet 1:1 with Dr. Rashid
+- Run the example targets pipeline
+- Make your first commit
+:::
+
+## Who to Contact {.qs-section}
+
+| Question Type | Contact |
+|---------------|---------|
+| Technical / computing | `#computing` Teams channel |
+| Project-specific | Your project mentor |
+| Administrative | Lab coordinator |
+| General guidance | Dr. Rashid |
+
+## Next Steps
+
+After completing Week 1:
+
+1. Read the [First Session](../claude-code/first-session.qmd) Claude Code guide
+2. Review the [Coding Standards](../coding-standards/index.qmd)
+3. Explore your assigned project's CLAUDE.md
+
+:::

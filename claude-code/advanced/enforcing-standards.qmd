@@ -1,7 +1,41 @@
 ---
 title: "Enforcing Standards"
 subtitle: "Lab-wide consistency through Claude Code"
+learning-path:
+  phase: 4
+  order: 7
+  level: advanced
+  time: "8 min"
+  prerequisites:
+    - skills.qmd
+    - hooks.qmd
+date-modified: 2026-02-01
 ---
+
+::: {.breadcrumb-nav}
+[Claude Code](../index.qmd) [/]{.separator} [Advanced](index.qmd) [/]{.separator} [Enforcing Standards]{.current}
+:::
+
+::: {.learning-path-indicator}
+::: {.path-meta}
+[[Advanced]{.level-badge .level-advanced}]{.meta-item}
+[8 min read]{.meta-item}
+[Phase 4: Advanced]{.meta-item}
+:::
+::: {.path-nav}
+[← MCP Servers](mcp-servers.qmd)
+:::
+:::
+
+::: {.callout-prereq}
+::: {.prereq-title}
+Prerequisites
+:::
+::: {.prereq-list}
+- [Skills](skills.qmd) (custom /commands)
+- [Hooks](hooks.qmd) (automation triggers)
+:::
+:::
 
 This guide shows how to configure Claude Code to automatically enforce lab standards across all projects.
 

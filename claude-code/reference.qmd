@@ -1,6 +1,7 @@
 ---
 title: "Quick Reference"
 subtitle: "Commands, shortcuts, and common patterns"
+date-modified: 2026-02-01
 ---
 
 ## Essential Commands

@@ -1,2 +1,5 @@
+# Rashid Lab Handbook - Private Documentation
+# Prevent all search engines from indexing this site
+
 User-agent: *
 Disallow: /

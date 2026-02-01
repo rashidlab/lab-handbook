@@ -5,6 +5,10 @@ subtitle: "Welcome to the Rashid Lab!"
 
 Welcome to the Rashid Lab! This guide will help you get set up and productive in your first weeks.
 
+::: {.callout-tip appearance="simple" icon=false}
+**Need a printable summary?** [Quick Start →](quick-start.qmd) — One-page checklist for your first week.
+:::
+
 ## First Steps
 
 1. **Complete administrative tasks** - HR paperwork, building access, etc.

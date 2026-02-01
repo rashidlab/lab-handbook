@@ -1,6 +1,8 @@
 ---
 title: "Lab Meetings"
 subtitle: "Overview and quick reference"
+reading-time: "10 min"
+date-modified: 2026-02-01
 ---
 
 ## Overview

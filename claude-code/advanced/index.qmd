@@ -1,7 +1,40 @@
 ---
 title: "Advanced Configuration"
 subtitle: "Customizing Claude Code for lab workflows"
+learning-path:
+  phase: 4
+  order: 1
+  level: advanced
+  time: "5 min"
+  prerequisites:
+    - ../daily-workflow.qmd
+date-modified: 2026-02-01
 ---
+
+::: {.breadcrumb-nav}
+[Claude Code](../index.qmd) [/]{.separator} [Advanced]{.current}
+:::
+
+::: {.learning-path-indicator}
+::: {.path-meta}
+[[Advanced]{.level-badge .level-advanced}]{.meta-item}
+[5 min read]{.meta-item}
+[Phase 4: Advanced]{.meta-item}
+:::
+::: {.path-nav}
+[← HPC Usage](../hpc-usage.qmd)
+[Next: Global Config →](global-config.qmd)
+:::
+:::
+
+::: {.callout-prereq}
+::: {.prereq-title}
+Prerequisites
+:::
+::: {.prereq-list}
+- [Daily Workflow](../daily-workflow.qmd) (comfortable with basic usage)
+:::
+:::
 
 This section covers advanced Claude Code configuration for power users and lab-wide standardization.
 

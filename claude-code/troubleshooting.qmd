@@ -1,6 +1,7 @@
 ---
 title: "Troubleshooting"
 subtitle: "Common issues and solutions"
+date-modified: 2026-02-01
 ---
 
 ## Quick Diagnostics

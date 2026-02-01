@@ -3,6 +3,12 @@ title: "Claude Code CLI"
 subtitle: "AI-powered coding assistant for lab research"
 ---
 
+::: {.callout-tip appearance="simple" icon=false}
+**New to Claude Code?** Follow our guided learning path to get up to speed quickly.
+
+[Start Learning Path →](learning-path.qmd){.start-here-btn}
+:::
+
 ## Why Claude Code?
 
 Claude Code is an AI-powered command-line tool that helps you write, understand, and debug code directly in your terminal. For Rashid Lab members, it offers:
@@ -25,16 +31,16 @@ Rashid Lab has a Claude for Teams subscription. Contact Dr. Rashid to be added t
 
 ## Quick Orientation
 
-| Topic | Page | You'll Learn |
-|-------|------|--------------|
-| **Setup** | [Installation](installation.qmd) | Install locally and on Longleaf |
-| **Getting Started** | [First Session](first-session.qmd) | Hands-on walkthrough with a real project |
-| **Daily Use** | [Daily Workflow](daily-workflow.qmd) | Common patterns and best practices |
-| **Lab Tools** | [Lab Integration](lab-integration.qmd) | targets, git, Quarto, HPC integration |
-| **Longleaf** | [HPC Usage](hpc-usage.qmd) | Running Claude on the cluster |
-| **Customization** | [Advanced](advanced/index.qmd) | Skills, agents, hooks, global config |
-| **Help** | [Troubleshooting](troubleshooting.qmd) | Common issues and solutions |
-| **Cheatsheet** | [Reference](reference.qmd) | Quick command reference |
+| Topic | Page | Level | You'll Learn |
+|-------|------|-------|--------------|
+| **Setup** | [Installation](installation.qmd) | [Beginner]{.level-badge .level-beginner} | Install locally and on Longleaf |
+| **Getting Started** | [First Session](first-session.qmd) | [Beginner]{.level-badge .level-beginner} | Hands-on walkthrough with a real project |
+| **Daily Use** | [Daily Workflow](daily-workflow.qmd) | [Intermediate]{.level-badge .level-intermediate} | Common patterns and best practices |
+| **Lab Tools** | [Lab Integration](lab-integration.qmd) | [Intermediate]{.level-badge .level-intermediate} | targets, git, Quarto, HPC integration |
+| **Longleaf** | [HPC Usage](hpc-usage.qmd) | [Intermediate]{.level-badge .level-intermediate} | Running Claude on the cluster |
+| **Customization** | [Advanced](advanced/index.qmd) | [Advanced]{.level-badge .level-advanced} | Skills, agents, hooks, global config |
+| **Help** | [Troubleshooting](troubleshooting.qmd) | — | Common issues and solutions |
+| **Cheatsheet** | [Reference](reference.qmd) | — | Quick command reference |
 
 ## How It Works
 
