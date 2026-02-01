@@ -1,0 +1,465 @@
+---
+title: "Troubleshooting"
+subtitle: "Common issues and solutions"
+---
+
+This page covers common problems students encounter and how to fix them. If your issue isn't listed here, check [ITS Research Computing help](https://help.rc.unc.edu/) for Longleaf issues or ask in the lab Teams channel.
+
+---
+
+## Longleaf & HPC
+
+### R package won't install (GCC/library issues)
+
+**Symptom:**
+```
+ERROR: compilation failed for package 'xxx'
+/usr/bin/ld: cannot find -lxxx
+configure: error: ... requires xxx
+```
+
+**Cause:** The package needs a C/C++ compiler or system library that isn't loaded. Longleaf uses modules, so dependencies aren't available by default.
+
+**Solution:**
+1. Load the GCC module before installing:
+   ```bash
+   module load gcc/11.2.0
+   module load r/4.3.0
+   R
+   ```
+2. For specific library errors, search for the required module:
+   ```bash
+   module avail | grep -i libname
+   ```
+3. If the library isn't available as a module, contact ITS Research Computing.
+
+---
+
+### Module not found
+
+**Symptom:**
+```
+Lmod has detected the following error: The following module(s) are unknown: "xxx"
+```
+
+**Cause:** The module name is incorrect, or the software isn't installed on Longleaf.
+
+**Solution:**
+1. Search for the correct module name:
+   ```bash
+   module avail | grep -i keyword
+   # Example: module avail | grep -i quarto
+   ```
+2. Check if there's a different version:
+   ```bash
+   module avail r
+   # Shows: r/4.1.0, r/4.2.0, r/4.3.0, etc.
+   ```
+3. If the software isn't available, request installation from [ITS Research Computing](https://help.rc.unc.edu/).
+
+---
+
+### Job stuck in queue (PENDING)
+
+**Symptom:**
+```
+squeue -u $USER
+JOBID    PARTITION  NAME      USER    ST   TIME  NODES NODELIST(REASON)
+123456   general    myjob     onyen   PD   0:00  1     (Resources)
+```
+
+**Cause:** The cluster is busy, or you're requesting more resources than available.
+
+**Solution:**
+1. Check cluster status:
+   ```bash
+   sinfo
+   ```
+2. Try requesting fewer resources (less memory, fewer cores, shorter time):
+   ```bash
+   #SBATCH --mem=8G      # Instead of 64G
+   #SBATCH --cpus-per-task=4   # Instead of 16
+   ```
+3. Use a different partition if available:
+   ```bash
+   #SBATCH --partition=debug   # For short test jobs
+   ```
+4. Wait - high priority jobs run first; your job will eventually start.
+
+---
+
+### Out of disk quota
+
+**Symptom:**
+```
+disk quota exceeded
+write error: No space left on device
+cannot create file: Disk quota exceeded
+```
+
+**Cause:** You've exceeded your home directory quota (50 GB) or are writing large files to the wrong location.
+
+**Solution:**
+1. Check your quota:
+   ```bash
+   quota -s
+   ```
+2. Find large files:
+   ```bash
+   du -h --max-depth=1 ~ | sort -hr | head -20
+   ```
+3. Move large/temporary files to `/work/`:
+   ```bash
+   mv ~/large_data /work/users/f/i/first_last/
+   ```
+4. Delete unneeded files:
+   ```bash
+   rm -rf ~/old_project/output/
+   ```
+5. Use `/work/` for scratch space (10 TB limit, not backed up).
+
+---
+
+## Git & GitHub
+
+### Permission denied (publickey)
+
+**Symptom:**
+```
+git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+```
+
+**Cause:** Your SSH key isn't set up correctly, or GitHub doesn't have your public key.
+
+**Solution:**
+1. Check if you have an SSH key:
+   ```bash
+   ls ~/.ssh/id_ed25519.pub
+   ```
+2. If not, generate one:
+   ```bash
+   ssh-keygen -t ed25519 -C "your.email@unc.edu"
+   ```
+3. Start the SSH agent and add your key:
+   ```bash
+   eval "$(ssh-agent -s)"
+   ssh-add ~/.ssh/id_ed25519
+   ```
+4. Copy your public key:
+   ```bash
+   cat ~/.ssh/id_ed25519.pub
+   ```
+5. Add to GitHub: Settings --> SSH and GPG keys --> New SSH key
+6. Test the connection:
+   ```bash
+   ssh -T git@github.com
+   # Should say: "Hi username! You've successfully authenticated..."
+   ```
+
+---
+
+### Authentication failed (HTTPS)
+
+**Symptom:**
+```
+remote: Support for password authentication was removed
+fatal: Authentication failed for 'https://github.com/...'
+```
+
+**Cause:** GitHub no longer accepts passwords for HTTPS. You need a personal access token (PAT) or SSH.
+
+**Solution:**
+
+**Option A: Use SSH instead (recommended)**
+1. Switch your remote URL:
+   ```bash
+   git remote set-url origin git@github.com:rashidlab/your-repo.git
+   ```
+
+**Option B: Use a Personal Access Token**
+1. Go to GitHub --> Settings --> Developer settings --> Personal access tokens --> Tokens (classic)
+2. Generate a new token with `repo` scope
+3. Use the token as your password when prompted:
+   ```bash
+   git push origin main
+   Username: your-github-username
+   Password: <paste your token here>
+   ```
+4. Cache the token:
+   ```bash
+   git config --global credential.helper 'cache --timeout=28800'
+   ```
+
+---
+
+### Merge conflicts
+
+**Symptom:**
+```
+CONFLICT (content): Merge conflict in file.R
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+**Cause:** Two people edited the same lines in a file, and Git can't automatically combine the changes.
+
+**Solution:**
+1. Open the conflicted file. You'll see conflict markers:
+   ```r
+   <<<<<<< HEAD
+   your changes
+   =======
+   their changes
+   >>>>>>> branch-name
+   ```
+2. Edit the file to keep the correct code (remove the markers):
+   ```r
+   # The final version you want
+   combined or chosen changes
+   ```
+3. Stage and commit:
+   ```bash
+   git add file.R
+   git commit -m "fix: resolve merge conflict in file.R"
+   ```
+
+**Prevention:** Pull before you push, communicate with collaborators, and use feature branches.
+
+---
+
+### Accidentally committed a large file
+
+**Symptom:**
+```
+remote: error: File xxx is 150.00 MB; this exceeds GitHub's file size limit of 100.00 MB
+```
+
+**Cause:** You committed a large file (data, results, binaries) that GitHub won't accept.
+
+**Solution:**
+
+**If you haven't pushed yet:**
+1. Remove the file from the last commit:
+   ```bash
+   git reset HEAD~1
+   git rm --cached large_file.csv
+   echo "large_file.csv" >> .gitignore
+   git add .gitignore
+   git commit -m "chore: remove large file and update gitignore"
+   ```
+
+**If the file is in older commits:**
+1. Use `git filter-repo` (preferred) or `git filter-branch`:
+   ```bash
+   # Install git-filter-repo if needed
+   pip install git-filter-repo
+
+   # Remove the file from all history
+   git filter-repo --path large_file.csv --invert-paths
+   ```
+2. Force push (coordinate with collaborators):
+   ```bash
+   git push origin main --force
+   ```
+
+**Prevention:** Add data files to `.gitignore` before starting work. Never commit files over 50 MB.
+
+---
+
+## R & targets
+
+### "object not found" in targets
+
+**Symptom:**
+```r
+Error in tar_make() : object 'my_data' not found
+# Or
+Error: Column 'x' doesn't exist
+```
+
+**Cause:** A target depends on an object that isn't defined in the `_targets.R` file, or you're referencing a variable that doesn't exist in the data.
+
+**Solution:**
+1. Check that all dependencies are listed in your target:
+   ```r
+   tar_target(
+     analysis_result,
+     run_analysis(my_data),  # my_data must be a target
+     pattern = map(my_data)
+   )
+   ```
+2. View the dependency graph:
+   ```r
+   tar_visnetwork()
+   ```
+3. Check if the upstream target built correctly:
+   ```r
+   tar_read(my_data)  # Does this return data?
+   ```
+4. Invalidate and rebuild:
+   ```r
+   tar_invalidate(my_data)
+   tar_make()
+   ```
+
+---
+
+### Package version mismatch
+
+**Symptom:**
+```
+Error: package 'xxx' was installed before R 4.x.x
+Error in loadNamespace(): there is no package called 'xxx'
+```
+
+**Cause:** R or package versions changed, making cached objects incompatible.
+
+**Solution:**
+1. Reinstall the package:
+   ```r
+   install.packages("xxx")
+   ```
+2. If using targets, invalidate affected targets:
+   ```r
+   tar_invalidate(everything())
+   tar_make()
+   ```
+3. Check that Longleaf module versions match what you used before:
+   ```bash
+   module list  # What's loaded now?
+   # Compare to your .bashrc or job script
+   ```
+
+---
+
+### Memory errors in R
+
+**Symptom:**
+```
+Error: cannot allocate vector of size X Gb
+Error in X : long vectors not supported yet
+std::bad_alloc
+```
+
+**Cause:** Your job doesn't have enough memory, or your code is inefficient.
+
+**Solution:**
+1. Request more memory in your Slurm job:
+   ```bash
+   #SBATCH --mem=64G   # or higher
+   ```
+2. Use memory-efficient approaches:
+   ```r
+   # Use data.table instead of data.frame
+   dt <- data.table::fread("large_file.csv")
+
+   # Process in chunks
+   library(data.table)
+   chunks <- split(1:nrow(dt), ceiling(seq_len(nrow(dt))/10000))
+   ```
+3. For OnDemand RStudio, request more memory when launching the session.
+4. Remove large objects you no longer need:
+   ```r
+   rm(large_object)
+   gc()  # Garbage collection
+   ```
+
+---
+
+## Quarto
+
+### PDF won't render (TinyTeX issues)
+
+**Symptom:**
+```
+Error: LaTeX failed to compile document.qmd
+! LaTeX Error: File `xxx.sty' not found.
+tlmgr: action not allowed in system mode
+```
+
+**Cause:** TinyTeX is missing required LaTeX packages, or you don't have write permissions.
+
+**Solution:**
+
+**On Longleaf:**
+1. Install TinyTeX to your home directory:
+   ```bash
+   quarto install tinytex
+   ```
+2. Install missing packages:
+   ```r
+   tinytex::tlmgr_install("package-name")
+   ```
+
+**Locally:**
+1. Reinstall TinyTeX:
+   ```bash
+   quarto install tinytex --update-path
+   ```
+2. Or install the missing package:
+   ```bash
+   tlmgr install missing-package-name
+   ```
+
+**If TinyTeX won't work:**
+1. Render to HTML instead:
+   ```bash
+   quarto render document.qmd --to html
+   ```
+2. Or install full TeX Live (larger but more complete):
+   ```bash
+   # macOS
+   brew install --cask mactex
+
+   # Linux
+   sudo apt install texlive-full
+   ```
+
+---
+
+### Citations not appearing
+
+**Symptom:**
+- `[@smith2020]` shows as literal text instead of a citation
+- Bibliography section is empty
+- "Citation not found" warnings
+
+**Cause:** The bibliography file isn't linked correctly, or the citation key doesn't match.
+
+**Solution:**
+1. Check that your YAML header includes the bibliography:
+   ```yaml
+   ---
+   title: "My Paper"
+   bibliography: references.bib
+   csl: nature.csl   # optional style file
+   ---
+   ```
+2. Verify the `.bib` file exists in the correct location:
+   ```bash
+   ls references.bib
+   ```
+3. Check that citation keys match exactly:
+   ```bibtex
+   @article{smith2020,     # Use [@smith2020] in text
+     author = {Smith, John},
+     ...
+   }
+   ```
+4. For Zotero users, re-export the bibliography if you added new references.
+5. Check for syntax errors in your `.bib` file:
+   ```bash
+   # Look for unclosed braces, missing commas
+   quarto render document.qmd 2>&1 | grep -i citation
+   ```
+
+---
+
+## Still Stuck?
+
+If your issue isn't covered here:
+
+1. **Search the error message** - Often someone else has encountered it
+2. **Check ITS Research Computing** - [help.rc.unc.edu](https://help.rc.unc.edu/) for Longleaf issues
+3. **Ask in Teams** - Post in the lab channel; someone may have seen it before
+4. **Create a minimal example** - Isolate the problem to share with others

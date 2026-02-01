@@ -1,0 +1,225 @@
+---
+title: "Git & GitHub Setup"
+subtitle: "Version control configuration"
+---
+
+Version control is essential for all lab work. This guide covers installing and configuring Git and GitHub.
+
+---
+
+## Install Git
+
+| Platform | Method |
+|----------|--------|
+| **Longleaf** | `module load git` (already available) |
+| **macOS** | `xcode-select --install` or `brew install git` |
+| **Linux** | `sudo apt install git` |
+| **Windows** | [Git for Windows](https://gitforwindows.org/) (includes Git Bash) |
+
+---
+
+## Configure Git
+
+These settings identify your commits:
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "your.email@unc.edu"
+
+# Recommended settings
+git config --global init.defaultBranch main
+git config --global pull.rebase false
+```
+
+**Explanation:**
+
+- `user.name` and `user.email`: Attached to every commit you make
+- `init.defaultBranch main`: New repos use `main` instead of `master`
+- `pull.rebase false`: Use merge commits when pulling (simpler for beginners)
+
+---
+
+## GitHub CLI (Optional but Recommended)
+
+The GitHub CLI (`gh`) makes it easier to work with GitHub from the command line.
+
+| Platform | Method |
+|----------|--------|
+| **Longleaf** | May need to install manually or use web interface |
+| **macOS** | `brew install gh` |
+| **Linux** | See [GitHub CLI install](https://github.com/cli/cli/blob/trunk/docs/install_linux.md) |
+| **Windows** | `winget install GitHub.cli` or download from [cli.github.com](https://cli.github.com/) |
+
+```bash
+# Authenticate
+gh auth login
+```
+
+Follow the prompts to log in via browser or token.
+
+**Useful `gh` commands:**
+
+```bash
+gh repo clone rashidlab/project-name   # Clone a repo
+gh pr create                            # Create a pull request
+gh pr list                              # List open PRs
+gh issue create                         # Create an issue
+gh issue list                           # List open issues
+```
+
+---
+
+## SSH Keys for GitHub
+
+SSH keys let you push/pull without entering your password each time.
+
+### Generate a Key
+
+```bash
+# Generate key (if you don't have one)
+ssh-keygen -t ed25519 -C "your.email@unc.edu"
+```
+
+Press Enter to accept the default file location. You can add a passphrase for extra security.
+
+### Add Key to SSH Agent
+
+```bash
+# Start ssh-agent
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+```
+
+### Add Key to GitHub
+
+```bash
+# Copy public key
+cat ~/.ssh/id_ed25519.pub
+```
+
+Then add to GitHub:
+
+1. Go to GitHub --> Settings
+2. Click **SSH and GPG keys**
+3. Click **New SSH key**
+4. Paste your public key
+5. Give it a descriptive title (e.g., "Longleaf" or "MacBook")
+
+### Test the Connection
+
+```bash
+ssh -T git@github.com
+# Should say: "Hi username! You've successfully authenticated..."
+```
+
+---
+
+## Git on Longleaf with OnDemand
+
+If using OnDemand + RStudio for development:
+
+### Initial Setup (One Time)
+
+1. Launch RStudio Server via OnDemand
+2. Open Terminal tab in RStudio
+3. Configure Git (see above)
+4. Set up GitHub authentication:
+
+**Option A: HTTPS with credential caching**
+
+```bash
+git config --global credential.helper 'cache --timeout=28800'
+git clone https://github.com/rashidlab/your-repo.git
+```
+
+You'll enter your username and personal access token once, and it caches for 8 hours.
+
+**Option B: SSH keys (more permanent)**
+
+```bash
+ssh-keygen -t ed25519 -C "your_onyen@unc.edu"
+cat ~/.ssh/id_ed25519.pub
+# Copy this key to GitHub: Settings --> SSH Keys --> New SSH Key
+```
+
+### Daily Workflow
+
+1. **Launch RStudio** via OnDemand
+2. **Open your project** (File --> Open Project)
+3. **Pull latest:** `git pull origin main`
+4. **Work on code**
+5. **Commit and push:**
+   ```bash
+   git add -A
+   git commit -m "feat: add new analysis function"
+   git push origin main
+   ```
+
+### RStudio Git Integration
+
+RStudio has built-in Git support:
+
+- **Git tab** in top-right pane shows changed files
+- **Diff** button shows changes
+- **Commit** button opens commit dialog
+- **Pull/Push** buttons sync with remote
+
+To enable: Tools --> Project Options --> Git/SVN --> Select Git
+
+---
+
+## Verification Checklist
+
+After setup, verify Git and GitHub work correctly:
+
+### On Longleaf
+
+```bash
+ssh your_onyen@longleaf.unc.edu
+module load git
+git --version
+git config --list | grep user
+ssh -T git@github.com
+```
+
+### Locally
+
+```bash
+git --version
+git config --list | grep user
+ssh -T git@github.com
+gh --version
+gh auth status
+```
+
+### Test a Clone
+
+```bash
+# Test SSH access
+git clone git@github.com:rashidlab/lab-handbook.git test-clone
+rm -rf test-clone
+```
+
+---
+
+## Common Issues
+
+| Issue | Solution |
+|-------|----------|
+| Permission denied (publickey) | SSH key not set up; see [SSH Keys for GitHub](#ssh-keys-for-github) |
+| Authentication failed | Use SSH instead of HTTPS, or use a personal access token |
+| Git not found | Load module on Longleaf (`module load git`) or install locally |
+
+For more detailed troubleshooting, see [Troubleshooting](troubleshooting.qmd#git--github).
+
+---
+
+## Next Steps
+
+- [GitHub Fundamentals](github-fundamentals.qmd) - Issues, PRs, Discussions
+- [Git Practices](../coding-standards/git-practices.qmd) - Workflow and conventions
+- [First Project](first-project.qmd) - Start your first lab project
+
+---
+
+Next: [GitHub Fundamentals](github-fundamentals.qmd) | [First Project](first-project.qmd)

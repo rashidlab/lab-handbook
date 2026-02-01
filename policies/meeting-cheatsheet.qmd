@@ -1,0 +1,44 @@
+---
+title: "Meeting Lead Cheatsheet"
+subtitle: "Quick reference for leading lab meetings"
+---
+
+## At a Glance
+
+```
+Tuesday ─────► Wednesday ─────► Thursday ─────► Thursday EOD
+Create         Check            Run             Post
+Agenda         Contributions    Meeting         Notes
+```
+
+## Tuesday by 5pm
+- [ ] Create Discussion thread in lab-handbook repo
+  - Title: "Lab Meeting - YYYY-MM-DD"
+  - Category: Lab Meetings
+- [ ] Copy agenda template from meeting-templates.qmd
+- [ ] Fill in: date, your name, presenter name, Teams link
+- [ ] Post reminder in Teams #general
+
+## Wednesday
+- [ ] Check Discussion for contributions
+- [ ] Send final reminder if few items added
+- [ ] Confirm with presenter (time needed, screen share?)
+
+## Thursday - During Meeting
+- [ ] Review last week's action items (5 min)
+- [ ] Facilitate each agenda item
+- [ ] Capture decisions and new action items
+- [ ] Confirm next week's lead and presenter
+
+## Thursday by End of Day
+- [ ] Update Discussion thread with notes section
+- [ ] @mention all action item owners
+- [ ] Commit notes: meeting-notes/2026/YYYY-MM-DD-lab-meeting.md
+
+## Can't Lead?
+Find swap 1+ week ahead → Update .github/meeting-rotation.yml → Post in Teams
+
+## Quick Links
+- [Create Discussion](https://github.com/rashidlab/lab-handbook/discussions/new?category=lab-meetings)
+- [Agenda Template](meeting-templates.qmd)
+- [Full Guide](meeting-leader-guide.qmd)

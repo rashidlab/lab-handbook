@@ -12,6 +12,19 @@ Read [GitHub Fundamentals](../onboarding/github-fundamentals.qmd) first to under
 
 ---
 
+## Can't Lead Your Assigned Week?
+
+If you're traveling, sick, or otherwise unavailable:
+
+1. **Find a swap** - Check the rotation schedule, ask someone to trade weeks
+2. **Update the schedule** - Edit `.github/meeting-rotation.yml` with the swap
+3. **Notify the team** - Post in Teams #general: "@[new-lead] is covering for me on [date]"
+4. **Timing** - Do this **at least 1 week ahead** when possible
+
+For last-minute emergencies, message Dr. Rashid and post in Teams immediately.
+
+---
+
 ## Phase 1: Create the Agenda (Tuesday)
 
 **Goal:** Create a GitHub Discussion thread where everyone can add agenda items.
@@ -209,7 +222,7 @@ The Discussion thread is great, but we also keep a permanent record in the repo.
 
 ```bash
 # 1. Go to the lab-handbook directory
-cd ~/lab-handbook  # or wherever you cloned it
+cd /path/to/lab-handbook  # Use your actual clone location
 
 # 2. Pull latest changes
 git pull origin main

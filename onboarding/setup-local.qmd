@@ -1,0 +1,214 @@
+---
+title: "Local Development Setup"
+subtitle: "R, RStudio, and Quarto on your machine"
+---
+
+This guide covers setting up a local development environment. Skip this section if you're using a Longleaf-only workflow.
+
+::: {.callout-note}
+## When to Use Local Development
+
+Local machines are fine for:
+
+- Writing and editing code
+- Small-scale testing
+- Manuscript writing
+
+For production analyses (simulations, calibrations, long-running jobs), use [Longleaf](setup-longleaf.qmd).
+:::
+
+---
+
+## Install R
+
+| Platform | Method |
+|----------|--------|
+| **macOS** | Download from [CRAN](https://cran.r-project.org/) or `brew install r` |
+| **Linux (Ubuntu/Debian)** | `sudo apt install r-base r-base-dev` |
+| **Linux (Fedora)** | `sudo dnf install R` |
+| **Windows** | Download from [CRAN](https://cran.r-project.org/) |
+
+---
+
+## Install RStudio (Optional)
+
+Download from [posit.co](https://posit.co/download/rstudio-desktop/)
+
+RStudio provides an integrated development environment with:
+
+- Script editor with syntax highlighting
+- Console for interactive R
+- Environment browser
+- Git integration
+- Quarto support
+
+---
+
+## Essential Packages
+
+```r
+# Core packages
+install.packages(c(
+  "data.table",
+  "targets",
+  "tarchetypes",
+  "crew",
+  "here",
+  "yaml"
+))
+
+# For clinical trial work
+install.packages(c(
+  "survival",
+  "DiceKriging",
+  "lhs"
+))
+
+# For cluster computing (if using crew.cluster)
+install.packages("crew.cluster")
+```
+
+---
+
+## Local Quarto Setup
+
+Download from [quarto.org/docs/get-started](https://quarto.org/docs/get-started/)
+
+| Platform | Method |
+|----------|--------|
+| **macOS** | Download installer or `brew install --cask quarto` |
+| **Linux** | Download `.deb` or `.tar.gz` from website |
+| **Windows** | Download installer from website |
+
+```bash
+# Verify installation
+quarto --version
+quarto check
+```
+
+### LaTeX for PDF Output
+
+Quarto can install TinyTeX automatically:
+
+```bash
+quarto install tinytex
+```
+
+This provides a minimal LaTeX distribution sufficient for most PDF rendering. If you need additional LaTeX packages:
+
+```r
+# In R
+tinytex::tlmgr_install("package-name")
+```
+
+---
+
+## Platform-Specific Notes
+
+### Windows
+
+::: {.callout-warning}
+## Windows Limitations
+
+Some packages and workflows have issues on Windows:
+
+- **Path separators**: Use `here::here()` or forward slashes
+- **Line endings**: Configure Git to handle (`git config --global core.autocrlf true`)
+- **Some packages**: May fail to compile (use pre-built binaries when available)
+- **Parallel computing**: `mclapply()` doesn't work; use `parLapply()` or `future`
+- **Shell scripts**: Won't run natively; use Git Bash or WSL
+
+**Recommendation:** For serious work, use Longleaf or install [WSL 2](https://docs.microsoft.com/en-us/windows/wsl/install).
+:::
+
+### macOS
+
+```bash
+# Install Xcode command line tools (required for package compilation)
+xcode-select --install
+
+# If using Homebrew
+brew install r
+brew install --cask rstudio
+```
+
+The Xcode command line tools provide compilers needed to install R packages from source.
+
+### Linux
+
+Most R packages compile smoothly on Linux. You may need development headers for some packages:
+
+```bash
+# Ubuntu/Debian
+sudo apt install libcurl4-openssl-dev libssl-dev libxml2-dev
+
+# Fedora
+sudo dnf install libcurl-devel openssl-devel libxml2-devel
+```
+
+---
+
+## Local `.Rprofile` Template
+
+Create or edit `~/.Rprofile` on your local machine:
+
+```r
+# ~/.Rprofile (local machine)
+
+# Set CRAN mirror
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+# Useful options
+options(
+  warnPartialMatchDollar = TRUE,
+  warnPartialMatchArgs = TRUE
+)
+```
+
+These options help catch common bugs:
+
+- `warnPartialMatchDollar`: Warns when using `$` with partial column names
+- `warnPartialMatchArgs`: Warns when function arguments are partially matched
+
+---
+
+## Verification
+
+After setup, verify everything works:
+
+```bash
+R --version
+Rscript -e "library(targets); print('OK')"
+quarto --version
+git --version
+gh --version  # If you installed GitHub CLI
+```
+
+In R:
+
+```r
+# Check essential packages load
+library(data.table)
+library(targets)
+library(here)
+
+# Check Quarto integration
+quarto::quarto_version()
+```
+
+---
+
+## Syncing with Longleaf
+
+If you develop locally but run on Longleaf:
+
+1. Use Git to sync code between machines
+2. Keep data on Longleaf only (use symlinks for local references)
+3. Test locally with small subsets
+4. Run full analyses on Longleaf
+
+See [Git & GitHub Setup](setup-git.qmd) for version control configuration.
+
+---
+
+Next: [Git & GitHub Setup](setup-git.qmd) | [Longleaf Setup](setup-longleaf.qmd)

@@ -1,7 +1,6 @@
 ---
 title: "Tools Setup"
 subtitle: "Configure your development environment"
-number-sections: true
 ---
 
 ## Overview
@@ -16,593 +15,68 @@ number-sections: true
 - Collaborative work (shared file system)
 - Long-running jobs
 
-Local machines are fine for:
-
-- Writing and editing code
-- Small-scale testing
-- Manuscript writing
+Local machines are fine for writing code, small-scale testing, and manuscript writing.
 :::
 
-### Why Linux/HPC?
+## Choose Your Setup Path
 
-| Concern | Linux/HPC | Windows | macOS |
-|---------|-----------|---------|-------|
-| Reproducibility | Consistent environment | Path issues, line endings | Generally OK |
-| Package compatibility | Full support | Some packages fail | Most work |
-| Parallel computing | Native support | Limited | Good |
-| Slurm/cluster | Native | N/A | N/A |
-| Lab collaboration | Shared `/proj/rashidlab/` | N/A | N/A |
+| Path | Best For | Guide |
+|------|----------|-------|
+| **A: Longleaf-Primary** (Recommended) | Most lab work | [Longleaf Setup](setup-longleaf.qmd) |
+| **B: Local + Longleaf** | Prefer local editing | [Local Setup](setup-local.qmd) + [Longleaf Setup](setup-longleaf.qmd) |
+| **C: Local Only** | Small projects, testing | [Local Setup](setup-local.qmd) |
 
-**Bottom line:** Develop locally if you prefer, but run production analyses on Longleaf.
+**All paths require Git:** [Git & GitHub Setup](setup-git.qmd)
 
-### Choose Your Setup Path
+## Setup Guides
 
-| Path | Best For | Setup Steps |
-|------|----------|-------------|
-| **A: Longleaf-Primary** (Recommended) | Most lab work | [Longleaf](#longleaf) → [OnDemand](#ondemand) or [VS Code Remote](#vs-code-remote) |
-| **B: Local + Longleaf** | Prefer local editing | [Local R](#local-r-setup) → [Git](#git-github) → [Longleaf](#longleaf) |
-| **C: Local Only** | Small projects | [Local R](#local-r-setup) → [Git](#git-github) → [Quarto](#local-quarto) |
+### [Longleaf Setup](setup-longleaf.qmd)
 
----
+UNC's HPC cluster. Covers:
 
-# Longleaf (UNC HPC Cluster) {#longleaf}
+- Request access
+- Open OnDemand (web interface) - **easiest way to start**
+- VS Code Remote SSH
+- Direct SSH access
+- Module system and environment configuration
 
-All Longleaf-related setup is in this section: access, web interface, editors, modules, and configuration.
+### [Local Development](setup-local.qmd)
 
-## Request Access
+Your laptop/desktop. Covers:
 
-1. Go to [ITS Research Computing](https://help.rc.unc.edu/request-a-cluster-account/)
-2. Request Longleaf access with PI: **Naim Rashid**
-3. Wait for approval email (~1-2 business days)
+- R and RStudio installation
+- Essential packages
+- Quarto for documents
+- Platform-specific notes (Windows, macOS, Linux)
 
-## Connection Options
+### [Git & GitHub](setup-git.qmd)
 
-You have three ways to access Longleaf:
+Version control. Covers:
 
-| Method | Best For | Setup Difficulty |
-|--------|----------|------------------|
-| [**OnDemand**](#ondemand) (Web) | Beginners, RStudio users | None |
-| [**VS Code Remote**](#vs-code-remote) | Modern editor experience | Easy |
-| [**SSH**](#ssh-access) | Command-line power users | Easy |
+- Git installation and configuration
+- GitHub CLI
+- SSH key setup
+- Git with OnDemand/RStudio
 
----
+## Quick Start Recommendation
 
-## Open OnDemand (Web Interface) {#ondemand}
+**New to the lab?** Follow this path:
 
-[Open OnDemand](https://ondemand.rc.unc.edu) provides a web-based interface to Longleaf—no software installation required. **This is the easiest way to get started.**
+1. [Request Longleaf access](setup-longleaf.qmd#request-access) (do this Day 1—takes 1-2 days to approve)
+2. [Set up Git locally](setup-git.qmd) while you wait
+3. Once approved, use [OnDemand](setup-longleaf.qmd#ondemand) for RStudio
 
-### Access
+## Having Issues?
 
-1. Go to [ondemand.rc.unc.edu](https://ondemand.rc.unc.edu)
-2. Log in with your Onyen and password
-3. You'll see the OnDemand dashboard
+See [Troubleshooting](troubleshooting.qmd) for common problems and solutions.
 
-::: {.callout-note}
-You must have a Longleaf account before using OnDemand. See [Request Access](#request-access) above.
-:::
+## Verification
 
-### Key Features
+After setup, you should be able to:
 
-| Feature | Description |
-|---------|-------------|
-| **Files** | Browse, upload, download, edit files on Longleaf |
-| **Shell** | Terminal access in your browser (no SSH needed) |
-| **RStudio Server** | Full RStudio IDE running on cluster |
-| **Jupyter** | Jupyter notebooks with Python/R kernels |
-| **Job Composer** | Submit and manage Slurm batch jobs |
+- [ ] Log into Longleaf (via OnDemand or SSH)
+- [ ] Run R and load `data.table`
+- [ ] Clone a GitHub repo
+- [ ] Render a Quarto document
 
-### Launching RStudio Server
-
-This is the recommended way to use RStudio on Longleaf:
-
-1. Go to **Interactive Apps → RStudio Server**
-2. Fill in the resource request form:
-   - **Number of hours:** Start with 4-8 hours
-   - **Number of cores:** 1-4 for interactive work
-   - **Memory (GB):** 8-16 GB is usually sufficient
-   - **Partition:** `general` (or `gpu` if needed)
-3. Click **Launch**
-4. Wait for job to start (usually 1-5 minutes)
-5. Click **Connect to RStudio Server**
-
-```
-# Example resource request for typical development work:
-Hours: 8
-Cores: 4
-Memory: 16 GB
-Partition: general
-```
-
-### Launching Jupyter Notebooks
-
-For Python work or R via IRkernel:
-
-1. Go to **Interactive Apps → Jupyter Notebook**
-2. Fill in resources (similar to RStudio)
-3. Select Python version or load R kernel
-4. Click **Launch** then **Connect**
-
-### Browser-Based Terminal
-
-Access a shell without any local software:
-
-1. Go to **Clusters → Longleaf Shell Access**
-2. A terminal opens in your browser
-3. You're on a login node—same as SSH
-
-**Use cases:** Quick file operations, `git` commands, checking job status, module loading.
-
-### File Management
-
-The **Files** menu provides a web-based file browser:
-
-- **Navigate** to any directory you have access to
-- **Upload** files via drag-and-drop (useful for small files)
-- **Download** files or entire directories
-- **Edit** text files directly in the browser
-- **Access** lab shared space at `/proj/rashidlab/`
-
-**Tip:** For large files, use `scp` or `rsync` instead of the web uploader.
-
-### Job Composer for Batch Jobs
-
-For long-running analyses, use Job Composer instead of interactive sessions:
-
-1. Go to **Jobs → Job Composer**
-2. Click **New Job → From Template**
-3. Select a template (or create from scratch)
-4. Edit the job script:
-
-```bash
-#!/bin/bash
-#SBATCH --job-name=my_analysis
-#SBATCH --time=24:00:00
-#SBATCH --cpus-per-task=8
-#SBATCH --mem=32G
-#SBATCH --output=logs/%j.out
-
-module load r/4.3.0
-Rscript scripts/run_analysis.R
-```
-
-5. Click **Submit**
-6. Monitor in **Jobs → Active Jobs**
-
-### OnDemand Best Practices
-
-::: {.callout-tip}
-1. **Request appropriate resources** - Don't over-request; it slows queue time
-2. **Save work frequently** - Sessions can timeout
-3. **Use `/work/` for large temp files** - Not `/home/` (quota limited)
-4. **Check job status** - Jobs → Active Jobs shows your running sessions
-5. **Delete completed jobs** - Keeps your dashboard clean
-:::
-
-### Troubleshooting OnDemand
-
-| Issue | Solution |
-|-------|----------|
-| Session won't start | Check if cluster is busy; try smaller resource request |
-| RStudio unresponsive | Delete job, relaunch; check memory limits |
-| Can't find files | Verify path; check you're in correct directory |
-| Git authentication fails | Re-enter credentials; check token hasn't expired |
-| Session timeout | Relaunch; consider batch job for long work |
-
-If sessions consistently fail: Go to **Jobs → Active Jobs**, delete the problematic job, clear browser cache, and try again. For persistent issues, contact [ITS Research Computing](https://help.rc.unc.edu/).
-
----
-
-## VS Code Remote SSH {#vs-code-remote}
-
-The recommended way to work on Longleaf with a modern editor.
-
-### Setup
-
-1. Install [VS Code](https://code.visualstudio.com/)
-2. Install the **Remote - SSH** extension
-3. Press `Ctrl+Shift+P` → "Remote-SSH: Connect to Host"
-4. Enter: `your_onyen@longleaf.unc.edu`
-5. VS Code opens a remote session on Longleaf
-
-### Recommended Extensions (install on remote)
-
-- R Extension for Visual Studio Code
-- Quarto
-- GitLens
-
-### SSH Config (Optional)
-
-Create `~/.ssh/config` on your local machine for easier connections:
-
-```
-Host longleaf
-    HostName longleaf.unc.edu
-    User your_onyen
-    ForwardAgent yes
-    ForwardX11 yes
-```
-
-Then connect with just: `ssh longleaf` or select "longleaf" in VS Code.
-
----
-
-## SSH Access {#ssh-access}
-
-For command-line access to Longleaf.
-
-### Connect via SSH
-
-```bash
-# Basic SSH connection
-ssh your_onyen@longleaf.unc.edu
-
-# With X11 forwarding (for plots)
-ssh -Y your_onyen@longleaf.unc.edu
-```
-
-**Windows users:** Use [MobaXterm](https://mobaxterm.mobatek.net/) or Windows Terminal with OpenSSH.
-
-### SSH Key Setup (Passwordless Login)
-
-```bash
-# On your LOCAL machine, generate key
-ssh-keygen -t ed25519 -C "your.email@unc.edu"
-
-# Copy to Longleaf
-ssh-copy-id your_onyen@longleaf.unc.edu
-
-# Test (should not ask for password)
-ssh your_onyen@longleaf.unc.edu
-```
-
----
-
-## Longleaf Environment
-
-### Module System
-
-Longleaf uses **modules** instead of package managers. Software is pre-installed and loaded on demand.
-
-```bash
-# See available modules
-module avail
-
-# Search for specific software
-module avail r
-module avail quarto
-
-# Load R (check for latest version)
-module load r/4.3.0
-
-# Load multiple modules
-module load r/4.3.0 gcc/11.2.0 quarto/1.4.550
-
-# See loaded modules
-module list
-
-# Unload a module
-module unload r
-
-# Unload all
-module purge
-```
-
-### Key Directories
-
-| Path | Purpose | Quota |
-|------|---------|-------|
-| `/home/your_onyen/` | Home directory | 50 GB |
-| `/work/users/y/o/your_onyen/` | Scratch space | 10 TB (not backed up) |
-| `/proj/rashidlab/` | Lab shared space | Shared |
-| `/proj/rashidlab/R-packages/` | Shared R packages | Shared |
-
-### R Package Installation
-
-```r
-# First, set up personal library (one time)
-dir.create("~/R/library", recursive = TRUE)
-
-# Add to ~/.Rprofile
-cat('.libPaths(c("~/R/library", "/proj/rashidlab/R-packages", .libPaths()))\n',
-    file = "~/.Rprofile", append = TRUE)
-
-# Restart R, then install packages
-install.packages("data.table")
-```
-
-### Quarto on Longleaf
-
-```bash
-# Load Quarto module
-module load quarto/1.4.550
-
-# Verify
-quarto --version
-
-# Render document
-quarto render manuscript.qmd --to pdf
-```
-
-**Note:** If Quarto module isn't available, check `module avail quarto` or contact ITS Research Computing.
-
-### Longleaf Configuration Templates
-
-**`~/.bashrc` on Longleaf:**
-
-```bash
-# Load standard modules on login
-module load r/4.3.0
-module load gcc/11.2.0
-module load git/2.36.0
-module load quarto/1.4.550
-
-# R library path
-export R_LIBS_USER=~/R/library
-
-# Useful aliases
-alias ll='ls -la'
-alias squeue-me='squeue -u $USER'
-```
-
-Then run: `source ~/.bashrc`
-
-**`~/.Rprofile` on Longleaf:**
-
-```r
-# Library paths (personal + shared lab + system)
-.libPaths(c(
-  "~/R/library",
-  "/proj/rashidlab/R-packages",
-  .libPaths()
-))
-
-# CRAN mirror
-options(repos = c(CRAN = "https://cloud.r-project.org"))
-```
-
----
-
-# Local Development {#local-r-setup}
-
-For local development (Path B or C). Skip this section if using Longleaf-only workflow.
-
-## Install R
-
-| Platform | Method |
-|----------|--------|
-| **macOS** | Download from [CRAN](https://cran.r-project.org/) or `brew install r` |
-| **Linux (Ubuntu/Debian)** | `sudo apt install r-base r-base-dev` |
-| **Linux (Fedora)** | `sudo dnf install R` |
-| **Windows** | Download from [CRAN](https://cran.r-project.org/) |
-
-## Install RStudio (Optional)
-
-Download from [posit.co](https://posit.co/download/rstudio-desktop/)
-
-## Essential Packages
-
-```r
-# Core packages
-install.packages(c(
-  "data.table",
-  "targets",
-  "tarchetypes",
-  "crew",
-  "here",
-  "yaml"
-))
-
-# For clinical trial work
-install.packages(c(
-  "survival",
-  "DiceKriging",
-  "lhs"
-))
-
-# For cluster computing (if using crew.cluster)
-install.packages("crew.cluster")
-```
-
-## Local Quarto Setup {#local-quarto}
-
-Download from [quarto.org/docs/get-started](https://quarto.org/docs/get-started/)
-
-| Platform | Method |
-|----------|--------|
-| **macOS** | Download installer or `brew install --cask quarto` |
-| **Linux** | Download `.deb` or `.tar.gz` from website |
-| **Windows** | Download installer from website |
-
-```bash
-# Verify installation
-quarto --version
-quarto check
-```
-
-### LaTeX for PDF Output
-
-Quarto can install TinyTeX automatically:
-
-```bash
-quarto install tinytex
-```
-
-## Platform-Specific Notes
-
-### Windows
-
-::: {.callout-warning}
-## Windows Limitations
-
-Some packages and workflows have issues on Windows:
-
-- **Path separators**: Use `here::here()` or forward slashes
-- **Line endings**: Configure Git to handle (`git config --global core.autocrlf true`)
-- **Some packages**: May fail to compile (use pre-built binaries when available)
-- **Parallel computing**: `mclapply()` doesn't work; use `parLapply()` or `future`
-- **Shell scripts**: Won't run natively; use Git Bash or WSL
-
-**Recommendation:** For serious work, use Longleaf or install [WSL 2](https://docs.microsoft.com/en-us/windows/wsl/install).
-:::
-
-### macOS
-
-```bash
-# Install Xcode command line tools (required for package compilation)
-xcode-select --install
-
-# If using Homebrew
-brew install r
-brew install --cask rstudio
-```
-
-## Local `.Rprofile` Template
-
-```r
-# ~/.Rprofile (local machine)
-
-# Set CRAN mirror
-options(repos = c(CRAN = "https://cloud.r-project.org"))
-
-# Useful options
-options(
-  warnPartialMatchDollar = TRUE,
-  warnPartialMatchArgs = TRUE
-)
-```
-
----
-
-# Git & GitHub {#git-github}
-
-Version control is essential for all lab work.
-
-## Install Git
-
-| Platform | Method |
-|----------|--------|
-| **Longleaf** | `module load git` (already available) |
-| **macOS** | `xcode-select --install` or `brew install git` |
-| **Linux** | `sudo apt install git` |
-| **Windows** | [Git for Windows](https://gitforwindows.org/) (includes Git Bash) |
-
-## Configure Git
-
-```bash
-git config --global user.name "Your Name"
-git config --global user.email "your.email@unc.edu"
-
-# Recommended settings
-git config --global init.defaultBranch main
-git config --global pull.rebase false
-```
-
-## GitHub CLI (Optional but Recommended)
-
-| Platform | Method |
-|----------|--------|
-| **Longleaf** | May need to install manually or use web interface |
-| **macOS** | `brew install gh` |
-| **Linux** | See [GitHub CLI install](https://github.com/cli/cli/blob/trunk/docs/install_linux.md) |
-| **Windows** | `winget install GitHub.cli` or download from [cli.github.com](https://cli.github.com/) |
-
-```bash
-# Authenticate
-gh auth login
-```
-
-## SSH Keys for GitHub
-
-```bash
-# Generate key (if you don't have one)
-ssh-keygen -t ed25519 -C "your.email@unc.edu"
-
-# Start ssh-agent
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_ed25519
-
-# Copy public key
-cat ~/.ssh/id_ed25519.pub
-```
-
-Then add to GitHub: Settings → SSH and GPG keys → New SSH key
-
-## Git on Longleaf with OnDemand
-
-If using OnDemand + RStudio for development:
-
-### Initial Setup (One Time)
-
-1. Launch RStudio Server via OnDemand
-2. Open Terminal tab in RStudio
-3. Configure Git (see above)
-4. Set up GitHub authentication:
-
-**Option A: HTTPS with credential caching**
-```bash
-git config --global credential.helper 'cache --timeout=28800'
-git clone https://github.com/rashidlab/your-repo.git
-```
-
-**Option B: SSH keys (more permanent)**
-```bash
-ssh-keygen -t ed25519 -C "your_onyen@unc.edu"
-cat ~/.ssh/id_ed25519.pub
-# Copy this key to GitHub: Settings → SSH Keys → New SSH Key
-```
-
-### Daily Workflow
-
-1. **Launch RStudio** via OnDemand
-2. **Open your project** (File → Open Project)
-3. **Pull latest:** `git pull origin main`
-4. **Work on code**
-5. **Commit and push:**
-   ```bash
-   git add -A
-   git commit -m "feat: add new analysis function"
-   git push origin main
-   ```
-
-### RStudio Git Integration
-
-RStudio has built-in Git support:
-
-- **Git tab** in top-right pane shows changed files
-- **Diff** button shows changes
-- **Commit** button opens commit dialog
-- **Pull/Push** buttons sync with remote
-
-To enable: Tools → Project Options → Git/SVN → Select Git
-
----
-
-# Verification Checklist
-
-After setup, verify everything works:
-
-## On Longleaf
-
-```bash
-ssh your_onyen@longleaf.unc.edu
-module load r/4.3.0
-R --version
-Rscript -e "library(data.table); print('OK')"
-module load quarto
-quarto --version
-git --version
-```
-
-## Locally (if using local setup)
-
-```bash
-R --version
-Rscript -e "library(targets); print('OK')"
-quarto --version
-git --version
-gh --version
-```
-
----
-
-Next: [First Project →](first-project.qmd)
+Detailed verification steps are at the end of each setup guide.

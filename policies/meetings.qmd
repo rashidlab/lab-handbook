@@ -22,6 +22,26 @@ This approach provides:
 | **1:1 with Dr. Rashid** | Bi-weekly | 30 min | Individual progress, mentorship |
 | **Working Groups** | As needed | 30-60 min | Project-specific collaboration |
 
+## Virtual & Hybrid Participation
+
+When attending remotely or in hybrid format:
+
+| Situation | What to Do |
+|-----------|------------|
+| **Joining remotely** | Use Teams link in calendar invite; mute when not speaking |
+| **Leading remotely** | Share screen with Discussion thread; designate in-person note backup |
+| **Hybrid meeting** | In-room laptop displays remote participants; one person monitors chat |
+
+**Teams link:** Posted in each meeting's Discussion thread by the lead.
+
+**Screen sharing:** Presenter shares their screen; others keep video on if bandwidth allows.
+
+**Remote participation tips:**
+
+- Join 2-3 minutes early to test audio/video
+- Use "raise hand" feature for questions
+- Keep camera on when speaking if possible
+
 ## GitHub Discussions Workflow
 
 ### Meeting Discussion Categories

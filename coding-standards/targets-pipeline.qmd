@@ -3,6 +3,14 @@ title: "Targets Pipeline Guide"
 subtitle: "Reproducible workflows with {targets}"
 ---
 
+::: {.callout-tip}
+## Prerequisites
+This page assumes familiarity with:
+- Basic R programming ([R Style Guide](r-style.qmd))
+- Command line basics (running commands in terminal)
+- Git fundamentals ([Git Practices](git-practices.qmd))
+:::
+
 A comprehensive guide to using the `{targets}` package for reproducible research workflows in R.
 
 ## Why Targets?

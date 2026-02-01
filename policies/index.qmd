@@ -33,6 +33,30 @@ Our primary communication tool. Key channels:
 See the [Lab Meetings](meetings.qmd) page for comprehensive guidance on agendas, notes, action items, and the [Meeting Schedule](schedule.qmd) for the current rotation.
 :::
 
+## 1:1 Meetings with Dr. Rashid
+
+Bi-weekly individual meetings are for mentorship, progress review, and removing blockers.
+
+**Before your 1:1:**
+
+- Review your action items from the last meeting
+- Prepare 2-3 bullet points on progress since last time
+- Identify 1-2 specific questions or blockers to discuss
+- Have your current work ready to show (code, figures, writing)
+
+**Typical structure (30 min):**
+
+1. **Your updates and questions** (15 min) - What you've done, what's blocking you
+2. **Feedback and discussion** (10 min) - Dr. Rashid's input, suggestions, connections
+3. **Action items** (5 min) - Clear next steps with owners and deadlines
+
+**Tips:**
+
+- Come prepared—don't wing it
+- Be specific about blockers ("I'm stuck on X" not "things are hard")
+- Take notes on action items during the meeting
+- It's okay to say "I don't know" or "I need help with..."
+
 ## Code and Data
 
 ### Version Control

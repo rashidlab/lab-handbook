@@ -3,6 +3,11 @@ title: "Git Practices"
 subtitle: "Version control workflows and conventions"
 ---
 
+::: {.callout-tip}
+## Prerequisites
+This page assumes you have Git installed and configured. See [Git Setup](../onboarding/setup-git.qmd) if needed.
+:::
+
 ## Overview
 
 Git is essential for collaborative research. This guide covers:

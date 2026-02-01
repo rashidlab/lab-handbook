@@ -42,7 +42,7 @@ A detailed checklist for your first week in the lab.
 ## First Code (Day 5)
 
 - [ ] Clone template repository
-- [ ] Install project dependencies (`install.packages(c("targets", "data.table", "here"))  # Install core packages`)
+- [ ] Install project dependencies (`install.packages(c("targets", "data.table", "here"))`)
 - [ ] Run example pipeline (`targets::tar_make()`)
 - [ ] Make a small change
 - [ ] Commit and push

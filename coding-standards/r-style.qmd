@@ -3,12 +3,33 @@ title: "R Style Guide"
 subtitle: "Base R conventions for lab code"
 ---
 
+::: {.callout-tip}
+## Prerequisites
+This page assumes basic familiarity with R programming. New to R? Start with [R for Data Science](https://r4ds.had.co.nz/) (chapters 1-8).
+:::
+
 ## General Principles
 
 1. **Reproducibility first**: Anyone should be able to run your code and get the same results
 2. **Document as you go**: Comments, README files, and roxygen2 docstrings
 3. **Version control everything**: Frequent, meaningful commits
 4. **Never hardcode paths**: Use `here::here()` or project-relative paths
+
+::: {.callout-note}
+## Why Base R + data.table?
+
+You may have learned tidyverse in coursework. Here's why we use base R:
+
+| Reason | Explanation |
+|--------|-------------|
+| **Fewer dependencies** | Base R ships with R; fewer packages = less that can break |
+| **Performance** | data.table is 10-100x faster than dplyr on large datasets |
+| **Debugging** | Base R errors are more explicit and easier to trace |
+| **Longevity** | Base R syntax hasn't changed significantly in 20+ years |
+| **Publication** | Our published methods use this stack for reproducibility |
+
+This isn't personal preference—it's a deliberate choice for reproducible research.
+:::
 
 ## Naming Conventions
 

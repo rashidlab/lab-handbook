@@ -32,15 +32,22 @@ website:
       contents:
         - onboarding/index.qmd
         - onboarding/first-week.qmd
-        - onboarding/tools-setup.qmd
+        - section: "Tools Setup"
+          contents:
+            - onboarding/tools-setup.qmd
+            - onboarding/setup-longleaf.qmd
+            - onboarding/setup-local.qmd
+            - onboarding/setup-git.qmd
         - onboarding/github-fundamentals.qmd
         - onboarding/first-project.qmd
+        - onboarding/troubleshooting.qmd
         - onboarding/glossary.qmd
 
     - title: "Lab Meetings"
       contents:
         - policies/meetings.qmd
         - policies/meeting-leader-guide.qmd
+        - policies/meeting-cheatsheet.qmd
         - policies/meeting-templates.qmd
         - policies/schedule.qmd
 
