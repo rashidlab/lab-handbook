@@ -1,7 +1,31 @@
 ---
 title: "Git & GitHub Setup"
 subtitle: "Version control configuration"
+learning-path:
+  name: git
+  phase: 1
+  order: 1
+  level: beginner
+  time: "10 min"
+  prerequisites: []
+date-modified: 2026-02-01
 ---
+
+::: {.callout-tip appearance="simple" icon=false}
+**Git Learning Path** — This is the first of 3 pages covering Git for the lab.
+Setup → [GitHub Fundamentals](github-fundamentals.qmd) → [Git Practices](../coding-standards/git-practices.qmd)
+:::
+
+::: {.learning-path-indicator}
+::: {.path-meta}
+[[Beginner]{.level-badge .level-beginner}]{.meta-item}
+[10 min read]{.meta-item}
+[Git Phase 1: Setup]{.meta-item}
+:::
+::: {.path-nav}
+[Next: GitHub Fundamentals →](github-fundamentals.qmd)
+:::
+:::
 
 Version control is essential for all lab work. This guide covers installing and configuring Git and GitHub.
 

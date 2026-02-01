@@ -1,11 +1,36 @@
 ---
 title: "Git Practices"
 subtitle: "Version control workflows and conventions"
+learning-path:
+  name: git
+  phase: 3
+  order: 1
+  level: intermediate
+  time: "12 min"
+  prerequisites:
+    - github-fundamentals.qmd
+date-modified: 2026-02-01
 ---
 
-::: {.callout-tip}
-## Prerequisites
-This page assumes you have Git installed and configured. See [Git Setup](../onboarding/setup-git.qmd) if needed.
+::: {.learning-path-indicator}
+::: {.path-meta}
+[[Intermediate]{.level-badge .level-intermediate}]{.meta-item}
+[12 min read]{.meta-item}
+[Git Phase 3: Workflows]{.meta-item}
+:::
+::: {.path-nav}
+[← GitHub Fundamentals](../onboarding/github-fundamentals.qmd)
+:::
+:::
+
+::: {.callout-prereq}
+::: {.prereq-title}
+Prerequisites
+:::
+::: {.prereq-list}
+- [Git & GitHub Setup](../onboarding/setup-git.qmd)
+- [GitHub Fundamentals](../onboarding/github-fundamentals.qmd)
+:::
 :::
 
 ## Overview

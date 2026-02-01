@@ -1,7 +1,37 @@
 ---
 title: "GitHub Fundamentals"
 subtitle: "A beginner's guide to GitHub for research collaboration"
+learning-path:
+  name: git
+  phase: 2
+  order: 1
+  level: beginner
+  time: "15 min"
+  prerequisites:
+    - setup-git.qmd
+date-modified: 2026-02-01
 ---
+
+::: {.learning-path-indicator}
+::: {.path-meta}
+[[Beginner]{.level-badge .level-beginner}]{.meta-item}
+[15 min read]{.meta-item}
+[Git Phase 2: Concepts]{.meta-item}
+:::
+::: {.path-nav}
+[← Git Setup](setup-git.qmd)
+[Next: Git Practices →](../coding-standards/git-practices.qmd)
+:::
+:::
+
+::: {.callout-prereq}
+::: {.prereq-title}
+Prerequisites
+:::
+::: {.prereq-list}
+- [Git & GitHub Setup](setup-git.qmd)
+:::
+:::
 
 ## What is GitHub?
 
