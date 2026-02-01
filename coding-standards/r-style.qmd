@@ -401,8 +401,20 @@ For computationally intensive loops that can't be vectorized (e.g., simulation s
 - Include parameter types and descriptions
 - Provide examples where helpful
 
+::: {.callout-tip}
+## Claude Code Enforces R Style
+Claude Code is configured to follow these lab R standards automatically. If you're using Claude and it suggests tidyverse code, remind it:
+
+```
+> Use base R and data.table, not tidyverse
+```
+
+The lab's global CLAUDE.md includes these preferences, so Claude should follow them by default.
+:::
+
 ## See Also
 
 - [Targets Pipeline Guide](targets-pipeline.qmd) - Reproducible workflows
 - [Git Practices](git-practices.qmd) - Version control conventions
 - [Project Consistency](../project-consistency/index.qmd) - Keeping code and docs aligned
+- [Claude Code Guide](../claude-code/index.qmd) - AI-powered coding assistant

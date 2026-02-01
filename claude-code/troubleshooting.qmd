@@ -1,0 +1,387 @@
+---
+title: "Troubleshooting"
+subtitle: "Common issues and solutions"
+---
+
+## Quick Diagnostics
+
+When something isn't working, start here:
+
+```bash
+# Check Claude is installed
+claude --version
+
+# Check authentication
+claude auth status
+
+# Check you're in a project with CLAUDE.md
+cat CLAUDE.md
+
+# Check global config exists
+cat ~/.claude/CLAUDE.md
+```
+
+## Authentication Issues
+
+### "Not authenticated"
+
+```bash
+claude logout
+claude login
+```
+
+Follow the browser prompts to re-authenticate.
+
+### "Team account not found"
+
+Make sure you've been added to the Rashid Lab team account. Contact Dr. Rashid if you haven't been added yet.
+
+### Authentication works locally but not on Longleaf
+
+On Longleaf, you may need to copy the authentication token:
+
+```bash
+# Copy from local machine
+cat ~/.config/claude/auth.json
+
+# Paste to Longleaf
+mkdir -p ~/.config/claude
+nano ~/.config/claude/auth.json
+```
+
+## Context Issues
+
+### Claude doesn't see my files
+
+Make sure you're in the project directory:
+
+```bash
+pwd  # Should be your project root
+ls CLAUDE.md  # Should exist
+```
+
+### Claude ignores lab standards
+
+Check your global CLAUDE.md is set up:
+
+```bash
+cat ~/.claude/CLAUDE.md
+```
+
+If missing, copy from the lab template:
+
+```bash
+cp ~/rashid-lab-setup/lab-handbook/config/claude/student-CLAUDE.md ~/.claude/CLAUDE.md
+```
+
+### Claude forgets what we discussed
+
+Context can fill up during long sessions. Start a fresh session:
+
+```
+> /exit
+```
+
+Then restart `claude` and provide context again.
+
+### Claude reads wrong CLAUDE.md
+
+Claude reads files in this order:
+1. `~/.claude/CLAUDE.md` (global)
+2. `.claude/CLAUDE.md` (project)
+3. `CLAUDE.md` (project root)
+
+Check which files exist and their contents.
+
+## Permission Issues
+
+### "Permission denied" running commands
+
+Claude asks for permission before running bash commands. If you want to pre-approve common commands, add to `.claude/settings.json`:
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(Rscript *)",
+      "Bash(git *)",
+      "Bash(make *)"
+    ]
+  }
+}
+```
+
+### Claude can't read certain files
+
+Check file permissions:
+
+```bash
+ls -la path/to/file
+chmod u+r path/to/file
+```
+
+### Claude can't write to directory
+
+Check directory permissions:
+
+```bash
+ls -la path/to/directory
+chmod u+w path/to/directory
+```
+
+## Performance Issues
+
+### Claude is slow
+
+On shared systems (Longleaf login nodes), resources may be limited:
+
+```bash
+# Request an interactive session
+srun --pty -p interact -n 1 -t 60 --mem=8G bash
+claude
+```
+
+### Session times out
+
+Use tmux to keep sessions alive:
+
+```bash
+tmux new -s claude
+claude
+# Ctrl-b, d to detach
+# Later: tmux attach -t claude
+```
+
+### Large files make Claude slow
+
+Claude reads files to understand context. Very large files slow things down. Either:
+- Point Claude to specific sections
+- Add large data files to `.claudeignore`
+
+## HPC-Specific Issues
+
+### "command not found" on Longleaf
+
+Add Claude to your PATH:
+
+```bash
+# In ~/.bashrc
+export PATH="$HOME/.local/bin:$PATH"
+
+# Reload
+source ~/.bashrc
+```
+
+### Slurm jobs fail but Claude doesn't know why
+
+Ask Claude to check the logs:
+
+```
+> Show me the Slurm error log for job 12345678
+```
+
+Or check directly:
+
+```bash
+cat logs/slurm_12345678.err
+```
+
+### Targets workers keep dying
+
+Common causes:
+1. **Out of memory**: Increase `slurm_memory_gigabytes_per_cpu`
+2. **Timeout**: Increase `slurm_time_minutes`
+3. **Module not loaded**: Add module load to worker script
+
+```
+> The simulation workers keep failing. Check the logs and suggest fixes.
+```
+
+### Network issues on Longleaf
+
+Some operations require external network access. Check:
+
+```bash
+curl -I https://claude.ai
+```
+
+If blocked, you may be on a compute node instead of a login node.
+
+## Hook Issues
+
+### Pre-commit hooks fail
+
+If Claude commits and a pre-commit hook fails:
+
+```
+> The pre-commit hook failed. Show me the error and help me fix it.
+```
+
+Common fixes:
+- Formatting issues: Run the formatter Claude suggests
+- Test failures: Fix the failing test before committing
+
+### Hook blocks Claude's commands
+
+Check `.claude/settings.json` for hook configuration:
+
+```json
+{
+  "hooks": {
+    "pre-command": "..."
+  }
+}
+```
+
+Disable temporarily if needed:
+
+```
+> Run this command without hooks
+```
+
+## Git Issues
+
+### "Merge conflict"
+
+```
+> Help me resolve this merge conflict in R/analysis.R
+```
+
+Claude will:
+1. Show both versions
+2. Help you decide which to keep
+3. Mark the conflict as resolved
+
+### "Detached HEAD"
+
+```
+> I'm in a detached HEAD state. Help me get back to main.
+```
+
+Claude will:
+1. Check if you have uncommitted work
+2. Create a branch if needed
+3. Get you back to a normal state
+
+### "Uncommitted changes would be overwritten"
+
+```
+> I need to pull but have uncommitted changes. What should I do?
+```
+
+Options:
+1. Commit your changes first
+2. Stash them: `git stash`
+3. Discard them (carefully!)
+
+## Pipeline Issues
+
+### Targets cache corrupted
+
+```
+> The targets cache seems corrupted. Help me fix it.
+```
+
+Claude may suggest:
+
+```r
+# Remove specific target
+targets::tar_invalidate(target_name)
+
+# Or rebuild cache
+targets::tar_destroy()
+targets::tar_make()
+```
+
+### "Stale lock file"
+
+If a previous run crashed:
+
+```
+> There's a stale lock file. Can you remove it?
+```
+
+Claude runs:
+
+```bash
+rm -f _targets/.targets-lock
+```
+
+### Target stuck outdated
+
+```
+> The data_clean target is always outdated even though nothing changed.
+```
+
+Common causes:
+- Function using non-deterministic code (random without seed)
+- File with changing timestamp
+- External dependency changing
+
+## Plugin Issues
+
+### Plugin not loading
+
+```bash
+# Check installed plugins
+claude plugins list
+
+# Reinstall
+claude plugins uninstall superpowers@superpowers-marketplace
+claude plugins install superpowers@superpowers-marketplace
+```
+
+### Skill not found
+
+Make sure the skill exists:
+
+```bash
+ls .claude/commands/
+```
+
+Or check if it's from a plugin:
+
+```
+> What skills are available?
+```
+
+## Getting Help
+
+### Within Claude
+
+```
+> /help
+> What commands are available?
+```
+
+### Lab Resources
+
+| Issue | Contact |
+|-------|---------|
+| Claude Code problems | `#computing` Teams channel |
+| Longleaf issues | research@unc.edu |
+| Lab practices | Ask in lab meeting or Teams |
+
+### External Resources
+
+| Resource | URL |
+|----------|-----|
+| Claude Code Docs | [claude.ai/code](https://claude.ai/code) |
+| Longleaf User Guide | [help.rc.unc.edu](https://help.rc.unc.edu) |
+| Targets Manual | [books.ropensci.org/targets](https://books.ropensci.org/targets/) |
+
+## Reporting Issues
+
+When reporting Claude Code issues to the lab:
+
+1. **What you were trying to do**
+2. **The exact error message** (screenshot or copy)
+3. **What you already tried**
+4. **Environment**: Local or Longleaf? What OS?
+
+Example:
+
+> I was trying to run the targets pipeline with Claude on Longleaf.
+> Got this error: "Error: crew controller failed to start"
+> I tried restarting Claude and checking the logs.
+> Running on Longleaf, module r/4.3.0 loaded.

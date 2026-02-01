@@ -1,0 +1,255 @@
+---
+title: "Custom Skills"
+subtitle: "Create /commands for common tasks"
+---
+
+Skills are reusable command templates that you invoke with `/skillname`. They encode complex workflows into simple commands.
+
+## What Are Skills?
+
+A skill is a markdown file in `.claude/commands/` that defines:
+- What the command does
+- Step-by-step instructions for Claude
+- Any parameters it accepts
+
+## Using Skills
+
+```
+> /review              # Run the review skill
+> /review --all        # With arguments
+> /validate            # Run validation skill
+```
+
+## Lab-Provided Skills
+
+### /review
+
+Comprehensive code review with priority-ordered checks:
+
+```markdown
+# .claude/commands/review.md
+
+# /review - Code Review Command
+
+Review changes for bugs, security issues, and lab standard violations.
+
+## Usage
+/review              # Review since last commit
+/review --all        # Review all recent changes
+
+## Instructions
+
+When invoked:
+
+1. Check git status for changed files
+2. Review each file with this priority:
+   - Logic errors (highest priority)
+   - Security vulnerabilities
+   - Data integrity issues
+   - Lab standard violations
+   - Style issues (lowest priority)
+
+3. Check project-specific patterns from review-checklist.yml
+
+4. Output findings as:
+   - CRITICAL: Must fix
+   - WARNING: Should review
+   - INFO: Minor notes
+
+5. Write summary to logs/code_review.log
+```
+
+### /validate
+
+Check project consistency:
+
+```markdown
+# .claude/commands/validate.md
+
+# /validate - Project Consistency Check
+
+Verify project follows the consistency framework.
+
+## Instructions
+
+1. Check globals.yml exists and is valid YAML
+2. Scan R/ for hardcoded values that should be in globals.yml
+3. Verify manuscript uses dynamic values (not hardcoded)
+4. Check DATA_PROVENANCE.md is up to date
+5. Report any inconsistencies found
+```
+
+### /preflight
+
+Pre-Slurm submission checks:
+
+```markdown
+# .claude/commands/preflight.md
+
+# /preflight - Pre-Submission Checks
+
+Run before submitting jobs to Slurm.
+
+## Instructions
+
+1. Check for stale lock files in _targets/
+2. Look for orphaned worker processes
+3. Verify Slurm script has required directives
+4. Check disk space in /proj/rashidlab/
+5. Confirm R packages are available
+6. Report any issues that would cause job failure
+```
+
+## Creating Custom Skills
+
+### 1. Create the file
+
+```bash
+mkdir -p .claude/commands
+nano .claude/commands/myskill.md
+```
+
+### 2. Write the skill
+
+```markdown
+# /myskill - Description
+
+Brief description of what this skill does.
+
+## Usage
+
+/myskill [arguments]
+
+## Instructions
+
+Step-by-step instructions for Claude:
+
+1. First, do X
+2. Then, check Y
+3. Finally, output Z
+
+## Examples
+
+Example invocation and expected output.
+```
+
+### 3. Use it
+
+```
+> /myskill
+```
+
+## Skill Structure
+
+### Basic Template
+
+```markdown
+# /skillname - Short Description
+
+Longer description of purpose.
+
+## Usage
+
+/skillname [optional-args]
+
+## Instructions
+
+When this command is invoked:
+
+1. First step
+2. Second step
+3. Third step
+
+## Output Format
+
+Describe expected output format.
+```
+
+### With Parameters
+
+```markdown
+# /analyze - Run Analysis
+
+## Usage
+
+/analyze <target>           # Analyze specific target
+/analyze --all              # Analyze everything
+/analyze --since <date>     # Since specific date
+
+## Instructions
+
+Parse the arguments:
+- If <target> provided: analyze that target
+- If --all: analyze all targets
+- If --since: filter by date
+
+Then proceed with analysis...
+```
+
+## Best Practices
+
+### Keep Skills Focused
+
+Each skill should do one thing well:
+
+```markdown
+# Good: Focused
+/review    # Review code
+/validate  # Check consistency
+/preflight # Pre-submission checks
+
+# Bad: Too broad
+/do-everything  # Review, validate, and submit
+```
+
+### Include Examples
+
+```markdown
+## Examples
+
+### Example 1: Basic usage
+> /review
+Reviews changes since last commit...
+
+### Example 2: With arguments
+> /review --since abc123
+Reviews all changes since commit abc123...
+```
+
+### Reference Project Files
+
+```markdown
+## Instructions
+
+1. Read the review checklist from `.claude/review-checklist.yml`
+2. Apply patterns specific to this project
+3. Check critical files listed in CLAUDE.md
+```
+
+## Skill vs Agent
+
+| Feature | Skill (/command) | Agent |
+|---------|------------------|-------|
+| Invocation | `/skillname` | "Use the reviewer agent" |
+| Purpose | Workflow automation | Specialized expertise |
+| Length | Short, procedural | Can be detailed |
+| State | Stateless | Can maintain context |
+
+Use skills for workflows; use agents for specialized knowledge.
+
+## Sharing Skills
+
+### Within the Lab
+
+Skills in template repos are shared with everyone:
+
+```
+template-research-project/.claude/
+└── commands/
+    ├── review.md
+    └── validate.md
+```
+
+### Personal Skills
+
+Add to `~/.claude/commands/` for personal skills available everywhere.

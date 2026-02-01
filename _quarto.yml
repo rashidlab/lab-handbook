@@ -101,6 +101,7 @@ website:
         - project-consistency/method-claims.qmd
         - project-consistency/data-provenance.qmd
         - project-consistency/validation.qmd
+        - project-consistency/claude-code-enforcement.qmd
 
     - title: "Templates"
       contents:

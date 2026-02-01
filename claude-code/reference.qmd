@@ -1,0 +1,236 @@
+---
+title: "Quick Reference"
+subtitle: "Commands, shortcuts, and common patterns"
+---
+
+## Essential Commands
+
+### Starting and Stopping
+
+| Command | Description |
+|---------|-------------|
+| `claude` | Start Claude in current directory |
+| `claude --help` | Show help |
+| `claude --version` | Show version |
+| `/exit` or `Ctrl+C` | Exit Claude |
+| `/clear` | Clear conversation history |
+
+### Authentication
+
+| Command | Description |
+|---------|-------------|
+| `claude login` | Authenticate with Claude |
+| `claude logout` | Sign out |
+| `claude auth status` | Check authentication |
+
+### Plugins
+
+| Command | Description |
+|---------|-------------|
+| `claude plugins list` | List installed plugins |
+| `claude plugins install <name>` | Install plugin |
+| `claude plugins uninstall <name>` | Remove plugin |
+
+## Keyboard Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl+C` | Cancel current operation / Exit |
+| `↑` / `↓` | Navigate command history |
+| `Tab` | Autocomplete (if supported) |
+| `Ctrl+L` | Clear screen |
+
+## Common Prompts
+
+### Exploration
+
+```
+What is the structure of this project?
+Explain the targets pipeline in _targets.R
+What functions are in R/analysis.R?
+Show me recent git commits
+```
+
+### Modification
+
+```
+Add a function to R/utils.R that calculates the median
+Update the simulation to use 1000 iterations
+Fix the bug in calculate_statistics()
+Refactor this function to be more readable
+```
+
+### Running Code
+
+```
+Run the targets pipeline
+Run tar_outdated() to check what needs updating
+Execute the test suite
+Run this R script
+```
+
+### Git Operations
+
+```
+What's the git status?
+Create a new branch called feature/bootstrap
+Stage all R files
+Commit with message "Add bootstrap CI"
+Push to origin
+```
+
+### Review and Quality
+
+```
+Review my changes for issues
+Check for lab coding standard violations
+Are there any hardcoded values that should be in globals.yml?
+```
+
+## Skills (Slash Commands)
+
+### Built-in Skills
+
+| Skill | Description |
+|-------|-------------|
+| `/commit` | Streamlined commit workflow |
+| `/review` | Code review with priority-ordered checks |
+| `/help` | Show available commands |
+
+### Lab Skills (if configured)
+
+| Skill | Description |
+|-------|-------------|
+| `/validate` | Check project consistency |
+| `/preflight` | Pre-Slurm submission checks |
+
+## File Patterns
+
+### Configuration Files
+
+| File | Purpose |
+|------|---------|
+| `~/.claude/CLAUDE.md` | Global instructions (all projects) |
+| `.claude/CLAUDE.md` | Project-specific instructions |
+| `CLAUDE.md` | Project memory (root level) |
+| `.claude/settings.json` | Permissions and hooks |
+| `config/globals.yml` | Project constants |
+
+### Project Structure
+
+```
+project/
+├── CLAUDE.md              # Project context
+├── .claude/
+│   ├── settings.json      # Permissions
+│   ├── commands/          # Custom skills
+│   └── agents/            # Custom agents
+├── _targets.R             # Pipeline definition
+├── R/                     # Functions
+├── config/
+│   └── globals.yml        # Constants
+├── data/                  # Input data
+├── output/                # Results
+└── docs/
+    ├── plans/             # Design documents
+    └── DATA_PROVENANCE.md # Data sources
+```
+
+## Pipeline Commands
+
+### Targets
+
+| Prompt | What it does |
+|--------|--------------|
+| "Run the pipeline" | `targets::tar_make()` |
+| "Check what's outdated" | `targets::tar_outdated()` |
+| "Show the dependency graph" | `targets::tar_visnetwork()` |
+| "Load the model_fit target" | `targets::tar_read(model_fit)` |
+| "Check for failures" | `targets::tar_meta() \|> filter(!is.na(error))` |
+
+### Slurm
+
+| Prompt | What it does |
+|--------|--------------|
+| "Submit this job" | `sbatch script.sh` |
+| "Check my queue" | `squeue -u $USER` |
+| "Cancel job 12345" | `scancel 12345` |
+| "Show job details" | `scontrol show job 12345` |
+
+## Lab Coding Standards
+
+### Use
+
+| Category | Standard |
+|----------|----------|
+| Data manipulation | Base R + `data.table` |
+| Dependencies | DESCRIPTION file |
+| Pipelines | `{targets}` |
+| Configuration | `globals.yml` |
+| Communication | Microsoft Teams |
+
+### Avoid
+
+| Category | Avoid |
+|----------|-------|
+| Data manipulation | tidyverse, dplyr |
+| Dependencies | renv.lock |
+| Pipelines | Makefiles for R |
+| Configuration | Hardcoded values |
+| Communication | Slack |
+
+## Configuration Locations
+
+| File | Location |
+|------|----------|
+| Global CLAUDE.md | `~/.claude/CLAUDE.md` |
+| Global settings | `~/.claude/settings.json` |
+| Project CLAUDE.md | `.claude/CLAUDE.md` or `CLAUDE.md` |
+| Project settings | `.claude/settings.json` |
+| Project skills | `.claude/commands/*.md` |
+| Project agents | `.claude/agents/*.md` |
+| Lab team roster | `config/team.yml` |
+| Project globals | `config/globals.yml` |
+
+## Recommended Plugins
+
+```bash
+# Install all recommended plugins
+claude plugins install github@claude-plugins-official
+claude plugins install commit-commands@claude-plugins-official
+claude plugins install superpowers@superpowers-marketplace
+claude plugins install scientific-skills@claude-scientific-skills
+```
+
+## Links
+
+| Resource | URL |
+|----------|-----|
+| Lab Handbook | [rashidlab.github.io/lab-handbook](https://rashidlab.github.io/lab-handbook/) |
+| Claude Code Docs | [claude.ai/code](https://claude.ai/code) |
+| GitHub Org | [github.com/rashidlab](https://github.com/rashidlab) |
+| Longleaf Help | [help.rc.unc.edu](https://help.rc.unc.edu) |
+| Targets Manual | [books.ropensci.org/targets](https://books.ropensci.org/targets/) |
+
+## Cheatsheet
+
+```
+# Start session
+claude
+
+# Explore
+> What's in this project?
+> Explain R/models.R
+
+# Modify
+> Add a bootstrap function to R/analysis.R
+
+# Review
+> /review
+
+# Commit
+> /commit
+
+# Push
+> Push to origin
+```

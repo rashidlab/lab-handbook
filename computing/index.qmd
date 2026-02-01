@@ -188,9 +188,44 @@ if (Sys.getenv("QUICK_MODE") == "1") {
 }
 ```
 
+## Claude Code on Longleaf
+
+Claude Code can help manage HPC workflows directly from the command line.
+
+### Setup
+
+```bash
+# Install on Longleaf
+curl -fsSL https://claude.ai/install.sh | sh
+claude login
+```
+
+### Common Tasks
+
+```
+> Submit this job to Slurm with 4 CPUs and 16GB RAM
+> Check my queue status
+> Configure targets to use 20 Slurm workers
+> Debug why my job failed
+```
+
+### Long Sessions
+
+Use tmux to keep Claude running:
+
+```bash
+tmux new -s claude
+claude
+# Ctrl-b, d to detach
+# tmux attach -t claude to reattach
+```
+
+See the [Claude Code HPC Guide](../claude-code/hpc-usage.qmd) for comprehensive documentation.
+
 ## Getting Help
 
 - **Longleaf issues**: research@unc.edu
 - **Lab computing questions**: `#computing` Teams channel
 - **Targets/pipeline help**: [targets documentation](https://books.ropensci.org/targets/)
+- **Claude Code help**: [Claude Code Guide](../claude-code/index.qmd)
 - **Initial setup**: [Tools Setup Guide](../onboarding/tools-setup.qmd)

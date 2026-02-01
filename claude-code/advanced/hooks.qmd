@@ -1,0 +1,285 @@
+---
+title: "Hooks"
+subtitle: "Automation triggers for events"
+---
+
+Hooks run automatically in response to Claude Code events, enabling automation without manual invocation.
+
+## Hook Types
+
+| Hook | Triggers When |
+|------|---------------|
+| Pre-command | Before any bash command runs |
+| Post-command | After any bash command completes |
+| Pre-commit | Before a git commit |
+| Post-commit | After a git commit |
+| Session start | When Claude session begins |
+| Session stop | When Claude session ends |
+
+## Configuration
+
+Hooks are defined in `.claude/settings.json`:
+
+```json
+{
+  "hooks": {
+    "pre-commit": {
+      "command": "Rscript scripts/validate_pipeline_consistency.R"
+    },
+    "post-commit": {
+      "command": "./scripts/post_commit_review.sh"
+    },
+    "session-stop": {
+      "agent": "lab-reviewer"
+    }
+  }
+}
+```
+
+## Common Hook Patterns
+
+### Pre-Commit Validation
+
+Catch issues before they're committed:
+
+```json
+{
+  "hooks": {
+    "pre-commit": {
+      "command": "Rscript scripts/validate_pipeline_consistency.R",
+      "description": "Check globals.yml consistency"
+    }
+  }
+}
+```
+
+The validation script might check:
+- All globals.yml values are used correctly
+- No hardcoded values in manuscript
+- Data provenance is documented
+
+### Post-Commit Review
+
+Automatically review after commits:
+
+```json
+{
+  "hooks": {
+    "post-commit": {
+      "command": "./scripts/post_commit_review.sh",
+      "description": "Review changes after commit"
+    }
+  }
+}
+```
+
+### Session Stop Review
+
+Run a review when ending a session:
+
+```json
+{
+  "hooks": {
+    "session-stop": {
+      "agent": "lab-reviewer",
+      "description": "Review session changes before exit"
+    }
+  }
+}
+```
+
+### Pre-Slurm Checks
+
+Validate before job submission:
+
+```json
+{
+  "hooks": {
+    "pre-command": {
+      "pattern": "sbatch",
+      "command": "./scripts/preflight_check.sh",
+      "description": "Pre-submission validation"
+    }
+  }
+}
+```
+
+## Writing Hook Scripts
+
+### Validation Script Example
+
+```r
+# scripts/validate_pipeline_consistency.R
+
+library(yaml)
+
+# Load globals
+globals <- read_yaml("config/globals.yml")
+
+# Check R files for hardcoded values
+r_files <- list.files("R/", pattern = "\\.R$", full.names = TRUE)
+issues <- character()
+
+for (file in r_files) {
+  content <- readLines(file)
+
+  # Check for hardcoded values that should be in globals
+  if (any(grepl("n_iterations\\s*=\\s*\\d+", content))) {
+    issues <- c(issues, paste(file, ": hardcoded n_iterations"))
+  }
+}
+
+if (length(issues) > 0) {
+  cat("Validation failed:\n")
+  cat(paste("-", issues), sep = "\n")
+  quit(status = 1)
+} else {
+  cat("Validation passed\n")
+}
+```
+
+### Review Script Example
+
+```bash
+#!/bin/bash
+# scripts/post_commit_review.sh
+
+SINCE_COMMIT=${1:-HEAD~1}
+
+echo "Reviewing changes since $SINCE_COMMIT"
+
+# Get changed files
+CHANGED_FILES=$(git diff --name-only $SINCE_COMMIT HEAD)
+
+# Check for critical file changes
+CRITICAL="globals.yml _targets.R"
+for file in $CRITICAL; do
+  if echo "$CHANGED_FILES" | grep -q "$file"; then
+    echo "WARNING: Critical file changed: $file"
+  fi
+done
+
+# Log the review
+echo "$(date): Reviewed $CHANGED_FILES" >> logs/code_review.log
+```
+
+## Hook Best Practices
+
+### Keep Hooks Fast
+
+Hooks run synchronously. Slow hooks block Claude:
+
+```json
+{
+  "hooks": {
+    "pre-commit": {
+      "command": "quick_check.sh",  // Good: fast
+      "timeout": 10
+    }
+  }
+}
+```
+
+### Make Hooks Informative
+
+Output should explain what happened:
+
+```bash
+#!/bin/bash
+echo "Running pre-commit checks..."
+if ./check.sh; then
+  echo "✓ All checks passed"
+else
+  echo "✗ Checks failed - commit blocked"
+  exit 1
+fi
+```
+
+### Handle Failures Gracefully
+
+Non-zero exit blocks the action:
+
+```r
+# Return 0 to allow, non-zero to block
+if (has_issues) {
+  cat("Issues found - blocking commit\n")
+  quit(status = 1)  # Block
+} else {
+  quit(status = 0)  # Allow
+}
+```
+
+### Log Everything
+
+Keep a record of hook executions:
+
+```bash
+LOG_FILE="logs/hooks.log"
+echo "$(date): $HOOK_NAME executed" >> $LOG_FILE
+```
+
+## Debugging Hooks
+
+### Check hook configuration
+
+```
+> What hooks are configured for this project?
+```
+
+### Test hook manually
+
+```bash
+# Run the hook script directly
+./scripts/post_commit_review.sh
+
+# Check exit code
+echo $?  # 0 = success, non-zero = failure
+```
+
+### Disable temporarily
+
+```
+> Run this command without hooks
+```
+
+Or edit `.claude/settings.json` to comment out the hook.
+
+## Lab-Recommended Hooks
+
+### Research Projects
+
+```json
+{
+  "hooks": {
+    "pre-commit": {
+      "command": "Rscript scripts/validate_pipeline_consistency.R"
+    },
+    "session-stop": {
+      "agent": "lab-reviewer"
+    }
+  }
+}
+```
+
+### Methods Papers
+
+```json
+{
+  "hooks": {
+    "pre-commit": {
+      "command": "Rscript scripts/check_manuscript_consistency.R"
+    },
+    "post-commit": {
+      "command": "./scripts/post_commit_review.sh"
+    }
+  }
+}
+```
+
+## Caution
+
+Hooks with bugs can block all operations. Test thoroughly:
+
+1. Run hook script manually first
+2. Test with a dummy commit
+3. Have a way to disable (edit settings.json)

@@ -732,3 +732,40 @@ git count-objects -vH
 git checkout -b backup/before-refactor
 git checkout main
 ```
+
+## Claude Code Git Workflow
+
+Claude Code can manage your git workflow directly.
+
+### Common Operations
+
+```
+> What's the git status?
+> Create a branch called feature/bootstrap
+> Show me what changed in the last commit
+```
+
+### Commit Workflow
+
+Use the `/commit` skill for a streamlined workflow:
+
+```
+> /commit
+```
+
+Claude will:
+1. Show staged and unstaged changes
+2. Suggest a commit message following lab conventions
+3. Create the commit with your approval
+
+### Code Review
+
+Use `/review` before committing to catch issues:
+
+```
+> /review
+```
+
+Claude checks for logic errors, security issues, and lab standard violations.
+
+See [Claude Code Guide](../claude-code/index.qmd) for more on git integration.

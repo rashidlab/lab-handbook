@@ -232,3 +232,17 @@ Or use the browser's print function (Ctrl/Cmd + P) when viewing the HTML slides.
 3. **Test on projector** - Colors may appear differently
 4. **Version control** - Commit slides to GitHub
 5. **Include speaker notes** - Use `::: {.notes}` blocks
+
+## Creating Presentations with Claude Code
+
+Claude Code can help create and edit Quarto presentations:
+
+```
+> Create a new Quarto RevealJS presentation with lab branding
+> Add a slide showing the simulation results figure
+> Help me format this code block for the methods slide
+```
+
+Claude knows the lab's color scheme and styling conventions.
+
+See [Claude Code Guide](../claude-code/index.qmd) for more on using Claude with Quarto.

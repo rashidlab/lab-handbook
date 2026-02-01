@@ -1,0 +1,335 @@
+---
+title: "Lab Integration"
+subtitle: "Using Claude Code with targets, git, Quarto, and HPC"
+---
+
+This guide shows how Claude Code integrates with the lab's core tools and workflows.
+
+## Targets Pipeline Integration
+
+Claude understands targets pipelines and can help you build, debug, and extend them.
+
+### Exploring the Pipeline
+
+```
+> Explain the targets pipeline in _targets.R
+
+> What targets are outdated?
+
+> Show me the dependency graph for the model_fit target
+```
+
+### Running the Pipeline
+
+```
+> Run the targets pipeline
+
+> Run just the simulation targets
+
+> Check which targets failed
+```
+
+Claude executes:
+```r
+Rscript -e "targets::tar_make()"
+Rscript -e "targets::tar_make(names = c('sim_results'))"
+Rscript -e "targets::tar_meta() |> dplyr::filter(!is.na(error))"
+```
+
+### Debugging Failed Targets
+
+When a target fails:
+
+```
+> The sim_results target failed. Help me debug it.
+```
+
+Claude will:
+1. Check `tar_meta()` for the error message
+2. Load the workspace with `tar_workspace()`
+3. Examine the inputs
+4. Suggest fixes
+
+### Adding New Targets
+
+```
+> Add a new target that creates a summary table from model_results
+```
+
+Claude:
+1. Reads the existing `_targets.R`
+2. Creates a function in `R/` if needed
+3. Adds the target with proper dependencies
+4. Suggests running `tar_validate()` to check syntax
+
+### Slurm Integration
+
+For cluster jobs:
+
+```
+> Configure this pipeline to run on Longleaf with 20 workers
+
+> The simulation targets are slow. Set them up to run on Slurm workers.
+```
+
+See [Targets Pipeline Guide](../coding-standards/targets-pipeline.qmd) for the full targets documentation.
+
+## Git Workflow Integration
+
+Claude follows the lab's git practices and can manage your version control.
+
+### Checking Status
+
+```
+> What's the git status?
+
+> Show me what's changed since last commit
+```
+
+### Branching
+
+```
+> Create a new branch for the bootstrap feature
+
+> What branch am I on?
+```
+
+### Committing
+
+The `/commit` skill provides a streamlined workflow:
+
+```
+> /commit
+```
+
+This:
+1. Shows you staged and unstaged changes
+2. Suggests a commit message following lab conventions
+3. Creates the commit with your approval
+
+For manual commits:
+
+```
+> Stage all R files and commit with message "Add bootstrap CI calculation"
+```
+
+### Reviewing Changes
+
+Before committing, use `/review`:
+
+```
+> /review
+```
+
+Claude checks:
+- Logic errors
+- Lab coding standards (base R, not tidyverse)
+- Common mistakes
+- Security issues
+
+### Pushing and PRs
+
+```
+> Push this branch to origin
+
+> Create a pull request for this feature
+```
+
+See [Git Practices](../coding-standards/git-practices.qmd) for the lab's git conventions.
+
+## Configuration Integration
+
+Claude automatically reads and respects lab configuration files.
+
+### globals.yml
+
+The project's single source of truth for constants:
+
+```yaml
+# config/globals.yml
+simulation:
+  n_iterations: 1000
+  n_bootstrap: 500
+  seed: 42
+
+model:
+  prior_mean: 0
+  prior_sd: 1
+
+output:
+  figure_width: 8
+  figure_height: 6
+```
+
+Claude references these values:
+
+```
+> Use the n_iterations value from globals.yml in the simulation
+
+> What's the configured prior_sd?
+```
+
+### Updating Configuration
+
+```
+> Add a new parameter to globals.yml for the learning rate
+
+> Update n_iterations to 2000
+```
+
+Claude will:
+1. Edit `globals.yml`
+2. Find and update any hardcoded values in code
+3. Suggest running the pipeline to propagate changes
+
+### Consistency Checks
+
+```
+> Check if any hardcoded values should be in globals.yml
+
+> Are there any values in the manuscript that don't match the code?
+```
+
+See [Project Consistency Framework](../project-consistency/index.qmd) for the full consistency documentation.
+
+## Quarto Integration
+
+Claude can help create and maintain Quarto documents.
+
+### Manuscripts
+
+```
+> What Quarto documents are in this project?
+
+> Preview the main manuscript
+```
+
+Claude runs:
+```bash
+quarto preview paper/main.qmd
+```
+
+### Dynamic Values
+
+The lab uses dynamic values to keep manuscripts in sync with code:
+
+```
+> Add an inline R expression for the sample size from globals.yml
+
+> Update the results section to pull from the analysis output
+```
+
+Claude generates:
+```markdown
+The sample size was `r params$n`.
+The mean effect was `r round(results$mean_effect, 2)`.
+```
+
+### Figures
+
+```
+> Which figures in the manuscript come from which targets?
+
+> Update Figure 2 to use the new color scheme
+```
+
+### Rendering
+
+```
+> Render the manuscript
+
+> Check if any Quarto dependencies are outdated
+```
+
+## Full Workflow Examples
+
+### Example 1: Adding a Bootstrap Analysis
+
+```
+> I need to add bootstrap confidence intervals to the main analysis.
+> Walk me through what files need to change.
+```
+
+Claude maps out:
+1. `config/globals.yml` — Add `n_bootstrap: 500`
+2. `R/analysis.R` — Add `compute_bootstrap_ci()` function
+3. `_targets.R` — Add `bootstrap_results` target
+4. `paper/main.qmd` — Add results section
+
+Then helps implement each step.
+
+### Example 2: Debugging a Pipeline Failure
+
+```
+> The pipeline failed overnight. Here's the error:
+> Error in tar_target sim_batch_42: cannot allocate vector of size 2.5 Gb
+```
+
+Claude:
+1. Identifies the memory issue
+2. Suggests increasing Slurm memory allocation
+3. Recommends chunking the simulation
+4. Updates `_targets.R` with the fix
+
+### Example 3: Preparing for Submission
+
+```
+> Help me prepare this manuscript for JASA submission.
+> What checks should I run?
+```
+
+Claude suggests:
+1. Run `/review` on all code
+2. Check `globals.yml` values match manuscript
+3. Verify figure provenance in `DATA_PROVENANCE.md`
+4. Run `quarto render` to ensure clean build
+5. Check git status for uncommitted changes
+
+## Integration Checklist
+
+| Tool | Claude Can... |
+|------|---------------|
+| **targets** | Run pipeline, debug failures, add targets, configure Slurm |
+| **git** | Check status, branch, commit, push, create PRs, review changes |
+| **globals.yml** | Read values, update config, check consistency |
+| **Quarto** | Preview, render, add dynamic values, check figures |
+| **Slurm** | Submit jobs, check queue, configure workers |
+
+## Tips for Effective Integration
+
+### Reference files explicitly
+
+```
+# More effective
+> Update the fit_model function in R/models.R
+
+# Less effective
+> Update the model function
+```
+
+### Let Claude read first
+
+```
+> Read _targets.R and then help me add a new preprocessing step
+```
+
+### Use lab terminology
+
+```
+# Claude understands lab-specific terms
+> Use data.table, not dplyr
+> Follow the consistency framework
+> Add to the review checklist
+```
+
+### Check configuration first
+
+```
+> Before changing the simulation, what's in globals.yml?
+```
+
+## Next Steps
+
+- [HPC Usage](hpc-usage.qmd) — Running Claude on Longleaf
+- [Advanced](advanced/index.qmd) — Custom skills, agents, and automation
+- [Project Consistency](../project-consistency/index.qmd) — Full consistency framework

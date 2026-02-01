@@ -1,0 +1,236 @@
+---
+title: "MCP Servers"
+subtitle: "External tool integrations"
+---
+
+MCP (Model Context Protocol) servers connect Claude to external tools, databases, and services.
+
+## What Are MCP Servers?
+
+MCP servers provide Claude with:
+- Access to databases (PubMed, UniProt, etc.)
+- Integration with lab systems
+- Specialized scientific tools
+- Data visualization capabilities
+
+## Recommended Plugins
+
+The lab recommends these plugins (which include MCP servers):
+
+### scientific-skills
+
+Scientific databases and analysis tools:
+
+```bash
+claude plugins install scientific-skills@claude-scientific-skills
+```
+
+Provides access to:
+- **Databases**: PubMed, UniProt, KEGG, ChEMBL, ClinicalTrials.gov
+- **Analysis**: Statistical methods, visualization
+- **Data formats**: FASTA, PDB, CSV, Excel
+
+### superpowers
+
+Development workflow tools:
+
+```bash
+claude plugins install superpowers@superpowers-marketplace
+```
+
+Provides:
+- Code review agents
+- TDD workflows
+- Debugging tools
+- Git worktree management
+
+### github
+
+GitHub CLI integration:
+
+```bash
+claude plugins install github@claude-plugins-official
+```
+
+Provides:
+- Issue management
+- Pull request workflows
+- Repository operations
+
+## Using MCP-Provided Tools
+
+### Database Queries
+
+With scientific-skills installed:
+
+```
+> Search PubMed for recent papers on TREM2 and Alzheimer's
+
+> Get the protein sequence for human TP53 from UniProt
+
+> What clinical trials are recruiting for glioblastoma?
+```
+
+### Data Analysis
+
+```
+> Perform a power analysis for a two-sample t-test
+
+> Create a volcano plot from this differential expression data
+
+> Run a survival analysis on the patient data
+```
+
+### File Operations
+
+```
+> Read the Excel file and summarize the data
+
+> Convert this FASTA to a table format
+
+> Parse the PDB file and extract chain A coordinates
+```
+
+## Configuration
+
+MCP servers are configured through plugins. Check your configuration:
+
+```bash
+# List installed plugins
+claude plugins list
+
+# Check what tools are available
+claude tools list
+```
+
+## Lab-Specific Integrations
+
+### Accessing Lab Data
+
+For projects that need lab-specific integrations:
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "lab-data": {
+        "command": "python",
+        "args": ["scripts/lab_data_server.py"],
+        "description": "Access to /proj/rashidlab/ data"
+      }
+    }
+  }
+}
+```
+
+### Custom Scientific Tools
+
+For specialized analysis:
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "simulation-tools": {
+        "command": "Rscript",
+        "args": ["scripts/simulation_server.R"],
+        "description": "Run simulations with lab parameters"
+      }
+    }
+  }
+}
+```
+
+## Available Skills from Plugins
+
+### scientific-skills Database Tools
+
+| Tool | Description |
+|------|-------------|
+| pubmed-database | Search PubMed literature |
+| uniprot-database | Query protein sequences |
+| pdb-database | Access protein structures |
+| kegg-database | Query pathway data |
+| chembl-database | Search compound data |
+| clinicaltrials-database | Find clinical trials |
+
+### scientific-skills Analysis Tools
+
+| Tool | Description |
+|------|-------------|
+| statistical-analysis | Statistical tests |
+| exploratory-data-analysis | EDA workflows |
+| scientific-visualization | Create figures |
+| hypothesis-generation | Research planning |
+
+### superpowers Development Tools
+
+| Tool | Description |
+|------|-------------|
+| code-review | Review code changes |
+| test-driven-development | TDD workflows |
+| systematic-debugging | Debug issues |
+| brainstorming | Design discussions |
+
+## Example Workflows
+
+### Literature Search
+
+```
+> Search PubMed for papers on Bayesian adaptive trials
+> published in the last 2 years
+
+Claude uses pubmed-database to query and summarize results.
+```
+
+### Protein Analysis
+
+```
+> Get the TP53 sequence from UniProt and identify
+> functional domains
+
+Claude fetches data and analyzes the protein.
+```
+
+### Statistical Analysis
+
+```
+> Run a power analysis for detecting a 0.5 effect size
+> with alpha=0.05
+
+Claude uses statistical tools to compute power.
+```
+
+## Troubleshooting
+
+### Tool not found
+
+```bash
+# Reinstall the plugin
+claude plugins uninstall scientific-skills@claude-scientific-skills
+claude plugins install scientific-skills@claude-scientific-skills
+```
+
+### Server connection failed
+
+```bash
+# Check plugin status
+claude plugins list
+
+# Check for updates
+claude plugins update
+```
+
+### Tool runs slowly
+
+Large database queries may take time. For complex queries, consider:
+- Breaking into smaller queries
+- Using more specific search terms
+- Caching results locally
+
+## Security Notes
+
+- MCP servers can access external resources
+- Be cautious with sensitive data
+- Lab data should stay on approved systems
+- Don't expose credentials in MCP configurations

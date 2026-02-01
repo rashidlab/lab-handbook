@@ -1,0 +1,289 @@
+---
+title: "Claude Code Enforcement"
+subtitle: "Integrating Claude Code with the consistency framework"
+---
+
+This page explains how Claude Code works with the Project Consistency Framework to automatically enforce standards.
+
+## How Claude Uses the Framework
+
+Claude Code reads your project's consistency files and uses them to:
+
+1. **Reference correct values** — Uses globals.yml instead of hardcoding
+2. **Validate changes** — Checks that code matches claims
+3. **Catch drift** — Warns when changes might cause inconsistencies
+4. **Document properly** — Updates provenance and claims as needed
+
+## Files Claude Reads
+
+| File | Purpose | How Claude Uses It |
+|------|---------|-------------------|
+| `config/globals.yml` | Parameter values | References for all constants |
+| `config/consistency_registry.yml` | Claim tracking | Validates manuscript claims |
+| `docs/DATA_PROVENANCE.md` | Data sources | Documents data origins |
+| `docs/plans/*.md` | Design decisions | Understands project rationale |
+
+## Automatic Behaviors
+
+### When Writing Code
+
+Claude automatically:
+
+```
+> Add a simulation with 1000 iterations
+
+Claude reads globals.yml and generates:
+  n_reps <- globals$simulation$n_iterations
+
+NOT:
+  n_reps <- 1000  # Hardcoded - wrong!
+```
+
+### When Reviewing Code
+
+The `/review` skill checks:
+
+- Are hardcoded values present that should use globals.yml?
+- Do parameter names match canonical names?
+- Are consistency registry claims still valid?
+
+### When Updating Manuscripts
+
+Claude uses dynamic values:
+
+```
+> Update the methods section with the sample size
+
+Claude generates:
+  The study used `r params$n` participants.
+
+NOT:
+  The study used 500 participants.
+```
+
+## The /validate Skill
+
+Run validation checks on demand:
+
+```
+> /validate
+```
+
+This skill:
+
+1. Loads `config/globals.yml`
+2. Scans R/ for hardcoded values
+3. Checks manuscript for hardcoded numbers
+4. Verifies consistency_registry.yml claims
+5. Reports any inconsistencies
+
+### Example Output
+
+```
+Validation Results:
+------------------
+
+✓ globals.yml is valid YAML
+✓ All R files use config loader
+
+⚠ Potential issues:
+  - R/simulation.R:42 contains hardcoded value: n_reps = 1000
+    → Should use: globals$simulation$n_iterations
+
+  - manuscript/paper.qmd:127 contains hardcoded: "500 participants"
+    → Should use: inline R expression
+
+✗ Consistency registry violations:
+  - Claim sim_reps: Expected 10000, found 1000 in R/simulation.R
+```
+
+## Hook Integration
+
+### Pre-Commit Validation
+
+Add to `.claude/settings.json`:
+
+```json
+{
+  "hooks": {
+    "pre-commit": {
+      "command": "Rscript scripts/validate_pipeline_consistency.R"
+    }
+  }
+}
+```
+
+This blocks commits that would introduce inconsistencies.
+
+### Session Review
+
+```json
+{
+  "hooks": {
+    "session-stop": {
+      "agent": "lab-reviewer"
+    }
+  }
+}
+```
+
+Reviews all session changes for consistency issues.
+
+## Review Checklist Integration
+
+Create `.claude/review-checklist.yml` with consistency patterns:
+
+```yaml
+patterns:
+  # Hardcoded values
+  - name: "Hardcoded n_reps"
+    regex: "n_reps\\s*=\\s*\\d+"
+    severity: critical
+    message: "Use globals$simulation$n_reps instead"
+
+  - name: "Hardcoded alpha"
+    regex: "alpha\\s*=\\s*0\\.\\d+"
+    severity: critical
+    message: "Use globals$analysis$alpha instead"
+
+  # Naming conventions
+  - name: "Wrong parameter name"
+    regex: "\\bnmax\\b"
+    severity: warning
+    message: "Use total_n instead of nmax"
+
+  - name: "Wrong alpha name"
+    regex: "\\btype_1_error\\b"
+    severity: warning
+    message: "Use type1 instead of type_1_error"
+
+file_triggers:
+  critical:
+    - "config/globals.yml"
+    - "config/consistency_registry.yml"
+  warning:
+    - "manuscript/*.qmd"
+```
+
+## Workflows
+
+### Making Config Changes
+
+```
+> I need to change n_iterations from 1000 to 2000
+
+Claude:
+1. Updates config/globals.yml
+2. Finds all references in R/
+3. Verifies no hardcoded values
+4. Updates consistency_registry.yml if needed
+5. Notes manuscript may need re-rendering
+```
+
+### Adding New Parameters
+
+```
+> Add a new parameter for bootstrap_samples
+
+Claude:
+1. Adds to globals.yml
+2. Creates loader access
+3. Updates DEFAULTS.md documentation
+4. Adds to consistency registry
+```
+
+### Checking Before Submission
+
+```
+> Run pre-submission checks
+
+Claude:
+1. Runs /validate
+2. Checks all claims in registry
+3. Verifies data provenance
+4. Confirms figures match outputs
+5. Reports ready or lists issues
+```
+
+## Common Prompts
+
+| Task | Prompt |
+|------|--------|
+| Check consistency | "/validate" |
+| Find hardcoded values | "Are there any hardcoded values in R/?" |
+| Update config | "Change n_iterations to 2000 in globals.yml" |
+| Check claims | "Verify all consistency registry claims" |
+| Document data | "Update DATA_PROVENANCE.md with the new dataset" |
+| Review changes | "/review" |
+
+## Best Practices
+
+### Reference globals.yml explicitly
+
+```
+> Use globals$simulation$n_reps for the iteration count
+```
+
+### Ask Claude to check before committing
+
+```
+> Before I commit, check for any consistency issues
+```
+
+### Document data sources immediately
+
+```
+> Add this dataset to DATA_PROVENANCE.md
+```
+
+### Update registry when adding claims
+
+```
+> Add a new claim to the registry for this method description
+```
+
+## Troubleshooting
+
+### "Claude uses hardcoded values"
+
+Check that globals.yml exists and is valid:
+
+```bash
+cat config/globals.yml
+```
+
+Remind Claude:
+
+```
+> Use values from globals.yml, never hardcode numbers
+```
+
+### "Validation keeps failing"
+
+Run validation manually to see details:
+
+```bash
+Rscript scripts/validate_pipeline_consistency.R
+```
+
+### "Claims don't match"
+
+Check the registry:
+
+```bash
+cat config/consistency_registry.yml
+```
+
+Ask Claude to update:
+
+```
+> Update the consistency registry to match current values
+```
+
+## See Also
+
+- [Config Values](config-values.qmd) — Parameter management
+- [Method Claims](method-claims.qmd) — Claim tracking
+- [Data Provenance](data-provenance.qmd) — Source tracing
+- [Validation](validation.qmd) — Running checks
+- [Claude Code Advanced](../claude-code/advanced/enforcing-standards.qmd) — Full enforcement setup

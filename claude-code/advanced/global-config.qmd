@@ -1,0 +1,172 @@
+---
+title: "Global Configuration"
+subtitle: "User-level CLAUDE.md and settings"
+---
+
+Global configuration applies to all projects and ensures Claude always knows your preferences.
+
+## ~/.claude/CLAUDE.md
+
+This file provides context that applies everywhere:
+
+```markdown
+# My Claude Configuration
+
+## Lab Organization
+- Lab: Rashid Lab, Biostatistics, UNC Chapel Hill
+- GitHub: https://github.com/rashidlab
+- Team roster: ~/rashid-lab-setup/config/team.yml
+
+## Coding Standards
+- Data manipulation: Base R + data.table (NOT tidyverse)
+- Pipelines: {targets}
+- Communication: Microsoft Teams
+
+## Common Commands
+- Pipeline: Rscript -e "targets::tar_make()"
+- Longleaf: ssh <onyen>@longleaf.unc.edu
+
+## Resources
+- Lab Handbook: https://rashidlab.github.io/lab-handbook/
+```
+
+### Lab Templates
+
+Copy the lab template to get started:
+
+```bash
+mkdir -p ~/.claude
+cp ~/rashid-lab-setup/lab-handbook/config/claude/student-CLAUDE.md ~/.claude/CLAUDE.md
+```
+
+### Customizing
+
+Add personal preferences after the lab section:
+
+```markdown
+## Personal Preferences
+
+I prefer:
+- Verbose explanations when learning new concepts
+- Step-by-step breakdowns for complex tasks
+- Asking before making changes to critical files
+
+## My Projects
+
+Active projects:
+- ~/rashid-lab-setup/my-dissertation/ - Main research
+- ~/rashid-lab-setup/side-project/ - Collaboration with X lab
+```
+
+## ~/.claude/settings.json
+
+Global settings for permissions and plugins:
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(Rscript *)",
+      "Bash(git *)",
+      "Bash(make *)",
+      "Bash(quarto *)"
+    ]
+  }
+}
+```
+
+### Common Permission Patterns
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(Rscript *)",
+      "Bash(git *)",
+      "Bash(make *)",
+      "Bash(quarto *)",
+      "Bash(sbatch *)",
+      "Bash(squeue *)",
+      "Bash(scancel *)",
+      "Bash(srun *)",
+      "Bash(module *)"
+    ]
+  }
+}
+```
+
+## PI Configuration
+
+The PI template includes additional admin sections:
+
+```markdown
+## Admin (PI Only)
+
+### Student Management
+See ~/rashid-lab-setup/lab-admin/ for:
+- 1on1-meetings/ - Meeting notes
+- milestones/ - PhD tracking
+- config/students.yml - Student data
+
+### Admin Commands
+cd ~/rashid-lab-setup/lab-admin
+make sync-students    # Propagate config
+make prep-1on1        # Generate prep reports
+
+### Team Account
+Dashboard: https://claude.ai/team
+```
+
+Copy the PI template:
+
+```bash
+cp ~/rashid-lab-setup/lab-handbook/config/claude/pi-CLAUDE.md ~/.claude/CLAUDE.md
+```
+
+## Project vs Global
+
+| Setting | Global (~/.claude/) | Project (.claude/) |
+|---------|--------------------|--------------------|
+| Lab standards | ✓ | |
+| Personal preferences | ✓ | |
+| Project context | | ✓ |
+| Project skills | | ✓ |
+| Project agents | | ✓ |
+
+Global settings provide defaults; project settings override them.
+
+## Syncing Across Machines
+
+To use the same config on local and Longleaf:
+
+```bash
+# On Longleaf
+mkdir -p ~/.claude
+
+# Option 1: Copy from local
+scp ~/.claude/CLAUDE.md <onyen>@longleaf.unc.edu:~/.claude/
+
+# Option 2: Download from repo
+curl -o ~/.claude/CLAUDE.md \
+  https://raw.githubusercontent.com/rashidlab/lab-handbook/main/config/claude/student-CLAUDE.md
+```
+
+## Troubleshooting
+
+### Global config not loading
+
+```bash
+# Check file exists
+cat ~/.claude/CLAUDE.md
+
+# Check permissions
+ls -la ~/.claude/
+```
+
+### Project overrides global
+
+This is expected. Project `.claude/CLAUDE.md` takes precedence. To check which files Claude reads:
+
+```
+> What CLAUDE.md files are you reading?
+```

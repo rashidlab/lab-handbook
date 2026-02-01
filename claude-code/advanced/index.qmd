@@ -1,0 +1,93 @@
+---
+title: "Advanced Configuration"
+subtitle: "Customizing Claude Code for lab workflows"
+---
+
+This section covers advanced Claude Code configuration for power users and lab-wide standardization.
+
+## Configuration Hierarchy
+
+Claude Code reads configuration from multiple levels:
+
+```
+~/.claude/CLAUDE.md          # Global (all projects)
+~/.claude/settings.json      # Global settings
+    ↓
+.claude/CLAUDE.md            # Project-specific
+.claude/settings.json        # Project settings
+.claude/commands/*.md        # Custom skills
+.claude/agents/*.md          # Custom agents
+    ↓
+CLAUDE.md                    # Project root (legacy)
+```
+
+Lower levels override higher levels for conflicting settings.
+
+## Quick Setup
+
+### Copy Lab Templates
+
+```bash
+# Global config (do once)
+mkdir -p ~/.claude
+cp ~/rashid-lab-setup/lab-handbook/config/claude/student-CLAUDE.md ~/.claude/CLAUDE.md
+
+# Project config (for each project)
+mkdir -p .claude/commands .claude/agents
+```
+
+### Recommended Plugins
+
+```bash
+claude plugins install github@claude-plugins-official
+claude plugins install commit-commands@claude-plugins-official
+claude plugins install superpowers@superpowers-marketplace
+claude plugins install scientific-skills@claude-scientific-skills
+```
+
+## Topics
+
+| Topic | Description |
+|-------|-------------|
+| [Global Config](global-config.qmd) | User-level CLAUDE.md and settings |
+| [Skills](skills.qmd) | Custom `/commands` for common tasks |
+| [Agents](agents.qmd) | Specialized agents for complex work |
+| [Hooks](hooks.qmd) | Automation triggers for events |
+| [MCP Servers](mcp-servers.qmd) | External tool integrations |
+| [Enforcing Standards](enforcing-standards.qmd) | Lab-wide consistency |
+
+## Lab-Provided Templates
+
+The lab provides ready-to-use templates:
+
+### Global CLAUDE.md
+
+| Template | For |
+|----------|-----|
+| `config/claude/student-CLAUDE.md` | Lab members |
+| `config/claude/pi-CLAUDE.md` | PI (includes admin section) |
+
+### Project Templates
+
+Each lab template repo includes `.claude/` with:
+- `CLAUDE.md` — Project context
+- `settings.json` — Permissions
+- `commands/review.md` — `/review` skill
+- `agents/lab-reviewer.md` — Code review agent
+
+## What's Possible
+
+With advanced configuration, you can:
+
+- **Enforce standards** — Claude follows lab conventions automatically
+- **Automate reviews** — Code review runs after every session
+- **Custom workflows** — `/preflight` checks before Slurm submission
+- **Integrate tools** — Connect to databases, APIs, and lab systems
+- **Share knowledge** — Team-wide agents that know lab practices
+
+## Getting Started
+
+1. Start with [Global Config](global-config.qmd) to set up your personal settings
+2. Add [Skills](skills.qmd) for common project tasks
+3. Configure [Hooks](hooks.qmd) for automation
+4. Explore [MCP Servers](mcp-servers.qmd) for external integrations

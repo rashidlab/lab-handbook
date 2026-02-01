@@ -1,0 +1,405 @@
+---
+title: "HPC Usage"
+subtitle: "Using Claude Code on Longleaf"
+---
+
+This guide covers using Claude Code on the Longleaf HPC cluster. For general HPC documentation, see [Computing Resources](../computing/index.qmd).
+
+## When to Use HPC vs Local
+
+| Use Local When... | Use HPC When... |
+|-------------------|-----------------|
+| Writing and debugging code | Running production simulations |
+| Small test runs | Jobs need >16GB RAM |
+| Interactive exploration | Long-running pipelines (>1 hour) |
+| Editing manuscripts | Parallel execution with many workers |
+
+::: {.callout-tip}
+## Development Workflow
+Write and test code locally with reduced parameters, then run production jobs on Longleaf.
+:::
+
+## Connecting to Longleaf
+
+### Basic SSH
+
+```bash
+ssh <onyen>@longleaf.unc.edu
+```
+
+### Using tmux (Recommended)
+
+tmux keeps Claude running even if you disconnect:
+
+```bash
+# Start new session
+tmux new -s claude
+
+# Start Claude
+claude
+
+# Detach: Ctrl-b, then d
+
+# Later, reattach
+tmux attach -t claude
+```
+
+### VS Code Remote-SSH
+
+If you use VS Code:
+1. Install Remote-SSH extension
+2. Connect to `<onyen>@longleaf.unc.edu`
+3. Open terminal in VS Code
+4. Run `claude`
+
+This gives you a graphical editor with Claude in the integrated terminal.
+
+## Starting Claude on Longleaf
+
+### From a Login Node
+
+```bash
+# Navigate to your project
+cd /proj/rashidlab/users/$USER/my-project
+
+# Start Claude
+claude
+```
+
+::: {.callout-warning}
+## Login Node Limits
+Login nodes have memory and CPU limits. For heavy analysis, request an interactive session first.
+:::
+
+### Interactive Session for Heavy Work
+
+```bash
+# Request interactive session
+srun --pty -p interact -n 1 -t 120 --mem=16G bash
+
+# Then start Claude
+claude
+```
+
+## HPC-Specific Workflows
+
+### Submitting Slurm Jobs
+
+```
+> Submit this R script to Slurm with 4 CPUs and 16GB RAM
+
+> Check the status of my running jobs
+
+> Cancel job 12345678
+```
+
+Claude runs:
+```bash
+sbatch --cpus-per-task=4 --mem=16G script.sh
+squeue -u $USER
+scancel 12345678
+```
+
+### Monitoring Jobs
+
+```
+> Show me the output from my most recent Slurm job
+
+> What's in the error log for job 12345678?
+
+> How much memory did my last job use?
+```
+
+Claude runs:
+```bash
+tail -50 logs/slurm_*.out | tail -50
+cat logs/slurm_12345678.err
+sacct -j 12345678 --format=JobID,MaxRSS,Elapsed
+```
+
+### Debugging Failed Jobs
+
+```
+> My job failed with "out of memory". What should I request?
+
+> The simulation job timed out. Help me estimate how long it needs.
+```
+
+Claude:
+1. Checks the error logs
+2. Analyzes resource usage
+3. Suggests updated Slurm parameters
+
+### Targets + Slurm
+
+```
+> Configure this pipeline to use 20 Slurm workers
+
+> The simulation targets keep timing out. Increase the time limit.
+
+> Check which targets are currently running on workers
+```
+
+See [Targets Pipeline Guide](../coding-standards/targets-pipeline.qmd#slurm-integration) for detailed configuration.
+
+## Data Management
+
+### Symlinks to /proj
+
+Projects should use symlinks to lab storage:
+
+```
+> Create a symlink from data/ to /proj/rashidlab/data/my-project
+```
+
+Claude runs:
+```bash
+ln -s /proj/rashidlab/data/my-project data
+```
+
+### Checking Storage
+
+```
+> How much space am I using in /proj/rashidlab?
+
+> What's the largest file in this project?
+```
+
+Claude runs:
+```bash
+du -sh /proj/rashidlab/users/$USER
+find . -type f -exec du -h {} + | sort -rh | head -10
+```
+
+### Data Provenance
+
+```
+> Update DATA_PROVENANCE.md with the new dataset location
+```
+
+Claude documents where data came from and where it's stored.
+
+## Common HPC Tasks
+
+### Check Cluster Status
+
+```
+> What partitions are available and how busy are they?
+
+> How many jobs do I have in the queue?
+```
+
+### Module Management
+
+```
+> What R version is loaded?
+
+> Load R 4.3.0 and check it's working
+```
+
+Claude runs:
+```bash
+module list
+module load r/4.3.0
+R --version
+```
+
+### Environment Setup
+
+```
+> Set up my R environment to use the lab package library
+```
+
+Claude creates/updates `~/.Rprofile`:
+```r
+.libPaths(c(
+  "~/R/library",
+  "/proj/rashidlab/R-packages",
+  .libPaths()
+))
+```
+
+## Remote Development Patterns
+
+### Pattern 1: Local Edit, Remote Run
+
+1. Edit code locally with Claude
+2. Push to GitHub
+3. Pull on Longleaf
+4. Run pipeline
+
+```
+# Local
+> /commit
+> Push to origin
+
+# On Longleaf
+> Pull latest changes and run the pipeline
+```
+
+### Pattern 2: Full Remote
+
+1. SSH to Longleaf with tmux
+2. Use Claude for everything
+3. Detach when running long jobs
+
+```bash
+# Start session
+tmux new -s project
+
+# Work with Claude
+claude
+> Configure and run the simulation pipeline
+> (Claude sets up Slurm jobs)
+
+# Detach while jobs run
+# Ctrl-b, d
+
+# Check back later
+tmux attach -t project
+> What's the status of the pipeline?
+```
+
+### Pattern 3: VS Code Remote
+
+1. Connect VS Code to Longleaf
+2. Edit files in VS Code
+3. Use Claude in integrated terminal
+4. Best of both worlds
+
+## Long-Running Sessions
+
+### Keeping Claude Alive
+
+Use tmux to persist sessions:
+
+```bash
+# Named session for each project
+tmux new -s my-project-claude
+```
+
+### Session Recovery
+
+If disconnected:
+
+```bash
+# List sessions
+tmux ls
+
+# Reattach
+tmux attach -t my-project-claude
+```
+
+### Multiple Projects
+
+```bash
+# Start sessions for different projects
+tmux new -s project-a
+# Ctrl-b, d to detach
+
+tmux new -s project-b
+# Ctrl-b, d to detach
+
+# Switch between them
+tmux attach -t project-a
+```
+
+## Performance Tips
+
+### Pre-approve Common Commands
+
+Add to `.claude/settings.json`:
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(sbatch *)",
+      "Bash(squeue *)",
+      "Bash(scancel *)",
+      "Bash(srun *)",
+      "Bash(module *)"
+    ]
+  }
+}
+```
+
+### Use Specific File References
+
+```
+# Faster (Claude goes directly there)
+> Check the error in logs/slurm_12345678.err
+
+# Slower (Claude searches)
+> Check the Slurm errors
+```
+
+### Batch Operations
+
+```
+# More efficient
+> Submit all scripts in jobs/ to Slurm
+
+# Less efficient
+> Submit job1.sh
+> Submit job2.sh
+> Submit job3.sh
+```
+
+## Troubleshooting
+
+### "Cannot connect to server"
+
+```bash
+# Check you're on a login node
+hostname  # Should be login*.longleaf.unc.edu
+
+# Check network
+curl -I https://claude.ai
+```
+
+### Session Timeout
+
+```
+> /exit
+```
+
+Then restart Claude. Or use tmux to prevent timeouts.
+
+### Slow Response
+
+On shared login nodes, Claude may be slow. Request an interactive session:
+
+```bash
+srun --pty -p interact -n 1 -t 60 --mem=8G bash
+claude
+```
+
+### Permission Denied
+
+```bash
+# Check file permissions
+ls -la /proj/rashidlab/users/$USER
+
+# Fix if needed
+chmod -R u+rw /proj/rashidlab/users/$USER/my-project
+```
+
+## Quick Reference
+
+| Task | Command |
+|------|---------|
+| Start tmux session | `tmux new -s claude` |
+| Detach tmux | `Ctrl-b, d` |
+| Reattach tmux | `tmux attach -t claude` |
+| Interactive session | `srun --pty -p interact -n 1 -t 60 bash` |
+| Check queue | `squeue -u $USER` |
+| Submit job | `sbatch script.sh` |
+| Cancel job | `scancel JOB_ID` |
+| Check storage | `du -sh /proj/rashidlab/users/$USER` |
+
+## Next Steps
+
+- [Computing Resources](../computing/index.qmd) — Full HPC documentation
+- [Targets Pipeline](../coding-standards/targets-pipeline.qmd) — Slurm integration
+- [Troubleshooting](troubleshooting.qmd) — Common issues

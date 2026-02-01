@@ -1,0 +1,299 @@
+---
+title: "Custom Agents"
+subtitle: "Specialized agents for complex tasks"
+---
+
+Agents are specialized personas with deep knowledge of specific domains. Unlike skills (which are procedural), agents embody expertise.
+
+## What Are Agents?
+
+An agent is a markdown file in `.claude/agents/` that defines:
+- The agent's purpose and expertise
+- Priority order for decisions
+- Domain-specific checklists
+- Output formats
+
+## Using Agents
+
+Invoke agents by name:
+
+```
+> Use the lab-reviewer agent to review my changes
+
+> Ask the pipeline-debugger agent about this error
+```
+
+Or reference in skills:
+
+```markdown
+# In .claude/commands/review.md
+When this command is invoked, use the Reviewer agent
+from `.claude/agents/reviewer.md`.
+```
+
+## Lab-Provided Agents
+
+### lab-reviewer
+
+Code review specialist with lab-specific knowledge:
+
+```markdown
+# .claude/agents/lab-reviewer.md
+
+# Lab Reviewer Agent
+
+A code review agent focused on finding real issues, not style nitpicks.
+
+## Purpose
+
+Review code for bugs, security vulnerabilities, and lab standard violations.
+**Prioritize logic errors over style.**
+
+## Review Priority Order
+
+1. **Logic Errors & Bugs** (HIGHEST)
+   - Off-by-one errors, incorrect conditionals
+   - Null/NA handling issues
+   - Incorrect algorithm implementations
+
+2. **Security Vulnerabilities**
+   - Command injection in shell scripts
+   - Hardcoded credentials
+
+3. **Data Integrity Issues**
+   - Silent data loss
+   - Seed/reproducibility problems
+
+4. **Lab Standard Violations**
+   - Using tidyverse instead of data.table
+   - Hardcoded values instead of globals.yml
+
+5. **Style Issues** (LOWEST)
+   - Only flag if significant
+   - Ignore minor preferences
+
+## Project Checklist
+
+### R Code
+- [ ] Seeds preserved for reproducibility
+- [ ] Values from globals.yml (not hardcoded)
+- [ ] Proper NA handling
+- [ ] Loader functions for configuration
+
+### Manuscript
+- [ ] No hardcoded numerical values
+- [ ] Inline R expressions for computed values
+- [ ] Correct figure references
+
+## Output Format
+
+## Summary
+[1-2 sentences]
+
+## Critical Issues (Must Fix)
+- [file:line] Description
+  → Recommendation
+
+## Warnings (Should Review)
+- [file:line] Description
+
+## Notes (Informational)
+- [file:line] Observation
+```
+
+### pipeline-debugger
+
+Targets + Slurm debugging specialist:
+
+```markdown
+# .claude/agents/pipeline-debugger.md
+
+# Pipeline Debugger Agent
+
+Specialist for debugging targets pipelines and Slurm jobs.
+
+## Expertise
+
+- Targets pipeline errors
+- Slurm job failures
+- Memory and resource issues
+- Lock file problems
+- Worker crashes
+
+## Common Fixes
+
+### Stale Lock File
+```bash
+rm -f _targets/.targets-lock
+```
+
+### Out of Memory
+Increase Slurm memory:
+```r
+crew_controller_slurm(
+  slurm_memory_gigabytes_per_cpu = 8  # Increase
+)
+```
+
+### Worker Timeout
+Increase time limit:
+```r
+crew_controller_slurm(
+  slurm_time_minutes = 240  # Increase
+)
+```
+
+### Orphaned Workers
+```bash
+scancel -u $USER  # Cancel all jobs
+```
+
+## Diagnostic Steps
+
+1. Check tar_meta() for errors
+2. Examine Slurm logs in logs/
+3. Check resource usage with sacct
+4. Verify module loads and paths
+5. Test locally with tar_make(callr_function = NULL)
+```
+
+### manuscript-checker
+
+Quarto/manuscript validation:
+
+```markdown
+# .claude/agents/manuscript-checker.md
+
+# Manuscript Checker Agent
+
+Validates manuscripts for submission readiness.
+
+## Checks
+
+### Content
+- [ ] No hardcoded values in text
+- [ ] All figures referenced
+- [ ] All tables complete
+- [ ] Bibliography entries used
+
+### Technical
+- [ ] Quarto renders without errors
+- [ ] PDF figures (not PNG)
+- [ ] Correct LaTeX notation
+- [ ] Cross-references resolve
+
+### Provenance
+- [ ] Figures match targets outputs
+- [ ] Tables match data
+- [ ] Claims match analysis results
+
+## Output
+
+List any issues found with file:line references.
+Suggest fixes for each issue.
+```
+
+## Creating Custom Agents
+
+### 1. Create the file
+
+```bash
+mkdir -p .claude/agents
+nano .claude/agents/my-agent.md
+```
+
+### 2. Define the agent
+
+```markdown
+# Agent Name
+
+Brief description of expertise.
+
+## Purpose
+
+What this agent specializes in.
+
+## Priority Order
+
+1. Most important consideration
+2. Second priority
+3. Third priority
+
+## Checklist
+
+### Category 1
+- [ ] Check item
+- [ ] Check item
+
+### Category 2
+- [ ] Check item
+
+## Output Format
+
+How findings should be structured.
+```
+
+### 3. Use it
+
+```
+> Use the my-agent agent for this task
+```
+
+## Agent Design Principles
+
+### Focus on Expertise
+
+Agents should have deep knowledge of one area:
+
+```markdown
+# Good: Focused expertise
+- Lab Reviewer (code review)
+- Pipeline Debugger (targets + Slurm)
+- Manuscript Checker (Quarto documents)
+
+# Bad: Too general
+- General Helper (does everything)
+```
+
+### Encode Priorities
+
+Make decision-making explicit:
+
+```markdown
+## Priority Order
+
+When reviewing, prioritize in this order:
+1. Correctness (does it work?)
+2. Safety (is it secure?)
+3. Clarity (is it readable?)
+4. Style (does it look nice?)
+```
+
+### Include Checklists
+
+Project-specific knowledge:
+
+```markdown
+## Project Checklist
+
+- [ ] globals.yml values used
+- [ ] Canonical naming (total_n not nmax)
+- [ ] Seeds preserved
+- [ ] Manuscript synced with code
+```
+
+## Agent vs Skill
+
+| Aspect | Agent | Skill |
+|--------|-------|-------|
+| Nature | Expertise/persona | Procedure/workflow |
+| Invocation | "Use the X agent" | `/skillname` |
+| Best for | Complex judgment | Repeatable tasks |
+| Example | "Review this code" | "/review --all" |
+
+Skills often invoke agents:
+
+```markdown
+# /review skill
+When invoked, use the lab-reviewer agent guidelines...
+```

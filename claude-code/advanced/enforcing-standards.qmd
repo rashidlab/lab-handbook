@@ -1,0 +1,324 @@
+---
+title: "Enforcing Standards"
+subtitle: "Lab-wide consistency through Claude Code"
+---
+
+This guide shows how to configure Claude Code to automatically enforce lab standards across all projects.
+
+## The Consistency Stack
+
+Multiple layers work together to maintain consistency:
+
+```
+Global CLAUDE.md          # Lab standards (all projects)
+    ↓
+Project CLAUDE.md         # Project-specific rules
+    ↓
+globals.yml               # Configuration values
+    ↓
+/review skill             # Code review with checklist
+    ↓
+Pre-commit hooks          # Block non-compliant commits
+    ↓
+review-checklist.yml      # Known issue patterns
+```
+
+## Setting Up New Projects
+
+### 1. Copy from Templates
+
+Lab templates include pre-configured `.claude/`:
+
+```bash
+# Clone a template
+gh repo create rashidlab/my-project \
+  --template rashidlab/template-research-project --private
+
+# Or copy .claude/ from template
+cp -r ~/rashid-lab-setup/template-research-project/.claude .
+```
+
+### 2. Customize Project CLAUDE.md
+
+Edit `.claude/CLAUDE.md` for project-specific context:
+
+```markdown
+# Project: My Research Project
+
+## Purpose
+This project implements a Bayesian adaptive trial design...
+
+## Key Files
+- _targets.R: Pipeline definition
+- R/tar_functions.R: Core functions
+- config/globals.yml: All configurable parameters
+
+## Project-Specific Rules
+- Never hardcode fidelity values (use globals.yml)
+- Use canonical names: total_n (not nmax), type1 (not alpha)
+- All simulations must preserve seeds
+```
+
+### 3. Configure globals.yml
+
+```yaml
+# config/globals.yml
+simulation:
+  n_iterations: 1000
+  n_bootstrap: 500
+  seed: 42
+
+model:
+  prior_mean: 0
+  prior_sd: 1
+
+output:
+  figure_format: "pdf"
+  table_format: "csv"
+```
+
+### 4. Create Review Checklist
+
+```yaml
+# .claude/review-checklist.yml
+patterns:
+  - name: "Hardcoded fidelity"
+    regex: "fidelity_low\\s*=\\s*\\d"
+    severity: critical
+    message: "Use globals$simulation$fidelity_low instead"
+
+  - name: "Wrong parameter name"
+    regex: "\\bnmax\\b"
+    severity: warning
+    message: "Use total_n instead of nmax"
+
+  - name: "Math notation"
+    regex: "\\\\mathbf\\{"
+    severity: warning
+    message: "Use \\boldsymbol{ instead"
+
+file_triggers:
+  critical:
+    - "globals.yml"
+    - "_targets.R"
+    - "R/tar_functions.R"
+  warning:
+    - "*.csv"
+    - "manuscript/*.qmd"
+```
+
+### 5. Enable Hooks
+
+```json
+// .claude/settings.json
+{
+  "permissions": {
+    "allow": [
+      "Bash(Rscript *)",
+      "Bash(git *)",
+      "Bash(make *)"
+    ]
+  },
+  "hooks": {
+    "pre-commit": {
+      "command": "Rscript scripts/validate_pipeline_consistency.R"
+    },
+    "session-stop": {
+      "agent": "lab-reviewer"
+    }
+  }
+}
+```
+
+## Enforcement Points
+
+### At Code Review
+
+The `/review` skill checks:
+
+1. **Logic errors** — Bugs, incorrect algorithms
+2. **Security issues** — Hardcoded secrets, injection vulnerabilities
+3. **Data integrity** — Seed preservation, NA handling
+4. **Lab standards** — data.table not tidyverse, globals.yml usage
+5. **Project patterns** — Checklist from review-checklist.yml
+
+### At Commit Time
+
+Pre-commit hooks validate:
+
+- globals.yml values are used correctly
+- No hardcoded values in manuscripts
+- Critical files reviewed
+- Tests pass
+
+### At Session End
+
+Stop hooks trigger final review:
+
+- Summary of changes made
+- Issues found in session
+- Recommendations for next session
+
+## Integration with Project Consistency Framework
+
+Claude Code works with the lab's [Project Consistency Framework](../../project-consistency/index.qmd):
+
+### Reading Configuration
+
+Claude automatically reads:
+
+```
+config/globals.yml              # Simulation parameters
+docs/plans/*.md                 # Design decisions
+docs/DATA_PROVENANCE.md         # Data sources
+```
+
+### Checking Consistency
+
+The `/validate` skill verifies:
+
+```markdown
+# /validate checks:
+1. globals.yml values used in R code
+2. Manuscript uses dynamic values
+3. Figures match targets outputs
+4. Data provenance documented
+5. Claims match analysis results
+```
+
+### Documenting Changes
+
+Claude updates consistency files:
+
+```
+> Add an entry to DATA_PROVENANCE.md for the new dataset
+> Update the changelog with today's changes
+> Document this design decision in docs/plans/
+```
+
+## Customizing Enforcement
+
+### Project-Specific Patterns
+
+Add patterns to `review-checklist.yml`:
+
+```yaml
+patterns:
+  - name: "Project-specific check"
+    regex: "your_pattern_here"
+    severity: warning
+    message: "Explanation of issue"
+```
+
+### Disable Specific Checks
+
+In project CLAUDE.md:
+
+```markdown
+## Exceptions
+
+For this project, we use tidyverse because [reason].
+Do not flag tidyverse usage as a lab standard violation.
+```
+
+### Add Custom Validation
+
+Create project-specific validation scripts:
+
+```r
+# scripts/validate_pipeline_consistency.R
+
+# Load project-specific validation rules
+source("R/validation_rules.R")
+
+# Run checks
+results <- run_all_validations()
+
+# Report
+if (any_failures(results)) {
+  report_failures(results)
+  quit(status = 1)
+}
+```
+
+## Lab-Wide vs Project-Specific
+
+| Enforcement | Level | Example |
+|-------------|-------|---------|
+| Use data.table | Lab-wide | In global CLAUDE.md |
+| Use globals.yml | Lab-wide | In global CLAUDE.md |
+| Specific variable names | Project | In project CLAUDE.md |
+| Review checklist patterns | Project | In review-checklist.yml |
+
+## Verification Workflow
+
+### Before Starting Work
+
+```
+> Check that this project is properly configured for enforcement
+```
+
+Claude verifies:
+- CLAUDE.md exists (global and project)
+- globals.yml exists and is valid
+- review-checklist.yml has patterns
+- Hooks are configured
+
+### During Work
+
+Claude automatically:
+- References globals.yml for values
+- Follows lab coding standards
+- Warns about potential issues
+
+### Before Committing
+
+```
+> /review
+```
+
+Claude reviews all changes against the full checklist.
+
+### Before Submitting
+
+```
+> /validate
+```
+
+Claude runs complete consistency validation.
+
+## Troubleshooting
+
+### "Claude ignores my standards"
+
+Check configuration is loaded:
+
+```
+> What CLAUDE.md files are you reading?
+> What's in my review checklist?
+```
+
+### "Hook keeps failing"
+
+Test the hook manually:
+
+```bash
+Rscript scripts/validate_pipeline_consistency.R
+echo $?  # Should be 0 for success
+```
+
+### "Patterns don't match"
+
+Test regex patterns:
+
+```bash
+grep -E "your_pattern" R/*.R
+```
+
+## See Also
+
+- [Project Consistency Framework](../../project-consistency/index.qmd)
+- [Claude Code Enforcement](../../project-consistency/claude-code-enforcement.qmd)
+- [Skills](skills.qmd) — Custom /commands
+- [Agents](agents.qmd) — Review agents
+- [Hooks](hooks.qmd) — Automation

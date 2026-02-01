@@ -183,11 +183,35 @@ Make small, frequent commits with descriptive messages. It's easier to track cha
 Add comments explaining *why*, not *what*. Update README when you add features.
 :::
 
+## Using Claude Code on Your First Project
+
+Claude Code can help you get started and learn the codebase:
+
+```bash
+# Start Claude in your project
+cd ~/rashid-lab-setup/my-first-project
+claude
+```
+
+Try these prompts:
+
+```
+> What is the structure of this project?
+> Explain how the targets pipeline works
+> Help me add a new analysis function
+> What do I need to do to run the pipeline?
+```
+
+Claude understands lab conventions and will guide you through using base R, data.table, and targets.
+
+See [Claude Code First Session](../claude-code/first-session.qmd) for a detailed walkthrough.
+
 ## Getting Help
 
 - **Pipeline issues**: Check `targets::tar_meta()` for errors
 - **Package issues**: Reinstall packages from DESCRIPTION
 - **Git issues**: Ask in `#computing` Teams channel
+- **Claude Code**: [Claude Code Guide](../claude-code/index.qmd)
 
 ---
 

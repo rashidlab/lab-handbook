@@ -587,3 +587,28 @@ Consider using a shared package library for targets projects:
 See lab templates for pre-configured targets setups:
 - `template-methods-paper/` - Methodology papers
 - `template-research-project/` - General research
+
+## Debugging with Claude Code
+
+Claude Code understands targets pipelines and can help debug issues.
+
+### Common Tasks
+
+```
+> Explain the targets pipeline in _targets.R
+> Run tar_outdated() to see what needs to run
+> The sim_results target failed. Help me debug it.
+> Configure this pipeline for Slurm with 20 workers
+```
+
+### When Targets Fail
+
+```
+> Check tar_meta() for the error
+> Load the workspace for the failed target
+> What caused the simulation to fail?
+```
+
+Claude can examine error logs, check resource usage, and suggest fixes like increasing memory or time limits.
+
+See [Claude Code Lab Integration](../claude-code/lab-integration.qmd) for more on working with targets.
