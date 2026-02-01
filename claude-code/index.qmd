@@ -1,0 +1,83 @@
+---
+title: "Claude Code CLI"
+subtitle: "AI-powered coding assistant for lab research"
+---
+
+## Why Claude Code?
+
+Claude Code is an AI-powered command-line tool that helps you write, understand, and debug code directly in your terminal. For Rashid Lab members, it offers:
+
+| Benefit | How It Helps |
+|---------|--------------|
+| **Accelerate research** | Write code faster, debug quicker, automate repetitive tasks |
+| **Improve quality** | Built-in code review, catches common errors, enforces lab standards |
+| **Learning tool** | Ask Claude to explain code, methods, or statistical concepts |
+| **Integration** | Works with our existing git, targets, and HPC workflows |
+
+::: {.callout-note}
+## Lab Team Account
+Rashid Lab has a Claude for Teams subscription. Contact Dr. Rashid to be added to the team account, which provides:
+
+- Shared usage across lab projects
+- No individual billing
+- Access to latest Claude models
+:::
+
+## Quick Orientation
+
+| Topic | Page | You'll Learn |
+|-------|------|--------------|
+| **Setup** | [Installation](installation.qmd) | Install locally and on Longleaf |
+| **Getting Started** | [First Session](first-session.qmd) | Hands-on walkthrough with a real project |
+| **Daily Use** | [Daily Workflow](daily-workflow.qmd) | Common patterns and best practices |
+| **Lab Tools** | [Lab Integration](lab-integration.qmd) | targets, git, Quarto, HPC integration |
+| **Longleaf** | [HPC Usage](hpc-usage.qmd) | Running Claude on the cluster |
+| **Customization** | [Advanced](advanced/index.qmd) | Skills, agents, hooks, global config |
+| **Help** | [Troubleshooting](troubleshooting.qmd) | Common issues and solutions |
+| **Cheatsheet** | [Reference](reference.qmd) | Quick command reference |
+
+## How It Works
+
+Claude Code runs in your terminal alongside your normal development workflow:
+
+```bash
+# Start Claude Code in any project directory
+claude
+
+# Claude sees your project files, git history, and CLAUDE.md instructions
+# You chat naturally to explore, modify, and run code
+```
+
+Claude can:
+
+- **Read and understand** your entire codebase
+- **Write and edit** files directly
+- **Run commands** (git, Rscript, make, sbatch)
+- **Explain code** and help you learn
+- **Review changes** before committing
+
+## Lab-Specific Configuration
+
+Every project in the lab uses a `CLAUDE.md` file that tells Claude about:
+
+- Project structure and purpose
+- Lab coding standards (base R + data.table, not tidyverse)
+- Common commands and workflows
+- Configuration files and their roles
+
+This means Claude automatically follows lab conventions without you having to remind it.
+
+## Getting Started
+
+Ready to start? Head to the [Installation](installation.qmd) guide to set up Claude Code on your machine and Longleaf.
+
+Already installed? Try the [First Session](first-session.qmd) walkthrough for a hands-on introduction.
+
+## Resources
+
+| Resource | Link |
+|----------|------|
+| Official Documentation | [claude.ai/code](https://claude.ai/code) |
+| Lab Handbook | [rashidlab.github.io/lab-handbook](https://rashidlab.github.io/lab-handbook/) |
+| GitHub Organization | [github.com/rashidlab](https://github.com/rashidlab) |
+| Claude for Teams | [claude.ai/team](https://claude.ai/team) (PI access) |

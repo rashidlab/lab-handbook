@@ -1,0 +1,29 @@
+{
+  "$comment": "Recommended Claude Code settings for Rashid Lab members",
+  "permissions": {
+    "allow": [
+      "Bash(make *)",
+      "Bash(Rscript *)",
+      "Bash(git *)",
+      "Bash(quarto *)",
+      "Bash(sbatch *)",
+      "Bash(squeue *)",
+      "Bash(scancel *)",
+      "Bash(srun *)"
+    ]
+  },
+  "plugins": {
+    "enabled": [
+      "github@claude-plugins-official",
+      "commit-commands@claude-plugins-official",
+      "superpowers@superpowers-marketplace",
+      "scientific-skills@claude-scientific-skills"
+    ],
+    "notes": {
+      "github": "GitHub CLI integration for Issues and PRs",
+      "commit-commands": "Streamlined /commit workflow",
+      "superpowers": "Code review, TDD, brainstorming, debugging skills",
+      "scientific-skills": "Scientific databases, visualization, analysis tools"
+    }
+  }
+}

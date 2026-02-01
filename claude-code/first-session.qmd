@@ -1,0 +1,214 @@
+---
+title: "First Session"
+subtitle: "A hands-on walkthrough with a real project"
+---
+
+This guide walks you through your first Claude Code session using the lab's template-research-project. You'll learn the core patterns for exploring, modifying, and committing code.
+
+## Setup
+
+### 1. Clone the Template
+
+```bash
+# Clone the research project template
+cd ~/rashid-lab-setup
+git clone git@github.com:rashidlab/template-research-project.git my-first-project
+cd my-first-project
+```
+
+### 2. Start Claude
+
+```bash
+claude
+```
+
+You should see Claude's prompt. The first thing Claude does is read the project's `CLAUDE.md` file to understand the project context.
+
+## Exploring the Project
+
+### Ask about structure
+
+```
+> What is the structure of this project?
+```
+
+Claude will read the directory and explain the layout. For a targets-based project, you'll see:
+
+- `_targets.R` — Pipeline definition
+- `R/` — Function files
+- `data/` — Input data (often symlinked)
+- `output/` — Results
+- `docs/` — Documentation
+
+### Understand the pipeline
+
+```
+> Explain the targets pipeline in _targets.R
+```
+
+Claude reads the file and explains each target, their dependencies, and what they produce.
+
+### Check configuration
+
+```
+> What configuration files does this project use?
+```
+
+Claude will find files like:
+- `config/globals.yml` — Project constants (single source of truth)
+- `CLAUDE.md` — Project context for Claude
+
+## Running Commands
+
+### Check pipeline status
+
+```
+> Run tar_outdated() to see what needs to run
+```
+
+Claude executes:
+```r
+Rscript -e "targets::tar_outdated()"
+```
+
+### Run the pipeline
+
+```
+> Run the targets pipeline
+```
+
+Claude executes:
+```r
+Rscript -e "targets::tar_make()"
+```
+
+::: {.callout-note}
+Claude asks for permission before running commands. You can pre-approve common commands by adding them to `.claude/settings.json` (see [Advanced Configuration](advanced/index.qmd)).
+:::
+
+## Making Changes
+
+### Modify a function
+
+```
+> Open R/analysis.R and add a function that calculates the median
+> of a numeric vector, following the lab's base R style
+```
+
+Claude will:
+1. Read the existing file
+2. Write a new function using base R (not tidyverse)
+3. Show you the diff
+
+### Review the change
+
+```
+> Show me what you changed
+```
+
+Claude displays the diff of modified files.
+
+### Test the change
+
+```
+> Run the pipeline to make sure everything still works
+```
+
+## Code Review
+
+Before committing, use Claude's built-in review capabilities:
+
+```
+> Review my changes for any issues
+```
+
+Claude checks for:
+- **Logic errors** — Does the code do what it claims?
+- **Lab standards** — Using base R + data.table? Following style guide?
+- **Common mistakes** — Off-by-one errors, missing edge cases?
+
+For more thorough reviews, use the `/review` skill:
+
+```
+> /review
+```
+
+This runs a structured 9-step code review process.
+
+## Committing Changes
+
+### Check git status
+
+```
+> What files have changed?
+```
+
+Claude runs `git status` and summarizes the changes.
+
+### Create a commit
+
+```
+> Commit these changes with an appropriate message
+```
+
+Claude will:
+1. Stage the relevant files
+2. Write a commit message following lab conventions
+3. Create the commit
+
+Or use the `/commit` skill for a streamlined workflow:
+
+```
+> /commit
+```
+
+::: {.callout-tip}
+## Commit Message Convention
+Claude follows the lab's commit message style:
+- Start with a verb (Add, Fix, Update, Refactor)
+- Keep the first line under 72 characters
+- Reference issues when applicable
+:::
+
+## Learning Mode
+
+Claude is also a teaching tool. Try:
+
+```
+> Explain what data.table's := operator does
+
+> What's the difference between targets::tar_make() and tar_make_future()?
+
+> Why do we use symlinks for data instead of committing files?
+```
+
+Claude explains concepts in context, referencing your actual code when helpful.
+
+## Session Summary
+
+In this first session, you learned to:
+
+| Task | Command |
+|------|---------|
+| Start Claude | `claude` |
+| Explore project | "What is the structure?" |
+| Understand code | "Explain the pipeline" |
+| Run commands | "Run the targets pipeline" |
+| Modify code | "Add a function that..." |
+| Review changes | `/review` or "Review my changes" |
+| Commit | `/commit` or "Commit these changes" |
+| Learn concepts | "Explain what X does" |
+
+## Key Takeaways
+
+1. **Claude reads CLAUDE.md first** — Project context is automatically loaded
+2. **Explore before modifying** — Understand existing code before changing it
+3. **Commands need permission** — Claude asks before running bash commands
+4. **Review before committing** — Use `/review` to catch issues early
+5. **Ask questions freely** — Claude is a learning tool, not just a coder
+
+## Next Steps
+
+- [Daily Workflow](daily-workflow.qmd) — Common patterns for everyday use
+- [Lab Integration](lab-integration.qmd) — Working with targets, git, and Quarto
+- [HPC Usage](hpc-usage.qmd) — Using Claude on Longleaf

@@ -1,0 +1,51 @@
+# =============================================================================
+# RASHID LAB - TEAM ROSTER (PUBLIC)
+# =============================================================================
+# This file contains public information about lab members.
+# For private data (milestones, funding, meetings), see lab-admin/config/students.yml
+#
+# Claude Code uses this file to understand the team structure.
+# =============================================================================
+
+lab:
+  name: "Rashid Lab"
+  department: "Biostatistics"
+  institution: "UNC Chapel Hill"
+  github_org: "https://github.com/rashidlab"
+
+pi:
+  name: "Naim Rashid"
+  github: "naimurashid"
+  email: "naim_rashid@unc.edu"
+  role: "Principal Investigator"
+
+members:
+  - name: "Amber Young"
+    github: "ayoung31"
+    role: "PhD Student"
+    year: 1
+    focus: ""  # Research focus area
+
+  - name: "Dinelka Nanayakkara"
+    github: "dinelka97"
+    role: "PhD Student"
+    year: 1
+    focus: ""
+
+  - name: "Jialiu Xie"
+    github: "jialiux22"
+    role: "PhD Student"
+    year: 1
+    focus: ""
+
+  - name: "Tyler Humpherys"
+    github: "tylerbhumpherys"
+    role: "PhD Student"
+    year: 1
+    focus: ""
+
+  - name: "Andrew Walther"
+    github: "andrew-walther"
+    role: "PhD Student"
+    year: 1
+    focus: ""

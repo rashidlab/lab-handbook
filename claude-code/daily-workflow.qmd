@@ -1,0 +1,284 @@
+---
+title: "Daily Workflow"
+subtitle: "Effective patterns for everyday Claude Code use"
+---
+
+This guide covers the patterns and habits that make Claude Code most effective for daily research work.
+
+## Starting Your Day
+
+### 1. Open your project
+
+```bash
+cd ~/rashid-lab-setup/my-project
+claude
+```
+
+### 2. Get oriented
+
+```
+> What's the current state of this project? Check git status
+> and any recent changes.
+```
+
+Claude checks:
+- Git status (uncommitted changes, current branch)
+- Recent commits
+- Pipeline status (if using targets)
+
+### 3. Review your plan
+
+```
+> Read docs/plans/ and summarize what I should work on today
+```
+
+## Core Pattern: Explore → Understand → Modify
+
+The most effective pattern for working with Claude:
+
+### Step 1: Explore
+
+```
+> What functions are in R/models.R?
+> Show me the data processing pipeline
+> How does the simulation work?
+```
+
+### Step 2: Understand
+
+```
+> Explain the fit_model() function in detail
+> What are the inputs and outputs of the clean_data target?
+> Why are we using this specific prior?
+```
+
+### Step 3: Modify
+
+```
+> Add a parameter to fit_model() for the learning rate
+> Update the simulation to include a new scenario
+> Fix the bug in calculate_statistics()
+```
+
+::: {.callout-warning}
+## Avoid the "Just Do It" Trap
+Asking Claude to "just make it work" without understanding the code leads to:
+- Harder debugging when things break
+- Less learning
+- Potential violations of lab standards
+
+Take time to understand what you're changing.
+:::
+
+## Task-Specific Workflows
+
+### Bug Fixing
+
+```
+> I'm getting this error: [paste error message]
+> Help me understand and fix it
+```
+
+Claude will:
+1. Analyze the error message
+2. Find the relevant code
+3. Explain the cause
+4. Suggest a fix
+
+### Adding Features
+
+```
+> I need to add bootstrap confidence intervals to the analysis.
+> What files would need to change?
+```
+
+Claude maps out the changes before making them, letting you validate the approach.
+
+### Refactoring
+
+```
+> This function is getting too long. Can you suggest how to
+> break it into smaller functions?
+```
+
+### Writing Tests
+
+```
+> Help me write tests for the validate_input() function
+```
+
+### Documentation
+
+```
+> Add roxygen documentation to all functions in R/utils.R
+```
+
+## Managing Context
+
+Claude has a context window that can fill up during long sessions.
+
+### Keep sessions focused
+
+One task per session works better than marathon sessions covering many topics.
+
+### Use explicit file references
+
+```
+# Less effective (Claude searches everything)
+> Update the model function
+
+# More effective (Claude goes directly there)
+> Update the fit_bayesian_model function in R/models.R
+```
+
+### Start fresh when stuck
+
+If Claude seems confused or is giving inconsistent answers:
+
+```bash
+# Exit and restart
+> /exit
+claude
+```
+
+## Consistency Files
+
+The lab uses several files to maintain project consistency. Claude reads these automatically.
+
+### docs/plans/*.md
+
+Design documents and implementation plans:
+
+```
+> Read docs/plans/2026-01-15-simulation-design.md and help me
+> implement the next phase
+```
+
+### config/globals.yml
+
+Single source of truth for project constants:
+
+```yaml
+# config/globals.yml
+simulation:
+  n_iterations: 1000
+  seed: 42
+
+model:
+  prior_mean: 0
+  prior_sd: 1
+```
+
+Tell Claude to use these values:
+
+```
+> Use the n_iterations value from globals.yml for the simulation
+```
+
+### CHANGELOG.md
+
+Track what's changed:
+
+```
+> Add an entry to CHANGELOG.md summarizing today's changes
+```
+
+### docs/DATA_PROVENANCE.md
+
+Document where data came from:
+
+```
+> Update DATA_PROVENANCE.md with the new dataset I added
+```
+
+See the [Project Consistency Framework](../project-consistency/index.qmd) for the full documentation.
+
+## End of Day Checklist
+
+Before ending your session:
+
+### 1. Commit your work
+
+```
+> /commit
+```
+
+### 2. Update documentation
+
+```
+> Have I changed anything that should be documented?
+```
+
+### 3. Note tomorrow's tasks
+
+```
+> What should I work on next? Add a note to docs/plans/
+```
+
+### 4. Push to remote
+
+```
+> Push to origin
+```
+
+## Common Prompts
+
+| Task | Prompt |
+|------|--------|
+| Check status | "What's the git status and pipeline status?" |
+| Run pipeline | "Run tar_make()" |
+| Review changes | "/review" |
+| Commit | "/commit" |
+| Explain code | "Explain how [function] works" |
+| Debug error | "I'm getting this error: [paste]" |
+| Add feature | "I need to add [feature]. What files need to change?" |
+| Clean up | "Are there any unused functions in R/?" |
+
+## Efficiency Tips
+
+### Use skills
+
+Skills are pre-defined workflows for common tasks:
+
+```
+> /review    # Code review
+> /commit    # Commit workflow
+> /validate  # Check project consistency
+```
+
+### Batch similar tasks
+
+```
+> Add roxygen documentation to all functions in R/utils.R,
+> R/models.R, and R/simulation.R
+```
+
+### Let Claude suggest next steps
+
+```
+> What should I do next to finish this feature?
+```
+
+### Use templates
+
+When starting a new analysis or function:
+
+```
+> Create a new function following the pattern in analyze_data()
+```
+
+## What Not to Do
+
+| Avoid | Instead |
+|-------|---------|
+| "Just make it work" | Understand the problem first |
+| Huge multi-hour sessions | Focused 30-60 minute sessions |
+| Committing without review | Always run `/review` first |
+| Ignoring lab standards | Reference globals.yml, follow style guide |
+| Skipping documentation | Update docs as you go |
+
+## Next Steps
+
+- [Lab Integration](lab-integration.qmd) — Deep dive into targets, git, Quarto
+- [HPC Usage](hpc-usage.qmd) — Running Claude on Longleaf
+- [Advanced](advanced/index.qmd) — Custom skills, agents, and automation

@@ -1,0 +1,211 @@
+---
+title: "Installation"
+subtitle: "Setting up Claude Code locally and on Longleaf"
+---
+
+## Local Installation
+
+### 1. Install Claude Code
+
+Open your terminal and run:
+```bash
+# macOS/Linux
+curl -fsSL https://claude.ai/install.sh | sh
+
+# Windows (PowerShell)
+irm https://claude.ai/install.ps1 | iex
+```
+
+### 2. Authenticate
+
+```bash
+claude login
+```
+
+This opens your browser for authentication. Use your UNC email if you've been added to the lab team account.
+
+### 3. Set Up Lab Configuration
+
+Copy the lab's global CLAUDE.md to your home directory:
+
+```bash
+# Create the .claude directory
+mkdir -p ~/.claude
+
+# Copy the student template (or pi template if you're Dr. Rashid)
+cp ~/rashid-lab-setup/lab-handbook/config/claude/student-CLAUDE.md ~/.claude/CLAUDE.md
+```
+
+This global file ensures Claude always knows about lab standards, regardless of which project you're in.
+
+### 4. Install Recommended Plugins
+
+```bash
+# Enable GitHub integration
+claude plugins install github@claude-plugins-official
+
+# Enable commit workflow
+claude plugins install commit-commands@claude-plugins-official
+
+# Enable superpowers (code review, debugging, TDD)
+claude plugins install superpowers@superpowers-marketplace
+
+# Enable scientific skills (databases, visualization)
+claude plugins install scientific-skills@claude-scientific-skills
+```
+
+### 5. Verify Installation
+
+```bash
+# Check version
+claude --version
+
+# Start Claude in any project
+cd ~/rashid-lab-setup/lab-handbook
+claude
+
+# Try a simple command
+> What files are in this project?
+```
+
+## Longleaf Installation
+
+### 1. Connect to Longleaf
+
+```bash
+ssh <onyen>@longleaf.unc.edu
+```
+
+### 2. Install Claude Code
+
+```bash
+# Install in your home directory
+curl -fsSL https://claude.ai/install.sh | sh
+
+# Add to PATH (add this to your ~/.bashrc)
+export PATH="$HOME/.local/bin:$PATH"
+
+# Reload shell
+source ~/.bashrc
+```
+
+### 3. Authenticate
+
+```bash
+# This will give you a URL to open in your local browser
+claude login
+```
+
+::: {.callout-tip}
+## SSH Tip
+If you're using VS Code Remote-SSH, the browser authentication should work automatically. Otherwise, copy the URL and paste it in your local browser.
+:::
+
+### 4. Set Up Lab Configuration
+
+```bash
+# Create .claude directory
+mkdir -p ~/.claude
+
+# Option A: If you have rashid-lab-setup cloned on Longleaf
+cp ~/rashid-lab-setup/lab-handbook/config/claude/student-CLAUDE.md ~/.claude/CLAUDE.md
+
+# Option B: Download directly from GitHub
+curl -o ~/.claude/CLAUDE.md https://raw.githubusercontent.com/rashidlab/lab-handbook/main/config/claude/student-CLAUDE.md
+```
+
+### 5. Configure for HPC Environment
+
+Add these settings to handle Longleaf's environment:
+
+```bash
+# Add to ~/.bashrc
+export CLAUDE_DISABLE_TELEMETRY=1  # Optional: disable telemetry on shared systems
+```
+
+### 6. Verify Installation
+
+```bash
+# Check Claude is accessible
+claude --version
+
+# Test in a project directory
+cd ~/your-project
+claude
+
+# Verify lab config is loaded
+> What are the lab coding standards?
+```
+
+## tmux for Long Sessions
+
+On Longleaf, use tmux to keep Claude running even if you disconnect:
+
+```bash
+# Start a new tmux session
+tmux new -s claude-work
+
+# Start Claude
+claude
+
+# Detach with Ctrl-b, then d
+
+# Reattach later
+tmux attach -t claude-work
+```
+
+See the [HPC Usage](hpc-usage.qmd) guide for more on using Claude with Slurm jobs.
+
+## Plugin Details
+
+| Plugin | Purpose | Key Features |
+|--------|---------|--------------|
+| **github** | GitHub CLI integration | View/create issues, PRs, discussions |
+| **commit-commands** | Streamlined commits | `/commit` skill with lab conventions |
+| **superpowers** | Development workflows | Code review, TDD, debugging, brainstorming |
+| **scientific-skills** | Research tools | Database queries, visualization, analysis |
+
+## Troubleshooting Installation
+
+### "claude: command not found"
+
+```bash
+# Add to PATH
+export PATH="$HOME/.local/bin:$PATH"
+
+# Make permanent (add to ~/.bashrc)
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+### Authentication issues
+
+```bash
+# Clear and re-authenticate
+claude logout
+claude login
+```
+
+### Plugin installation fails
+
+```bash
+# Check network connectivity
+curl -I https://claude.ai
+
+# On Longleaf, ensure you're on a login node (not a compute node)
+hostname  # Should show something like login*.longleaf.unc.edu
+```
+
+### Global CLAUDE.md not loading
+
+```bash
+# Verify file exists
+cat ~/.claude/CLAUDE.md
+
+# Check permissions
+ls -la ~/.claude/
+```
+
+## Next Steps
+
+Once installed, proceed to the [First Session](first-session.qmd) guide for a hands-on walkthrough of using Claude Code with a real project.

@@ -18,6 +18,8 @@ website:
         href: policies/meetings.qmd
       - text: "Handbook"
         href: handbook.qmd
+      - text: "Claude Code"
+        href: claude-code/index.qmd
       - text: "Computing"
         href: computing/index.qmd
     right:
@@ -42,6 +44,26 @@ website:
         - onboarding/first-project.qmd
         - onboarding/troubleshooting.qmd
         - onboarding/glossary.qmd
+
+    - title: "Claude Code"
+      contents:
+        - claude-code/index.qmd
+        - claude-code/installation.qmd
+        - claude-code/first-session.qmd
+        - claude-code/daily-workflow.qmd
+        - claude-code/lab-integration.qmd
+        - claude-code/hpc-usage.qmd
+        - section: "Advanced"
+          contents:
+            - claude-code/advanced/index.qmd
+            - claude-code/advanced/global-config.qmd
+            - claude-code/advanced/skills.qmd
+            - claude-code/advanced/agents.qmd
+            - claude-code/advanced/hooks.qmd
+            - claude-code/advanced/mcp-servers.qmd
+            - claude-code/advanced/enforcing-standards.qmd
+        - claude-code/troubleshooting.qmd
+        - claude-code/reference.qmd
 
     - title: "Lab Meetings"
       contents:
