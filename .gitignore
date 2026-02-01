@@ -1,6 +1,7 @@
 # Quarto build output
 _site/
 _freeze/
+*_files/
 
 # R
 .Rhistory
