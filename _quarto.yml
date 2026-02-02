@@ -18,14 +18,14 @@ website:
         href: index.qmd
       - text: "Meetings"
         href: policies/meetings.qmd
-      - text: "Handbook"
-        href: handbook.qmd
-      - text: "Claude Code"
-        href: claude-code/index.qmd
       - text: "Computing"
         href: computing/index.qmd
       - text: "Learning"
         href: learning/index.qmd
+      - text: "Claude Code"
+        href: claude-code/index.qmd
+      - text: "Handbook"
+        href: handbook.qmd
     right:
       - text: "Dashboard"
         href: https://rashidlab.github.io/lab-dashboard/
