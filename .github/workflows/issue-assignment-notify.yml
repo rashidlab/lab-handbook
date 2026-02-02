@@ -1,0 +1,51 @@
+# Notify Teams when someone is assigned to an issue
+# Students get notified when they're assigned work
+name: Issue Assignment Notification
+
+on:
+  issues:
+    types: [assigned]
+
+jobs:
+  notify-assignee:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check webhook secret exists
+        run: |
+          if [ -z "${{ secrets.MS_TEAMS_WEBHOOK_ISSUES }}" ]; then
+            echo "::error::MS_TEAMS_WEBHOOK_ISSUES secret is not configured"
+            exit 1
+          fi
+
+      - name: Send Teams notification
+        env:
+          WEBHOOK_URL: ${{ secrets.MS_TEAMS_WEBHOOK_ISSUES }}
+          ASSIGNEE: ${{ github.event.assignee.login }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPO_NAME: ${{ github.event.repository.name }}
+        run: |
+          curl -H "Content-Type: application/json" -d '{
+            "@type": "MessageCard",
+            "@context": "http://schema.org/extensions",
+            "themeColor": "4B9CD3",
+            "summary": "Issue Assignment: '"${ISSUE_TITLE}"'",
+            "sections": [{
+              "activityTitle": "📋 New Issue Assignment",
+              "markdown": true,
+              "facts": [
+                {"name": "Assignee", "value": "@'"${ASSIGNEE}"'"},
+                {"name": "Issue", "value": "#'"${ISSUE_NUMBER}"' - '"${ISSUE_TITLE}"'"},
+                {"name": "Repository", "value": "'"${REPO_NAME}"'"}
+              ],
+              "text": "**@'"${ASSIGNEE}"'** has been assigned to issue **#'"${ISSUE_NUMBER}"'**"
+            }],
+            "potentialAction": [
+              {
+                "@type": "OpenUri",
+                "name": "View Issue",
+                "targets": [{"os": "default", "uri": "'"${ISSUE_URL}"'"}]
+              }
+            ]
+          }' "$WEBHOOK_URL"
