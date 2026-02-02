@@ -264,6 +264,7 @@ See the [Claude Code HPC Guide](../claude-code/hpc-usage.qmd) for comprehensive 
 
 | Resource | Description |
 |----------|-------------|
+| [Claude Code Guide](../claude-code/index.qmd) | AI-assisted development and coding |
 | [Lab Branding](../branding/index.qmd) | Presentations, colors, logos, and visual identity |
 | [Lab Policies](../policies/index.qmd) | Communication, data management, publications |
 | [Project Templates](../templates/index.qmd) | Starters for research projects and papers |

@@ -22,8 +22,6 @@ website:
         href: computing/index.qmd
       - text: "Learning"
         href: learning/index.qmd
-      - text: "Claude Code"
-        href: claude-code/index.qmd
     right:
       - text: "Dashboard"
         href: https://rashidlab.github.io/lab-dashboard/
