@@ -24,6 +24,8 @@ website:
         href: claude-code/index.qmd
       - text: "Computing"
         href: computing/index.qmd
+      - text: "Learning"
+        href: learning/index.qmd
     right:
       - text: "Dashboard"
         href: https://rashidlab.github.io/lab-dashboard/
@@ -113,6 +115,13 @@ website:
         - templates/research-project.qmd
         - templates/methods-paper.qmd
         - templates/package-development.qmd
+
+    - title: "Learning Materials"
+      contents:
+        - learning/index.qmd
+        - onboarding/github-fundamentals.qmd
+        - onboarding/glossary.qmd
+        - onboarding/troubleshooting.qmd
 
   page-footer:
     center: |

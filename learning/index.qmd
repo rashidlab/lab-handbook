@@ -1,0 +1,57 @@
+---
+title: "Learning Materials"
+subtitle: "Tutorials, guides, and educational resources"
+---
+
+This page collects learning resources to help you build skills for research in the lab. Whether you're new to Git, need a refresher on our tools, or want to level up your workflow, you'll find resources here.
+
+## Fundamentals
+
+Core skills every lab member should know:
+
+| Guide | Description |
+|-------|-------------|
+| [GitHub Fundamentals](../onboarding/github-fundamentals.qmd) | Issues, pull requests, branches, and discussions |
+| [Git & GitHub Setup](../onboarding/setup-git.qmd) | Initial configuration and SSH keys |
+| [Git Practices](../coding-standards/git-practices.qmd) | Our conventions for commits, branches, and code review |
+
+## Tools & Workflows
+
+Guides for the tools we use daily:
+
+| Guide | Description |
+|-------|-------------|
+| [Tools Setup](../onboarding/tools-setup.qmd) | Overview of required tools |
+| [Targets Pipeline Guide](../coding-standards/targets-pipeline.qmd) | Reproducible workflows with {targets} |
+| [R Style Guide](../coding-standards/r-style.qmd) | Base R + data.table conventions |
+| [Python Style Guide](../coding-standards/python-style.qmd) | Python conventions |
+
+## Claude Code
+
+AI-assisted development with Claude Code:
+
+| Guide | Description |
+|-------|-------------|
+| [Claude Code Overview](../claude-code/index.qmd) | Introduction to Claude Code CLI |
+| [Learning Path](../claude-code/learning-path.qmd) | Progressive skill-building with Claude Code |
+| [First Session](../claude-code/first-session.qmd) | Your first Claude Code session |
+| [Daily Workflow](../claude-code/daily-workflow.qmd) | Integrating Claude Code into your work |
+
+## Reference
+
+Quick lookups when you need them:
+
+| Resource | Description |
+|----------|-------------|
+| [Lab Glossary](../onboarding/glossary.qmd) | Definitions of lab terms and acronyms |
+| [Troubleshooting](../onboarding/troubleshooting.qmd) | Common issues and solutions |
+| [Claude Code Reference](../claude-code/reference.qmd) | Quick reference for Claude Code commands |
+
+## External Resources
+
+Useful external learning materials:
+
+- [Pro Git Book](https://git-scm.com/book/en/v2) - Comprehensive Git reference
+- [R for Data Science](https://r4ds.hadley.nz/) - Modern R programming (note: we use base R + data.table, not tidyverse)
+- [The targets R Package User Manual](https://books.ropensci.org/targets/) - Official targets documentation
+- [Longleaf Documentation](https://help.rc.unc.edu/longleaf-cluster/) - UNC HPC guides

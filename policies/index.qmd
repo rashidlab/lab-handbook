@@ -299,6 +299,14 @@ Published papers should include:
 - Vacation: Take it! Just coordinate coverage
 - Wellness: Your health comes first
 
+## Related Resources
+
+| Resource | Description |
+|----------|-------------|
+| [Lab Branding](../branding/index.qmd) | Presentations, colors, logos for talks and papers |
+| [Lab Computing](../computing/index.qmd) | Setup guides, coding standards, HPC workflows |
+| [Project Templates](../templates/index.qmd) | Starters for research projects and papers |
+
 ## Getting Help
 
 - **Technical issues**: `#computing` Teams channel

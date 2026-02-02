@@ -77,19 +77,19 @@ Coding standards, policies, templates, and best practices.
 <div class="quick-link-desc">Find the current agenda thread</div>
 </a>
 
-<a href="templates/index.qmd" class="quick-link">
-<div class="quick-link-title">Starting a Project?</div>
-<div class="quick-link-desc">Use our project templates</div>
-</a>
-
 <a href="computing/index.qmd" class="quick-link">
-<div class="quick-link-title">Running on Longleaf?</div>
-<div class="quick-link-desc">HPC computing resources</div>
+<div class="quick-link-title">Setup & Computing?</div>
+<div class="quick-link-desc">Tools, standards, HPC workflows</div>
 </a>
 
-<a href="branding/presentations.qmd" class="quick-link">
-<div class="quick-link-title">Making a Presentation?</div>
-<div class="quick-link-desc">Slides with lab branding</div>
+<a href="learning/index.qmd" class="quick-link">
+<div class="quick-link-title">Learning Resources?</div>
+<div class="quick-link-desc">Tutorials and skill-building</div>
+</a>
+
+<a href="policies/index.qmd" class="quick-link">
+<div class="quick-link-title">Lab Policies?</div>
+<div class="quick-link-desc">Data, communication, guidelines</div>
 </a>
 
 :::
@@ -102,14 +102,14 @@ Coding standards, policies, templates, and best practices.
 
 ::: {.g-col-12 .g-col-md-4}
 ::: {.resource-section}
-<div class="resource-section-title">For Students</div>
+<div class="resource-section-title">Lab Policies</div>
 ::: {.resource-list}
 ::: {.resource-item}
-[GitHub Fundamentals](onboarding/github-fundamentals.qmd){.resource-link}
-<span class="resource-desc">Issues, PRs, Discussions</span>
+[Lab Policies Overview](policies/index.qmd){.resource-link}
+<span class="resource-desc">Communication, data, publications</span>
 :::
 ::: {.resource-item}
-[Meeting Guide](policies/meetings.qmd){.resource-link}
+[Lab Meetings](policies/meetings.qmd){.resource-link}
 <span class="resource-desc">How to lead and participate</span>
 :::
 ::: {.resource-item}
@@ -117,8 +117,8 @@ Coding standards, policies, templates, and best practices.
 <span class="resource-desc">Rotation and upcoming dates</span>
 :::
 ::: {.resource-item}
-[Tools Setup](onboarding/tools-setup.qmd){.resource-link}
-<span class="resource-desc">Configure your environment</span>
+[Lab Branding](branding/index.qmd){.resource-link}
+<span class="resource-desc">Presentations, colors, logos</span>
 :::
 :::
 :::
@@ -126,32 +126,16 @@ Coding standards, policies, templates, and best practices.
 
 ::: {.g-col-12 .g-col-md-4}
 ::: {.resource-section}
-<div class="resource-section-title">For Development</div>
+<div class="resource-section-title">Lab Computing</div>
 ::: {.resource-list}
 ::: {.resource-item}
-[R Style Guide](coding-standards/r-style.qmd){.resource-link}
-<span class="resource-desc">Base R + data.table</span>
+[Lab Computing Hub](computing/index.qmd){.resource-link}
+<span class="resource-desc">Setup, standards, HPC workflows</span>
 :::
 ::: {.resource-item}
-[Git Practices](coding-standards/git-practices.qmd){.resource-link}
-<span class="resource-desc">Commits, branches, PRs</span>
+[Coding Standards](coding-standards/index.qmd){.resource-link}
+<span class="resource-desc">R, Python, Git conventions</span>
 :::
-::: {.resource-item}
-[Targets Pipeline](coding-standards/targets-pipeline.qmd){.resource-link}
-<span class="resource-desc">Reproducible workflows</span>
-:::
-::: {.resource-item}
-[Computing Guide](computing/index.qmd){.resource-link}
-<span class="resource-desc">Longleaf and Slurm</span>
-:::
-:::
-:::
-:::
-
-::: {.g-col-12 .g-col-md-4}
-::: {.resource-section}
-<div class="resource-section-title">For Projects</div>
-::: {.resource-list}
 ::: {.resource-item}
 [Project Templates](templates/index.qmd){.resource-link}
 <span class="resource-desc">Starters for papers & packages</span>
@@ -160,13 +144,29 @@ Coding standards, policies, templates, and best practices.
 [Project Consistency](project-consistency/index.qmd){.resource-link}
 <span class="resource-desc">Keep code and docs in sync</span>
 :::
+:::
+:::
+:::
+
+::: {.g-col-12 .g-col-md-4}
+::: {.resource-section}
+<div class="resource-section-title">Learning Materials</div>
+::: {.resource-list}
 ::: {.resource-item}
-[Methods Paper](templates/methods-paper.qmd){.resource-link}
-<span class="resource-desc">Template for methodology work</span>
+[Learning Hub](learning/index.qmd){.resource-link}
+<span class="resource-desc">Tutorials and guides</span>
 :::
 ::: {.resource-item}
-[Data Management](policies/index.qmd#data-management){.resource-link}
-<span class="resource-desc">Storage and sharing guidelines</span>
+[GitHub Fundamentals](onboarding/github-fundamentals.qmd){.resource-link}
+<span class="resource-desc">Issues, PRs, Discussions</span>
+:::
+::: {.resource-item}
+[Claude Code Guide](claude-code/index.qmd){.resource-link}
+<span class="resource-desc">AI-assisted development</span>
+:::
+::: {.resource-item}
+[Lab Glossary](onboarding/glossary.qmd){.resource-link}
+<span class="resource-desc">Terms and definitions</span>
 :::
 :::
 :::

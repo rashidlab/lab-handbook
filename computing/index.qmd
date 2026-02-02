@@ -1,11 +1,49 @@
 ---
-title: "Computing Resources"
-subtitle: "Advanced Slurm usage, targets pipelines, and cluster workflows"
+title: "Lab Computing"
+subtitle: "Setup guides, coding standards, and cluster workflows"
 ---
+
+This page is your hub for all computing-related resources in the lab. Whether you're setting up your environment, learning our coding standards, or running jobs on Longleaf, you'll find links to the relevant guides here.
+
+## Getting Started
+
+New to the lab or setting up a new machine? Start here:
+
+| Guide | Description |
+|-------|-------------|
+| [Your First Project](../onboarding/first-project.qmd) | Starting your first research project |
+| [Tools Setup](../onboarding/tools-setup.qmd) | Overview of required tools and configuration |
+| [Longleaf Setup](../onboarding/setup-longleaf.qmd) | UNC HPC cluster access and configuration |
+| [Local Development Setup](../onboarding/setup-local.qmd) | R, RStudio, VS Code on your machine |
+| [Git & GitHub Setup](../onboarding/setup-git.qmd) | Version control configuration |
+
+## Coding Standards
+
+Our lab follows specific conventions for reproducibility and collaboration:
+
+| Guide | Description |
+|-------|-------------|
+| [Coding Standards Overview](../coding-standards/index.qmd) | Summary of all coding conventions |
+| [R Style Guide](../coding-standards/r-style.qmd) | Base R + data.table conventions |
+| [Python Style Guide](../coding-standards/python-style.qmd) | Python conventions and formatting |
+| [Git Practices](../coding-standards/git-practices.qmd) | Commits, branches, PRs, code review |
+| [Targets Pipeline Guide](../coding-standards/targets-pipeline.qmd) | Reproducible workflows with {targets} |
+
+## Project Consistency
+
+Keep your code and documentation in sync:
+
+| Guide | Description |
+|-------|-------------|
+| [Project Consistency Framework](../project-consistency/index.qmd) | Overview of the consistency system |
+| [Centralized Configuration](../project-consistency/config-values.qmd) | Single source of truth for values |
+| [Data Provenance](../project-consistency/data-provenance.qmd) | Tracking data origins and transformations |
+
+## HPC Resources
 
 ::: {.callout-tip}
 ## New to Longleaf?
-Start with [Tools Setup](../onboarding/tools-setup.qmd) for initial access, OnDemand, and basic configuration. This page covers **advanced usage** for production workflows.
+Start with [Longleaf Setup](../onboarding/setup-longleaf.qmd) for initial access, OnDemand, and basic configuration. The sections below cover **advanced usage** for production workflows.
 :::
 
 ## Slurm Job Scheduler
@@ -221,6 +259,14 @@ claude
 ```
 
 See the [Claude Code HPC Guide](../claude-code/hpc-usage.qmd) for comprehensive documentation.
+
+## Related Resources
+
+| Resource | Description |
+|----------|-------------|
+| [Lab Branding](../branding/index.qmd) | Presentations, colors, logos, and visual identity |
+| [Lab Policies](../policies/index.qmd) | Communication, data management, publications |
+| [Project Templates](../templates/index.qmd) | Starters for research projects and papers |
 
 ## Getting Help
 
