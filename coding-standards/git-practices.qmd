@@ -42,6 +42,52 @@ Git is essential for collaborative research. This guide covers:
 3. **Issues** - Tracking tasks, bugs, and ideas
 4. **Pull Requests** - Proposing and reviewing changes
 
+## Branch Protection Policy
+
+::: {.callout-important}
+## PRs Required for Lab Documentation
+
+The **lab-handbook** repository has branch protection enabled. You cannot push directly to `main`. All changes must go through a pull request with at least one approval.
+
+This applies to Computing guides, Learning materials, and all other documentation.
+:::
+
+### Why PRs for Documentation?
+
+1. **Quality control** - Another set of eyes catches errors and unclear writing
+2. **Learning opportunity** - Review feedback helps improve technical writing
+3. **Transparency** - Changes are visible and discussed before merging
+4. **Reversibility** - Easy to track what changed and why
+
+### Quick Workflow for Documentation Changes
+
+```bash
+# 1. Create a branch for your changes
+git checkout main
+git pull origin main
+git checkout -b docs/update-computing-guide
+
+# 2. Make your edits
+# ... edit files ...
+
+# 3. Commit your changes
+git add computing/index.qmd
+git commit -m "docs: clarify Slurm partition guidelines"
+
+# 4. Push and create PR
+git push -u origin docs/update-computing-guide
+gh pr create --title "Clarify Slurm partition guidelines" --body "
+## Summary
+Added clearer guidance on when to use each Slurm partition.
+
+## Changes
+- Added decision flowchart for partition selection
+- Clarified memory limits for bigmem partition
+"
+```
+
+Then request review from Dr. Rashid or another lab member. Once approved, merge via GitHub.
+
 ## Issues vs Pull Requests
 
 Understanding the difference between issues and pull requests is crucial for effective collaboration.
