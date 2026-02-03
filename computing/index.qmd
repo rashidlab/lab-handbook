@@ -91,6 +91,12 @@ submit: validate-consistency
 
 See [Claude Code Enforcement](../project-consistency/claude-code-enforcement.qmd) for detailed prompts and workflows.
 
+::: {.callout-note}
+## Template Setup Required
+
+Lab templates reference the consistency framework in their CLAUDE.md but don't include the actual files yet. After cloning a template, ask Claude to generate `globals.yml`, `DATA_PROVENANCE.md`, and other framework files. See [Template Status](../project-consistency/claude-code-enforcement.qmd#template-status) for details.
+:::
+
 ## HPC Resources
 
 ::: {.callout-tip}

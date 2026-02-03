@@ -356,6 +356,165 @@ Claude:
 > Add a new claim to the registry for this method description
 ```
 
+## Data Provenance Tracking
+
+Claude Code can help maintain `docs/DATA_PROVENANCE.md` as your project evolves. This is particularly valuable because data sources, processing steps, and figure generation often change during development.
+
+### Automatic Provenance Updates
+
+When you add or modify outputs, ask Claude to update provenance:
+
+```
+> I just added Figure 3 showing the sensitivity analysis.
+> Update DATA_PROVENANCE.md with:
+> - Data source: results/sensitivity_analysis.csv
+> - Script: scripts/generate_figures.R
+> - Target: fig3_sensitivity
+```
+
+Claude will:
+
+1. Add the new entry to `docs/DATA_PROVENANCE.md`
+2. Verify the referenced files exist
+3. Check the targets pipeline includes the target
+4. Warn if any referenced files are missing
+
+### Provenance Audits
+
+Before submission, ask Claude to audit your provenance:
+
+```
+> Audit DATA_PROVENANCE.md - check that all referenced files exist
+> and all figures/tables in the manuscript are documented
+```
+
+Claude will:
+
+1. Parse the provenance document
+2. Verify each data source file exists
+3. Verify each output file exists
+4. Check file modification timestamps (outputs should be newer than inputs)
+5. Scan the manuscript for figures/tables not in provenance
+6. Report any gaps or inconsistencies
+
+### Regeneration Assistance
+
+When data sources change:
+
+```
+> The raw data in data/clinical_outcomes.csv was updated.
+> What outputs need to be regenerated?
+```
+
+Claude traces the dependency chain through `DATA_PROVENANCE.md` and the targets pipeline to identify affected outputs.
+
+## Centralized Configuration
+
+Claude enforces the "single source of truth" principle by always referencing `config/globals.yml` rather than using hardcoded values.
+
+### Why Centralization Matters
+
+Without centralization:
+```r
+# File 1: simulation.R
+n_reps <- 10000
+
+# File 2: analysis.R
+n_reps <- 1000  # Oops, different value!
+
+# Manuscript: paper.qmd
+"We used 10,000 replications"  # Which is correct?
+```
+
+With centralization:
+```r
+# All files reference the same source
+cfg <- load_globals()
+n_reps <- cfg$simulation$n_reps_high  # Always consistent
+```
+
+### Claude's Centralization Behaviors
+
+**When writing new code**, Claude automatically:
+
+- Checks if a value exists in `globals.yml`
+- Uses the config loader to access it
+- Suggests adding new parameters to `globals.yml` if needed
+
+**When reviewing code**, Claude flags:
+
+- Hardcoded numeric values that should be centralized
+- Inconsistent parameter names across files
+- Values that don't match `globals.yml`
+
+**When updating parameters**, Claude:
+
+- Modifies `globals.yml` (single location)
+- Finds all code references to verify they use the loader
+- Updates `consistency_registry.yml` if the parameter has manuscript claims
+- Notes which outputs may need regeneration
+
+### Centralization Prompts
+
+| Task | Prompt |
+|------|--------|
+| Centralize existing value | "Move this hardcoded n_reps=1000 to globals.yml" |
+| Add new parameter | "Add a new parameter batch_size=64 to globals.yml" |
+| Find all references | "Where is simulation.n_reps used in the codebase?" |
+| Audit centralization | "Are there any hardcoded values that should be in globals.yml?" |
+
+## Template Status
+
+::: {.callout-warning}
+## Templates Reference But Don't Include Framework Files
+
+The lab templates (`template-research-project`, `template-methods-paper`, `template-clinical-trial`) reference the consistency framework in their `CLAUDE.md` files but **do not yet include the actual files**. When starting a new project from a template, ask Claude to generate them.
+:::
+
+### What Templates Include
+
+| File | research-project | methods-paper | clinical-trial |
+|------|:---:|:---:|:---:|
+| `config/globals.yml` | ❌ | ❌ | ❌ |
+| `R/globals_loader.R` | ❌ | ✅ (symlink) | ✅ (symlink) |
+| `_targets.R` | ❌ | ✅ | ✅ |
+| `docs/DATA_PROVENANCE.md` | ❌ | ❌ | ❌ |
+| `DEFAULTS.md` | ❌ | ❌ | ❌ |
+| `scripts/validate_consistency.R` | ❌ | ❌ | ❌ |
+| `.claude/CLAUDE.md` | ✅ | ✅ | ✅ |
+
+### Setting Up After Cloning a Template
+
+When you clone a template for a new project, ask Claude to set up the missing framework files:
+
+```
+> I just cloned template-methods-paper for my new project.
+> Set up the consistency framework with:
+> - Simulation parameters: n_reps (500 testing, 10000 production)
+> - Analysis parameters: alpha=0.05, power_target=0.80
+> - Project seed: 2024
+```
+
+Claude will:
+
+1. Create `config/globals.yml` with your parameters
+2. Create `config/consistency_registry.yml` (empty, ready for claims)
+3. Create `docs/DATA_PROVENANCE.md` template
+4. Create `DEFAULTS.md` documenting your parameters
+5. Create `scripts/validate_consistency.R`
+6. Update `_targets.R` to use the globals loader (if not already)
+
+### Reference Implementation
+
+For a complete example of the consistency framework in action, see:
+
+```
+~/Downloads/adaptive-trial-bo-paper/
+├── globals.yml                              # Centralized parameters
+├── scripts/validate_pipeline_consistency.R  # Validation script
+└── docs/plans/                              # Design documentation
+```
+
 ## Troubleshooting
 
 ### "Claude uses hardcoded values"

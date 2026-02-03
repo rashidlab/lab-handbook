@@ -227,6 +227,54 @@ verify_checksum <- function(path) {
 }
 ```
 
+## Using Claude for Provenance Management
+
+Claude Code can help create, maintain, and audit your data provenance documentation.
+
+### Initial Setup
+
+When starting a project or after cloning a template:
+
+```
+> Create docs/DATA_PROVENANCE.md for my simulation study.
+> I'll have figures for: simulation results, model comparison, sensitivity analysis
+> And tables for: operating characteristics, parameter estimates
+```
+
+### Adding New Outputs
+
+When you create a new figure or table:
+
+```
+> I just added Figure 4 showing convergence diagnostics.
+> Add it to DATA_PROVENANCE.md with:
+> - Data: results/convergence_stats.csv
+> - Script: scripts/generate_figures.R
+> - Target: fig4_convergence
+```
+
+### Pre-Submission Audit
+
+Before submitting a paper:
+
+```
+> Audit my data provenance:
+> 1. Check all files in DATA_PROVENANCE.md exist
+> 2. Verify outputs are newer than their data sources
+> 3. Find any figures/tables in the manuscript not documented
+```
+
+### Tracking Changes
+
+When data sources change:
+
+```
+> The simulation was re-run with updated parameters.
+> What outputs need regeneration based on DATA_PROVENANCE.md?
+```
+
+Claude traces dependencies and identifies affected downstream outputs.
+
 ## Best Practices
 
 1. **One CSV per major result** - Don't combine unrelated results
@@ -234,3 +282,5 @@ verify_checksum <- function(path) {
 3. **Use targets** - Automatic dependency tracking
 4. **Document regeneration** - Clear instructions to recreate any output
 5. **Check file dates** - Outputs should be newer than inputs
+6. **Update provenance immediately** - Add entries when creating outputs, not later
+7. **Include Claude in the loop** - Ask Claude to verify provenance after changes
