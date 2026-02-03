@@ -31,6 +31,12 @@ Our lab follows specific conventions for reproducibility and collaboration:
 
 ## Project Consistency
 
+::: {.callout-important}
+## Read This Before Starting Any Project
+
+The consistency framework is foundational to reproducible research in our lab. Set it up **before** you start writing analysis code. See [Claude Code Enforcement](../project-consistency/claude-code-enforcement.qmd) for how Claude automates this for you.
+:::
+
 Keep your code and documentation in sync:
 
 | Guide | Description |
@@ -104,7 +110,27 @@ Lab templates reference the consistency framework in their CLAUDE.md but don't i
 Start with [Longleaf Setup](../onboarding/setup-longleaf.qmd) for initial access, OnDemand, and basic configuration. The sections below cover **advanced usage** for production workflows.
 :::
 
+### Data Storage
+
+Lab data lives on the shared project space:
+
+- **Project directory**: `/proj/rashidlab/`
+- **Quotas**: 5 TB shared across the lab (check with `df -h /proj/rashidlab/`)
+- **Retention**: Files on `/proj/` persist indefinitely but are **not backed up**. Use Git for code and keep raw data copies in their original repositories.
+- **Symlinks**: Projects should symlink large data into their repo rather than committing it to Git
+
+See [Lab Policies](../policies/index.qmd) for data management and HIPAA requirements.
+
 ## Slurm Job Scheduler
+
+### Prerequisites
+
+Before submitting jobs, ensure your log directory exists:
+
+```bash
+# Create log directory (required by batch scripts below)
+mkdir -p logs
+```
 
 ### Basic Commands
 
@@ -121,6 +147,9 @@ scancel JOB_ID
 # Job information
 scontrol show job JOB_ID
 sacct -j JOB_ID
+
+# Interactive session (for debugging)
+srun --pty -p interact -n 1 --mem=8G -t 60 bash
 ```
 
 ### Example Batch Script
@@ -135,10 +164,15 @@ sacct -j JOB_ID
 #SBATCH --output=logs/slurm_%j.out
 #SBATCH --error=logs/slurm_%j.err
 
-module load r/4.3.0
+# Check available R versions: module spider r
+module load r/4.4.0
 
 Rscript my_analysis.R
 ```
+
+::: {.callout-note}
+R versions on Longleaf change over time. Check available versions with `module spider r` and use the latest stable release. Update your batch scripts accordingly.
+:::
 
 ### Partitions
 
@@ -147,7 +181,8 @@ Rscript my_analysis.R
 | `debug` | 4 hours | Testing, quick jobs |
 | `general` | 7 days | Standard jobs |
 | `bigmem` | 7 days | High memory jobs |
-| `gpu` | 7 days | GPU computing |
+| `gpu` | 7 days | GPU computing (PyTorch, deep learning) |
+| `interact` | 4 hours | Interactive debugging sessions |
 
 ### Resource Guidelines
 
@@ -156,7 +191,39 @@ Rscript my_analysis.R
 | Light analysis | 1-2 | 4-8 GB | 1-4 hours |
 | Simulation (single) | 4 | 8-16 GB | 4-24 hours |
 | Heavy simulation | 8-16 | 32-64 GB | 24-48 hours |
+| Bayesian MCMC | 4-8 | 16-32 GB | 12-48 hours |
 | Parallel (targets) | 4/worker | 4 GB/CPU | varies |
+
+::: {.callout-tip}
+## Bayesian MCMC Jobs
+
+For Stan, JAGS, or Nimble models: request one CPU per chain. Four chains at 4 CPUs is typical. Memory needs depend on the model and data size---start with 16 GB and increase if jobs fail with `OUT_OF_MEMORY`.
+:::
+
+### Debugging Failed Jobs
+
+When a job fails, check these common causes:
+
+```bash
+# Check exit code and reason
+sacct -j JOB_ID --format=JobID,State,ExitCode,MaxRSS,Elapsed
+
+# Read error log
+cat logs/slurm_JOB_ID.err
+```
+
+| Symptom | Likely Cause | Fix |
+|---------|-------------|-----|
+| `OUT_OF_MEMORY` | Insufficient `--mem` | Increase memory allocation |
+| `TIMEOUT` | Exceeded `--time` | Increase time limit or optimize code |
+| `FAILED` exit code 1 | R script error | Check `.err` log for R traceback |
+| `MODULE_NOT_FOUND` | Wrong module name | Run `module spider r` to find correct name |
+| `CANCELLED` by user | Manually cancelled or dependency failed | Check dependent jobs |
+
+```bash
+# Check actual memory used by a completed job (useful for tuning)
+sacct -j JOB_ID --format=JobID,MaxRSS,ReqMem,Elapsed,State
+```
 
 ## Targets + Slurm Integration
 
@@ -185,6 +252,8 @@ tar_option_set(
 ### Running Pipeline on Cluster
 
 ```bash
+mkdir -p logs  # Ensure log directory exists
+
 # Submit controller job
 sbatch run_pipeline.sh
 ```
@@ -198,7 +267,7 @@ sbatch run_pipeline.sh
 #SBATCH --cpus-per-task=2
 #SBATCH --output=logs/controller_%j.out
 
-module load r/4.3.0
+module load r/4.4.0
 Rscript -e "targets::tar_make()"
 ```
 
@@ -222,16 +291,22 @@ For running many similar jobs (e.g., simulation replicates):
 ```bash
 #!/bin/bash
 #SBATCH --job-name=sim_array
-#SBATCH --array=1-100
+#SBATCH --array=1-100%20
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=4G
 #SBATCH --time=2:00:00
 #SBATCH --output=logs/sim_%A_%a.out
 
-module load r/4.3.0
+module load r/4.4.0
 
 Rscript run_simulation.R $SLURM_ARRAY_TASK_ID
 ```
+
+::: {.callout-tip}
+## Cluster Etiquette: Throttle Array Jobs
+
+The `%20` in `--array=1-100%20` limits to 20 concurrent tasks. This prevents monopolizing the cluster and is **required** for large arrays. Use `%10`--`%30` depending on the job size and cluster load.
+:::
 
 In R:
 ```r
@@ -259,12 +334,19 @@ Add to your `~/.Rprofile` on Longleaf:
 
 ### Installing to Shared Library
 
-For packages everyone needs:
+To install a package to the shared lab directory:
+
+1. Post a message to `#computing` on Teams with the package name and why it's needed
+2. Get approval from the PI or a senior lab member
+3. Install to the shared path:
 
 ```r
-# Install to shared lab directory (ask first!)
 install.packages("mypackage", lib = "/proj/rashidlab/R-packages")
 ```
+
+::: {.callout-warning}
+Do not install to the shared library without checking with the lab first. Conflicting package versions can break other members' analyses.
+:::
 
 ## Quick Mode for Testing
 
@@ -274,6 +356,24 @@ Use reduced parameters for local testing before cluster submission:
 # Environment variable approach
 QUICK_MODE=1 Rscript my_analysis.R
 ```
+
+### With globals.yml Integration
+
+The recommended approach combines `QUICK_MODE` with centralized configuration:
+
+```r
+# In R script
+source("R/globals_loader.R")
+cfg <- load_globals()
+
+quick_mode <- Sys.getenv("QUICK_MODE") == "1"
+
+n_reps <- if (quick_mode) cfg$simulation$n_reps_low else cfg$simulation$n_reps_high
+```
+
+This ensures even "quick" runs use values from `globals.yml` rather than hardcoded numbers, keeping them consistent with the project configuration.
+
+### Without globals.yml (Simple Scripts)
 
 ```r
 # In R script
