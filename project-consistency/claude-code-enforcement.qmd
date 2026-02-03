@@ -20,8 +20,122 @@ Claude Code reads your project's consistency files and uses them to:
 |------|---------|-------------------|
 | `config/globals.yml` | Parameter values | References for all constants |
 | `config/consistency_registry.yml` | Claim tracking | Validates manuscript claims |
+| `R/globals_loader.R` | Config loading utilities | Ensures code uses loader |
 | `docs/DATA_PROVENANCE.md` | Data sources | Documents data origins |
 | `docs/plans/*.md` | Design decisions | Understands project rationale |
+| `DEFAULTS.md` | Parameter documentation | Understands parameter choices |
+
+## Generating Consistency Files with Claude
+
+Claude can help you create all the files needed for the consistency framework. Here are specific prompts for each file:
+
+### Initial Setup
+
+To set up the entire framework at once:
+
+```
+> Set up the project consistency framework for my simulation study.
+> My key parameters are: n_reps (1000 for testing, 10000 for production),
+> alpha = 0.05, and power_target = 0.80.
+```
+
+Claude will create all required files in the correct directory structure.
+
+### Individual File Generation
+
+#### config/globals.yml
+
+```
+> Create config/globals.yml for my project with these parameters:
+> - simulation: n_reps_low (500), n_reps_high (10000)
+> - analysis: alpha (0.05), power_target (0.80)
+> - project seed: 2024
+```
+
+#### config/consistency_registry.yml
+
+```
+> Create config/consistency_registry.yml to track these claims:
+> - Manuscript states "10,000 Monte Carlo replications"
+> - Methods section claims "5% significance level"
+> Add the locations where these appear in manuscript/paper.qmd
+```
+
+#### R/globals_loader.R
+
+```
+> Create R/globals_loader.R with load_globals() function that:
+> - Reads config/globals.yml
+> - Returns a list with all parameters
+> - Handles missing file gracefully
+```
+
+#### scripts/validate_consistency.R
+
+```
+> Create scripts/validate_consistency.R that:
+> - Loads globals.yml and consistency_registry.yml
+> - Checks that all claims match their expected values
+> - Scans R/ files for hardcoded values that should use globals
+> - Reports any inconsistencies found
+```
+
+#### DEFAULTS.md
+
+```
+> Create DEFAULTS.md documenting all parameters in globals.yml
+> Include: parameter name, value, justification, and where it's used
+```
+
+#### docs/DATA_PROVENANCE.md
+
+```
+> Create docs/DATA_PROVENANCE.md for my project with:
+> - Figure 1: simulation results from results/sim_summary.csv
+> - Table 1: operating characteristics from results/oc_table.csv
+> Include the generating scripts and targets targets
+```
+
+### Integration File Updates
+
+#### Update _targets.R
+
+```
+> Update _targets.R to use the globals loader:
+> - Source R/globals_loader.R at the top
+> - Replace hardcoded values with cfg$parameter$name
+> - Add config as a target dependency
+```
+
+#### Create .github/workflows/validate.yml
+
+```
+> Create a GitHub Actions workflow that runs validate_consistency.R
+> on every push and pull request
+```
+
+#### Update Makefile
+
+```
+> Add a validate-consistency target to the Makefile that runs
+> the validation script before the submit target
+```
+
+### Updating Existing Files
+
+When your project parameters change:
+
+```
+> Update globals.yml: change n_reps_high from 10000 to 20000
+> Also update the consistency registry claim to match
+```
+
+Claude will:
+
+1. Update `config/globals.yml`
+2. Update `config/consistency_registry.yml`
+3. Note any manuscript sections that need re-rendering
+4. Optionally run validation to confirm consistency
 
 ## Automatic Behaviors
 

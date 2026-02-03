@@ -15,7 +15,7 @@ Every figure and table in your manuscript should be traceable back to:
 
 Create `docs/DATA_PROVENANCE.md`:
 
-```markdown
+````markdown
 # Data Provenance
 
 Maps manuscript outputs to their generating sources.
@@ -63,7 +63,7 @@ Rscript -e "targets::tar_make(fig1_simulation)"
 # All figures
 make figures
 ```
-```
+````
 
 ## Targets Integration
 

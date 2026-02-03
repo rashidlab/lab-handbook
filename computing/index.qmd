@@ -38,6 +38,58 @@ Keep your code and documentation in sync:
 | [Project Consistency Framework](../project-consistency/index.qmd) | Overview of the consistency system |
 | [Centralized Configuration](../project-consistency/config-values.qmd) | Single source of truth for values |
 | [Data Provenance](../project-consistency/data-provenance.qmd) | Tracking data origins and transformations |
+| [Claude Code Enforcement](../project-consistency/claude-code-enforcement.qmd) | Using Claude to generate and validate files |
+
+### Using Claude to Generate Consistency Files
+
+Claude Code can help you set up and maintain the consistency framework files. Ask Claude to generate these files for your project:
+
+```
+> Set up the project consistency framework for my simulation study
+```
+
+Claude will create:
+
+| File | Purpose |
+|------|---------|
+| `config/globals.yml` | Centralized parameters (n_reps, alpha, seeds) |
+| `config/consistency_registry.yml` | Claims tracking for manuscript statements |
+| `R/globals_loader.R` | Config loading utilities |
+| `scripts/validate_consistency.R` | Validation script |
+| `DEFAULTS.md` | Parameter documentation |
+| `docs/DATA_PROVENANCE.md` | Figure/table source tracing |
+
+#### Integration with Existing Files
+
+Claude will also update your pipeline files to use the consistency framework:
+
+```r
+# _targets.R
+library(targets)
+source("R/globals_loader.R")
+
+cfg <- load_globals()
+
+list(
+  tar_target(sim_results,
+    run_simulation(n_reps = cfg$simulation$n_reps_high))
+)
+```
+
+```yaml
+# .github/workflows/validate.yml
+- name: Check Consistency
+  run: Rscript scripts/validate_consistency.R
+```
+
+```makefile
+# Makefile
+submit: validate-consistency
+	@echo "Ready for submission"
+	quarto render manuscript/paper.qmd
+```
+
+See [Claude Code Enforcement](../project-consistency/claude-code-enforcement.qmd) for detailed prompts and workflows.
 
 ## HPC Resources
 
