@@ -13,6 +13,7 @@ We have three main templates:
 |----------|----------|
 | [Research Project](../templates/research-project.qmd) | General analysis projects |
 | [Methods Paper](../templates/methods-paper.qmd) | Methodology papers with simulations |
+| [R Package Development](../templates/package-development.qmd) | R packages accompanying a methods paper |
 
 ## Clone the Template
 

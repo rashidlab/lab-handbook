@@ -37,7 +37,7 @@ Our lab follows specific conventions for reproducibility and collaboration:
 The consistency framework is foundational to reproducible research in our lab. Set it up **before** you start writing analysis code. See [Claude Code Enforcement](../project-consistency/claude-code-enforcement.qmd) for how Claude automates this for you.
 :::
 
-Keep your code and documentation in sync:
+Keep your code and documentation in sync. All three lab templates ([Research Project](../templates/research-project.qmd), [Methods Paper](../templates/methods-paper.qmd), and Clinical Trial) include a `CLAUDE.md` that references the consistency framework, so Claude already knows the expected structure when you start a session. However, the templates provide the directory layout but **not the actual framework files** — after cloning a template, ask Claude to generate them for your project (see below).
 
 | Guide | Description |
 |-------|-------------|
@@ -48,7 +48,7 @@ Keep your code and documentation in sync:
 
 ### Using Claude to Generate Consistency Files
 
-Claude Code can help you set up and maintain the consistency framework files. Ask Claude to generate these files for your project:
+After cloning any lab template, ask Claude Code to set up and populate the consistency framework files. Because the template's `CLAUDE.md` already describes the framework, Claude knows what to create and where to put it:
 
 ```
 > Set up the project consistency framework for my simulation study
@@ -100,7 +100,13 @@ See [Claude Code Enforcement](../project-consistency/claude-code-enforcement.qmd
 ::: {.callout-note}
 ## Template Setup Required
 
-Lab templates reference the consistency framework in their CLAUDE.md but don't include the actual files yet. After cloning a template, ask Claude to generate `globals.yml`, `DATA_PROVENANCE.md`, and other framework files. See [Template Status](../project-consistency/claude-code-enforcement.qmd#template-status) for details.
+All lab templates reference the consistency framework in their `CLAUDE.md` but don't include the actual files yet. After cloning **any** template, ask Claude to generate `globals.yml`, `DATA_PROVENANCE.md`, and other framework files. The scope will vary by project type:
+
+- **Research Project**: Simpler config (seed, key analysis parameters)
+- **Methods Paper**: Full framework (simulation parameters, manuscript claims, figure provenance)
+- **Clinical Trial**: Extensive config (trial design parameters, interim analysis rules, operating characteristics)
+
+See [Template Status](../project-consistency/claude-code-enforcement.qmd#template-status) for exactly which files each template includes.
 :::
 
 ## HPC Resources
