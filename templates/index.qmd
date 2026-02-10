@@ -114,12 +114,11 @@ targets::tar_make()
 | File | Purpose |
 |------|---------|
 | `_targets.R` | Pipeline definition |
-| `config/globals.yml` | Centralized configuration |
+| `config/` | Project-specific + shared lab config (via symlinks) |
 | `R/` | Reusable functions |
-| `DESCRIPTION` | Package dependencies |
-| `CLAUDE.md` | Project guidance |
+| `.claude/CLAUDE.md` | Project guidance for Claude Code |
+| `README.md` | Project overview and reproduction instructions |
 | `.gitignore` | Excludes data/, results/, _targets/ |
-| `scripts/download_data.sh` | Data setup for external users |
 
 ::: {.callout-important}
 ## Data Storage Convention
@@ -142,10 +141,10 @@ make validate-quick
 
 After cloning:
 
-1. **Update `config/globals.yml`** with your parameters
+1. **Update config** — `config/settings.yml` (methods paper) or `config/config.yml` (research project)
 2. **Modify `_targets.R`** to define your pipeline
 3. **Add functions** to `R/` directory
-4. **Update documentation** in `CLAUDE.md` and `README.md`
+4. **Update documentation** in `.claude/CLAUDE.md` and `README.md`
 
 ::: {.callout-tip}
 ## Keep Templates Updated

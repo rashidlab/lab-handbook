@@ -9,7 +9,7 @@ Copy-paste these templates when creating meeting agendas and notes.
 
 ## Agenda Template {#agenda-template}
 
-The meeting lead should copy this template when creating the weekly Discussion thread:
+The meeting lead should copy this template when creating the biweekly Discussion thread:
 
 ```markdown
 ## Lab Meeting - [DATE]
@@ -203,7 +203,7 @@ Update action items with status indicators:
 | Blocked | `- [ ] :red_circle:` | Waiting on something |
 | Complete | `- [x]` | Done |
 
-### Weekly Review
+### Action Item Review
 
 At each meeting:
 

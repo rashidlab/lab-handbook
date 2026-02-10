@@ -189,7 +189,7 @@ In your paper repository, install the package from GitHub:
 
 ```r
 # In paper repo's setup
-devtools::install_github("rashidlab/BATON")
+devtools::install_github("naimurashid/BATON")
 
 # Or from local source during development
 devtools::install("~/Downloads/BATON")
@@ -201,7 +201,7 @@ Document the package version in your paper repo's README:
 ## Dependencies
 
 This analysis requires:
-- BATON >= 0.3.0 (`devtools::install_github("rashidlab/BATON@v0.3.0")`)
+- BATON >= 0.3.0 (`devtools::install_github("naimurashid/BATON@v0.3.0")`)
 ```
 
 ## README Structure for Packages

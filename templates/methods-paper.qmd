@@ -37,32 +37,8 @@ QUICK_MODE=1 targets::tar_make()
 
 ## Directory Structure
 
-```
-my-paper/
-├── _targets.R              # Pipeline with dynamic branching
-├── R/
-│   ├── simulation.R        # Simulation functions
-│   ├── analysis.R          # Analysis methods
-│   ├── visualization.R     # Figure generation
-│   └── globals_loader.R
-├── config/
-│   ├── globals.yml         # Simulation parameters
-│   └── consistency_registry.yml
-├── scenarios/              # Scenario definitions
-│   └── main_scenarios.csv
-├── manuscript/
-│   ├── paper.qmd           # Main manuscript
-│   ├── supplementary.qmd   # Supplement
-│   └── _extensions/        # Journal templates
-├── results/
-├── figures/
-├── scripts/
-│   ├── run_pipeline.sh     # Slurm submission
-│   └── validate_*.R
-├── reviewer_response/      # Revision materials
-├── DESCRIPTION
-└── Makefile
-```
+<!-- Auto-generated from actual repo by scripts/generate-template-trees.sh -->
+{{< include ../_generated/template-methods-paper-tree.md >}}
 
 ## Simulation Pipeline
 
@@ -70,60 +46,91 @@ my-paper/
 # _targets.R
 library(targets)
 library(tarchetypes)
-library(crew.cluster)
 
-source("R/globals_loader.R")
-cfg <- load_globals()
-
-# Slurm controller for production runs
-slurm_controller <- crew_controller_slurm(
-  name = "simulations",
-  workers = 20,
-  slurm_partition = cfg$slurm$partition,
-  slurm_cpus_per_task = cfg$slurm$cpus_per_task,
-  slurm_memory_gigabytes_per_cpu = cfg$slurm$memory_gb_per_cpu,
-  slurm_time_minutes = cfg$slurm$time_minutes,
-  slurm_log_output = "logs/slurm_%j.out"
-)
+# Source all functions
+tar_source("R/")
+tar_source("simulations/R/")
 
 tar_option_set(
-  controller = slurm_controller,
+  packages = c("data.table", "yaml"),
+  seed = 2024,
   error = "continue"
 )
 
+# For Longleaf cluster, uncomment:
+# library(crew)
+# library(crew.cluster)
+# tar_option_set(
+#   controller = crew_controller_slurm(
+#     name = "slurm",
+#     workers = 20,
+#     slurm_partition = "general",
+#     slurm_time_minutes = 60,
+#     slurm_cpus_per_task = 4,
+#     slurm_memory_gigabytes_per_cpu = 4,
+#     slurm_log_output = "logs/slurm_%j.out"
+#   )
+# )
+
 list(
-  # Load scenarios
-  tar_target(scenarios, load_scenarios("scenarios/main_scenarios.csv")),
+  # Configuration
+  tar_target(config, yaml::read_yaml("config/settings.yml")),
+  tar_target(scenarios,
+    yaml::read_yaml("simulations/config/scenarios.yml")$scenarios
+  ),
 
   # Dynamic branching over scenarios
   tar_target(
     sim_results,
-    run_simulation(scenarios, n_reps = cfg$simulation$n_reps_high),
+    run_simulation(
+      scenario_id = scenarios$id,
+      params = scenarios,
+      n_reps = config$simulation$n_reps,
+      seed = config$seed
+    ),
     pattern = map(scenarios),
     deployment = "worker"
   ),
 
-  # Consolidate results
-  tar_target(results_summary, consolidate_results(sim_results)),
+  # Analysis
+  tar_target(combined_results, compute_summary_statistics(sim_results)),
+  tar_target(results_table, create_results_table(combined_results),
+    format = "file"),
 
   # Figures
-  tar_target(fig1, create_fig1(results_summary)),
-  tar_target(fig2, create_fig2(results_summary)),
+  tar_target(fig_main, create_main_figure(combined_results, config$figures),
+    format = "file"),
+  tar_target(fig_supplementary,
+    create_supplementary_figures(combined_results, config$figures),
+    format = "file"),
 
   # Manuscript
-  tar_quarto(manuscript, path = "manuscript/paper.qmd")
+  tar_quarto(paper, path = "paper/main.qmd",
+    extra_files = c("paper/references.bib", "paper/sections/"))
 )
 ```
 
 ## Scenario Configuration
 
-Define scenarios in CSV:
+Define scenarios in YAML (`simulations/config/scenarios.yml`):
 
-```csv
-scenario_id,method,n,effect_size,description
-scen_1,proposed,100,0.5,"Small sample, medium effect"
-scen_2,proposed,500,0.5,"Large sample, medium effect"
-scen_3,competitor,100,0.5,"Competitor comparison"
+```yaml
+scenarios:
+  - id: scen_1
+    method: proposed
+    n: 100
+    effect_size: 0.5
+    description: "Small sample, medium effect"
+  - id: scen_2
+    method: proposed
+    n: 500
+    effect_size: 0.5
+    description: "Large sample, medium effect"
+  - id: scen_3
+    method: competitor
+    n: 100
+    effect_size: 0.5
+    description: "Competitor comparison"
 ```
 
 ## Running on Longleaf
@@ -141,36 +148,38 @@ Rscript -e "targets::tar_progress()"
 
 ## Manuscript Workflow
 
+The manuscript lives in `paper/` and is rendered as a terminal node in the `{targets}` pipeline via `tar_quarto()`, ensuring figures and tables always reflect computed results.
+
 ```bash
-# Render PDF
-make pdf
+# Full pipeline (simulations + manuscript)
+Rscript -e "targets::tar_make()"
 
-# Validate JASA formatting
-make validate-jasa
+# Check what's outdated
+Rscript -e "targets::tar_outdated()"
 
-# Pre-submission
-make submit
+# Visualize dependency graph
+Rscript -e "targets::tar_visnetwork()"
 ```
 
 ## Reviewer Response
 
-After revision requests:
+After revision requests, organize materials in `reviews/`:
 
 ```
-reviewer_response/
-├── response_letter.qmd     # Point-by-point response
-├── diff.pdf                # Track changes
-└── revision_notes.md       # Internal notes
+reviews/
+├── round-1/
+│   ├── response_letter.qmd     # Point-by-point response
+│   ├── diff.pdf                # Track changes
+│   └── revision_notes.md       # Internal notes
+└── round-2/                    # Add as needed
 ```
 
 ## Common Commands
 
 ```bash
-make all              # Full pipeline
-make quick            # Quick mode (reduced reps)
-make pdf              # Render manuscript
-make validate         # Check consistency
-make submit           # Pre-submission checks
+Rscript -e "targets::tar_make()"       # Run full pipeline
+Rscript -e "targets::tar_outdated()"   # Check what needs to run
+Rscript -e "targets::tar_visnetwork()" # Visualize dependencies
 ```
 
 ## README Structure for Paper Repos
@@ -189,14 +198,15 @@ Brief summary of the paper (2-3 sentences).
 ## Repository Structure
 
 ```
-├── manuscript/          # Quarto source for paper
+├── paper/               # Manuscript (Quarto/LaTeX)
 ├── R/                   # Analysis functions
-├── scenarios/           # Simulation configurations
-├── scripts/             # Runner scripts
-├── results/             # Generated outputs (gitignored)
-├── figures/             # Publication figures
+├── simulations/         # Scenarios, code, results
+├── code/                # Standalone scripts
+├── config/settings.yml  # Parameters
+├── reviews/             # Reviewer responses
+├── docs/                # Documentation
 ├── _targets.R           # Pipeline definition
-└── config/globals.yml   # Parameters
+└── .gitignore
 ```
 
 ## Requirements
@@ -212,7 +222,7 @@ Brief summary of the paper (2-3 sentences).
 install.packages(c("targets", "data.table", "survival", ...))
 
 # Install lab packages from GitHub
-devtools::install_github("rashidlab/BATON")
+devtools::install_github("naimurashid/BATON")
 ```
 
 ## Reproducing Results

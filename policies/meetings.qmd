@@ -20,7 +20,7 @@ This approach provides:
 
 | Meeting | Frequency | Duration | Purpose |
 |---------|-----------|----------|---------|
-| **Lab Meeting** | Weekly (Thursdays 9:30am) | 90 min | Research presentations, paper discussions |
+| **Lab Meeting** | Every two weeks (Thursdays 9:30am) | 90 min | Research presentations, paper discussions |
 | **1:1 with Dr. Rashid** | Bi-weekly | 30 min | Individual progress, mentorship |
 | **Working Groups** | As needed | 30-60 min | Project-specific collaboration |
 
@@ -52,13 +52,13 @@ We use the following Discussion categories:
 
 | Category | Purpose |
 |----------|---------|
-| **Lab Meetings** | Weekly lab meeting threads |
+| **Lab Meetings** | Biweekly lab meeting threads |
 | **Announcements** | Lab-wide announcements |
 | **Q&A** | Technical questions and answers |
 
-### Weekly Lab Meeting Thread
+### Lab Meeting Thread
 
-Each lab meeting gets its own Discussion thread, created by that week's **meeting lead**. The thread serves as the single source of truth for agenda, notes, and action items.
+Each lab meeting gets its own Discussion thread, created by that meeting's **meeting lead**. The thread serves as the single source of truth for agenda, notes, and action items.
 
 **Thread title format:** `Lab Meeting - YYYY-MM-DD`
 
@@ -68,7 +68,7 @@ Each lab meeting gets its own Discussion thread, created by that week's **meetin
 
 ## Roles and Responsibilities
 
-### Meeting Lead (Rotates Weekly)
+### Meeting Lead (Rotates Each Meeting)
 
 The meeting lead is responsible for:
 

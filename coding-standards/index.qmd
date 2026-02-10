@@ -23,6 +23,17 @@ These standards ensure code consistency, reproducibility, and maintainability ac
 | **Line length** | ≤80 characters |
 | **Commits** | `type: description` format |
 
+## Why Base R + data.table?
+
+The lab standardizes on base R and `data.table` rather than tidyverse for several practical reasons:
+
+- **Performance:** `data.table` is significantly faster than `dplyr` on the large simulation outputs common in our work (millions of rows across parameter configurations)
+- **Fewer dependencies:** Base R + `data.table` avoids the sprawling dependency tree of the tidyverse, which means fewer installation headaches on Longleaf and more stable code over time
+- **HPC compatibility:** Base R code runs reliably in non-interactive Slurm batch jobs without surprising namespace conflicts or version mismatches
+- **Longevity:** Base R syntax rarely changes between versions, so code written today will still run years from now without modification
+
+You're welcome to use tidyverse for quick exploratory work on your own, but all code committed to lab repositories should use base R and `data.table`.
+
 ## Sections
 
 - [R Style Guide](r-style.qmd) - Base R conventions, function documentation
@@ -42,10 +53,10 @@ For creating reusable R packages (structure, roxygen2, testing, Rcpp), see the [
 #'
 #' @param data A data frame with time, status, treatment columns
 #' @param alpha Significance level (default 0.05)
-#' @return A tibble with hr, lower, upper columns
+#' @return A data.frame with hr, lower, upper columns
 calculate_hr <- function(data, alpha = 0.05) {
   # Validate inputs
-stopifnot(
+  stopifnot(
     is.data.frame(data),
     all(c("time", "status", "treatment") %in% names(data))
   )
@@ -54,7 +65,7 @@ stopifnot(
   fit <- coxph(Surv(time, status) ~ treatment, data = data)
 
   # Extract results
-  tibble(
+  data.frame(
     hr = exp(coef(fit)),
     lower = exp(confint(fit, level = 1 - alpha)[1]),
     upper = exp(confint(fit, level = 1 - alpha)[2])

@@ -5,18 +5,23 @@ subtitle: "Welcome to the Rashid Lab!"
 
 Welcome to the Rashid Lab! This guide will help you get set up and productive in your first weeks.
 
-::: {.callout-tip appearance="simple" icon=false}
-**Need a printable summary?** [Quick Start →](quick-start.qmd) — One-page checklist for your first week.
+::: {.callout-note appearance="simple" icon=false}
+**Start here:** Follow the [First Two Weeks Checklist](first-week.qmd) — it's the canonical onboarding path with clear priorities for each day.
+
+Need a printable one-pager instead? See [Quick Start](quick-start.qmd).
 :::
 
-## First Steps
+## What to Do (In Order)
 
-1. **Complete administrative tasks** - HR paperwork, building access, etc.
-2. **Set up your computing environment** - See [Tools Setup](tools-setup.qmd)
-3. **Learn GitHub basics** - See [GitHub Fundamentals](github-fundamentals.qmd) (essential for collaboration!)
-4. **Read the coding standards** - [Coding Standards](../coding-standards/index.qmd)
-5. **Understand our meeting workflow** - See [Lab Meetings](../policies/meetings.qmd)
-6. **Clone the starter template** - Get your first project going
+1. **Complete administrative tasks** — HR paperwork, building access, Onyen credentials
+2. **Set up your computing environment** — See [Tools Setup](tools-setup.qmd) (request Longleaf access on Day 1)
+3. **Join communication channels** — Teams workspace and GitHub org
+4. **Meet with Dr. Rashid** — Project overview, reading list, and mentor assignment
+5. **Learn GitHub basics** — See [GitHub Fundamentals](github-fundamentals.qmd)
+6. **Read the coding standards** — [Coding Standards](../coding-standards/index.qmd) (especially "Why Base R + data.table?")
+7. **Start your first project** — [Your First Project](first-project.qmd) walks you through it
+
+The [First Two Weeks Checklist](first-week.qmd) has all of this with day-by-day detail and clear "must do" vs. stretch goal markings.
 
 ## Key Resources
 
@@ -24,40 +29,32 @@ Welcome to the Rashid Lab! This guide will help you get set up and productive in
 |----------|---------|
 | Lab Teams | Daily communication (invite sent by Dr. Rashid) |
 | [GitHub Organization](https://github.com/rashidlab) | All code repositories |
-| [Lab Meeting Discussions](https://github.com/rashidlab/lab-handbook/discussions/categories/lab-meetings) | Weekly agendas & notes |
+| [Lab Meeting Discussions](https://github.com/rashidlab/lab-handbook/discussions/categories/lab-meetings) | Biweekly agendas & notes |
 | [Meeting Schedule](../policies/schedule.qmd) | Rotation and calendar |
 | [Longleaf Docs](https://help.rc.unc.edu/longleaf-cluster/) | UNC HPC cluster |
 
-## Your First Week
+## What to Expect
 
-### Day 1-2: Environment Setup
+Graduate students in the lab typically balance coursework and research. Here's a rough sketch of what a typical week looks like:
 
-- [ ] Get Onyen and UNC credentials
-- [ ] Request Longleaf account
-- [ ] Install R, RStudio, and essential packages
-- [ ] Set up Git and GitHub access
-- [ ] Join lab Teams channels
+- **Research time** varies by year: during coursework semesters, expect ~10-15 hours/week on research, ramping up after comps
+- **Lab meetings** are every two weeks (Thursdays 9:30am) — attendance is expected
+- **1:1s with Dr. Rashid** are biweekly (30 min) — come prepared with updates and questions
+- **Core hours** are roughly 10am-4pm for availability, but schedules are otherwise flexible
+- **Remote work** is fine — just communicate your availability on Teams
+- **Vacation** — take it! Coordinate with Dr. Rashid and let the team know
 
-### Day 3-4: Orientation
-
-- [ ] Meet with Dr. Rashid for project overview
-- [ ] Review existing lab projects
-- [ ] Read 2-3 relevant papers
-- [ ] Attend lab meeting
-
-### Day 5: First Code
-
-- [ ] Clone a project template
-- [ ] Run the example pipeline
-- [ ] Make a small modification
-- [ ] Submit your first commit
+There's no expectation to have everything figured out in your first month. The first few weeks are about getting set up and oriented; productive research ramps up gradually.
 
 ## Questions?
 
-- **Technical questions**: Post in `#computing` Teams channel
-- **Project questions**: Ask your project mentor or Dr. Rashid
-- **Administrative**: Contact lab coordinator
+| I need help with... | Where to go |
+|---------------------|-------------|
+| Code error or computing issue | `#computing` Teams channel |
+| Research or project question | 1:1 meeting or lab meeting |
+| Administrative / HR | Department staff |
+| Something personal | Dr. Rashid (confidentially) |
 
 ---
 
-Next: [Tools Setup →](tools-setup.qmd)
+Next: [First Two Weeks Checklist →](first-week.qmd)

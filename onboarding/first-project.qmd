@@ -5,6 +5,32 @@ subtitle: "Getting started with a project template"
 
 This guide walks through setting up your first project using lab templates.
 
+## What is `targets` (and Why We Use It)?
+
+Most R users are used to running scripts in sequence: `01_clean.R`, `02_analyze.R`, `03_plot.R`. This works until your project grows—then you forget which scripts to re-run when you change something, you accidentally use stale intermediate results, and reproducing the full analysis becomes error-prone.
+
+[`targets`](https://docs.ropensci.org/targets/) solves this. It's a pipeline tool that:
+
+- **Tracks dependencies automatically** — it knows that your plot depends on your model, which depends on your cleaned data
+- **Only re-runs what changed** — if you edit your plotting code, it won't re-run the data cleaning or model fitting
+- **Documents your workflow** — the pipeline definition (`_targets.R`) serves as a readable map of your entire analysis
+
+Think of it like a smart "Run All" button that skips work it doesn't need to redo.
+
+```r
+# A simple pipeline: _targets.R
+list(
+  tar_target(raw_data, read.csv("data/raw/study.csv")),
+  tar_target(clean_data, clean_dataset(raw_data)),
+  tar_target(model_fit, fit_model(clean_data)),
+  tar_target(summary_table, summarize_results(model_fit))
+)
+```
+
+Each `tar_target()` defines one step. The first argument is the name, the second is the R expression to run. `targets` figures out the order from the dependency chain (`summary_table` needs `model_fit`, which needs `clean_data`, etc.).
+
+You'll learn more as you use it. For now, just know that every lab project uses `targets` as the backbone of its analysis. See the [Targets Pipeline Guide](../coding-standards/targets-pipeline.qmd) for the full reference.
+
 ## Choose a Template
 
 We have three main templates:
@@ -42,16 +68,22 @@ Data files are **never committed** to Git. Use the lab project directory and sym
 
 ```bash
 # Create your project's data folder on Longleaf
-mkdir -p /proj/rashidlab/my-first-project/data/raw
-mkdir -p /proj/rashidlab/my-first-project/data/processed
+# Use /proj/rashidlab/projects/ for private project data
+# (the top-level /proj/rashidlab/ is publicly readable on the cluster)
+mkdir -p /proj/rashidlab/projects/my-first-project/data/raw
+mkdir -p /proj/rashidlab/projects/my-first-project/data/processed
 
 # Create a symlink from your repo to the data
-ln -s /proj/rashidlab/my-first-project/data data
+ln -s /proj/rashidlab/projects/my-first-project/data data
 
 # Your .gitignore already excludes data/
 ```
 
-Now place any data files in `/proj/rashidlab/my-first-project/data/raw/` and they'll be accessible via `data/raw/` in your code.
+Now place any data files in `/proj/rashidlab/projects/my-first-project/data/raw/` and they'll be accessible via `data/raw/` in your code.
+
+::: {.callout-note}
+The lab shared space (`/proj/rashidlab/`) has a 1 TB quota shared across all members and is **not backed up**. Check usage at [service.rc.unc.edu](https://service.rc.unc.edu/). See [Longleaf Setup](setup-longleaf.qmd#key-directories) for the full directory reference.
+:::
 
 ## Set Up Dependencies
 

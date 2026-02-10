@@ -24,7 +24,7 @@ Our primary communication tool. Key channels:
 
 ### Meetings
 
-- **Lab meetings**: Weekly, attendance expected
+- **Lab meetings**: Every two weeks (Thursdays 9:30am), attendance expected
 - **1:1s with Dr. Rashid**: Bi-weekly or as scheduled
 - **Working groups**: As needed for projects
 
@@ -71,7 +71,9 @@ All code must be version controlled with Git:
 
 ::: {.callout-important}
 ## Never Push Data to Git
-Data files—especially large ones—should **never** be committed to repositories. Use the lab project directory for data storage and symlinks for access.
+Data files—especially large ones—should **never** be committed to repositories. Use the lab project directory (`/proj/rashidlab/`) for data storage and symlinks for access.
+
+For a step-by-step walkthrough of setting up data for a new project, see [Your First Project — Set Up Data Directory](../onboarding/first-project.qmd#set-up-data-directory).
 :::
 
 #### Storage Principles
@@ -154,8 +156,9 @@ _targets/
 
 - **Raw data**: Never modify, always preserve original
 - **Processed data**: Document all transformations in code
-- **Sensitive data**: Follow IRB protocols strictly
-- **Backups**: Lab project directory (`/proj/rashidlab/`) is backed up
+- **Sensitive data**: Follow IRB protocols strictly — store in `/proj/rashidlab/projects/` (not the publicly readable top-level directory)
+- **Backups**: The lab project directory (`/proj/rashidlab/`) is **not backed up** — keep copies of irreplaceable data elsewhere
+- **Privacy**: The top-level `/proj/rashidlab/` is publicly readable on the cluster; use `projects/` or `users/` subdirectories for anything private
 
 ## Data Privacy & Security
 

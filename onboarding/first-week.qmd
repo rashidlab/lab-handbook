@@ -1,12 +1,14 @@
 ---
-title: "First Week Checklist"
+title: "First Two Weeks Checklist"
 reading-time: "5 min"
 date-modified: 2026-02-01
 ---
 
-A detailed checklist for your first week in the lab.
+A checklist for your first two weeks in the lab. Don't worry about finishing everything on a strict schedule — the items marked **Must do** are the priority. Everything else is a stretch goal that can slide into the following week if needed.
 
-## Administrative (Day 1)
+## Week 1: Get Set Up
+
+### Administrative (Day 1) — Must do
 
 - [ ] Complete HR onboarding paperwork
 - [ ] Get building/office access
@@ -14,16 +16,15 @@ A detailed checklist for your first week in the lab.
 - [ ] Set up UNC email
 - [ ] Get added to lab mailing list
 
-## Computing Setup (Days 1-2)
+### Computing Setup (Days 1-3) — Must do
 
-- [ ] Install R (≥4.3.0) and RStudio
+- [ ] Request Longleaf cluster access (do this Day 1 — approval takes 1-2 business days)
+- [ ] Install R (≥4.3) and RStudio locally
 - [ ] Install Git and configure credentials
-- [ ] Set up GitHub SSH keys
-- [ ] Request Longleaf cluster access
-- [ ] Install Quarto
+- [ ] Set up GitHub SSH keys ([Git & GitHub Setup](setup-git.qmd))
 - [ ] Join lab GitHub organization
 
-## Communication (Day 2)
+### Communication (Day 2) — Must do
 
 - [ ] Join lab Teams workspace
 - [ ] Subscribe to relevant channels:
@@ -31,29 +32,66 @@ A detailed checklist for your first week in the lab.
   - `#computing` - Technical help
   - `#papers` - Literature discussion
   - `#random` - Social
-- [ ] Add lab meeting to calendar
+- [ ] Add lab meeting to calendar (every two weeks, Thursday 9:30am)
 
-## Orientation (Days 3-4)
+### Orientation (Days 3-5) — Must do
 
 - [ ] Meet with Dr. Rashid (1:1)
 - [ ] Get overview of current lab projects
 - [ ] Receive reading list (2-3 key papers)
 - [ ] Identify project mentor
-- [ ] Attend lab meeting
+- [ ] Attend lab meeting (if it falls during your first week)
 
-## First Code (Day 5)
+### Stretch goals for Week 1
 
-- [ ] Clone template repository
+- [ ] Install Quarto
+- [ ] Log into Longleaf via OnDemand (once access is approved)
+- [ ] Browse the [Coding Standards](../coding-standards/index.qmd)
+
+### End of Week 1 Goals
+
+By Friday, you should have:
+
+- ✅ Computing access requested or approved
+- ✅ Git and GitHub configured
+- ✅ Joined Teams and the GitHub org
+- ✅ Met with Dr. Rashid and received your reading list
+- ✅ Know who to ask for different types of help
+
+## Week 2: Start Working
+
+### Computing (Days 6-7) — Must do
+
+- [ ] Log into Longleaf and verify R works ([Longleaf Setup](setup-longleaf.qmd))
+- [ ] Set up your `.bashrc` and `.Rprofile` on Longleaf
+
+### First Code (Days 7-9) — Must do
+
+- [ ] Clone a project template ([Your First Project](first-project.qmd))
 - [ ] Install project dependencies (`install.packages(c("targets", "data.table", "here"))`)
-- [ ] Run example pipeline (`targets::tar_make()`)
-- [ ] Make a small change
+- [ ] Run the example pipeline (`targets::tar_make()`)
+- [ ] Make a small modification
 - [ ] Commit and push
 
-## Documentation to Read
+### Reading — Must do
 
-1. [Coding Standards](../coding-standards/index.qmd) - Lab code style
-2. [Targets Pipeline Guide](../coding-standards/targets-pipeline.qmd) - Workflow management
-3. [Project Consistency](../project-consistency/index.qmd) - Keeping code/docs aligned
+1. [Coding Standards](../coding-standards/index.qmd) - Lab code style (especially the "Why Base R + data.table?" section)
+2. [Your First Project](first-project.qmd) - Includes a "What is targets?" introduction
+
+### Reading — When you're ready
+
+3. [Targets Pipeline Guide](../coding-standards/targets-pipeline.qmd) - Full reference (skim for now, reference later)
+4. [Project Consistency](../project-consistency/index.qmd) - Relevant when you start writing up results
+
+### End of Week 2 Goals
+
+By Friday, you should be able to:
+
+- ✅ Log into Longleaf and run R
+- ✅ Clone, modify, and push to a GitHub repo
+- ✅ Run a `targets` pipeline
+- ✅ Render a Quarto document to PDF
+- ✅ Understand the basics of the lab's coding conventions
 
 ## Questions to Ask
 
@@ -64,13 +102,3 @@ In your first meeting with Dr. Rashid:
 3. What are the short-term and long-term goals?
 4. What background reading should I prioritize?
 5. When is my first presentation expected?
-
-## End of Week 1 Goals
-
-By Friday, you should be able to:
-
-- ✅ Log into Longleaf and submit a test job
-- ✅ Clone, modify, and push to a GitHub repo
-- ✅ Run a `targets` pipeline locally
-- ✅ Render a Quarto document to PDF
-- ✅ Know who to ask for different types of help

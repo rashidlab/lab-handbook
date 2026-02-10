@@ -37,7 +37,7 @@ New to the lab? First week checklist, tools setup, and GitHub fundamentals.
 Lab Meetings
 :::
 ::: {.hero-card-desc}
-Weekly workflow, agendas, notes, and how to lead meetings.
+Biweekly workflow, agendas, notes, and how to lead meetings.
 :::
 [View Guide <span class="arrow">→</span>](policies/meetings.qmd){.hero-card-link}
 :::
@@ -145,7 +145,7 @@ Longleaf HPC access, Slurm job submission, and environment setup.
 :::
 ::: {.resource-item}
 [Meeting Discussions](https://github.com/rashidlab/lab-handbook/discussions/categories/lab-meetings){.resource-link}
-<span class="resource-desc">Weekly agenda threads</span>
+<span class="resource-desc">Biweekly agenda threads</span>
 :::
 ::: {.resource-item}
 [Lab Dashboard](https://rashidlab.github.io/lab-dashboard/){.resource-link}
@@ -167,6 +167,6 @@ Longleaf HPC access, Slurm job submission, and environment setup.
 ## Key Conventions
 - **Data manipulation:** Base R + `data.table` (not tidyverse)
 - **Version control:** Git + GitHub for everything
-- **Meetings:** Thursdays 9:30am, agendas via GitHub Discussions
+- **Meetings:** Every two weeks, Thursdays 9:30am, agendas via GitHub Discussions
 - **HPC:** Run production work on Longleaf
 :::

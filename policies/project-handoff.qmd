@@ -129,7 +129,7 @@ Create a `HANDOFF.md` in the repository:
 
 | Role | Person | Notes |
 |------|--------|-------|
-| PI | Dr. Rashid | Weekly check-ins |
+| PI | Dr. Rashid | Biweekly check-ins |
 | Collaborator | [Name] | Provides clinical data |
 | Co-author | [Name] | Methods expert |
 

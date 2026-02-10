@@ -120,12 +120,15 @@ Start with [Longleaf Setup](../onboarding/setup-longleaf.qmd) for initial access
 
 Lab data lives on the shared project space:
 
-- **Project directory**: `/proj/rashidlab/`
-- **Quotas**: 5 TB shared across the lab (check with `df -h /proj/rashidlab/`)
-- **Retention**: Files on `/proj/` persist indefinitely but are **not backed up**. Use Git for code and keep raw data copies in their original repositories.
+- **Project directory**: `/proj/rashidlab/` (available on Longleaf and Sycamore)
+- **Quota**: 1 TB shared across the lab — check usage at [service.rc.unc.edu](https://service.rc.unc.edu/)
+- **Private data**: Store in `/proj/rashidlab/projects/` or `/proj/rashidlab/users/` (the top-level `/proj/rashidlab/` directory is publicly readable on the cluster)
+- **Not backed up**: Files persist but are not backed up — keep copies of irreplaceable data elsewhere
 - **Symlinks**: Projects should symlink large data into their repo rather than committing it to Git
+- **Access changes**: Email [research@unc.edu](mailto:research@unc.edu) to add/remove lab members (group: `rc_nur2lab_psx`)
+- **Compliance**: If storing NIST 800-171 regulated data, see [Longleaf Compliance](https://help.rc.unc.edu/longleaf-compliance)
 
-See [Lab Policies](../policies/index.qmd) for data management and HIPAA requirements.
+See [Lab Policies](../policies/index.qmd) for data management and HIPAA requirements, or [Longleaf Setup](../onboarding/setup-longleaf.qmd) for the full directory reference.
 
 ## Slurm Job Scheduler
 

@@ -126,7 +126,7 @@ Run the same analysis across multiple scenarios:
 # Define scenarios
 tar_target(
   scenarios,
-  tibble(
+  data.frame(
     scenario_id = c("null", "alt_small", "alt_large"),
     effect_size = c(0, 0.2, 0.5),
     n_reps = 1000

@@ -1,0 +1,86 @@
+# =============================================================================
+# Directory tree annotations for auto-generated handbook content
+# =============================================================================
+# Each template repo has a map of path -> description comment.
+# The generate-template-trees.sh script uses these to annotate the tree output.
+#
+# To add annotations for a new directory:
+#   1. Add the path (relative to repo root) as a key
+#   2. Add a short description as the value
+#   3. Re-run: bash scripts/generate-template-trees.sh
+#
+# Paths without annotations will appear in the tree without comments.
+# =============================================================================
+
+template-methods-paper:
+  _targets.R: "Pipeline with dynamic branching"
+  R/: "Analysis/method functions"
+  R/load_lab_config.R: "Config loader helper"
+  code/: "Standalone scripts"
+  config/: ""
+  config/settings.yml: "Simulation & figure parameters"
+  config/lab.yml: "Shared lab config (symlink)"
+  config/branding.yml: "Shared branding config (symlink)"
+  config/load_lab_config.R: "Shared config loader (symlink)"
+  simulations/: ""
+  simulations/config/: ""
+  simulations/config/scenarios.yml: "Simulation scenario definitions"
+  simulations/R/: "Simulation-specific R code"
+  simulations/scripts/: "Slurm job scripts"
+  simulations/results/: "Raw simulation results (gitignored)"
+  paper/: ""
+  paper/sections/: "Manuscript sections"
+  paper/figures/: "Publication figures"
+  reviews/: "Reviewer responses by round"
+  reviews/round-1/: ""
+  docs/: "Project documentation"
+  README.md: ""
+  .gitignore: ""
+
+template-research-project:
+  _targets.R: "Pipeline definition"
+  R/: "Analysis functions"
+  R/load_lab_config.R: "Config loader helper"
+  python/: "Python modules (if needed)"
+  analysis/: "Numbered analysis scripts"
+  config/: ""
+  config/config.yml: "Project-specific parameters"
+  config/lab.yml: "Shared lab config (symlink)"
+  config/branding.yml: "Shared branding config (symlink)"
+  config/load_lab_config.R: "Shared config loader (symlink)"
+  data/: "Symlink to /proj/rashidlab/ (gitignored)"
+  data/raw/: "Original data (never modify)"
+  data/processed/: "Cleaned data"
+  data/external/: "External datasets"
+  figures/: ""
+  figures/exploratory/: "Working figures (not tracked)"
+  figures/publication/: "Final figures (tracked)"
+  output/: "Analysis outputs (gitignored)"
+  reports/: "Quarto documents"
+  README.md: ""
+  .gitignore: ""
+
+template-clinical-trial:
+  _targets.R: "Trial simulation pipeline"
+  R/: "Trial design functions"
+  R/load_lab_config.R: "Config loader helper"
+  config/: ""
+  config/lab.yml: "Shared lab config (symlink)"
+  config/branding.yml: "Shared branding config (symlink)"
+  config/load_lab_config.R: "Shared config loader (symlink)"
+  design/: "Trial design specifications"
+  design/priors/: "Prior specifications"
+  design/interim/: "Interim analysis rules"
+  design/adaptive/: "Adaptive features"
+  simulations/: ""
+  simulations/config/: ""
+  simulations/config/trial-scenarios.yml: "Trial scenario definitions"
+  simulations/R/: "Simulation code"
+  simulations/scripts/: "Slurm job scripts"
+  simulations/results/: "Operating characteristics (gitignored)"
+  calibration/: "Calibration studies"
+  protocol/: "Design documentation"
+  sap/: "Statistical Analysis Plan"
+  docs/: "Project documentation"
+  README.md: ""
+  .gitignore: ""

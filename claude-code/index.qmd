@@ -29,6 +29,11 @@ Rashid Lab has a Claude for Teams subscription. Contact Dr. Rashid to be added t
 - Access to latest Claude models
 :::
 
+::: {.callout-tip}
+## Where to Start
+Most lab members only need the first three pages below: **Installation**, **First Session**, and **Daily Workflow**. The remaining pages are references you can consult as needed — you don't need to read everything up front.
+:::
+
 ## Quick Orientation
 
 | Topic | Page | Level | You'll Learn |

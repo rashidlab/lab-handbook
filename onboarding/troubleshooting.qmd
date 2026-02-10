@@ -3,7 +3,25 @@ title: "Troubleshooting"
 subtitle: "Common issues and solutions"
 ---
 
-This page covers common problems students encounter and how to fix them. If your issue isn't listed here, check [ITS Research Computing help](https://help.rc.unc.edu/) for Longleaf issues or ask in the lab Teams channel.
+This page covers common problems students encounter and how to fix them.
+
+## Where to Get Help
+
+Not sure where to go? Use this guide:
+
+| Situation | What to do |
+|-----------|------------|
+| **Error message I can search for** | Google / Stack Overflow first, then ask in `#computing` on Teams |
+| **Longleaf or cluster issue** | Post in `#computing` Teams channel with the error message and what you tried |
+| **Package won't install** | Check the specific errors below, then ask in `#computing` |
+| **Git conflict or confusion** | Post in `#computing` — include the output of `git status` |
+| **Conceptual or research question** | Bring to your next 1:1 with Dr. Rashid or to lab meeting |
+| **Blocked and not sure what to try** | Message Dr. Rashid or your project mentor on Teams |
+| **Longleaf account / access issue** | Contact [ITS Research Computing](https://help.rc.unc.edu/) directly |
+
+::: {.callout-tip}
+When asking for help in `#computing`, include: (1) what you were trying to do, (2) the exact error message, and (3) what you already tried. This helps others help you faster.
+:::
 
 ---
 

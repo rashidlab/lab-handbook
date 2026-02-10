@@ -78,7 +78,7 @@ This page provides a condensed summary of everything you need for your first wee
 | **Communication** | Microsoft Teams |
 | **Version control** | GitHub (rashidlab org) |
 | **HPC** | Longleaf cluster |
-| **Meetings** | Thursdays 9:30am |
+| **Meetings** | Every two weeks, Thursdays 9:30am |
 
 ## Week 1 Goals {.qs-section}
 

@@ -34,30 +34,8 @@ targets::tar_make()
 
 ## Directory Structure
 
-```
-my-project/
-├── _targets.R           # Pipeline definition
-├── R/                   # Functions
-│   ├── analysis.R
-│   ├── visualization.R
-│   └── globals_loader.R
-├── config/
-│   ├── globals.yml      # Parameters
-│   └── consistency_registry.yml
-├── data -> /proj/rashidlab/my-project/data  # Symlink (gitignored)
-│   ├── raw/             # Original data
-│   └── processed/       # Cleaned data
-├── results/             # Outputs (gitignored)
-├── figures/             # Plots
-├── reports/             # Quarto documents
-│   └── analysis.qmd
-├── scripts/
-│   └── download_data.sh # For external users after publication
-├── DESCRIPTION          # Package dependencies
-├── CLAUDE.md            # Project guidance
-├── .gitignore           # Excludes data/, results/, _targets/
-└── Makefile
-```
+<!-- Auto-generated from actual repo by scripts/generate-template-trees.sh -->
+{{< include ../_generated/template-research-project-tree.md >}}
 
 ## Pipeline Structure
 
@@ -87,30 +65,38 @@ list(
 
 ## Configuration
 
-Edit `config/globals.yml`:
+Edit `config/config.yml`:
 
 ```yaml
 project:
-  name: "My Analysis Project"
-  seed: 2024
+  name: "Project Name"
+  author: "Your Name"
+  created: "2025-01-01"
+
+paths:
+  data_raw: "data/raw"
+  data_processed: "data/processed"
+  output: "output"
+  figures: "figures"
 
 analysis:
-  alpha: 0.05
-  bootstrap_reps: 1000
+  seed: 20250101
+  n_cores: 4
+
+# Add project-specific parameters below
 ```
 
 ## Common Commands
 
 ```bash
 # Run pipeline
-make all           # Full pipeline
-make quick         # Quick mode for testing
+Rscript -e "targets::tar_make()"
 
-# Visualize
-make visualize     # Show dependency graph
+# Check what's outdated
+Rscript -e "targets::tar_outdated()"
 
-# Validate
-make validate      # Check consistency
+# Visualize dependency graph
+Rscript -e "targets::tar_visnetwork()"
 ```
 
 ## Data Setup

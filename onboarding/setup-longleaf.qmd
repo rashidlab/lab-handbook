@@ -244,7 +244,7 @@ module avail
 module avail r
 module avail quarto
 
-# Load R (check for latest version)
+# Load R (run 'module avail r' to see available versions)
 module load r/4.3.0
 
 # Load multiple modules
@@ -266,8 +266,20 @@ module purge
 |------|---------|-------|
 | `/home/your_onyen/` | Home directory | 50 GB |
 | `/work/users/y/o/your_onyen/` | Scratch space | 10 TB (not backed up) |
-| `/proj/rashidlab/` | Lab shared space | Shared |
-| `/proj/rashidlab/R-packages/` | Shared R packages | Shared |
+| `/proj/rashidlab/` | Lab shared space | 1 TB shared (not backed up) |
+| `/proj/rashidlab/projects/` | Project data (private) | Within lab 1 TB quota |
+| `/proj/rashidlab/users/` | Personal work (private) | Within lab 1 TB quota |
+| `/proj/rashidlab/R-packages/` | Shared R packages | Within lab 1 TB quota |
+
+::: {.callout-warning}
+## Important: `/proj/rashidlab/` Access Rules
+
+- **The top-level `/proj/rashidlab/` directory is publicly readable** on the cluster — anyone can read files placed directly there. Store private or sensitive data in the `projects/` or `users/` subdirectories instead.
+- **This space is not backed up.** If you have data that can't be easily reproduced, keep a copy elsewhere.
+- **Quota:** 1 TB soft limit. You can check current usage at [service.rc.unc.edu](https://service.rc.unc.edu/). If the folder exceeds the soft limit, a 7-day grace period starts — after that, no new files can be added until usage drops back below the limit.
+- **Access:** To add or remove cluster access for lab members, email [research@unc.edu](mailto:research@unc.edu) referencing group `rc_nur2lab_psx`.
+- **Compliance:** If storing data requiring NIST 800-171 compliance, see [Longleaf Compliance](https://help.rc.unc.edu/longleaf-compliance).
+:::
 
 ### R Package Installation
 
