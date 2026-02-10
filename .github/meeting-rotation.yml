@@ -40,7 +40,7 @@ meetings:
       - "dinelka97"
     topic: "Research Update"
 
-  - date: "2026-03-12"
+  - date: "2026-03-19"
     lead: "jialiux22"
     presenters:
       - "jialiux22"
@@ -66,7 +66,7 @@ meetings:
 
 # Skip these dates (holidays, breaks, conferences)
 skip_dates:
-  - "2026-03-13"  # Spring break
+  - "2026-03-12"  # Spring break (Mar 9-15)
   - "2026-05-01"  # Finals week
 
 # Teams channel webhook (stored in secrets, referenced here for documentation)
