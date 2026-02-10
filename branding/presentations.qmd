@@ -233,6 +233,36 @@ Or use the browser's print function (Ctrl/Cmd + P) when viewing the HTML slides.
 4. **Version control** - Commit slides to GitHub
 5. **Include speaker notes** - Use `::: {.notes}` blocks
 
+## F31 Lab Meeting Presentation Template
+
+For your first research presentation to the lab, use the **F31-structured presentation template**. This template organizes your talk around the sections of an NIH F31 (Ruth L. Kirschstein Predoctoral Individual NRSA) fellowship application, helping you think through your research narrative early in your PhD.
+
+**Download:** [f31-lab-meeting-template.qmd](../assets/branding/f31-lab-meeting-template.qmd)
+
+The template includes:
+
+- **12 slides** mirroring F31 sections (Specific Aims, Significance, Innovation, Approach, Training Goals, etc.)
+- **Speaker notes** with F31 guidance, page limits, and tips for each section
+- **Direct NIH links** to the current FORMS-I application instructions
+- **Page limit reference table** for all F31 sections
+- Lab branding (uses the same `custom.css` and logo as all presentations)
+
+### How to Use
+
+1. Copy the template and branding files into your project directory:
+   ```bash
+   cp ~/rashid-lab-setup/lab-handbook/assets/branding/f31-lab-meeting-template.qmd ./
+   cp ~/rashid-lab-setup/lab-handbook/assets/branding/presentation-template.css ./custom.css
+   cp ~/rashid-lab-setup/lab-handbook/assets/branding/logos/RLlogoA.png ./assets/
+   ```
+2. Rename and edit the `.qmd` file with your content
+3. Press `S` during presentation to see the F31 coaching notes
+4. Preview with `quarto preview your-presentation.qmd`
+
+::: {.callout-note}
+Updated for **FORMS-I** (effective January 25, 2025). Section names reflect the revised fellowship application structure. See the [NIH changes summary](https://grants.nih.gov/policy-and-compliance/policy-topics/peer-review/revisions-nih-fellowship-application-review-process/changes-to-fellowship-applications) for details.
+:::
+
 ## Creating Presentations with Claude Code
 
 Claude Code can help create and edit Quarto presentations:
