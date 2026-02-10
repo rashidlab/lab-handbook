@@ -13,9 +13,9 @@ The meeting lead role rotates biweekly. Meetings are held **Thursdays at 9:30am*
 |------|--------------|------|
 | Feb 12 | Naim Rashid | Orientation |
 | Feb 26 | Dinelka Nanayakkara | Research Update |
-| Mar 19 | Jialiu Xie | Research Update |
-| Mar 26 | Tyler Humpherys | Research Update |
+| Mar 12 | Jialiu Xie | Research Update |
 | Apr 9 | Andrew Walther | Research Update |
+| Apr 16 | Tyler Humpherys | Research Update |
 | Apr 23 | Amber Young | Research Update |
 | May 7 | Dinelka Nanayakkara | Research Update |
 | May 21 | Jialiu Xie | Research Update |
@@ -23,7 +23,7 @@ The meeting lead role rotates biweekly. Meetings are held **Thursdays at 9:30am*
 | Jun 18 | Andrew Walther | Research Update |
 | Jul 2 | Amber Young | Research Update |
 | Jul 16 | Dinelka Nanayakkara | Research Update |
-| Jul 30 | Jialiu Xie | Research Update |
+| Aug 6 | Jialiu Xie | Research Update |
 | Aug 13 | Tyler Humpherys | Research Update |
 | Aug 27 | Andrew Walther | Research Update |
 
@@ -69,16 +69,24 @@ See the [Lab Meetings Guide](meetings.qmd#leader-walkthrough) for the complete s
 
 | Date | Event |
 |------|-------|
-| Jan 13 | Spring semester begins |
-| Mar 9-15 | Spring break (no meeting) |
-| Apr 28 | Last day of classes |
-| May 1-8 | Finals week |
+| Jan 7 | Spring classes begin |
+| Jan 19 | MLK Jr. Day (no classes) |
+| Mar 14-22 | Spring break (no meeting Mar 19) |
+| Apr 2 | Well-being day (no classes) |
+| Apr 3 | Spring Holiday / Good Friday (no classes) |
+| Apr 27 | Last day of classes |
+| Apr 28 – May 7 | Reading days and exams |
+| May 9 | Spring Commencement |
+| May 25 | Memorial Day (no classes) |
+| Jun 19 | Juneteenth (no classes) |
+| Jul 3 | Independence Day observed (no classes) |
 
 ### No-Meeting Weeks
 
-- University holidays
-- Conference weeks (when multiple members traveling)
-- Finals week
+- Spring break (Mar 14-22)
+- Reading/exam period (Apr 28 – May 7)
+- University holidays falling on Thursday
+- Conference weeks (when PI traveling)
 
 ## Sign Up
 

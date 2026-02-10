@@ -40,16 +40,10 @@ meetings:
       - "dinelka97"
     topic: "Research Update"
 
-  - date: "2026-03-19"
+  - date: "2026-03-12"
     lead: "jialiux22"
     presenters:
       - "jialiux22"
-    topic: "Research Update"
-
-  - date: "2026-03-26"
-    lead: "tylerbhumpherys"
-    presenters:
-      - "tylerbhumpherys"
     topic: "Research Update"
 
   - date: "2026-04-09"
@@ -58,16 +52,76 @@ meetings:
       - "andrew-walther"
     topic: "Research Update"
 
+  - date: "2026-04-16"
+    lead: "tylerbhumpherys"
+    presenters:
+      - "tylerbhumpherys"
+    topic: "Research Update"
+
   - date: "2026-04-23"
     lead: "ayoung31"
     presenters:
       - "ayoung31"
     topic: "Research Update"
 
+  - date: "2026-05-07"
+    lead: "dinelka97"
+    presenters:
+      - "dinelka97"
+    topic: "Research Update"
+
+  - date: "2026-05-21"
+    lead: "jialiux22"
+    presenters:
+      - "jialiux22"
+    topic: "Research Update"
+
+  - date: "2026-06-04"
+    lead: "tylerbhumpherys"
+    presenters:
+      - "tylerbhumpherys"
+    topic: "Research Update"
+
+  - date: "2026-06-18"
+    lead: "andrew-walther"
+    presenters:
+      - "andrew-walther"
+    topic: "Research Update"
+
+  - date: "2026-07-02"
+    lead: "ayoung31"
+    presenters:
+      - "ayoung31"
+    topic: "Research Update"
+
+  - date: "2026-07-16"
+    lead: "dinelka97"
+    presenters:
+      - "dinelka97"
+    topic: "Research Update"
+
+  - date: "2026-08-06"
+    lead: "jialiux22"
+    presenters:
+      - "jialiux22"
+    topic: "Research Update"
+
+  - date: "2026-08-13"
+    lead: "tylerbhumpherys"
+    presenters:
+      - "tylerbhumpherys"
+    topic: "Research Update"
+
+  - date: "2026-08-27"
+    lead: "andrew-walther"
+    presenters:
+      - "andrew-walther"
+    topic: "Research Update"
+
 # Skip these dates (holidays, breaks, conferences)
 skip_dates:
-  - "2026-03-12"  # Spring break (Mar 9-15)
-  - "2026-05-01"  # Finals week
+  - "2026-03-19"  # Spring break (Mar 14-22)
+  - "2026-05-01"  # Finals/reading period
 
 # Teams channel webhook (stored in secrets, referenced here for documentation)
 # Secret name: MS_TEAMS_WEBHOOK_URI
