@@ -1,0 +1,110 @@
+---
+title: "Lab Projects"
+subtitle: "Active research projects in the Rashid Lab"
+---
+
+## Overview
+
+This page provides an overview of active research projects in the Rashid Lab. All project repositories are hosted in the [rashidlab GitHub organization](https://github.com/rashidlab).
+
+::: {.callout-tip}
+## Finding Projects
+Use [GitHub Topics](https://github.com/rashidlab?q=topic:student-project) to filter repositories:
+
+- All student projects: [`topic:student-project`](https://github.com/rashidlab?q=topic:student-project)
+- By student: [`topic:tylerbhumpherys`](https://github.com/rashidlab?q=topic:tylerbhumpherys)
+- By area: [`topic:clinical-trials`](https://github.com/rashidlab?q=topic:clinical-trials)
+:::
+
+## Current Student Projects
+
+### Tyler Humpherys (Year 3)
+
+| Project | Description | Status | Topics |
+|---------|-------------|--------|--------|
+| *Pancreatic Cancer RL* | Offline reinforcement learning for precision treatment | Active | `machine-learning`, `clinical-trials` |
+| *LLM Clinical Decisions* | Large language models for clinical decision support | Active | `machine-learning` |
+
+**Research areas:** Offline RL, LLMs, precision health, pancreatic cancer
+
+---
+
+### Andrew Walther (Year 6)
+
+| Project | Description | Status | Topics |
+|---------|-------------|--------|--------|
+| *Spatial Spillover* | Study design with spillover effects | Active | `spatial-statistics`, `methods-paper` |
+| *Survival Dimension Reduction* | ML methods for survival analysis | Active | `survival-analysis`, `machine-learning` |
+
+**Research areas:** Spatial statistics, study design, dimension reduction, survival analysis
+
+---
+
+### Amber Young (Year 1)
+
+| Project | Description | Status | Topics |
+|---------|-------------|--------|--------|
+| *Biomarker Discovery* | Biomarker discovery and validation in oncology | Active | `biomarkers`, `applied-paper` |
+
+**Research areas:** Biomarker discovery, oncology
+
+---
+
+### Dinelka Nanayakkara (Year 1)
+
+| Project | Description | Status | Topics |
+|---------|-------------|--------|--------|
+| *TBD* | Research area to be determined | Planning | |
+
+**Research areas:** TBD
+
+---
+
+### Jialiu Xie (Year 1)
+
+| Project | Description | Status | Topics |
+|---------|-------------|--------|--------|
+| *TBD* | Research area to be determined | Planning | |
+
+**Research areas:** TBD
+
+---
+
+## Lab Infrastructure
+
+| Repository | Description | Links |
+|------------|-------------|-------|
+| [lab-handbook](https://github.com/rashidlab/lab-handbook) | Documentation and policies | [Site](https://rashidlab.github.io/lab-handbook/) |
+| [lab-meetings](https://github.com/rashidlab/lab-meetings) | Meeting coordination | |
+| [lab-computing](https://github.com/rashidlab/lab-computing) | HPC guides and templates | |
+| [lab-dashboard](https://github.com/rashidlab/lab-dashboard) | Lab status dashboard | [Site](https://rashidlab.github.io/lab-dashboard/) |
+
+## Templates
+
+| Template | Use Case | Links |
+|----------|----------|-------|
+| [template-research-project](https://github.com/rashidlab/template-research-project) | General research | [Docs](../templates/research-project.qmd) |
+| [template-methods-paper](https://github.com/rashidlab/template-methods-paper) | Methods papers | [Docs](../templates/methods-paper.qmd) |
+| [template-clinical-trial](https://github.com/rashidlab/template-clinical-trial) | Trial designs | |
+| [template-r-package](https://github.com/rashidlab/template-r-package) | R packages | [Docs](../templates/package-development.qmd) |
+
+## Creating a New Project
+
+1. **Choose a template** from the list above
+2. **Create repository** using "Use this template" on GitHub
+3. **Follow naming convention**: `{github-username}-{project-name}`
+4. **Add topics** for discoverability
+5. **Update this page** with your project info
+
+See [Repository Organization](../policies/repository-organization.qmd) for detailed guidelines.
+
+## Project Status Legend
+
+| Status | Meaning |
+|--------|---------|
+| **Planning** | Early stage, defining scope |
+| **Active** | Under active development |
+| **Writing** | Analysis complete, writing manuscript |
+| **Submitted** | Manuscript under review |
+| **Published** | Work is published |
+| **Archived** | Project complete, repo archived |

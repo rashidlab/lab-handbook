@@ -18,6 +18,8 @@ website:
     left:
       - text: "Home"
         href: index.qmd
+      - text: "Projects"
+        href: projects/index.qmd
       - text: "Meetings"
         href: policies/meetings.qmd
       - text: "Computing"
@@ -88,6 +90,7 @@ website:
     - title: "Policies"
       contents:
         - policies/index.qmd
+        - policies/repository-organization.qmd
         - policies/project-handoff.qmd
 
     - title: "Branding"
@@ -113,6 +116,10 @@ website:
         - templates/research-project.qmd
         - templates/methods-paper.qmd
         - templates/package-development.qmd
+
+    - title: "Projects"
+      contents:
+        - projects/index.qmd
 
     - title: "Learning Materials"
       contents:

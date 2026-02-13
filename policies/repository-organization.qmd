@@ -1,0 +1,219 @@
+---
+title: "Repository Organization"
+subtitle: "Naming conventions and structure for lab repositories"
+---
+
+## Overview
+
+All Rashid Lab repositories live in the [rashidlab GitHub organization](https://github.com/rashidlab). We use a flat structure with consistent naming conventions and GitHub Topics to keep repositories organized and discoverable.
+
+## Repository Types
+
+| Prefix | Purpose | Example |
+|--------|---------|---------|
+| `lab-*` | Lab infrastructure | `lab-handbook`, `lab-meetings`, `lab-computing` |
+| `template-*` | Project templates | `template-research-project`, `template-r-package` |
+| `pkg-*` | R packages | `pkg-baton`, `pkg-adapthr` |
+| `paper-*` | Publication repositories | `paper-adaptive-basket-design` |
+| `{username}-*` | Student projects | `tylerbhumpherys-pancreatic-rl` |
+
+## Naming Conventions
+
+### Student Project Repositories
+
+When creating a new repository for your research, use this format:
+
+```
+{github-username}-{short-project-name}
+```
+
+**Guidelines:**
+
+- Use your GitHub username (not your name) as the prefix
+- Keep the project name short but descriptive (2-4 words)
+- Use hyphens to separate words
+- Use lowercase only
+- Avoid dates in the name (use Topics instead)
+
+**Good examples:**
+
+- `tylerbhumpherys-pancreatic-rl`
+- `andrew-walther-spatial-spillover`
+- `dinelka97-biomarker-validation`
+- `ayoung31-survival-methods`
+- `jialiux22-adaptive-enrichment`
+
+**Avoid:**
+
+- `tyler-project-1` (not descriptive)
+- `2026-02-pancreatic-analysis` (dates don't help)
+- `PancreaticCancerRLAnalysis` (not lowercase, no hyphens)
+- `my-awesome-project` (not prefixed with username)
+
+### Publication Repositories
+
+When a project is ready for publication, you may optionally rename or create a clean repository:
+
+```
+paper-{short-title}
+```
+
+**Examples:**
+
+- `paper-adaptive-basket-design`
+- `paper-spatial-spillover-trials`
+- `paper-biomarker-surrogacy`
+
+### R Package Repositories
+
+For reusable R packages:
+
+```
+pkg-{package-name}
+```
+
+Or simply use the package name if it's distinctive:
+
+- `pkg-baton` or just `BATON`
+- `pkg-adapthr` or just `adapthr`
+
+## GitHub Topics
+
+Every repository should have relevant topics to enable filtering and discovery. Add topics via **Settings → Topics** or the "About" gear icon on the repo page.
+
+### Required Topics
+
+| Topic | When to Use |
+|-------|-------------|
+| `student-project` | All student research repos |
+| Your GitHub username | All your repos (e.g., `tylerbhumpherys`) |
+
+### Recommended Topics
+
+| Topic | Description |
+|-------|-------------|
+| `methods-paper` | Methodology development |
+| `applied-paper` | Applied data analysis |
+| `clinical-trials` | Trial design projects |
+| `spatial-statistics` | Spatial methods |
+| `machine-learning` | ML/AI projects |
+| `survival-analysis` | Time-to-event methods |
+| `bayesian` | Bayesian methods |
+| `simulation-study` | Contains simulation studies |
+| `r-package` | R package development |
+
+### Filtering by Topic
+
+To find all repositories with a specific topic:
+
+```
+https://github.com/rashidlab?q=topic:tylerbhumpherys
+https://github.com/rashidlab?q=topic:clinical-trials
+```
+
+Or use the GitHub search bar with `topic:NAME`.
+
+## Creating a New Repository
+
+### From a Template
+
+1. Go to the appropriate template repository:
+   - [template-research-project](https://github.com/rashidlab/template-research-project) — General research
+   - [template-methods-paper](https://github.com/rashidlab/template-methods-paper) — Methods papers
+   - [template-clinical-trial](https://github.com/rashidlab/template-clinical-trial) — Trial designs
+   - [template-r-package](https://github.com/rashidlab/template-r-package) — R packages
+
+2. Click **"Use this template"** → **"Create a new repository"**
+
+3. Configure:
+   - **Owner:** `rashidlab` (not your personal account)
+   - **Repository name:** Follow naming convention above
+   - **Visibility:** Private (can make public later)
+
+4. After creation:
+   - Add relevant Topics
+   - Update README with project description
+   - Update CLAUDE.md with project-specific guidance
+
+### From Scratch
+
+If no template fits:
+
+1. Go to [github.com/organizations/rashidlab/repositories/new](https://github.com/organizations/rashidlab/repositories/new)
+2. Follow the naming convention
+3. Initialize with README
+4. Add `.gitignore` for R or Python
+5. Add MIT license
+6. Add Topics after creation
+
+## Repository Visibility
+
+| Stage | Visibility | Notes |
+|-------|------------|-------|
+| Active development | **Private** | Default for new repos |
+| Submitted for publication | Private | Until acceptance |
+| Published/Preprint | **Public** | Make public when paper is available |
+| Lab infrastructure | Public | `lab-handbook`, templates, etc. |
+
+To change visibility: **Settings → Danger Zone → Change visibility**
+
+## GitHub Teams
+
+The lab uses [GitHub Teams](https://docs.github.com/en/organizations/organizing-members-into-teams/about-teams) for access control:
+
+| Team | Access | Members |
+|------|--------|---------|
+| `lab-admin` | Admin on all repos | Dr. Rashid |
+| `students` | Read on lab-* repos | All students |
+| `{username}` | Write on their repos | Individual student |
+
+When you create a new repository, your team will automatically have access. For collaboration, add other student teams with appropriate permissions.
+
+## Directory Structure on Longleaf
+
+Repositories are cloned to your Longleaf workspace. Recommended structure:
+
+```
+/proj/rashidlab/users/{onyen}/
+├── projects/
+│   ├── tylerbhumpherys-pancreatic-rl/    # Git repo
+│   ├── tylerbhumpherys-biomarker-study/  # Git repo
+│   └── ...
+└── data/
+    ├── pancreatic-rl/                     # Symlinked from repos
+    └── biomarker-study/
+```
+
+See [Lab Computing](../computing/index.qmd) for more details on Longleaf setup.
+
+## Archiving and Cleanup
+
+When a project is complete:
+
+1. **Ensure reproducibility** — README has full reproduction instructions
+2. **Tag a release** — `git tag -a v1.0 -m "Publication version"`
+3. **Update status** — Add `archived` topic if no longer active
+4. **Consider archiving** — Settings → Archive repository (makes read-only)
+
+::: {.callout-tip}
+## Don't Delete
+Avoid deleting repositories. Archive them instead to preserve history and links.
+:::
+
+## Quick Reference
+
+```bash
+# Clone your project
+git clone git@github.com:rashidlab/tylerbhumpherys-pancreatic-rl.git
+
+# Check all your repos
+gh repo list rashidlab --topic tylerbhumpherys
+
+# Check all clinical trial repos
+gh repo list rashidlab --topic clinical-trials
+
+# Create new repo from template
+gh repo create rashidlab/tylerbhumpherys-new-project \
+  --template rashidlab/template-research-project \
+  --private
+```
