@@ -237,7 +237,7 @@ Or use the browser's print function (Ctrl/Cmd + P) when viewing the HTML slides.
 
 For your first research presentation to the lab, use the **F31-structured presentation template**. This template organizes your talk around the sections of an NIH F31 (Ruth L. Kirschstein Predoctoral Individual NRSA) fellowship application, helping you think through your research narrative early in your PhD.
 
-**Download:** [f31-lab-meeting-template.qmd](../assets/branding/f31-lab-meeting-template.qmd)
+**Download:** [f31-lab-meeting-template.qmd](../assets/branding/f31-lab-meeting-template.qmd.txt) (right-click → Save As, rename to `.qmd`)
 
 The template includes:
 
@@ -251,7 +251,7 @@ The template includes:
 
 1. Copy the template and branding files into your project directory:
    ```bash
-   cp ~/rashid-lab-setup/lab-handbook/assets/branding/f31-lab-meeting-template.qmd ./
+   cp ~/rashid-lab-setup/lab-handbook/assets/branding/f31-lab-meeting-template.qmd.txt ./my-presentation.qmd
    cp ~/rashid-lab-setup/lab-handbook/assets/branding/presentation-template.css ./custom.css
    cp ~/rashid-lab-setup/lab-handbook/assets/branding/logos/RLlogoA.png ./assets/
    ```
