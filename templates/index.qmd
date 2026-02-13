@@ -80,7 +80,7 @@ Standards for creating reusable R packages separate from paper repositories.
 - testthat testing
 - Reference: BATON package
 
-[Learn More →](package-development.qmd) | [Reference: BATON](https://github.com/naimurashid/BATON)
+[Learn More →](package-development.qmd) | [GitHub](https://github.com/rashidlab/template-r-package) | [Reference: BATON](https://github.com/naimurashid/BATON)
 :::
 
 ## Quick Start
