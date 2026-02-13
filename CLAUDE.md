@@ -31,6 +31,48 @@ The lab uses specific conventions - be aware when writing examples:
 | **HPC** | Longleaf (UNC cluster) | Local for production |
 | **Data storage** | `/proj/rashidlab/` + symlinks | Committing data to Git |
 
+## Build Validation
+
+Before pushing changes, run the validation script to catch common errors:
+
+```bash
+bash scripts/validate-build.sh
+```
+
+This checks for:
+- Broken symlinks
+- Template files that would fail rendering
+- Missing `_generated/` files
+
+### Common Build Errors and Fixes
+
+| Error | Cause | Fix |
+|-------|-------|-----|
+| `NotFound: readfile ... custom.css.scss` | `.qmd` file in `assets/branding/` with RevealJS format | Rename to `.qmd.txt` |
+| `Include directive failed` | Missing `_generated/*.md` files | Commit the generated tree files |
+| `No such file or directory` for symlinks | Broken symlinks pointing to non-existent files | Remove the symlinks |
+
+### Template Files Convention
+
+Files in `assets/branding/` that are meant to be **downloaded by users** (not rendered) must use the `.qmd.txt` extension:
+
+- `f31-lab-meeting-template.qmd.txt` - Users download and rename to `.qmd`
+
+This prevents Quarto from attempting to render them during the site build.
+
+### Generated Files
+
+The `_generated/` directory contains files that must be committed:
+
+- `template-methods-paper-tree.md`
+- `template-research-project-tree.md`
+
+These are included by template documentation pages. If missing, the build fails. Generate locally with:
+
+```bash
+bash scripts/generate-template-trees.sh
+```
+
 ## Common Commands
 
 ### Render the Site

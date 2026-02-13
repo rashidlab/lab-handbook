@@ -3,6 +3,8 @@ name: Publish to GitHub Pages
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -21,6 +23,41 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Check for broken symlinks
+        run: |
+          echo "Checking for broken symlinks..."
+          broken=$(find . -type l ! -exec test -e {} \; -print)
+          if [ -n "$broken" ]; then
+            echo "::error::Broken symlinks found:"
+            echo "$broken"
+            exit 1
+          fi
+          echo "No broken symlinks found."
+
+      - name: Validate no .qmd files in assets/branding (except .qmd.txt)
+        run: |
+          echo "Checking for renderable .qmd files in assets/branding..."
+          bad_files=$(find assets/branding -name "*.qmd" ! -name "*.qmd.txt" 2>/dev/null || true)
+          if [ -n "$bad_files" ]; then
+            echo "::error::Found .qmd files in assets/branding that will be rendered."
+            echo "Rename to .qmd.txt to prevent rendering:"
+            echo "$bad_files"
+            exit 1
+          fi
+          echo "No problematic .qmd files found."
+
+      - name: Check _generated files exist
+        run: |
+          echo "Checking that _generated tree files exist..."
+          for f in _generated/template-methods-paper-tree.md _generated/template-research-project-tree.md; do
+            if [ ! -f "$f" ]; then
+              echo "::error::Missing required file: $f"
+              echo "Run scripts/generate-template-trees.sh locally and commit the results."
+              exit 1
+            fi
+          done
+          echo "All required _generated files present."
+
       - name: Setup Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
@@ -33,6 +70,7 @@ jobs:
           path: _site
 
   deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
