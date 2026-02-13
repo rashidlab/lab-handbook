@@ -4,6 +4,7 @@ subtitle: "Rashid Lab — New Member Research Presentation"
 author: "Your Name"
 institute: "Department of Biostatistics, UNC Gillings School of Global Public Health"
 date: today
+render: false
 format:
   revealjs:
     theme: [default, custom.css]
