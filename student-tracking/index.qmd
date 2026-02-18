@@ -1,0 +1,160 @@
+---
+title: "Student Tracking"
+description: "How the lab tracks projects, milestones, and meetings"
+---
+
+## Overview
+
+The lab uses YAML-based configuration files in the `rashidlab/lab-admin` repository to track student profiles, project assignments, PhD milestones, and meeting frequency. A weekly digest generated from these configs helps the PI monitor progress across the lab.
+
+As a student, you are responsible for keeping your own profile up to date. This page explains what is tracked, where the files live, and how to make updates.
+
+## Your Profile (`students.yml`)
+
+Your profile lives in `config/students.yml` inside the `rashidlab/lab-admin` repository. To update it:
+
+1. Clone or navigate to `rashidlab/lab-admin`.
+2. Open `config/students.yml` and find your entry.
+3. Make your edits, then open a PR or ask the PI to merge the change directly.
+
+### Required fields
+
+| Field | Description |
+|-------|-------------|
+| `research_focus` | One-sentence description of your current research area. |
+| `expected_graduation` | Target graduation semester, e.g., `"Spring 2029"`. |
+| `meeting_preferences` | Contains `preferred_day`, `preferred_time`, and `frequency` (`weekly` or `biweekly`). |
+| `funding` | Contains `source` (`RA`, `TA`, or `fellowship`), `grant_name`, and `end_date`. |
+| `committee` | Contains `members` (list of names) and `external_member`. |
+| `milestones` | Target dates for PhD milestones as they become known, formatted as `"YYYY-MM"`. |
+
+### Complete example
+
+Below is a fully populated entry for a fictional student. Use this as a reference when filling in your own profile.
+
+```yaml
+example_student:
+  name: "Example Student"
+  email: "example@unc.edu"
+  onyen: "examplestu"
+  github: "example-student"
+  year: 2
+  program: "PhD Biostatistics"
+  research_focus: "Bayesian methods for spatially resolved transcriptomics"
+  expected_graduation: "Spring 2029"
+  meeting_preferences:
+    preferred_day: "Tuesday"
+    preferred_time: "2:00 PM"
+    frequency: "weekly"
+  funding:
+    source: "RA"
+    grant_name: "R01-CA-123456"
+    end_date: "2027-06-30"
+  committee:
+    members:
+      - "Naim Rashid (Chair)"
+      - "Jane Smith"
+      - "Robert Lee"
+      - "Maria Garcia"
+    external_member: "David Chen (Duke)"
+  milestones:
+    core_coursework:
+      target_date: "2026-05"
+      status: "complete"
+    written_prelim:
+      target_date: "2027-01"
+      status: "upcoming"
+    oral_prelim:
+      target_date: "2027-05"
+      status: "upcoming"
+    dissertation_proposal:
+      target_date: "2028-01"
+      status: "upcoming"
+    first_paper:
+      target_date: "2028-06"
+      status: "upcoming"
+    defense:
+      target_date: "2029-03"
+      status: "upcoming"
+```
+
+::: {.callout-tip}
+You do not need to fill in every milestone date immediately. Add target dates as they become known, and update statuses as you progress.
+:::
+
+## Projects (`projects.yml`)
+
+Each project tracked by the lab has an entry in `config/projects.yml`. Projects are typed by category: `package`, `paper`, `grant`, `teaching`, or `infrastructure`.
+
+Students are assigned to projects via the `students` field in each project entry. Your assigned projects will appear in the weekly digest and in the 1:1 prep reports the PI uses before meetings.
+
+To update a project's status or `next_action`, edit `config/projects.yml` and open a PR. This keeps the PI and other collaborators aware of where things stand without needing a separate conversation.
+
+## Milestones
+
+The system tracks six PhD milestones:
+
+1. **Core Coursework** -- completion of required courses.
+2. **Written Prelim** -- the written preliminary examination.
+3. **Oral Prelim** -- the oral preliminary examination.
+4. **Dissertation Proposal** -- formal proposal defense.
+5. **First Paper** -- first first-author manuscript submitted.
+6. **Defense** -- dissertation defense.
+
+### How milestone tracking works
+
+- Set target dates in `students.yml` as they become known (format: `"YYYY-MM"`).
+- Update the status field as you progress: `upcoming` -> `in_progress` -> `complete`.
+- The system alerts the PI when a deadline is within 14 days or is overdue.
+- A Gantt chart of your milestone timeline is generated monthly and stored at `milestones/gantt/<your-name>.pdf`.
+
+::: {.callout-note}
+Milestone dates are targets, not hard deadlines. The alerts exist so the PI can proactively check in, not to penalize you. Update the dates if your timeline shifts.
+:::
+
+## 1:1 Meetings
+
+After each 1:1 meeting with the PI, create a notes file at:
+
+```
+1on1-meetings/<your-name>/YYYY-MM-DD.md
+```
+
+Use the template at `1on1-meetings/templates/notes-template.md` as your starting point. The template includes these sections:
+
+- **Progress Since Last Meeting** -- what you accomplished.
+- **Current Focus** -- what you are working on now.
+- **Questions for PI** -- anything you want to discuss.
+- **Action Items** -- concrete next steps with owners.
+
+The system tracks meeting frequency based on the `frequency` field in your profile and flags meetings that are overdue. Before each 1:1, an automated prep report may be generated at:
+
+```
+1on1-meetings/<your-name>/prep-YYYY-MM-DD.md
+```
+
+This report pulls together your recent commits, project statuses, and upcoming milestones so the PI can come to the meeting prepared.
+
+## GitHub Issues
+
+The PI or automated checks may create GitHub Issues in `rashidlab/lab-admin` assigned to you. Issues with an `auto:` label prefix are system-generated and correspond to specific conditions:
+
+| Label | Meaning |
+|-------|---------|
+| `auto:onboarding` | Profile setup checklist (created for new students). |
+| `auto:milestone` | A milestone deadline is approaching or overdue. |
+| `auto:activity` | No commits detected in any of your assigned repositories for 2+ weeks. |
+| `auto:followup` | A previously created issue has gone stale (>30 days without update). |
+| `auto:meeting` | Your 1:1 meeting is overdue based on your configured frequency. |
+
+Close the issue when the underlying condition is resolved or the task is complete. If an auto-generated issue is not relevant, leave a comment explaining why and close it.
+
+## Quick Reference
+
+| Task | How |
+|------|-----|
+| Update my profile | Edit `config/students.yml`, open PR |
+| Update project status | Edit `config/projects.yml`, open PR |
+| Record a 1:1 meeting | Create `1on1-meetings/<name>/YYYY-MM-DD.md` |
+| Check my Gantt chart | See `milestones/gantt/<name>.pdf` |
+| See the weekly digest | Ask the PI (PI-only for now) |

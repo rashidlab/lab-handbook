@@ -101,6 +101,10 @@ website:
         - branding/assets.qmd
         - branding/claude-template.qmd
 
+    - title: "Student Tracking"
+      contents:
+        - student-tracking/index.qmd
+
     - title: "Project Consistency"
       contents:
         - project-consistency/index.qmd
