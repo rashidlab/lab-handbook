@@ -16,6 +16,7 @@ format:
     incremental: false
     chalkboard: false
     preview-links: auto
+    embed-resources: true
 ---
 
 <!--
