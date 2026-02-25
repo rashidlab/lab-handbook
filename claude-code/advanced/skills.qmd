@@ -8,7 +8,7 @@ learning-path:
   time: "12 min"
   prerequisites:
     - index.qmd
-date-modified: 2026-02-01
+date-modified: 2026-02-25
 ---
 
 ::: {.breadcrumb-nav}
@@ -277,3 +277,118 @@ template-research-project/.claude/
 ### Personal Skills
 
 Add to `~/.claude/commands/` for personal skills available everywhere.
+
+## GSD Workflows {#gsd-workflows}
+
+GSD (Get Stuff Done) is a plugin that provides structured, multi-phase project management through Claude Code. It's the scaled-up version of the [plan→implement pattern](../daily-workflow.qmd#plan-implement) — designed for large research efforts that span weeks or months.
+
+### When to Use GSD
+
+| Scope | Approach |
+|-------|----------|
+| 5-minute fix | Just do it — no structure needed |
+| Single feature or analysis | Plan→implement pattern with `docs/plans/` |
+| Multi-week research effort | GSD workflows |
+| Full paper (method + sims + manuscript) | GSD with milestone tracking |
+
+### Core Commands
+
+GSD provides commands organized around a **research → plan → execute** cycle:
+
+#### Starting a Project
+
+| Command | What it does |
+|---------|-------------|
+| `/gsd:new-project` | Interviews you about the project, researches the domain, creates a phased roadmap with milestones |
+| `/gsd:new-milestone` | Start a new milestone cycle within an existing project |
+
+**Example:**
+
+```
+> /gsd:new-project
+```
+
+GSD asks about your methodology, simulation design, target journal, etc. Then it creates a roadmap — for instance:
+
+- Phase 1: Core method implementation
+- Phase 2: Simulation study design and execution
+- Phase 3: Results analysis and figures
+- Phase 4: Manuscript
+
+Each phase is scoped and sequenced with dependencies.
+
+#### Planning and Executing Phases
+
+| Command | What it does |
+|---------|-------------|
+| `/gsd:research-phase` | Research how to implement a phase before planning (reads docs, explores codebase) |
+| `/gsd:plan-phase` | Creates a detailed execution plan with tasks, dependencies, and success criteria |
+| `/gsd:execute-phase` | Works through the plan task by task, committing as it goes |
+| `/gsd:discuss-phase` | Gather context through adaptive questioning before planning |
+
+The cycle for each phase is: **research → plan → execute**. This ensures every phase is well-understood before code is written.
+
+#### Tracking Progress
+
+| Command | What it does |
+|---------|-------------|
+| `/gsd:progress` | Shows completed phases, current task, what's next |
+| `/gsd:check-todos` | List pending tasks and select one to work on |
+| `/gsd:verify-work` | Validate that built features meet the original spec |
+| `/gsd:audit-milestone` | Audit milestone completion against original goals |
+
+#### Pausing and Resuming
+
+| Command | What it does |
+|---------|-------------|
+| `/gsd:pause-work` | Saves full context to a handoff document when stopping |
+| `/gsd:resume-work` | Restores context from the handoff document in a new session |
+
+This is especially useful for HPC workflows — plan locally, pause before submitting Longleaf jobs, resume when results are back.
+
+#### Managing the Roadmap
+
+| Command | What it does |
+|---------|-------------|
+| `/gsd:add-phase` | Add a phase to the end of the current milestone |
+| `/gsd:insert-phase` | Insert urgent work as a decimal phase (e.g., Phase 2.5) |
+| `/gsd:remove-phase` | Remove a future phase from the roadmap |
+
+#### Utilities
+
+| Command | What it does |
+|---------|-------------|
+| `/gsd:quick` | Execute a quick task with GSD tracking |
+| `/gsd:debug` | Systematic debugging with persistent state |
+| `/gsd:map-codebase` | Analyze codebase structure with parallel analysis |
+| `/gsd:help` | Show all available GSD commands |
+
+### How GSD Fits With Lab Infrastructure
+
+GSD creates planning files in `.planning/` at your project root:
+
+```
+.planning/
+├── ROADMAP.md           # Phase breakdown with milestones
+├── phases/
+│   ├── 01-method/
+│   │   ├── RESEARCH.md  # Domain research output
+│   │   ├── PLAN.md      # Detailed task breakdown
+│   │   └── VERIFICATION.md
+│   ├── 02-simulation/
+│   │   └── ...
+│   └── ...
+└── PROGRESS.md          # Current status
+```
+
+This complements the lab's `docs/plans/` directory — GSD plans are more structured and automated, while `docs/plans/` holds your manually written design documents.
+
+### Installation
+
+GSD is installed as a plugin:
+
+```bash
+claude plugins install gsd@gsd-plugin
+```
+
+After installation, all `/gsd:*` commands are available in every project.

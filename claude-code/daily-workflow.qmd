@@ -121,11 +121,56 @@ Claude maps out the changes before making them, letting you validate the approac
 > break it into smaller functions?
 ```
 
-### Writing Tests
+### Writing Tests (TDD) {#writing-tests}
+
+Test-driven development — writing the test first, then the implementation — is one of the most effective Claude Code workflows for research code.
+
+**The pattern: describe what you want → get tests → get implementation**
 
 ```
-> Help me write tests for the validate_input() function
+> I need a function called summarize_scenarios that takes a data.table
+> with columns scenario_id, metric, and value, and returns a summary
+> table with mean and sd per scenario.
+> Write the tests first using testthat.
 ```
+
+Claude writes the test file to `tests/testthat/test-summarize_scenarios.R`. Then:
+
+```
+> Now implement the function to pass these tests
+```
+
+Claude writes the function in `R/summarize_scenarios.R`. Then:
+
+```
+> Run the tests
+```
+
+Claude runs `Rscript -e "testthat::test_file('tests/testthat/test-summarize_scenarios.R')"` and you see the results.
+
+**Why TDD matters for research:** Simulation code runs for hours on Longleaf. A bug discovered after a week-long run means re-running everything. Writing tests first catches logic errors in minutes, not days. Claude generates edge-case tests you might not think of — empty inputs, single-row data.tables, NA handling, boundary conditions.
+
+**The checkpoint connection:** Commit after tests are written, commit after implementation passes. If you later change the function and tests break, `git diff` shows exactly what you changed (see [Commits as Checkpoints](#commit-checkpoints)).
+
+**More TDD examples for research code:**
+
+```
+> Write tests for the bootstrap_ci() function. It should:
+> - Return a named list with lower, upper, and estimate
+> - Handle single-observation input gracefully
+> - Use the seed from globals.yml for reproducibility
+> - Work with both numeric vectors and data.table columns
+```
+
+```
+> I have an existing function fit_model() in R/models.R that has no tests.
+> Read the function, then write a comprehensive test suite for it.
+```
+
+::: {.callout-tip}
+## TDD for R Packages
+Lab template repos include a `tests/testthat/` directory ready to go. When starting a new project from a template, ask Claude to write tests for your core functions **before** writing the functions themselves. The tests become your specification.
+:::
 
 ### Documentation
 

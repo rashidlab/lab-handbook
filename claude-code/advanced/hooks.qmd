@@ -8,7 +8,7 @@ learning-path:
   time: "8 min"
   prerequisites:
     - index.qmd
-date-modified: 2026-02-01
+date-modified: 2026-02-25
 ---
 
 ::: {.breadcrumb-nav}
@@ -268,6 +268,66 @@ echo $?  # 0 = success, non-zero = failure
 
 Or edit `.claude/settings.json` to comment out the hook.
 
+### Session Start Hooks {#session-start-hooks}
+
+Run setup tasks or reminders when Claude starts a session. These are useful for environment checks, status displays, and context reminders.
+
+**Reminder to review CLAUDE.md:**
+
+```json
+{
+  "hooks": {
+    "SessionStart": [{
+      "command": "echo 'Reminder: Review CLAUDE.md if project context has changed'"
+    }]
+  }
+}
+```
+
+**Check for uncommitted work from last session:**
+
+```json
+{
+  "hooks": {
+    "SessionStart": [{
+      "command": "bash -c 'CHANGES=$(git status --porcelain | wc -l); if [ $CHANGES -gt 0 ]; then echo \"⚠ $CHANGES uncommitted changes from last session\"; fi'",
+      "description": "Warn about uncommitted changes on session start"
+    }]
+  }
+}
+```
+
+**Display pipeline status on startup:**
+
+```json
+{
+  "hooks": {
+    "SessionStart": [{
+      "command": "Rscript -e 'p <- targets::tar_progress(); cat(sprintf(\"Pipeline: %d complete, %d errored, %d dispatched\\n\", sum(p$progress==\"completed\"), sum(p$progress==\"errored\"), sum(p$progress==\"dispatched\")))'",
+      "description": "Show targets pipeline status on session start"
+    }]
+  }
+}
+```
+
+**Check for updates to a plugin or tool:**
+
+```json
+{
+  "hooks": {
+    "SessionStart": [{
+      "command": "node scripts/check-updates.js",
+      "description": "Background check for tool updates"
+    }]
+  }
+}
+```
+
+::: {.callout-tip}
+## Keep SessionStart Hooks Fast
+SessionStart hooks run before you can interact with Claude. Keep them under 2-3 seconds. For slower checks, use background processes that write results to a file Claude can read later.
+:::
+
 ## Lab-Recommended Hooks
 
 ### Research Projects
@@ -278,6 +338,9 @@ Or edit `.claude/settings.json` to comment out the hook.
     "pre-commit": {
       "command": "Rscript scripts/validate_pipeline_consistency.R"
     },
+    "SessionStart": [{
+      "command": "bash -c 'CHANGES=$(git status --porcelain | wc -l); if [ $CHANGES -gt 0 ]; then echo \"⚠ $CHANGES uncommitted changes from last session\"; fi'"
+    }],
     "session-stop": {
       "agent": "lab-reviewer"
     }
@@ -295,7 +358,10 @@ Or edit `.claude/settings.json` to comment out the hook.
     },
     "post-commit": {
       "command": "./scripts/post_commit_review.sh"
-    }
+    },
+    "SessionStart": [{
+      "command": "echo 'Reminder: Run make validate before submitting manuscript'"
+    }]
   }
 }
 ```
