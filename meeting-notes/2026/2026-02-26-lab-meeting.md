@@ -20,6 +20,18 @@
 
 ---
 
+### Round Robin — Quick Updates (10 min)
+
+Brief updates from each student (~2 min each). What are you working on, any blockers?
+
+- [ ] @ayoung31
+- [ ] @dinelka97
+- [ ] @jialiux22
+- [ ] @tylerbhumpherys
+- [ ] @andrew-walther
+
+---
+
 ### Working Session: Claude Code for Your Research Projects (50 min)
 
 > **Pre-work required:** See [Issue #16](https://github.com/rashidlab/lab-handbook/issues/16) — install Claude Code, have a repo ready.
