@@ -40,7 +40,8 @@ This is a live-coding session. I'll drive on the projector, you follow along on 
 | 6 | Planning documents — plan in one session, implement fresh | 7 | A design doc in `docs/plans/` |
 | 7 | GSD workflows — structured project management | 7 | See how to manage multi-phase research projects |
 | 8 | Hooks — automated safety nets | 4 | A pre-commit hook in your repo |
-| 9 | TDD — test-driven development with Claude | 4 | See the write-tests-first workflow in action |
+| 9 | Run→Fix loops — let Claude debug for you | 5 | See Claude run scripts, catch errors, and fix them |
+| 10 | TDD — test-driven development with Claude | 4 | See the write-tests-first workflow in action |
 
 ---
 
@@ -366,7 +367,43 @@ In `.claude/settings.json`:
 
 ---
 
-#### Segment 9: TDD — Test-Driven Development (4 min — demo)
+#### Segment 9: Run→Fix Loops — Let Claude Debug For You (5 min — demo)
+
+> 📖 Handbook: [Run→Diagnose→Fix Loop](https://rashidlab.github.io/lab-handbook/claude-code/lab-integration.html#run-diagnose-fix) · [HPC Submit→Monitor→Fix](https://rashidlab.github.io/lab-handbook/claude-code/hpc-usage.html#submit-monitor-fix)
+
+This is one of the biggest time-savers: instead of running a script, reading the error, searching for the fix, and trying again — **let Claude do the whole cycle.**
+
+**Live demo — run a script and let Claude handle the error:**
+
+```
+Run Rscript scripts/run_simulation.R and fix any errors you find
+```
+
+Claude runs the script, sees the error output directly, identifies the bug, fixes it, and re-runs — all without you reading the traceback.
+
+**Key insight:** Claude sees the full error output in real-time. You don't need to copy-paste errors or diagnose anything. Just tell Claude to run it and fix what breaks.
+
+**This works for everything:**
+
+| What you run | What Claude auto-fixes |
+|-------------|----------------------|
+| R scripts | Missing packages, syntax errors, wrong function arguments |
+| `targets::tar_make()` | Failed targets, missing dependencies, configuration issues |
+| `devtools::check()` | Missing docs, failed tests, namespace issues |
+| `quarto render` | YAML errors, missing references, broken includes |
+
+**On Longleaf — the submit→fix→resubmit cycle:**
+
+```
+Submit scripts/run_sim.sh to Slurm, and when it finishes,
+check the error log. If it failed, fix the issue and resubmit.
+```
+
+Common first-submission failures Claude handles automatically: missing modules, wrong library paths, insufficient memory, timeouts, bad file paths. Instead of multiple SSH sessions reading logs, Claude reads the error log and fixes the job script in one step.
+
+---
+
+#### Segment 10: TDD — Test-Driven Development (4 min — demo)
 
 > 📖 Handbook: [Daily Workflow — Writing Tests](https://rashidlab.github.io/lab-handbook/claude-code/daily-workflow.html#writing-tests)
 
@@ -413,6 +450,7 @@ Run the tests
 | Planning workflow | `docs/plans/` for design-before-code |
 | Project management | GSD for multi-phase research efforts |
 | Safety net | Hooks for automated validation |
+| Auto-debugging | Run→fix loops for scripts and HPC jobs |
 | Quality assurance | TDD for reliable research code |
 
 **Next steps:**
