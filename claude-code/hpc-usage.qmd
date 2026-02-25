@@ -8,7 +8,7 @@ learning-path:
   time: "10 min"
   prerequisites:
     - installation.qmd
-date-modified: 2026-02-01
+date-modified: 2026-02-25
 ---
 
 ::: {.learning-path-indicator}
@@ -171,6 +171,108 @@ Claude:
 ```
 
 See [Targets Pipeline Guide](../coding-standards/targets-pipeline.qmd#slurm-integration) for detailed configuration.
+
+## Submit→Monitor→Fix Loop {#submit-monitor-fix}
+
+The biggest HPC time-saver: **let Claude manage the full job lifecycle.** Instead of submitting a job, waiting for it to fail, SSHing in to read the logs, fixing the script, and resubmitting — Claude handles the entire cycle.
+
+### First Submission (Where Most Failures Happen)
+
+First-time job submissions frequently fail due to environment issues — wrong module, missing package, bad path, insufficient resources. Claude can diagnose and fix these without you reading the logs:
+
+```
+> Submit scripts/run_simulation.sh to Slurm and monitor it
+```
+
+Claude submits the job, waits briefly, then checks status:
+
+```
+> Check if my most recent job is still running or has failed
+```
+
+If the job failed:
+
+```
+> Read the error log for my most recent failed job, diagnose the
+> problem, fix it, and resubmit
+```
+
+Claude reads the Slurm error log, identifies the issue, and fixes it:
+
+| Common First-Submission Failure | What Claude Does |
+|-------------------------------|-----------------|
+| `module: command not found` | Adds `source /etc/profile.d/modules.sh` to job script |
+| `there is no package called 'X'` | Adds package install or updates `.libPaths()` in the script |
+| `CANCELLED ... due to time limit` | Increases `--time` in the Slurm directives |
+| `oom-kill` (out of memory) | Increases `--mem` based on `sacct` resource usage from the failed job |
+| `cannot open file '/proj/...'` | Fixes paths, checks symlinks, verifies permissions |
+| `No such file or directory` | Identifies missing input files or wrong working directory |
+
+### Full Job Lifecycle Example
+
+Here's what a realistic Claude-managed HPC session looks like:
+
+```
+> Submit the simulation job to Slurm with 8 cores and 32GB RAM
+
+# Claude runs: sbatch --cpus-per-task=8 --mem=32G scripts/run_sim.sh
+# Output: Submitted batch job 12345678
+
+> Check on job 12345678
+
+# Claude runs: squeue -j 12345678
+# Sees it's still running, or has completed/failed
+
+> It failed. What went wrong?
+
+# Claude runs: cat logs/slurm-12345678.err
+# Reads: "Error in library(data.table): package not found"
+# Claude identifies the issue: R library path not set for Slurm environment
+
+> Fix it and resubmit
+
+# Claude adds .libPaths() to the R script header
+# Resubmits: sbatch --cpus-per-task=8 --mem=32G scripts/run_sim.sh
+# Output: Submitted batch job 12345679
+```
+
+### Monitoring Long-Running Jobs
+
+For jobs that run for hours, use the check-in pattern:
+
+```
+> What's the status of all my running jobs? Show elapsed time
+> and estimated completion.
+```
+
+Claude runs `squeue` and `sacct` to show you what's running and how long it's been. For targets + crew pipelines:
+
+```
+> Check how many targets have completed in the current pipeline run
+```
+
+Claude runs `tar_progress()` to show exactly which targets are done, running, or errored — without you needing to read the pipeline log.
+
+### Resource Optimization After First Run
+
+After a successful job, ask Claude to optimize for next time:
+
+```
+> Check how much memory and time my last job actually used,
+> and update the Slurm script with tighter resource requests
+```
+
+Claude runs:
+```bash
+sacct -j 12345679 --format=JobID,MaxRSS,Elapsed,ReqMem,Timelimit
+```
+
+Then updates the Slurm directives to request only what's needed — shorter queue wait times for future submissions.
+
+::: {.callout-tip}
+## Combine with GSD for Multi-Phase HPC Work
+For large simulation studies with multiple phases, use [GSD workflows](advanced/skills.qmd#gsd-workflows) to plan each phase, then `/gsd:pause-work` before submitting cluster jobs. When results are back, `/gsd:resume-work` picks up the analysis.
+:::
 
 ## Data Management
 

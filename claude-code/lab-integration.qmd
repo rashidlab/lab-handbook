@@ -8,7 +8,7 @@ learning-path:
   time: "15 min"
   prerequisites:
     - first-session.qmd
-date-modified: 2026-02-01
+date-modified: 2026-02-25
 ---
 
 ::: {.learning-path-indicator}
@@ -270,6 +270,77 @@ The mean effect was `r round(results$mean_effect, 2)`.
 
 > Check if any Quarto dependencies are outdated
 ```
+
+## Run→Diagnose→Fix Loop {#run-diagnose-fix}
+
+One of Claude Code's biggest time-savers: **Claude sees error output directly and fixes the problem immediately.** You don't need to read the error, search StackOverflow, or diagnose the issue yourself.
+
+### Running Scripts with Auto-Fix
+
+Instead of running a script yourself, having it fail, and then pasting the error into Claude, let Claude run it:
+
+```
+> Run Rscript scripts/run_simulation.R
+```
+
+If it fails, Claude sees the full error traceback in real time. Without any additional prompting, it will:
+
+1. Read the error message and traceback
+2. Open the relevant source file
+3. Identify the bug
+4. Fix it
+5. Re-run the script to verify
+
+**Example — a common first-run failure:**
+
+```
+> Run the targets pipeline
+```
+
+Output:
+
+```
+Error in library(BATON) : there is no package called 'BATON'
+```
+
+Claude immediately:
+1. Sees the missing package error
+2. Checks DESCRIPTION or the install instructions in CLAUDE.md
+3. Installs the package (or tells you how)
+4. Re-runs the pipeline
+
+**This works for any command** — R scripts, Python scripts, test suites, Quarto renders:
+
+```
+> Run the test suite
+```
+
+If tests fail, Claude reads the test output, identifies which tests failed, reads the relevant code, and suggests or applies fixes.
+
+### The Iterative Debug Cycle
+
+For stubborn bugs that need multiple rounds:
+
+```
+> Run the simulation script and fix any errors you find
+```
+
+Claude enters a loop: run → read error → fix → re-run → check next error. For scripts with multiple issues (common when setting up a new analysis), this can resolve a chain of problems in one conversation.
+
+::: {.callout-tip}
+## Combine with Checkpoints
+Commit after each fix so you have a clean history of what was wrong and how it was resolved. See [Commits as Checkpoints](daily-workflow.qmd#commit-checkpoints).
+:::
+
+### Package Development Cycle
+
+For R package development, Claude can run the full check cycle:
+
+```
+> Run devtools::check() and fix any issues
+```
+
+Claude runs the check, reads NOTEs/WARNINGs/ERRORs, and fixes them — missing documentation, failed tests, namespace issues. This is especially powerful combined with [TDD](daily-workflow.qmd#writing-tests): write tests first, then iterate on the implementation until all checks pass.
 
 ## Full Workflow Examples
 
