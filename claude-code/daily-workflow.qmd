@@ -8,7 +8,7 @@ learning-path:
   time: "12 min"
   prerequisites:
     - first-session.qmd
-date-modified: 2026-02-01
+date-modified: 2026-02-25
 ---
 
 ::: {.learning-path-indicator}
@@ -133,13 +133,22 @@ Claude maps out the changes before making them, letting you validate the approac
 > Add roxygen documentation to all functions in R/utils.R
 ```
 
-## Managing Context
+## Managing Context {#managing-context}
 
-Claude has a context window that can fill up during long sessions.
+Claude has a fixed-size context window — think of it as a desk. Your CLAUDE.md files, the code Claude reads, your conversation, and Claude's responses all compete for space. When the desk fills up, older conversation gets compressed automatically. Understanding this shapes how you work.
+
+### Check your context
+
+Run `/context` to see a visual grid of what's consuming space, or `/cost` to see token usage:
+
+```
+> /context
+> /cost
+```
 
 ### Keep sessions focused
 
-One task per session works better than marathon sessions covering many topics.
+One task per session works better than marathon sessions covering many topics. When you finish a task, start fresh with `/clear` rather than continuing in a growing conversation.
 
 ### Use explicit file references
 
@@ -151,15 +160,45 @@ One task per session works better than marathon sessions covering many topics.
 > Update the fit_bayesian_model function in R/models.R
 ```
 
-### Start fresh when stuck
+### Let Claude read files — don't paste them
 
-If Claude seems confused or is giving inconsistent answers:
+Asking Claude to "Read R/analysis.R and fix the bug on line 34" is better than copying the file contents into the chat. File reads are efficient; pasted text consumes conversation context permanently.
+
+### Three strategies when context gets heavy {#context-strategies}
+
+**`/compact` — compress the noise, stay in the flow:**
+
+```
+> /compact focus on the bootstrap function
+```
+
+Summarizes older exchanges while keeping key content. Use when you're mid-task but context is filling up.
+
+**`/clear` — fresh start, same terminal:**
+
+```
+> /clear
+```
+
+Wipes the conversation completely. CLAUDE.md reloads. Use this when switching tasks or after writing a plan file (see [Plan→Implement Pattern](#plan-implement) below).
+
+**`/rename` + `--resume` — pause and come back later:**
+
+```
+> /rename sensitivity-analysis
+> /exit
+```
+
+Then tomorrow:
 
 ```bash
-# Exit and restart
-> /exit
-claude
+claude -c                          # resume most recent session
+claude -r "sensitivity-analysis"   # resume a specific session by name
 ```
+
+Full conversation history restored — Claude remembers where you were. Name sessions before stopping so they're easy to find later.
+
+See the [Session Management reference](reference.qmd#session-management) for the full command list.
 
 ## Consistency Files
 
@@ -212,6 +251,143 @@ Document where data came from:
 ```
 
 See the [Project Consistency Framework](../project-consistency/index.qmd) for the full documentation.
+
+## Workflow Patterns {#workflow-patterns}
+
+These three patterns build on each other and form the core of effective Claude Code usage.
+
+### Plan→Implement Pattern {#plan-implement}
+
+The single most important workflow: **plan in one context, implement in a fresh one.**
+
+When you're thinking through a problem with Claude — exploring approaches, asking questions, debating tradeoffs — your context fills up with exploratory conversation. That's fine for planning. But when you're ready to build, you want full context capacity for writing code.
+
+**Session 1 — Plan:**
+
+```
+> I need to add bootstrap confidence intervals to the analysis.
+> Let's think through the design. What are the key decisions?
+```
+
+After a few exchanges, when you've converged on an approach:
+
+```
+> Write this plan to docs/plans/2026-03-01-bootstrap-ci-design.md.
+> Include the decisions we made, the approach, and implementation steps.
+> Commit this plan file.
+```
+
+**Switch context:**
+
+```
+> /clear
+```
+
+**Session 2 — Implement:**
+
+```
+> Read docs/plans/2026-03-01-bootstrap-ci-design.md and implement step 1
+```
+
+Claude has everything it needs from CLAUDE.md + the plan file, with full context capacity for writing code. The planning conversation is gone, but the decisions survive in the file.
+
+**When to use this pattern:**
+
+- **5-minute tasks** — just do them, no plan needed
+- **Anything requiring real design thought** — new analysis pipeline, package architecture, manuscript restructuring — plan first, implement fresh
+
+If you need to stop mid-implementation:
+
+```
+> /rename bootstrap-implementation
+> /exit
+```
+
+Next day: `claude -r "bootstrap-implementation"` picks up exactly where you left off.
+
+### Commits as Checkpoints {#commit-checkpoints}
+
+Every commit is a save point. When Claude makes changes, commit early and often — not because you're done, but because you're creating checkpoints to debug from.
+
+**The pattern:**
+
+```
+> Add a comment block explaining what this function does
+> Commit this change
+
+> Now refactor the function to use a helper for the repeated logic
+> Commit this change
+```
+
+You now have two atomic commits. If the refactor introduced a bug:
+
+```
+> Show me what changed in the last commit
+```
+
+Claude runs `git diff HEAD~1` and summarizes in plain English. Then:
+
+```
+> Something is broken after the last commit. Compare the current
+> code to the previous commit and identify what might have caused it.
+```
+
+Claude reads the diff and pinpoints the issue — you don't have to read the raw diff yourself.
+
+**Recovery options when a commit introduces a bug:**
+
+| Approach | When to use |
+|----------|-------------|
+| Ask Claude to fix it | Bug is clear, fix is small |
+| `git checkout -- file.R` | Restore just one file to its pre-commit state |
+| `git revert HEAD` | Undo the entire last commit cleanly |
+
+**Key principle:** Atomic commits = debuggable history. A 500-line commit is a nightmare to debug. A series of small, focused commits lets Claude trace exactly where things went wrong.
+
+### Improving CLAUDE.md Over Time {#improving-claudemd}
+
+CLAUDE.md is a **living document** that gets smarter as you work. Every time Claude makes a systematic mistake, update CLAUDE.md so it won't repeat it.
+
+**The feedback loop:**
+
+```
+Claude makes mistake → you catch it (often via commit diff) →
+fix the code → update CLAUDE.md with the lesson →
+next session, Claude won't repeat it
+```
+
+**Example — add a Lessons Learned section:**
+
+```
+> In my CLAUDE.md, add a 'Lessons Learned' section. Include:
+> - Never use tidyverse/dplyr — use base R and data.table
+> - Never hardcode numerical values — always read from config/globals.yml
+> - Never create renv.lock — dependencies go in DESCRIPTION
+> - Always preserve random seeds for reproducibility
+```
+
+**Example — add a naming taxonomy when Claude uses inconsistent names:**
+
+```markdown
+## Naming Conventions
+
+| Canonical | Avoid |
+|-----------|-------|
+| `total_n` | `nmax`, `N`, `max_n` |
+| `type1`   | `alpha`, `type_1_error` |
+| `n_interim` | `n_looks`, `interim_count` |
+```
+
+After adding this to CLAUDE.md, Claude uses the right names in every future session.
+
+**What to add to CLAUDE.md:**
+
+- Coding conventions Claude keeps violating
+- Project-specific naming rules
+- Common patterns that should be followed (e.g., "always use loader functions for config")
+- Mistakes that have cost you time — prevent repeats
+
+**What not to add:** Temporary task context, session-specific notes, or anything that changes frequently. CLAUDE.md should contain stable, long-lived project knowledge.
 
 ## End of Day Checklist
 
@@ -292,10 +468,12 @@ When starting a new analysis or function:
 | Avoid | Instead |
 |-------|---------|
 | "Just make it work" | Understand the problem first |
-| Huge multi-hour sessions | Focused 30-60 minute sessions |
+| Huge multi-hour sessions | Focused 30-60 minute sessions; use `/clear` between tasks |
+| Pasting file contents into chat | Ask Claude to read the file — saves context |
 | Committing without review | Always run `/review` first |
 | Ignoring lab standards | Reference globals.yml, follow style guide |
 | Skipping documentation | Update docs as you go |
+| Leaving CLAUDE.md stale | Update it when Claude makes repeated mistakes |
 
 ## Next Steps
 

@@ -1,7 +1,7 @@
 ---
 title: "Quick Reference"
 subtitle: "Commands, shortcuts, and common patterns"
-date-modified: 2026-02-01
+date-modified: 2026-02-25
 ---
 
 ## Essential Commands
@@ -14,7 +14,42 @@ date-modified: 2026-02-01
 | `claude --help` | Show help |
 | `claude --version` | Show version |
 | `/exit` or `Ctrl+C` | Exit Claude |
-| `/clear` | Clear conversation history |
+| `/clear` | Clear conversation history (CLAUDE.md reloads; stays in terminal) |
+
+### Session Management {#session-management}
+
+These commands help you manage context, pause/resume work, and keep sessions productive.
+
+#### In-Session Commands
+
+| Command | Description | When to Use |
+|---------|-------------|-------------|
+| `/context` | Visual grid showing what's consuming your context window | Check before deciding to clear or compact |
+| `/cost` | Show token usage for the current session | Monitor how much context you've used |
+| `/compact [focus]` | Compress conversation, keeping key content | Mid-task but context is filling up — e.g., `/compact focus on the bootstrap function` |
+| `/clear` | Wipe conversation history completely | Switching tasks — e.g., done planning, ready to implement |
+| `/rename <name>` | Name the current session for later retrieval | Before pausing work — e.g., `/rename sensitivity-analysis` |
+| `/rewind` | Open menu to undo to a specific point in conversation | Claude went in the wrong direction — roll back without losing code |
+
+#### CLI Flags (Starting Sessions)
+
+| Flag | Description | Example |
+|------|-------------|---------|
+| `claude -c` | Resume the most recent session | Pick up after a break |
+| `claude -r "<name>"` | Resume a specific named session | `claude -r "sensitivity-analysis"` |
+| `claude -r` | Open interactive session picker | Browse and select from past sessions |
+| `claude --fork-session` | Resume but branch into a new session ID | Try an alternative approach without affecting the original |
+
+#### When to Use What
+
+| Situation | Command |
+|-----------|---------|
+| Context getting heavy, still working on same task | `/compact` |
+| Done planning, ready to implement from a plan file | `/clear` |
+| Stopping for the day, want to continue tomorrow | `/rename` → `/exit` → later: `claude -c` |
+| Returning to a specific past session | `claude -r "session-name"` |
+| Claude went off track, want to backtrack | `/rewind` |
+| Want to try two approaches from the same starting point | `claude --continue --fork-session` |
 
 ### Authentication
 
@@ -219,6 +254,12 @@ claude plugins install scientific-skills@claude-scientific-skills
 # Start session
 claude
 
+# Resume last session
+claude -c
+
+# Resume named session
+claude -r "my-session"
+
 # Explore
 > What's in this project?
 > Explain R/models.R
@@ -234,4 +275,19 @@ claude
 
 # Push
 > Push to origin
+
+# Check context usage
+> /context
+
+# Compress conversation
+> /compact focus on the analysis function
+
+# Fresh start (same terminal)
+> /clear
+
+# Name session before stopping
+> /rename feature-name
+
+# Undo last few messages
+> /rewind
 ```

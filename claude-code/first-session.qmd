@@ -8,7 +8,7 @@ learning-path:
   time: "20 min"
   prerequisites:
     - installation.qmd
-date-modified: 2026-02-01
+date-modified: 2026-02-25
 ---
 
 ::: {.learning-path-indicator}
@@ -27,7 +27,18 @@ This guide walks you through your first Claude Code session using the lab's temp
 
 ## Setup
 
-### 1. Clone the Template
+### 1. Set Up Your Global Configuration {#global-setup}
+
+Before your first session, copy the lab's student CLAUDE.md template to your global config. This gives Claude your lab-wide standards in every project:
+
+```bash
+mkdir -p ~/.claude
+cp ~/rashid-lab-setup/lab-handbook/config/claude/student-CLAUDE.md ~/.claude/CLAUDE.md
+```
+
+This file contains lab coding standards (base R + data.table, not tidyverse), common commands, project consistency rules, and key links. You set this up once and it applies to every project.
+
+### 2. Clone the Template
 
 ```bash
 # Clone the research project template
@@ -36,13 +47,37 @@ git clone git@github.com:rashidlab/template-research-project.git my-first-projec
 cd my-first-project
 ```
 
-### 2. Start Claude
+### 3. Initialize Claude for Your Project {#init}
+
+Run `/init` to generate a project-specific CLAUDE.md based on your repo's structure:
+
+```bash
+claude /init
+```
+
+`/init` scans your project — files, README, existing configs — and generates a starter `.claude/CLAUDE.md`. Think of this as your project's memory: every time Claude starts a session, it reads this file to understand your project context.
+
+::: {.callout-note}
+## Two CLAUDE.md Files
+Claude loads **two** files every session:
+
+- **Global** (`~/.claude/CLAUDE.md`) — Lab standards, applied to all projects
+- **Project** (`.claude/CLAUDE.md`) — Repo-specific context, key files, commands
+
+The global file provides your defaults; the project file adds specifics. See [Configuration Hierarchy](advanced/index.qmd#configuration-hierarchy) for details.
+:::
+
+If you cloned a lab template, `.claude/CLAUDE.md` already exists with a starter structure — open it and fill in the `[Project Name]` placeholders and project-specific details.
+
+For existing repos without a template, `/init` creates a reasonable starting point. You'll refine it over time as you work (see [Daily Workflow — Improving CLAUDE.md](daily-workflow.qmd#improving-claudemd)).
+
+### 4. Start Claude {#start-claude}
 
 ```bash
 claude
 ```
 
-You should see Claude's prompt. The first thing Claude does is read the project's `CLAUDE.md` file to understand the project context.
+You should see Claude's prompt. The first thing Claude does is read both CLAUDE.md files to understand your lab standards and project context.
 
 ## Exploring the Project
 
