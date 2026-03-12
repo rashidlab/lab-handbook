@@ -53,6 +53,7 @@ website:
     - title: "Claude Code"
       contents:
         - claude-code/index.qmd
+        - claude-code/code-ownership.qmd
         - claude-code/learning-path.qmd
         - claude-code/installation.qmd
         - claude-code/first-session.qmd

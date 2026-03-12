@@ -191,6 +191,10 @@ Coding standards, policies, templates, and best practices.
 
 ::: {.updates-list}
 ::: {.update-item}
+<span class="update-date">Mar 12</span>
+<span class="update-text">**New:** [Staying in the Driver's Seat](claude-code/code-ownership.qmd) --- guide to maintaining code ownership with AI tools</span>
+:::
+::: {.update-item}
 <span class="update-date">Jan 31</span>
 <span class="update-text">Added data management guidelines and storage conventions</span>
 :::

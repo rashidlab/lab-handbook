@@ -3,6 +3,12 @@ title: "Claude Code CLI"
 subtitle: "AI-powered coding assistant for lab research"
 ---
 
+::: {.callout-important appearance="simple" icon=false}
+**Read first:** [Staying in the Driver's Seat](code-ownership.qmd) --- our guide to maintaining code ownership while using AI tools. Required reading for all lab members.
+
+[Read the Guide →](code-ownership.qmd){.start-here-btn}
+:::
+
 ::: {.callout-tip appearance="simple" icon=false}
 **New to Claude Code?** Follow our guided learning path to get up to speed quickly.
 
@@ -38,6 +44,7 @@ Most lab members only need the first three pages below: **Installation**, **Firs
 
 | Topic | Page | Level | You'll Learn |
 |-------|------|-------|--------------|
+| **Code Ownership** | [Staying in the Driver's Seat](code-ownership.qmd) | [Essential]{.level-badge .level-beginner} | Maintain understanding while using AI |
 | **Setup** | [Installation](installation.qmd) | [Beginner]{.level-badge .level-beginner} | Install locally and on Longleaf |
 | **Getting Started** | [First Session](first-session.qmd) | [Beginner]{.level-badge .level-beginner} | Hands-on walkthrough with a real project |
 | **Daily Use** | [Daily Workflow](daily-workflow.qmd) | [Intermediate]{.level-badge .level-intermediate} | Common patterns and best practices |
