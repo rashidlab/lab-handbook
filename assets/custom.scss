@@ -5,10 +5,10 @@ $primary: #4B9CD3;       // Carolina Blue
 $primary-light: #7BAFD4; // Lighter blue
 $primary-pale: #E8F4FA;  // Very pale blue for backgrounds
 $secondary: #13294B;     // Navy
-$success: #2E8B6D;       // Warmer green
+$success: #2E8B6D;       // Warmer green (no official equivalent)
 $info: #5BA4CF;          // Softer info blue
-$warning: #E6A756;       // Warm amber
-$danger: #D45B54;        // Softer red
+$warning: #FFD340;       // Ginkgo (official UNC supporting)
+$danger: #E95550;        // Clay (official UNC supporting)
 
 // Warm neutral palette
 $gray-50:  #FAFBFC;
@@ -22,7 +22,7 @@ $gray-700: #3D4852;
 $gray-800: #2C353D;
 
 // Typography - warmer, more inviting
-$font-family-sans-serif: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+$font-family-sans-serif: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 $font-family-monospace: "Fira Code", "Source Code Pro", Consolas, monospace;
 
 // Improved readability

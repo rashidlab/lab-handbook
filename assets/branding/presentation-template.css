@@ -6,14 +6,38 @@ $body-color: #13294B;
 $link-color: #007FAE;
 $presentation-heading-color: #13294B;
 
-/* Color Variables */
+/* UNC Brand Color Variables */
 $unc-carolina-blue: #4B9CD3;
 $unc-navy: #13294B;
 $unc-hyperlink-blue: #007FAE;
-$unc-teal: #00A5AD;
+$unc-bolin-creek: #2C5080;
+$unc-old-well-basin: #5B6670;
+$unc-ginkgo: #FFD340;
+$unc-clay: #E95550;
 $unc-light-gray: #F8F9FA;
 
+/* Typography */
+$font-family-sans-serif: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+$font-family-serif: 'Source Serif', 'Georgia', serif;
+
 /*-- scss:rules --*/
+
+/* ============================================
+   GLOBAL TYPOGRAPHY
+   ============================================ */
+
+.reveal {
+  font-family: $font-family-sans-serif;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  font-family: $font-family-sans-serif;
+}
 
 /* ============================================
    TITLE SLIDE
@@ -46,12 +70,12 @@ $unc-light-gray: #F8F9FA;
 }
 
 #title-slide .institute {
-  color: #6C757D;
+  color: #5B6670;
   font-size: 1em;
 }
 
 #title-slide .date {
-  color: #6C757D;
+  color: #5B6670;
   font-size: 0.9em;
   margin-top: 2em;
 }
@@ -157,11 +181,11 @@ $unc-light-gray: #F8F9FA;
 }
 
 .reveal .hljs-string {
-  color: #00A5AD;
+  color: #2C5080;
 }
 
 .reveal .hljs-comment {
-  color: #6C757D;
+  color: #5B6670;
 }
 
 /* ============================================
@@ -215,17 +239,17 @@ $unc-light-gray: #F8F9FA;
 
 .callout-warning {
   background: #FFF9E6;
-  border-left: 4px solid #F8E71C;
+  border-left: 4px solid #FFD340;
 }
 
 .callout-important {
   background: #FDEDED;
-  border-left: 4px solid #DC3545;
+  border-left: 4px solid #E95550;
 }
 
 .callout-tip {
-  background: #E6F7F7;
-  border-left: 4px solid #00A5AD;
+  background: #E8EFF7;
+  border-left: 4px solid #2C5080;
 }
 
 /* ============================================
@@ -244,7 +268,7 @@ $unc-light-gray: #F8F9FA;
 }
 
 .reveal figcaption {
-  color: #6C757D;
+  color: #5B6670;
   font-size: 0.85em;
   font-style: italic;
   margin-top: 0.5em;
@@ -278,7 +302,7 @@ $unc-light-gray: #F8F9FA;
 }
 
 .reveal footer {
-  color: #6C757D;
+  color: #5B6670;
   font-size: 0.7em;
 }
 

@@ -11,8 +11,8 @@ format:
     footer: "Rashid Lab · UNC Chapel Hill"
     slide-number: true
     transition: fade
-    width: 1920
-    height: 1080
+    width: 1280
+    height: 720
     incremental: false
     chalkboard: false
     preview-links: auto
