@@ -1,0 +1,152 @@
+---
+title: "Your Poster Title Goes Here — Make It Specific and Punchy"
+authors:
+  - name: "Naim U. Rashid, PhD"
+    affiliations: "Department of Biostatistics, UNC Gillings School of Global Public Health"
+  - name: "Co-author Name"
+    affiliations: "Affiliation"
+format:
+  poster-typst:
+    size: "48x36"
+    poster-authors: "Naim U. Rashid, Co-author Name"
+    departments: "UNC Gillings · UNC Lineberger Comprehensive Cancer Center"
+    institution-logo: "RLlogoA.png"
+    footer-text: "Rashid Lab · UNC Chapel Hill · 2026"
+    keywords: "precision oncology, adaptive trials, biostatistics"
+    num-columns: 3
+    univ-logo-scale: 100
+    title-font-size: "90pt"
+    body-font-size: "26pt"
+    sectionhead-font-size: "40pt"
+    keywords-font-size: "22pt"
+    authors-font-size: "32pt"
+---
+
+```{=typst}
+// =============================================================================
+// RASHID LAB — Poster Token Setup
+// Mirrors the --rl-* tokens from naimurashid.github.io and lab-handbook/
+// branding/colors.qmd. Update only the literals below if the brand shifts.
+// =============================================================================
+
+#let rl-navy          = rgb("#13294B")
+#let rl-navy-deep     = rgb("#0B1D3A")
+#let rl-carolina      = rgb("#4B9CD3")
+#let rl-carolina-deep = rgb("#2E6A9F")
+#let rl-graphite      = rgb("#5B6670")
+#let rl-ink           = rgb("#1A202C")
+#let rl-fog           = rgb("#F4F6F8")
+#let rl-mist          = rgb("#E6EAEF")
+
+// Typography defaults — Archivo for body, Source Serif 4 for the title,
+// IBM Plex Mono for eyebrows/code/metadata.
+#set text(font: "Archivo", fill: rl-ink, size: 26pt)
+#show heading: set text(font: "Archivo", weight: "semibold", fill: rl-navy)
+#show heading.where(level: 1): set text(font: "Source Serif 4", weight: "semibold", size: 90pt, fill: rl-navy)
+#show heading.where(level: 2): set text(size: 40pt, fill: rl-navy)
+#show heading.where(level: 3): set text(size: 30pt, fill: rl-navy)
+#show raw: set text(font: "IBM Plex Mono", size: 0.95em)
+#show link: set text(fill: rl-carolina-deep)
+#show emph: set text(font: "Source Serif 4", style: "italic")
+
+// Mono uppercase eyebrow helper
+#let eyebrow(content) = text(
+  font: "IBM Plex Mono",
+  size: 22pt,
+  weight: "medium",
+  fill: rl-graphite,
+  tracking: 0.05em,
+  upper(content),
+)
+```
+
+# Background {.unnumbered}
+
+```{=typst}
+#eyebrow[Motivation]
+```
+
+State the clinical or methodological problem in 2–3 sentences. Anchor it
+in the population, scale, or constraint that makes the question worth
+solving. End with a single-sentence summary of what your work does about
+it.
+
+# Methods
+
+```{=typst}
+#eyebrow[Approach]
+```
+
+- Bullet points are appropriate here when the methods decompose into
+  distinct steps or components.
+- Keep each bullet to one line if possible. Reviewers scan posters
+  rather than read them.
+- For mathematical content, render equations inline using `$\theta$`
+  or as block displays.
+
+The model fit a Bayesian hierarchical regression with semi-supervised
+priors:
+
+```{=typst}
+#align(center)[
+  $hat(theta) = arg max_(theta) sum_(i=1)^N log p(y_i mid(|) x_i, theta) + lambda || theta ||_2^2$
+]
+```
+
+# Results
+
+```{=typst}
+#eyebrow[Key Finding]
+```
+
+State the single most important result first. Use a short sentence with
+specific numbers (sample size, effect size, p-value, CI) rather than a
+generic "we found significant differences."
+
+::: {.center}
+![Figure 1 caption goes here. Source Serif italic, mono "Figure N." prefix.](placeholder-figure.png){width="90%"}
+:::
+
+```{=typst}
+#eyebrow[Secondary results]
+```
+
+Use a sub-eyebrow + content block to surface results that build on the
+primary finding. Keep these tight; if it doesn't fit on the poster,
+consider whether the audience needs it at all.
+
+# Discussion
+
+```{=typst}
+#eyebrow[What this means]
+```
+
+Two short paragraphs at most:
+
+1. Why the result matters in clinical/scientific terms.
+2. What it changes about how the field should approach the problem.
+
+Resist the urge to include limitations on a poster — readers infer
+limitations from method choice, and posters are not the right venue
+for caveat-heavy discussion. Save it for the paper.
+
+# References & Acknowledgments
+
+```{=typst}
+#eyebrow[Cite & Thank]
+```
+
+1. Author A, Author B. *Journal Name* (Year).
+2. Author C, Author D. *Journal Name* (Year).
+
+Funding: NIH/NCI R01 CA000000, ARPA-H ADAPT, V Foundation Translational
+Research Award. Co-PIs and lab members not listed as authors.
+
+```{=typst}
+#v(20pt)
+#line(length: 100%, stroke: 1pt + rl-mist)
+#v(10pt)
+#text(size: 22pt, fill: rl-graphite, font: "IBM Plex Mono")[
+  Contact: naim\@unc.edu · naimurashid.github.io
+]
+```

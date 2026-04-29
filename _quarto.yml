@@ -97,8 +97,9 @@ website:
     - title: "Branding"
       contents:
         - branding/index.qmd
-        - branding/presentations.qmd
         - branding/colors.qmd
+        - branding/presentations.qmd
+        - branding/posters.qmd
         - branding/assets.qmd
         - branding/claude-template.qmd
 

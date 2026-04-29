@@ -1,0 +1,213 @@
+---
+title: "Poster Guidelines"
+description: "Producing conference posters with Rashid Lab branding"
+---
+
+This page covers academic poster production using the lab's
+`--rl-*` token system. See [Color Palette, Typography & CSS Tokens](colors.qmd)
+for the canonical token reference.
+
+::: {.callout-note}
+## New in April 2026
+
+A poster template was missing from the lab brand assets prior to April
+2026. This page introduces a starter Quarto Typst template that produces
+print-quality posters with the same visual register as
+[naimurashid.github.io](https://naimurashid.github.io). The template
+lives at `assets/branding/poster-template.qmd`.
+:::
+
+## Standard sizes
+
+Most conferences accept either format. Confirm with the organizers before
+printing.
+
+| Format | Dimensions (inches) | Dimensions (cm) | Use |
+|--------|--------------------|-----------------|-----|
+| Landscape | 48 × 36 | 122 × 91 | ASA/JSM, ENAR default |
+| Portrait | 36 × 48 | 91 × 122 | AACR, ASCO default |
+| Tabloid | 11 × 17 | 28 × 43 | Lab meetings, internal review |
+
+## Recommended toolchain
+
+**Quarto Typst** is the lab's preferred poster format. It produces
+print-quality PDFs faster than LaTeX, supports the `--rl-*` token system
+naturally, and works well with R-rendered figures.
+
+Alternatives that also work:
+
+- **LaTeX `beamerposter`** — battle-tested for math-heavy posters; slower
+  build, more verbose source. Use this if you need fine-grained control
+  over equation typography.
+- **LaTeX `tikzposter`** — modern LaTeX framework, good defaults.
+- **PowerPoint** — only as a last resort. Hard to version-control, hard
+  to keep aligned with the lab's typography system.
+
+## Typography
+
+| Role | Font | Use |
+|------|------|-----|
+| Poster title | Source Serif 4, 80–110pt | Top of poster |
+| Author block | Archivo, 32–40pt | Below title |
+| Section headings (h2) | Archivo, 36–44pt, weight 600 | Block labels |
+| Body | Archivo, 24–28pt | Main content |
+| Eyebrow / metadata | IBM Plex Mono, 18–22pt, uppercase | Section eyebrows |
+| Figure captions | Source Serif 4 italic, 18–22pt | Below figures |
+
+The 24–28pt body is the floor for readability at typical poster-viewing
+distance (3–5 ft). At 36×48", anything below 22pt is unreadable.
+
+## Color palette for posters
+
+All web tokens carry over. Two adjustments specific to print:
+
+- **Background**: white (`#FFFFFF`). Avoid the web's `--rl-fog` tint —
+  it doesn't reproduce reliably across CMYK printers.
+- **Hairlines**: bump to 1.5–2pt for print legibility (web uses 1px,
+  which disappears under most print-shop drum scanners).
+
+Otherwise the palette is identical to the web spec — see
+[`colors.qmd`](colors.qmd).
+
+## Layout grid
+
+A clean academic poster reads in **3 column blocks** for landscape or
+**2 column blocks** for portrait. Each block has a consistent eyebrow +
+heading + content pattern.
+
+```
+┌──────────────────────────────────────────────────────────────────────┐
+│  [Logo]   POSTER TITLE — SERIF, 90PT                                 │
+│           Authors · Affiliations · IBM Plex Mono caps                │
+├──────────────┬───────────────────────────┬───────────────────────────┤
+│ BACKGROUND   │ METHODS                   │ RESULTS                   │
+│              │                           │                           │
+│  body...     │  body...                  │  body...                  │
+│              │                           │                           │
+├──────────────┼───────────────────────────┼───────────────────────────┤
+│ APPROACH     │ FIGURE                    │ CONCLUSIONS               │
+│              │  ┌────────────────────┐   │                           │
+│  body...     │  │   panel            │   │  body...                  │
+│              │  └────────────────────┘   │                           │
+│              │  Figure 1. caption        │  CONTACT · QR ···         │
+└──────────────┴───────────────────────────┴───────────────────────────┘
+```
+
+## Quarto Typst starter
+
+Create a new poster from
+[`assets/branding/poster-template.qmd`](../assets/branding/poster-template.qmd):
+
+```bash
+cp ~/rashid-lab-setup/lab-handbook/assets/branding/poster-template.qmd ./my-poster.qmd
+cp ~/rashid-lab-setup/lab-handbook/assets/branding/logos/RLlogoA.png ./
+quarto render my-poster.qmd
+```
+
+The template uses Quarto's built-in Typst format. Render with:
+
+```bash
+quarto render my-poster.qmd --to typst
+# or for direct PDF:
+quarto render my-poster.qmd
+```
+
+Typst is included with recent Quarto versions; no separate install needed.
+
+## YAML frontmatter (Quarto Typst)
+
+Reference YAML for the starter template:
+
+```yaml
+---
+title: "Your Poster Title Goes Here"
+authors:
+  - name: "Naim U. Rashid, PhD"
+    affiliations: "UNC Gillings School of Global Public Health"
+  - name: "Co-author Name"
+    affiliations: "Affiliation"
+format:
+  poster-typst:
+    size: "48x36"      # landscape; or "36x48" for portrait
+    poster-authors: "Authors as above"
+    departments: "Department of Biostatistics, UNC Lineberger"
+    institution-logo: "RLlogoA.png"
+    footer-text: "Rashid Lab · UNC Chapel Hill"
+    keywords: "precision oncology, adaptive trials, biostatistics"
+    num-columns: 3
+    univ-logo-scale: 100
+    title-font-size: "90pt"
+    body-font-size: "26pt"
+    sectionhead-font-size: "40pt"
+---
+```
+
+## Color & font setup in Typst
+
+Add this block at the top of your poster's body (before the first `#`
+heading) to wire the lab tokens into Typst:
+
+```typst
+#let rl-navy = rgb("#13294B")
+#let rl-navy-deep = rgb("#0B1D3A")
+#let rl-carolina = rgb("#4B9CD3")
+#let rl-carolina-deep = rgb("#2E6A9F")
+#let rl-graphite = rgb("#5B6670")
+#let rl-ink = rgb("#1A202C")
+#let rl-fog = rgb("#F4F6F8")
+#let rl-mist = rgb("#E6EAEF")
+
+#set text(font: "Archivo", fill: rl-ink)
+#show heading: set text(font: "Archivo", weight: "semibold", fill: rl-navy)
+#show heading.where(level: 1): set text(font: "Source Serif 4", weight: "semibold", size: 90pt)
+#show raw: set text(font: "IBM Plex Mono", size: 0.95em)
+#show link: set text(fill: rl-carolina-deep)
+```
+
+## Print prep checklist
+
+Before sending to a print shop:
+
+- [ ] Convert all figures to **300 DPI minimum** (600 DPI for fine line
+      art, schematics, gel images).
+- [ ] Embed all fonts in the PDF (Quarto/Typst does this by default;
+      LaTeX requires `pdftex` with embedded fonts).
+- [ ] Check color profile: most print shops want **CMYK** for offset
+      printing, **sRGB** for digital roll printing. Confirm.
+- [ ] Add **3mm bleed** on each edge if the print shop requests it
+      (many do for full-bleed layouts).
+- [ ] Save the final PDF with **flattened layers** — some print shops
+      reject layered PDFs.
+- [ ] Order at least **2 days before the conference** for shipping
+      buffer; 1 week if the conference is across the country.
+
+## Logo placement
+
+- Top-left or top-right of the poster, sized to ~10% of poster width.
+- Use `RLlogoA.png` on white poster bg; `RLlogoAwhite.png` if you have
+  a navy/Carolina header bar.
+- For multi-affiliation posters, add UNC Gillings + UNC Lineberger logos
+  in addition to the lab logo. Get those from
+  [UNC's official brand site](https://brand.unc.edu/).
+
+## Don'ts
+
+These are the same anti-patterns the website's visual register avoids,
+adapted for print:
+
+- ❌ Decorative gradients on backgrounds or section headers
+- ❌ Drop shadows or 3D effects on figures or text
+- ❌ Heavy colored boxes around content blocks (white space + hairline
+   rules carry the layout)
+- ❌ Marketing-orange `#FF9E1B` (use the dulled `#C48A1A` if you need a
+   warm accent)
+- ❌ More than 3 colors total (navy + Carolina + one accent maximum)
+- ❌ Comic Sans, Arial, or Times New Roman as the primary typefaces.
+   Always use Archivo, Source Serif 4, IBM Plex Mono.
+
+## Examples
+
+The lab does not currently maintain a public gallery of past posters.
+For reference, the visual register the new tokens produce closely
+matches the [Stanford Statistics poster style guide](https://statistics.stanford.edu/)
+and the [Berkeley Biostat poster examples](https://publichealth.berkeley.edu/research/) — restrained, typographic, hairline-driven.

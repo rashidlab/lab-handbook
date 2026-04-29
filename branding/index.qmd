@@ -9,10 +9,11 @@ This guide provides resources for maintaining consistent visual identity across 
 
 ## Quick Links
 
-- [Presentation Guidelines](presentations.qmd) - Quarto RevealJS setup and templates
-- [Color Palette & CSS](colors.qmd) - Official colors and CSS variables
-- [Logos & Assets](assets.qmd) - Lab logos and hex stickers
-- [CLAUDE.md Template](claude-template.qmd) - AI assistant configuration for projects
+- [Color Palette, Typography & CSS Tokens](colors.qmd) — canonical `--rl-*` token spec, font stack, accessibility
+- [Presentation Guidelines](presentations.qmd) — Quarto RevealJS setup and templates
+- [Poster Guidelines](posters.qmd) — Quarto Typst poster template, sizes, print prep
+- [Logos & Assets](assets.qmd) — Lab logos and hex stickers
+- [CLAUDE.md Template](claude-template.qmd) — AI assistant configuration for projects
 
 ## UNC Institutional Branding
 
