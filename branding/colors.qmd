@@ -1,191 +1,352 @@
 ---
-title: "Color Palette & CSS"
-description: "Official colors and CSS variables for Rashid Lab projects"
+title: "Color Palette, Typography & CSS Tokens"
+description: "Official design tokens, colors, fonts, and CSS variables for Rashid Lab projects"
 ---
-## Primary Palette
 
-These are the core colors for all Rashid Lab materials:
+This page is the canonical specification for the Rashid Lab visual system,
+mirroring the [`_tokens.scss`][site-tokens] that powers
+[naimurashid.github.io](https://naimurashid.github.io). New projects should
+import or copy these tokens rather than redefining them.
+
+[site-tokens]: https://github.com/naimurashid/naimurashid.github.io/blob/master/_sass/custom/_tokens.scss
+
+::: {.callout-note}
+## Migration note (April 2026)
+
+The token system was unified in April 2026. Older docs and templates may
+still reference `--unc-*` / `--color-*` variables, Inter / Fira Code fonts,
+or the link color `#007FAE`. Those are deprecated. New code uses the
+`--rl-*` token namespace, the Archivo + Source Serif 4 + IBM Plex Mono
+font stack, and the link color `var(--rl-link)` (`#2E6A9F`).
+:::
+
+## Brand Palette
+
+Three brand hex values anchor the system. Everything else is a semantic
+alias built on top.
+
 <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin: 1rem 0;">
-<div style="background: #4B9CD3; color: white; padding: 2rem; border-radius: 8px; text-align: center; min-width: 150px;">
-<strong>Carolina Blue</strong><br>#4B9CD3
-</div>
-<div style="background: #13294B; color: white; padding: 2rem; border-radius: 8px; text-align: center; min-width: 150px;">
+<div style="background: #13294B; color: white; padding: 1.5rem; border-radius: 6px; text-align: center; min-width: 140px;">
 <strong>Navy</strong><br>#13294B
 </div>
-<div style="background: #007FAE; color: white; padding: 2rem; border-radius: 8px; text-align: center; min-width: 150px;">
-<strong>Hyperlink Blue</strong><br>#007FAE
+<div style="background: #4B9CD3; color: white; padding: 1.5rem; border-radius: 6px; text-align: center; min-width: 140px;">
+<strong>Carolina</strong><br>#4B9CD3
+</div>
+<div style="background: #2E6A9F; color: white; padding: 1.5rem; border-radius: 6px; text-align: center; min-width: 140px;">
+<strong>Carolina-deep</strong><br>#2E6A9F
 </div>
 </div>
 
-## Extended Palette
+| Token | Hex | Role |
+|-------|-----|------|
+| `--rl-navy` | `#13294B` | Primary ink, headings, links on light bg |
+| `--rl-navy-deep` | `#0B1D3A` | Pressed / active state |
+| `--rl-carolina` | `#4B9CD3` | Accent, interactive hover |
+| `--rl-carolina-deep` | `#2E6A9F` | Default link color |
 
-Additional colors for accents and data visualization:
+## Surfaces & Neutrals
 
-| Color | Hex | RGB | Usage |
-|-------|-----|-----|-------|
-| Carolina Blue | `#4B9CD3` | 75, 156, 211 | Primary accent |
-| Navy | `#13294B` | 19, 41, 75 | Headers, text |
-| Hyperlink Blue | `#007FAE` | 0, 127, 174 | Links, interactive |
-| Teal | `#00A5AD` | 0, 165, 173 | Secondary accent |
-| Gold | `#F8E71C` | 248, 231, 28 | Warnings, highlights |
-| Light Gray | `#F8F9FA` | 248, 249, 250 | Backgrounds |
-| Medium Gray | `#6C757D` | 108, 117, 125 | Muted text |
-| Dark Gray | `#343A40` | 52, 58, 64 | Body text alt |
+| Token | Hex | Role |
+|-------|-----|------|
+| `--rl-paper` | `#FFFFFF` | Page background, light mode |
+| `--rl-fog` | `#F4F6F8` | Subtle section tint |
+| `--rl-mist` | `#E6EAEF` | Hairline dividers, card borders |
+| `--rl-graphite` | `#5B6670` | Muted body text, metadata |
+| `--rl-ink` | `#1A202C` | Primary body text |
 
-## CSS Variables
+## Semantic Aliases
 
-Use these CSS custom properties in your projects:
+These are the names you use in components. They map to the brand/neutral
+hexes above and are the only color tokens that change in dark mode.
+
+| Alias | Light value | Dark value |
+|-------|-------------|------------|
+| `--rl-bg` | `var(--rl-paper)` | `#0F1720` |
+| `--rl-bg-subtle` | `var(--rl-fog)` | `#17202B` |
+| `--rl-text` | `var(--rl-ink)` | `#E2E8F0` |
+| `--rl-text-muted` | `var(--rl-graphite)` | `#94A3B8` |
+| `--rl-heading` | `var(--rl-navy)` | `#E2E8F0` |
+| `--rl-link` | `var(--rl-carolina-deep)` | `#8AB8DB` |
+| `--rl-link-hover` | `var(--rl-navy)` | `#B8D4E8` |
+| `--rl-border` | `var(--rl-mist)` | `rgba(255, 255, 255, 0.08)` |
+| `--rl-border-strong` | `#CED4DA` | `rgba(255, 255, 255, 0.14)` |
+| `--rl-accent` | `var(--rl-carolina)` | `#8AB8DB` |
+
+## Typography
+
+The lab uses a **three-font system**: a sans for body and UI, a serif for
+headings, and a monospace for metadata, dates, and code.
+
+| Token | Family | Use |
+|-------|--------|-----|
+| `--rl-font-sans` | Archivo, system fallbacks | Body text, UI, lab interests |
+| `--rl-font-serif` | Source Serif 4, Source Serif Pro, Georgia | Headings, lede paragraphs, titles |
+| `--rl-font-mono` | IBM Plex Mono, ui-monospace, Menlo | Dates, code, metadata eyebrows |
+
+### Type scale
+
+| Token | Size | Use |
+|-------|------|-----|
+| `--rl-text-xs` | 12px | Micro-metadata only |
+| `--rl-text-sm` | 14px | Metadata, captions |
+| `--rl-text-base` | 16px | Body |
+| `--rl-text-md` | 18px | Lede, callouts |
+| `--rl-text-lg` | 22px | h3 |
+| `--rl-text-xl` | 28px | h2 |
+| `--rl-text-2xl` | 36px | h1 |
+
+### Line height
+
+| Token | Value | Use |
+|-------|-------|-----|
+| `--rl-leading-tight` | 1.25 | Headings |
+| `--rl-leading-normal` | 1.55 | Body |
+| `--rl-leading-loose` | 1.7 | Lede, callouts that breathe |
+
+## Spacing Scale
+
+| Token | rem | px | Common use |
+|-------|-----|----|--|
+| `--rl-space-1` | 0.25 | 4 | Hairline gaps |
+| `--rl-space-2` | 0.5 | 8 | Eyebrow ↔ title |
+| `--rl-space-3` | 0.75 | 12 | Title ↔ body |
+| `--rl-space-4` | 1.0 | 16 | Paragraph spacing |
+| `--rl-space-5` | 1.5 | 24 | Card padding, section breaks |
+| `--rl-space-6` | 2.0 | 32 | Major sections |
+| `--rl-space-7` | 3.0 | 48 | Page padding, hero ↔ next section |
+
+## Radius & Shadow
+
+Tight, academic register. No pill stuntwork, no decorative drop shadows.
+
+| Token | Value |
+|-------|-------|
+| `--rl-radius-sm` | 3px |
+| `--rl-radius-md` | 6px |
+| `--rl-radius-lg` | 10px |
+| `--rl-shadow-none` | `none` |
+| `--rl-shadow-sm` | `0 1px 2px rgba(19, 41, 75, 0.06)` |
+| `--rl-shadow-md` | `0 1px 3px rgba(19, 41, 75, 0.08)` |
+
+## CSS Custom Properties
+
+Drop this `:root` block into any project that doesn't pull from the
+canonical [`_tokens.scss`][site-tokens]. Both forms produce the same
+runtime values.
 
 ```css
 :root {
-  /* Primary colors */
-  --unc-carolina-blue: #4B9CD3;
-  --unc-navy: #13294B;
-  --unc-hyperlink-blue: #007FAE;
+  /* Brand palette */
+  --rl-navy:          #13294B;
+  --rl-navy-deep:     #0B1D3A;
+  --rl-carolina:      #4B9CD3;
+  --rl-carolina-deep: #2E6A9F;
 
-  /* Extended palette */
-  --unc-teal: #00A5AD;
-  --unc-gold: #F8E71C;
+  /* Surfaces & neutrals */
+  --rl-paper:    #FFFFFF;
+  --rl-fog:      #F4F6F8;
+  --rl-mist:     #E6EAEF;
+  --rl-graphite: #5B6670;
+  --rl-ink:      #1A202C;
 
-  /* Neutrals */
-  --color-bg: #FFFFFF;
-  --color-bg-secondary: #F8F9FA;
-  --color-text: #13294B;
-  --color-text-muted: #6C757D;
-  --color-border: #DEE2E6;
+  /* Semantic aliases */
+  --rl-bg:            var(--rl-paper);
+  --rl-bg-subtle:     var(--rl-fog);
+  --rl-text:          var(--rl-ink);
+  --rl-text-muted:    var(--rl-graphite);
+  --rl-heading:       var(--rl-navy);
+  --rl-link:          var(--rl-carolina-deep);
+  --rl-link-hover:    var(--rl-navy);
+  --rl-border:        var(--rl-mist);
+  --rl-border-strong: #CED4DA;
+  --rl-accent:        var(--rl-carolina);
 
-  /* Semantic */
-  --color-primary: var(--unc-carolina-blue);
-  --color-secondary: var(--unc-navy);
-  --color-link: var(--unc-hyperlink-blue);
-  --color-success: #28A745;
-  --color-warning: #F8E71C;
-  --color-danger: #DC3545;
+  /* Radius / shadow */
+  --rl-radius-sm: 3px;
+  --rl-radius-md: 6px;
+  --rl-radius-lg: 10px;
+  --rl-shadow-none: none;
+  --rl-shadow-sm:   0 1px 2px rgba(19, 41, 75, 0.06);
+  --rl-shadow-md:   0 1px 3px rgba(19, 41, 75, 0.08);
+
+  /* Spacing scale */
+  --rl-space-1: 0.25rem;
+  --rl-space-2: 0.5rem;
+  --rl-space-3: 0.75rem;
+  --rl-space-4: 1rem;
+  --rl-space-5: 1.5rem;
+  --rl-space-6: 2rem;
+  --rl-space-7: 3rem;
 
   /* Typography */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'Fira Code', 'Monaco', monospace;
+  --rl-font-sans:  "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --rl-font-serif: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --rl-font-mono:  "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --rl-text-xs:    0.75rem;
+  --rl-text-sm:    0.875rem;
+  --rl-text-base:  1rem;
+  --rl-text-md:    1.125rem;
+  --rl-text-lg:    1.375rem;
+  --rl-text-xl:    1.75rem;
+  --rl-text-2xl:   2.25rem;
+  --rl-leading-tight:  1.25;
+  --rl-leading-normal: 1.55;
+  --rl-leading-loose:  1.7;
+}
 
-  /* Spacing */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 2rem;
-  --spacing-xl: 4rem;
+/* Dark-mode pairs — only the semantic aliases swap. */
+html[data-theme="dark"] {
+  --rl-bg:            #0F1720;
+  --rl-bg-subtle:     #17202B;
+  --rl-text:          #E2E8F0;
+  --rl-text-muted:    #94A3B8;
+  --rl-heading:       #E2E8F0;
+  --rl-link:          #8AB8DB;
+  --rl-link-hover:    #B8D4E8;
+  --rl-border:        rgba(255, 255, 255, 0.08);
+  --rl-border-strong: rgba(255, 255, 255, 0.14);
+  --rl-accent:        #8AB8DB;
+  --rl-shadow-sm:     0 1px 2px rgba(0, 0, 0, 0.4);
+  --rl-shadow-md:     0 1px 3px rgba(0, 0, 0, 0.5);
 }
 ```
 
-## SCSS Variables
+## SCSS Variants
 
-For Quarto projects using SCSS:
+For Quarto projects using the Bootstrap pipeline, map the brand tokens to
+Bootstrap variables in `_variables.scss`:
 
 ```scss
 // _variables.scss
 
-// UNC Brand Colors
-$unc-carolina-blue: #4B9CD3;
-$unc-navy: #13294B;
-$unc-hyperlink-blue: #007FAE;
-$unc-teal: #00A5AD;
+// Brand palette
+$rl-navy:          #13294B;
+$rl-navy-deep:     #0B1D3A;
+$rl-carolina:      #4B9CD3;
+$rl-carolina-deep: #2E6A9F;
 
-// Semantic mapping
-$primary: $unc-carolina-blue;
-$secondary: $unc-navy;
-$link-color: $unc-hyperlink-blue;
-$body-color: $unc-navy;
-$body-bg: #FFFFFF;
+// Bootstrap mapping
+$primary:    $rl-carolina;
+$secondary:  $rl-navy;
+$body-color: #1A202C;        // --rl-ink
+$body-bg:    #FFFFFF;        // --rl-paper
+$link-color: $rl-carolina-deep;
 
 // Typography
-$font-family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-$font-family-monospace: 'Fira Code', 'Monaco', monospace;
-$headings-font-weight: 600;
-$headings-color: $unc-navy;
+$font-family-sans-serif: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+$font-family-serif:      "Source Serif 4", "Source Serif Pro", Georgia, serif;
+$font-family-monospace:  "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+$headings-font-family:   $font-family-serif;
+$headings-font-weight:   600;
+$headings-color:         $rl-navy;
+```
+
+## Google Fonts URL
+
+The font stack loads from Google Fonts. Add this `<link>` to any project:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 ```
 
 ## R Color Palette
 
-For ggplot2 and other R visualizations:
+For ggplot2 and other R visualizations. Color names match the token system.
 
 ```r
 # Define Rashid Lab palette
 rashidlab_colors <- c(
-  carolina_blue = "#4B9CD3",
-  navy = "#13294B",
-  hyperlink_blue = "#007FAE",
-  teal = "#00A5AD",
-  gold = "#F8E71C",
-  light_gray = "#F8F9FA"
+  navy           = "#13294B",
+  navy_deep      = "#0B1D3A",
+  carolina       = "#4B9CD3",
+  carolina_deep  = "#2E6A9F",
+  graphite       = "#5B6670",
+  ink            = "#1A202C",
+  fog            = "#F4F6F8",
+  mist           = "#E6EAEF"
 )
 
-# Discrete scale
+# Discrete scales
 scale_color_rashidlab <- function(...) {
-  ggplot2::scale_color_manual(values = rashidlab_colors, ...)
+  ggplot2::scale_color_manual(values = unname(rashidlab_colors), ...)
 }
 
 scale_fill_rashidlab <- function(...) {
-  ggplot2::scale_fill_manual(values = rashidlab_colors, ...)
+  ggplot2::scale_fill_manual(values = unname(rashidlab_colors), ...)
 }
 
-# Example usage
+# Example
 library(ggplot2)
 ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
   geom_point(size = 3) +
-  scale_color_manual(values = c("#4B9CD3", "#13294B", "#007FAE")) +
-  theme_minimal() +
+  scale_color_manual(values = c("#4B9CD3", "#2E6A9F", "#13294B")) +
+  theme_minimal(base_family = "Archivo") +
   theme(
-    text = element_text(color = "#13294B"),
-    plot.title = element_text(color = "#13294B", face = "bold")
+    text = element_text(color = "#1A202C"),
+    plot.title = element_text(family = "Source Serif 4", color = "#13294B", face = "bold")
   )
 ```
 
 ## Data Visualization Guidelines
 
-### Categorical Data
-
-Use distinct colors from the palette:
+### Categorical (≤5 categories)
 
 ```r
-# 3-category palette
-cat3 <- c("#4B9CD3", "#13294B", "#00A5AD")
+# 3-category — Carolina trio
+cat3 <- c("#4B9CD3", "#2E6A9F", "#13294B")
 
-# 5-category palette
-cat5 <- c("#4B9CD3", "#13294B", "#007FAE", "#00A5AD", "#6C757D")
+# 5-category — adds graphite + a warmer accent
+cat5 <- c("#4B9CD3", "#2E6A9F", "#13294B", "#5B6670", "#C48A1A")
 ```
 
-### Sequential Data
-
-For continuous scales, use Carolina Blue gradients:
+### Sequential
 
 ```r
-# Light to dark blue
-scale_fill_gradient(low = "#E8F4FC", high = "#13294B")
+# Light to dark blue (single-hue ramp)
+scale_fill_gradient(low = "#E6EAEF", high = "#13294B")
 
 # Or use viridis for accessibility
 scale_fill_viridis_c(option = "D")
 ```
 
-### Diverging Data
-
-For data with a meaningful center point:
+### Diverging (around a meaningful zero)
 
 ```r
 scale_fill_gradient2(
-  low = "#DC3545",   # Negative
-  mid = "#F8F9FA",   # Neutral
-  high = "#4B9CD3",  # Positive
+  low  = "#C75050",   # Subdued red
+  mid  = "#F4F6F8",   # rl-fog
+  high = "#2E6A9F",   # rl-carolina-deep
   midpoint = 0
 )
 ```
 
 ## Accessibility
 
-Always ensure sufficient contrast:
-
-| Foreground | Background | Ratio | Pass |
+| Foreground | Background | Ratio | WCAG |
 |------------|------------|-------|------|
-| Navy (#13294B) | White | 13.5:1 | AAA |
-| Carolina Blue (#4B9CD3) | White | 3.2:1 | AA Large |
-| Hyperlink Blue (#007FAE) | White | 4.6:1 | AA |
-| White | Navy (#13294B) | 13.5:1 | AAA |
+| Navy (`#13294B`) | White | 13.5:1 | AAA |
+| Ink (`#1A202C`) | White | 16.0:1 | AAA |
+| Graphite (`#5B6670`) | White | 5.6:1 | AA |
+| Carolina-deep (`#2E6A9F`) | White | 5.4:1 | AA |
+| Carolina (`#4B9CD3`) | White | 3.2:1 | AA Large only |
+| White | Navy (`#13294B`) | 13.5:1 | AAA |
 
-**Tip:** Use Navy for body text and Carolina Blue for larger headings and accents.
+**Use:**
+
+- **Navy or ink** for body text and headings (passes AAA on white).
+- **Graphite** for muted/secondary text (passes AA).
+- **Carolina-deep** for links (passes AA on white; was `#007FAE` previously, very close ratios).
+- **Carolina** only at 18px+ or for non-text accents (3.2:1 fails AA below large text).
+
+## Visual Register
+
+Beyond colors and fonts, the lab system has a consistent design grammar:
+
+- **Hairline borders** — `1px solid var(--rl-border)`. No 2–4px decorative stripes.
+- **Restrained shadows** — `--rl-shadow-sm` or none. No `0 8px 20px` lift effects.
+- **No gradients** — `linear-gradient`, radial gradients, and decorative tints are out.
+- **No hover translateY lifts** — links underline, cards transition borders/shadows only.
+- **Mono eyebrows for metadata** — dates, labels, status text in `var(--rl-font-mono)` 12px uppercase with 0.08em letter-spacing.
+- **Serif for headings** — `var(--rl-font-serif)` for h1/h2/h3 anchors the academic register.
