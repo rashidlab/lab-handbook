@@ -21,7 +21,9 @@ $rl-graphite: #5B6670;
 $rl-ink:      #1A202C;
 
 // Bootstrap mapping — these drive Quarto's compiled CSS
-$primary:    $rl-carolina;
+$primary:       $rl-carolina;
+$primary-light: $rl-mist;          // Used by hover borders in legacy rules; trailing block overrides most.
+$primary-pale:  $rl-fog;           // Used by homepage gradient (now neutralized) — kept for compile.
 $secondary:  $rl-navy;
 $success:    #2E8B6D;
 $info:       $rl-carolina-deep;
@@ -1312,5 +1314,131 @@ body.homepage .page-layout-full .content {
 // Drop translateY hover lifts site-wide. Cards transition border + shadow only.
 *:hover {
   transform: none !important;
+}
+
+// h2 had a 4px linear-gradient navy bar (::before). Site uses no decorative
+// rule — the eyebrow + heading composition carries the section break.
+h2::before {
+  display: none !important;
+}
+h2 {
+  padding-left: 0;
+}
+
+// Navbar — drop blur backdrop + decorative shadow; hairline only.
+.navbar {
+  background: var(--rl-bg) !important;
+  backdrop-filter: none;
+  border-bottom: 1px solid var(--rl-border);
+  box-shadow: none;
+}
+
+// Nav link hover: color only, no pill background.
+.nav-link:hover {
+  background: transparent !important;
+  color: var(--rl-link) !important;
+}
+
+// Hero cards: drop 16px radius pills, kill decorative top border stripes,
+// kill lift shadow + translate hover.
+.hero-card {
+  border-radius: var(--rl-radius-md);
+  box-shadow: var(--rl-shadow-sm);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    box-shadow: var(--rl-shadow-md);
+    border-color: var(--rl-border-strong);
+  }
+
+  &.hero-dashboard,
+  &.hero-meetings,
+  &.hero-handbook {
+    border-top: 1px solid var(--rl-border);
+    border-left: 3px solid var(--rl-carolina);
+  }
+  &.hero-meetings { border-left-color: #2E8B6D; }
+  &.hero-handbook { border-left-color: var(--rl-navy); }
+}
+
+// Hero card icon tiles: replace gradient backgrounds with subtle fog tone,
+// drop 14px radius pill.
+.hero-card-icon {
+  border-radius: var(--rl-radius-sm);
+  background: var(--rl-bg-subtle) !important;
+
+  &.icon-dashboard,
+  &.icon-meetings,
+  &.icon-handbook {
+    background: var(--rl-bg-subtle);
+  }
+}
+
+// Quick link tiles: drop gradient bg, drop 12px radius, kill lift shadow.
+.quick-link {
+  background: var(--rl-bg) !important;
+  border-radius: var(--rl-radius-sm);
+  transition: border-color 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: var(--rl-bg) !important;
+    border-color: var(--rl-border-strong);
+    box-shadow: none;
+  }
+}
+
+// Resource sections: replace fog-block with hairline-bounded card.
+.resource-section {
+  background: var(--rl-bg);
+  border: 1px solid var(--rl-border);
+  border-radius: var(--rl-radius-md);
+}
+
+// External link chips: small radius, no lift shadow on hover.
+.external-link {
+  border-radius: var(--rl-radius-sm);
+
+  &:hover {
+    box-shadow: none;
+    border-color: var(--rl-link);
+    color: var(--rl-link);
+  }
+}
+
+// Section divider: plain hairline, no fade gradient.
+.section-divider {
+  background: var(--rl-border);
+}
+
+// Buttons: solid fill, small radius, no lift shadow.
+.btn {
+  border-radius: var(--rl-radius-sm);
+}
+.btn-primary {
+  background: var(--rl-carolina-deep);
+  border: 1px solid var(--rl-carolina-deep);
+  box-shadow: none;
+
+  &:hover {
+    background: var(--rl-navy);
+    border-color: var(--rl-navy);
+    box-shadow: none;
+  }
+}
+.btn-success {
+  background: #2E8B6D;
+  border: 1px solid #2E8B6D;
+  box-shadow: none;
+
+  &:hover {
+    background: #246F58;
+    border-color: #246F58;
+  }
+}
+
+// Table radius: drop the 8px pill — tables are tabular, not card-like.
+.table {
+  border-radius: 0;
+  overflow: visible;
 }
 

@@ -14,7 +14,9 @@ A poster template was missing from the lab brand assets prior to April
 2026. This page introduces a starter Quarto Typst template that produces
 print-quality posters with the same visual register as
 [naimurashid.github.io](https://naimurashid.github.io). The template
-lives at `assets/branding/poster-template.qmd`.
+lives at `assets/branding/poster-template.qmd.txt` (the `.txt` suffix
+keeps Quarto from trying to render it as part of the handbook build —
+copy it to a working directory and rename it to `.qmd` first).
 :::
 
 ## Standard sizes
@@ -99,10 +101,10 @@ heading + content pattern.
 ## Quarto Typst starter
 
 Create a new poster from
-[`assets/branding/poster-template.qmd`](../assets/branding/poster-template.qmd):
+[`assets/branding/poster-template.qmd.txt`](../assets/branding/poster-template.qmd.txt):
 
 ```bash
-cp ~/rashid-lab-setup/lab-handbook/assets/branding/poster-template.qmd ./my-poster.qmd
+cp ~/rashid-lab-setup/lab-handbook/assets/branding/poster-template.qmd.txt ./my-poster.qmd
 cp ~/rashid-lab-setup/lab-handbook/assets/branding/logos/RLlogoA.png ./
 quarto render my-poster.qmd
 ```
@@ -149,7 +151,7 @@ alongside the PDF, useful for debugging layout issues.
 
 All page setup, brand tokens, title block, and footer live in the
 Typst code blocks below the YAML. See
-[`assets/branding/poster-template.qmd`](../assets/branding/poster-template.qmd)
+[`assets/branding/poster-template.qmd.txt`](../assets/branding/poster-template.qmd.txt)
 for the full source.
 
 ## Color & font setup in Typst
