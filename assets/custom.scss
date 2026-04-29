@@ -1,42 +1,66 @@
 /*-- scss:defaults --*/
 
-// UNC Carolina Blue palette - warmer tones
-$primary: #4B9CD3;       // Carolina Blue
-$primary-light: #7BAFD4; // Lighter blue
-$primary-pale: #E8F4FA;  // Very pale blue for backgrounds
-$secondary: #13294B;     // Navy
-$success: #2E8B6D;       // Warmer green (no official equivalent)
-$info: #5BA4CF;          // Softer info blue
-$warning: #FFD340;       // Ginkgo (official UNC supporting)
-$danger: #E95550;        // Clay (official UNC supporting)
+// =============================================================================
+// RASHID LAB — DESIGN TOKENS
+// Mirrors naimurashid.github.io's _sass/custom/_tokens.scss. See
+// branding/colors.qmd for the canonical token reference. Updated April 2026
+// to align with the website's three-font academic register.
+// =============================================================================
 
-// Warm neutral palette
-$gray-50:  #FAFBFC;
-$gray-100: #F5F7F9;
-$gray-200: #E8ECF0;
-$gray-300: #D1D9E0;
-$gray-400: #A8B5C2;
-$gray-500: #7A8B9A;
-$gray-600: #566573;
-$gray-700: #3D4852;
-$gray-800: #2C353D;
+// Brand palette
+$rl-navy:          #13294B;
+$rl-navy-deep:     #0B1D3A;
+$rl-carolina:      #4B9CD3;
+$rl-carolina-deep: #2E6A9F;
 
-// Typography - warmer, more inviting
-$font-family-sans-serif: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-$font-family-monospace: "Fira Code", "Source Code Pro", Consolas, monospace;
+// Surfaces & neutrals
+$rl-paper:    #FFFFFF;
+$rl-fog:      #F4F6F8;
+$rl-mist:     #E6EAEF;
+$rl-graphite: #5B6670;
+$rl-ink:      #1A202C;
 
-// Improved readability
-$font-size-base: 1.05rem;
-$line-height-base: 1.7;
-$paragraph-margin-bottom: 1.25rem;
+// Bootstrap mapping — these drive Quarto's compiled CSS
+$primary:    $rl-carolina;
+$secondary:  $rl-navy;
+$success:    #2E8B6D;
+$info:       $rl-carolina-deep;
+$warning:    #C48A1A;       // Dulled UNC ginkgo, matches site --global-warm-accent
+$danger:     #C75050;
+$body-color: $rl-ink;
+$body-bg:    $rl-paper;
+$link-color: $rl-carolina-deep;
 
-// Headings
+// Bootstrap gray scale, repointed to the site's neutral system
+$gray-50:  $rl-paper;
+$gray-100: $rl-fog;
+$gray-200: $rl-mist;
+$gray-300: #CED4DA;          // --rl-border-strong
+$gray-400: #A8B0BB;
+$gray-500: $rl-graphite;
+$gray-600: #4A5560;
+$gray-700: #2C353D;
+$gray-800: $rl-ink;
+
+// Typography — three-font academic register
+$font-family-sans-serif: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+$font-family-serif:      "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+$font-family-monospace:  "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+// Type scale aligned to the site
+$font-size-base: 1rem;        // 16px (was 1.05rem)
+$line-height-base: 1.55;      // --rl-leading-normal (was 1.7)
+$paragraph-margin-bottom: 1rem;
+
+// Headings — serif, navy, tight leading
+$headings-font-family: $font-family-serif;
 $headings-font-weight: 600;
-$headings-line-height: 1.3;
+$headings-line-height: 1.25;  // --rl-leading-tight
+$headings-color:       $rl-navy;
 $headings-margin-bottom: 0.75rem;
 
 // Code blocks
-$code-block-bg: $gray-100;
+$code-block-bg: $rl-fog;
 
 /*-- scss:rules --*/
 
@@ -1195,3 +1219,98 @@ code {
     }
   }
 }
+
+// =============================================================================
+// RASHID LAB — TOKEN EMISSION + NEUTRALIZE OVERRIDES
+// Added April 2026 to align with naimurashid.github.io. Emits the --rl-*
+// custom properties at runtime so components can reference them, and
+// neutralizes the most visible pre-token decorative chrome (homepage
+// gradient bg, floating-card lift shadow, hover translateY effects).
+//
+// This block intentionally lives at the bottom of the file so it wins
+// the cascade against the legacy rules above. As individual sections
+// of the legacy rules are refactored to use the new tokens directly,
+// the corresponding override here can be removed.
+// =============================================================================
+
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap");
+
+:root {
+  // Brand palette
+  --rl-navy:          #13294B;
+  --rl-navy-deep:     #0B1D3A;
+  --rl-carolina:      #4B9CD3;
+  --rl-carolina-deep: #2E6A9F;
+
+  // Surfaces & neutrals
+  --rl-paper:    #FFFFFF;
+  --rl-fog:      #F4F6F8;
+  --rl-mist:     #E6EAEF;
+  --rl-graphite: #5B6670;
+  --rl-ink:      #1A202C;
+
+  // Semantic aliases
+  --rl-bg:            var(--rl-paper);
+  --rl-bg-subtle:     var(--rl-fog);
+  --rl-text:          var(--rl-ink);
+  --rl-text-muted:    var(--rl-graphite);
+  --rl-heading:       var(--rl-navy);
+  --rl-link:          var(--rl-carolina-deep);
+  --rl-link-hover:    var(--rl-navy);
+  --rl-border:        var(--rl-mist);
+  --rl-border-strong: #CED4DA;
+  --rl-accent:        var(--rl-carolina);
+
+  // Radius & shadow
+  --rl-radius-sm: 3px;
+  --rl-radius-md: 6px;
+  --rl-radius-lg: 10px;
+  --rl-shadow-sm: 0 1px 2px rgba(19, 41, 75, 0.06);
+  --rl-shadow-md: 0 1px 3px rgba(19, 41, 75, 0.08);
+
+  // Spacing scale
+  --rl-space-1: 0.25rem;
+  --rl-space-2: 0.5rem;
+  --rl-space-3: 0.75rem;
+  --rl-space-4: 1rem;
+  --rl-space-5: 1.5rem;
+  --rl-space-6: 2rem;
+  --rl-space-7: 3rem;
+
+  // Typography
+  --rl-font-sans:  "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --rl-font-serif: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --rl-font-mono:  "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --rl-text-xs:    0.75rem;
+  --rl-text-sm:    0.875rem;
+  --rl-text-base:  1rem;
+  --rl-text-md:    1.125rem;
+  --rl-text-lg:    1.375rem;
+  --rl-text-xl:    1.75rem;
+  --rl-text-2xl:   2.25rem;
+  --rl-leading-tight:  1.25;
+  --rl-leading-normal: 1.55;
+  --rl-leading-loose:  1.7;
+}
+
+// ---- Neutralize legacy decorative chrome ------------------------------------
+
+// Drop the homepage gradient background — flat tone matches the site register.
+body.homepage {
+  background: var(--rl-bg);
+}
+
+// The "floating card" content wrapper had a 0 4px 24px lift shadow and 16px
+// radius pill. Site uses hairline borders + small token shadow.
+body.homepage .page-layout-full .content {
+  background: var(--rl-bg);
+  border: 1px solid var(--rl-border);
+  border-radius: var(--rl-radius-md);
+  box-shadow: var(--rl-shadow-sm);
+}
+
+// Drop translateY hover lifts site-wide. Cards transition border + shadow only.
+*:hover {
+  transform: none !important;
+}
+
