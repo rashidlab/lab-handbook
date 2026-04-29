@@ -1,46 +1,83 @@
 /*-- scss:defaults --*/
 
-/* UNC Brand Colors */
-$body-bg: #FFFFFF;
-$body-color: #13294B;
-$link-color: #007FAE;
-$presentation-heading-color: #13294B;
+/* =============================================================================
+   RASHID LAB — RevealJS PRESENTATION TEMPLATE
+   Mirrors naimurashid.github.io's _tokens.scss. See branding/colors.qmd for
+   the canonical token reference. Updated April 2026 to align with the
+   website's three-font academic register (Archivo + Source Serif 4 +
+   IBM Plex Mono).
 
-/* UNC Brand Color Variables */
-$unc-carolina-blue: #4B9CD3;
-$unc-navy: #13294B;
-$unc-hyperlink-blue: #007FAE;
-$unc-bolin-creek: #2C5080;
-$unc-old-well-basin: #5B6670;
-$unc-ginkgo: #FFD340;
-$unc-clay: #E95550;
-$unc-light-gray: #F8F9FA;
+   Usage:
+     1. Copy this file into your presentation directory as `custom.css`.
+     2. In your .qmd YAML: format: revealjs: theme: [default, custom.css]
+     3. Drop RLlogoA.png into the same directory and reference it via
+        format: revealjs: logo: RLlogoA.png
 
-/* Typography */
-$font-family-sans-serif: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-$font-family-serif: 'Source Serif', 'Georgia', serif;
+   Older decks using `#007FAE` link color, `Open Sans` body font, or
+   `border-bottom: 3px solid #4B9CD3` heading underlines should be
+   updated against this file when next opened.
+   ============================================================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap");
+
+/* Brand palette */
+$rl-navy:          #13294B;
+$rl-navy-deep:     #0B1D3A;
+$rl-carolina:      #4B9CD3;
+$rl-carolina-deep: #2E6A9F;
+$rl-graphite:      #5B6670;
+$rl-ink:           #1A202C;
+$rl-fog:           #F4F6F8;
+$rl-mist:          #E6EAEF;
+
+/* RevealJS variable mapping */
+$body-bg:                    #FFFFFF;
+$body-color:                 $rl-ink;
+$link-color:                 $rl-carolina-deep;
+$presentation-heading-color: $rl-navy;
+$presentation-heading-font:  "Archivo", -apple-system, BlinkMacSystemFont, sans-serif;
+$presentation-font:          "Archivo", -apple-system, BlinkMacSystemFont, sans-serif;
 
 /*-- scss:rules --*/
+
+/* ============================================
+   TOKEN EMISSION (runtime CSS variables)
+   ============================================ */
+
+:root {
+  --rl-navy:          #13294B;
+  --rl-navy-deep:     #0B1D3A;
+  --rl-carolina:      #4B9CD3;
+  --rl-carolina-deep: #2E6A9F;
+  --rl-graphite:      #5B6670;
+  --rl-ink:           #1A202C;
+  --rl-fog:           #F4F6F8;
+  --rl-mist:          #E6EAEF;
+
+  --rl-font-sans:  "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --rl-font-serif: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --rl-font-mono:  "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
 
 /* ============================================
    GLOBAL TYPOGRAPHY
    ============================================ */
 
 .reveal {
-  font-family: $font-family-sans-serif;
+  font-family: var(--rl-font-sans);
+  color: var(--rl-ink);
 }
 
-.reveal h1,
-.reveal h2,
-.reveal h3,
-.reveal h4,
-.reveal h5,
-.reveal h6 {
-  font-family: $font-family-sans-serif;
+.reveal p,
+.reveal li {
+  color: var(--rl-ink);
+  line-height: 1.45;
 }
 
 /* ============================================
    TITLE SLIDE
+   Serif title (book-cover register). Sans subtitle for legibility.
+   Mono caps for institute + date metadata.
    ============================================ */
 
 #title-slide {
@@ -49,125 +86,106 @@ $font-family-serif: 'Source Serif', 'Georgia', serif;
 }
 
 #title-slide .title {
-  color: #13294B;
-  font-size: 2.5em;
-  font-weight: 700;
-  line-height: 1.2;
+  color: var(--rl-navy);
+  font-family: var(--rl-font-serif);
+  font-size: 2.4em;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
   margin-bottom: 0.5em;
 }
 
 #title-slide .subtitle {
-  color: #4B9CD3;
-  font-size: 1.5em;
+  color: var(--rl-graphite);
+  font-family: var(--rl-font-sans);
+  font-size: 1.3em;
   font-weight: 400;
-  margin-bottom: 1em;
+  font-style: normal;
+  margin-bottom: 1.25em;
 }
 
 #title-slide .author {
-  color: #13294B;
-  font-size: 1.2em;
+  color: var(--rl-ink);
+  font-family: var(--rl-font-sans);
+  font-size: 1.0em;
   font-weight: 500;
+  margin-bottom: 0.5em;
 }
 
-#title-slide .institute {
-  color: #5B6670;
-  font-size: 1em;
+#title-slide .institute,
+#title-slide .date {
+  color: var(--rl-graphite);
+  font-family: var(--rl-font-mono);
+  font-size: 0.75em;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 #title-slide .date {
-  color: #5B6670;
-  font-size: 0.9em;
-  margin-top: 2em;
+  margin-top: 1.5em;
 }
 
 /* ============================================
-   HEADINGS
+   SECTION HEADERS
+   Sans for slide-deck legibility. No decorative bottom-borders.
+   Whitespace + size hierarchy carry the structure.
    ============================================ */
 
-.reveal h1 {
-  color: #13294B;
-  font-weight: 700;
-  border-bottom: 3px solid #4B9CD3;
-  padding-bottom: 0.3em;
-  margin-bottom: 0.8em;
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4 {
+  color: var(--rl-navy);
+  font-family: var(--rl-font-sans);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
 }
 
-.reveal h2 {
-  color: #13294B;
-  font-weight: 600;
-}
-
-.reveal h3 {
-  color: #4B9CD3;
-  font-weight: 600;
-}
+.reveal h1 { font-size: 1.8em; }
+.reveal h2 { font-size: 1.4em; }
+.reveal h3 { font-size: 1.1em; }
 
 /* ============================================
-   TEXT & LINKS
+   LINKS
+   Carolina-deep, no decoration until hover.
    ============================================ */
-
-.reveal p {
-  color: #13294B;
-  line-height: 1.6;
-}
 
 .reveal a {
-  color: #007FAE;
+  color: var(--rl-carolina-deep);
   text-decoration: none;
 }
 
 .reveal a:hover {
-  color: #4B9CD3;
+  color: var(--rl-navy);
   text-decoration: underline;
-}
-
-.reveal strong {
-  color: #13294B;
-  font-weight: 600;
-}
-
-.reveal em {
-  color: #4B9CD3;
-}
-
-/* ============================================
-   LISTS
-   ============================================ */
-
-.reveal ul,
-.reveal ol {
-  margin-left: 1em;
-}
-
-.reveal li {
-  color: #13294B;
-  margin-bottom: 0.5em;
-  line-height: 1.5;
-}
-
-.reveal li::marker {
-  color: #4B9CD3;
 }
 
 /* ============================================
    CODE BLOCKS
+   Mono font, fog background, hairline border. No 4px Carolina stripe.
    ============================================ */
 
+.reveal pre,
+.reveal code {
+  font-family: var(--rl-font-mono);
+}
+
 .reveal pre {
-  background: #F8F9FA;
-  border-left: 4px solid #4B9CD3;
+  background: var(--rl-fog);
+  border: 1px solid var(--rl-mist);
   border-radius: 4px;
-  padding: 1em;
-  font-size: 0.85em;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-size: 0.55em;
+  line-height: 1.4;
+  padding: 0.6em 0.8em;
 }
 
 .reveal code {
-  color: #13294B;
-  background: #F8F9FA;
+  background: var(--rl-fog);
+  color: var(--rl-ink);
   padding: 0.1em 0.3em;
   border-radius: 3px;
-  font-family: 'Fira Code', 'Monaco', monospace;
 }
 
 .reveal pre code {
@@ -175,203 +193,93 @@ $font-family-serif: 'Source Serif', 'Georgia', serif;
   padding: 0;
 }
 
-/* Syntax highlighting adjustments */
-.reveal .hljs-keyword {
-  color: #007FAE;
-}
-
-.reveal .hljs-string {
-  color: #2C5080;
-}
-
-.reveal .hljs-comment {
-  color: #5B6670;
-}
-
 /* ============================================
    TABLES
+   Hairline borders only. Mono uppercase column headers.
+   No navy header bar with white text.
    ============================================ */
 
 .reveal table {
   border-collapse: collapse;
-  margin: 1.5em auto;
-  font-size: 0.9em;
-  width: auto;
+  font-size: 0.8em;
+  margin: 1em auto;
 }
 
 .reveal table th {
-  background: #13294B;
-  color: white;
-  padding: 0.75em 1.25em;
-  font-weight: 600;
+  border-bottom: 2px solid var(--rl-navy);
+  color: var(--rl-navy);
+  font-family: var(--rl-font-mono);
+  font-size: 0.85em;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 0.4em 0.8em;
   text-align: left;
-  border: none;
+  text-transform: uppercase;
 }
 
 .reveal table td {
-  border: 1px solid #DEE2E6;
-  padding: 0.75em 1.25em;
-  color: #13294B;
-}
-
-.reveal table tr:nth-child(even) {
-  background: #F8F9FA;
-}
-
-.reveal table tr:hover {
-  background: #E8F4FC;
+  border-bottom: 1px solid var(--rl-mist);
+  padding: 0.4em 0.8em;
 }
 
 /* ============================================
-   CALLOUT BOXES
+   SLIDE CHROME
+   Slide number + footer in mono caps, muted.
+   ============================================ */
+
+.reveal .slide-number {
+  color: var(--rl-graphite);
+  font-family: var(--rl-font-mono);
+  font-size: 0.7em;
+  letter-spacing: 0.04em;
+}
+
+.reveal .footer {
+  color: var(--rl-graphite);
+  font-family: var(--rl-font-mono);
+  font-size: 0.65em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ============================================
+   CALLOUTS
+   Hairline 3px left border in token color.
    ============================================ */
 
 .callout {
   border-radius: 4px;
-  padding: 1em;
-  margin: 1em 0;
+  font-family: var(--rl-font-sans);
 }
 
-.callout-note {
-  background: #E8F4FC;
-  border-left: 4px solid #4B9CD3;
+.callout-note      { border-left: 3px solid var(--rl-carolina-deep); }
+.callout-tip       { border-left: 3px solid #2E8B6D; }
+.callout-warning   { border-left: 3px solid #C48A1A; }
+.callout-important { border-left: 3px solid #C75050; }
+
+/* ============================================
+   LISTS
+   Tighter spacing between bullet points.
+   ============================================ */
+
+.reveal ul,
+.reveal ol {
+  margin-left: 1em;
 }
 
-.callout-warning {
-  background: #FFF9E6;
-  border-left: 4px solid #FFD340;
-}
-
-.callout-important {
-  background: #FDEDED;
-  border-left: 4px solid #E95550;
-}
-
-.callout-tip {
-  background: #E8EFF7;
-  border-left: 4px solid #2C5080;
+.reveal li + li {
+  margin-top: 0.4em;
 }
 
 /* ============================================
-   IMAGES & FIGURES
+   EMPHASIS
    ============================================ */
 
-.reveal img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 4px;
+.reveal strong {
+  color: var(--rl-navy);
+  font-weight: 600;
 }
 
-.reveal figure {
-  margin: 1em auto;
-  text-align: center;
-}
-
-.reveal figcaption {
-  color: #5B6670;
-  font-size: 0.85em;
+.reveal em {
   font-style: italic;
-  margin-top: 0.5em;
-}
-
-/* ============================================
-   BLOCKQUOTES
-   ============================================ */
-
-.reveal blockquote {
-  background: #F8F9FA;
-  border-left: 4px solid #4B9CD3;
-  padding: 1em 1.5em;
-  margin: 1em 0;
-  font-style: italic;
-  color: #13294B;
-}
-
-.reveal blockquote p {
-  margin: 0;
-}
-
-/* ============================================
-   FOOTER & SLIDE NUMBER
-   ============================================ */
-
-.reveal .slide-number {
-  color: #13294B;
-  font-size: 0.7em;
-  background: transparent;
-}
-
-.reveal footer {
-  color: #5B6670;
-  font-size: 0.7em;
-}
-
-/* ============================================
-   SPEAKER NOTES
-   ============================================ */
-
-.reveal .speaker-notes {
-  font-family: inherit;
-  font-size: 1em;
-  line-height: 1.5;
-}
-
-/* ============================================
-   COLUMNS
-   ============================================ */
-
-.reveal .columns {
-  display: flex;
-  gap: 2em;
-}
-
-.reveal .column {
-  flex: 1;
-}
-
-/* ============================================
-   PROGRESS BAR
-   ============================================ */
-
-.reveal .progress {
-  background: #DEE2E6;
-  height: 4px;
-}
-
-.reveal .progress span {
-  background: #4B9CD3;
-}
-
-/* ============================================
-   UTILITY CLASSES
-   ============================================ */
-
-.text-carolina {
-  color: #4B9CD3;
-}
-
-.text-navy {
-  color: #13294B;
-}
-
-.bg-carolina {
-  background: #4B9CD3;
-  color: white;
-}
-
-.bg-navy {
-  background: #13294B;
-  color: white;
-}
-
-.centered {
-  text-align: center;
-}
-
-.smaller {
-  font-size: 0.85em;
-}
-
-.larger {
-  font-size: 1.15em;
 }
