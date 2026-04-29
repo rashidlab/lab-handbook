@@ -1,34 +1,34 @@
 ---
-title: "Your Poster Title Goes Here — Make It Specific and Punchy"
-authors:
-  - name: "Naim U. Rashid, PhD"
-    affiliations: "Department of Biostatistics, UNC Gillings School of Global Public Health"
-  - name: "Co-author Name"
-    affiliations: "Affiliation"
 format:
-  poster-typst:
-    size: "48x36"
-    poster-authors: "Naim U. Rashid, Co-author Name"
-    departments: "UNC Gillings · UNC Lineberger Comprehensive Cancer Center"
-    institution-logo: "RLlogoA.png"
-    footer-text: "Rashid Lab · UNC Chapel Hill · 2026"
-    keywords: "precision oncology, adaptive trials, biostatistics"
-    num-columns: 3
-    univ-logo-scale: 100
-    title-font-size: "90pt"
-    body-font-size: "26pt"
-    sectionhead-font-size: "40pt"
-    keywords-font-size: "22pt"
-    authors-font-size: "32pt"
+  typst:
+    keep-typ: true
+keep-md: false
 ---
 
 ```{=typst}
 // =============================================================================
-// RASHID LAB — Poster Token Setup
+// RASHID LAB — POSTER STARTER (Quarto built-in typst format, 48" x 36" landscape)
+//
+// This template uses Quarto's built-in `format: typst` with no third-party
+// extension dependency. All layout (header, three-column body, footer) is
+// done in direct Typst code below.
+//
+// To change orientation:
+//   - Landscape 48x36:  #set page(width: 48in, height: 36in, ...)
+//   - Portrait 36x48:   #set page(width: 36in, height: 48in, ...) and adjust columns
+//
 // Mirrors the --rl-* tokens from naimurashid.github.io and lab-handbook/
 // branding/colors.qmd. Update only the literals below if the brand shifts.
 // =============================================================================
 
+#set page(
+  width: 48in,
+  height: 36in,
+  margin: (top: 1.0in, bottom: 0.8in, left: 1.0in, right: 1.0in),
+  fill: white,
+)
+
+// Brand tokens
 #let rl-navy          = rgb("#13294B")
 #let rl-navy-deep     = rgb("#0B1D3A")
 #let rl-carolina      = rgb("#4B9CD3")
@@ -38,11 +38,9 @@ format:
 #let rl-fog           = rgb("#F4F6F8")
 #let rl-mist          = rgb("#E6EAEF")
 
-// Typography defaults — Archivo for body, Source Serif 4 for the title,
-// IBM Plex Mono for eyebrows/code/metadata.
+// Typography
 #set text(font: "Archivo", fill: rl-ink, size: 26pt)
 #show heading: set text(font: "Archivo", weight: "semibold", fill: rl-navy)
-#show heading.where(level: 1): set text(font: "Source Serif 4", weight: "semibold", size: 90pt, fill: rl-navy)
 #show heading.where(level: 2): set text(size: 40pt, fill: rl-navy)
 #show heading.where(level: 3): set text(size: 30pt, fill: rl-navy)
 #show raw: set text(font: "IBM Plex Mono", size: 0.95em)
@@ -58,95 +56,182 @@ format:
   tracking: 0.05em,
   upper(content),
 )
-```
 
-# Background {.unnumbered}
+// =============================================================================
+// HEADER — title, authors, lab logo
+// =============================================================================
 
-```{=typst}
-#eyebrow[Motivation]
-```
+#grid(
+  columns: (4fr, 1fr),
+  gutter: 1in,
+  align: (left + horizon, right + horizon),
 
-State the clinical or methodological problem in 2–3 sentences. Anchor it
-in the population, scale, or constraint that makes the question worth
-solving. End with a single-sentence summary of what your work does about
-it.
+  // Left side: title + authors
+  [
+    #text(font: "Source Serif 4", weight: "semibold", size: 90pt, fill: rl-navy)[
+      Your Poster Title — Make It Specific and Punchy
+    ]
+    #v(20pt)
+    #text(size: 32pt, weight: "medium", fill: rl-ink)[
+      Naim U. Rashid, PhD#super[1]   ·   Co-author Name#super[1,2]
+    ]
+    #v(8pt)
+    #text(font: "IBM Plex Mono", size: 22pt, fill: rl-graphite, tracking: 0.04em)[
+      #super[1]Department of Biostatistics, UNC Gillings  ·  #super[2]UNC Lineberger
+    ]
+  ],
 
-# Methods
+  // Right side: logo placeholder
+  // To use the lab logo, drop RLlogoA.png into the same directory as this
+  // .qmd and uncomment the image() call below.
+  [
+    // #image("RLlogoA.png", width: 100%)
+    #rect(
+      width: 8in,
+      height: 3in,
+      stroke: 1pt + rl-mist,
+      fill: rl-fog,
+    )[
+      #align(center + horizon)[
+        #text(font: "IBM Plex Mono", size: 20pt, fill: rl-graphite)[
+          [logo: RLlogoA.png]
+        ]
+      ]
+    ]
+  ],
+)
 
-```{=typst}
-#eyebrow[Approach]
-```
+#v(30pt)
+#line(length: 100%, stroke: 2pt + rl-navy)
+#v(40pt)
 
-- Bullet points are appropriate here when the methods decompose into
-  distinct steps or components.
-- Keep each bullet to one line if possible. Reviewers scan posters
-  rather than read them.
-- For mathematical content, render equations inline using `$\theta$`
-  or as block displays.
+// =============================================================================
+// BODY — three columns
+// =============================================================================
 
-The model fit a Bayesian hierarchical regression with semi-supervised
-priors:
+#grid(
+  columns: (1fr, 1fr, 1fr),
+  gutter: 1in,
+  rows: 1fr,
 
-```{=typst}
-#align(center)[
-  $hat(theta) = arg max_(theta) sum_(i=1)^N log p(y_i mid(|) x_i, theta) + lambda || theta ||_2^2$
-]
-```
+  // ---------- Column 1 ----------
+  [
+    #eyebrow[Background]
+    #v(8pt)
+    == Why this question
 
-# Results
+    State the clinical or methodological problem in 2–3 sentences. Anchor it in the
+    population, scale, or constraint that makes the question worth solving. End
+    with a single-sentence summary of what your work does about it.
 
-```{=typst}
-#eyebrow[Key Finding]
-```
+    #v(40pt)
 
-State the single most important result first. Use a short sentence with
-specific numbers (sample size, effect size, p-value, CI) rather than a
-generic "we found significant differences."
+    #eyebrow[Approach]
+    #v(8pt)
+    == Methods
 
-::: {.center}
-![Figure 1 caption goes here. Source Serif italic, mono "Figure N." prefix.](placeholder-figure.png){width="90%"}
-:::
+    - Bullet points decompose distinct steps or components.
+    - Keep each bullet to one line if possible — reviewers scan posters rather
+      than read them.
+    - For mathematical content, use Typst's inline math: $hat(theta) = arg max_(theta) sum_(i=1)^N log p(y_i | x_i, theta)$.
 
-```{=typst}
-#eyebrow[Secondary results]
-```
+    #v(20pt)
 
-Use a sub-eyebrow + content block to surface results that build on the
-primary finding. Keep these tight; if it doesn't fit on the poster,
-consider whether the audience needs it at all.
+    Block math:
 
-# Discussion
+    #align(center)[
+      $hat(theta) = arg max_theta sum_(i=1)^N log p(y_i | x_i, theta) + lambda || theta ||_2^2$
+    ]
+  ],
 
-```{=typst}
-#eyebrow[What this means]
-```
+  // ---------- Column 2 ----------
+  [
+    #eyebrow[Key Finding]
+    #v(8pt)
+    == Results
 
-Two short paragraphs at most:
+    State the single most important result first. Use a short sentence with
+    specific numbers (sample size, effect size, p-value, CI) rather than a
+    generic "we found significant differences."
 
-1. Why the result matters in clinical/scientific terms.
-2. What it changes about how the field should approach the problem.
+    #v(20pt)
 
-Resist the urge to include limitations on a poster — readers infer
-limitations from method choice, and posters are not the right venue
-for caveat-heavy discussion. Save it for the paper.
+    #rect(
+      width: 100%,
+      height: 8in,
+      stroke: 1pt + rl-mist,
+      fill: rl-fog,
+    )[
+      #align(center + horizon)[
+        #text(font: "IBM Plex Mono", size: 24pt, fill: rl-graphite)[
+          [Figure 1 panel goes here]
+        ]
+      ]
+    ]
+    #v(8pt)
+    #text(font: "Source Serif 4", style: "italic", size: 22pt, fill: rl-graphite)[
+      *Figure 1.* Caption goes here. Source Serif italic; the *Figure N.* prefix
+      is bold non-italic for scannability.
+    ]
 
-# References & Acknowledgments
+    #v(40pt)
 
-```{=typst}
-#eyebrow[Cite & Thank]
-```
+    #eyebrow[Secondary]
+    #v(8pt)
+    Use a sub-eyebrow + content block to surface results that build on the
+    primary finding. Keep these tight.
+  ],
 
-1. Author A, Author B. *Journal Name* (Year).
-2. Author C, Author D. *Journal Name* (Year).
+  // ---------- Column 3 ----------
+  [
+    #eyebrow[What this means]
+    #v(8pt)
+    == Discussion
 
-Funding: NIH/NCI R01 CA000000, ARPA-H ADAPT, V Foundation Translational
-Research Award. Co-PIs and lab members not listed as authors.
+    Two short paragraphs at most:
 
-```{=typst}
-#v(20pt)
-#line(length: 100%, stroke: 1pt + rl-mist)
-#v(10pt)
-#text(size: 22pt, fill: rl-graphite, font: "IBM Plex Mono")[
-  Contact: naim\@unc.edu · naimurashid.github.io
+    #v(8pt)
+
+    *Why the result matters in clinical or scientific terms.* This is the
+    so-what. State it in one sentence if you can.
+
+    #v(16pt)
+
+    *What it changes about how the field should approach the problem.* Be
+    specific — vague "this opens new avenues" lines are filler.
+
+    #v(40pt)
+
+    #eyebrow[References]
+    #v(8pt)
+    #set text(size: 22pt)
+    + Author A, Author B. *Journal Name* (Year).
+    + Author C, Author D. *Journal Name* (Year).
+    + Author E, Author F. *Journal Name* (Year).
+
+    #v(40pt)
+
+    #eyebrow[Acknowledgments]
+    #v(8pt)
+    #set text(size: 22pt, fill: rl-graphite)
+    Funding: NIH/NCI R01 CA000000, ARPA-H ADAPT, V Foundation Translational
+    Research Award. Thanks to lab members and collaborators not listed as
+    authors.
+  ],
+)
+
+// =============================================================================
+// FOOTER
+// =============================================================================
+
+#place(
+  bottom + center,
+  dy: -0.4in,
+)[
+  #line(length: 100%, stroke: 1pt + rl-mist)
+  #v(10pt)
+  #text(font: "IBM Plex Mono", size: 22pt, fill: rl-graphite, tracking: 0.06em)[
+    #upper[Rashid Lab · UNC Chapel Hill · 2026 · naim\@unc.edu · naimurashid.github.io]
+  ]
 ]
 ```

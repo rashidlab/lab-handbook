@@ -30,9 +30,12 @@ printing.
 
 ## Recommended toolchain
 
-**Quarto Typst** is the lab's preferred poster format. It produces
-print-quality PDFs faster than LaTeX, supports the `--rl-*` token system
-naturally, and works well with R-rendered figures.
+**Quarto's built-in `format: typst`** is the lab's preferred poster
+format. It produces print-quality PDFs faster than LaTeX, supports the
+`--rl-*` token system naturally, and works well with R-rendered figures.
+**No third-party extension required** — the starter template uses direct
+Typst page-layout primitives (`#set page`, `#grid`) so it renders out of
+the box on any Quarto 1.4+ install.
 
 Alternatives that also work:
 
@@ -107,61 +110,77 @@ quarto render my-poster.qmd
 The template uses Quarto's built-in Typst format. Render with:
 
 ```bash
-quarto render my-poster.qmd --to typst
-# or for direct PDF:
 quarto render my-poster.qmd
 ```
 
 Typst is included with recent Quarto versions; no separate install needed.
 
-## YAML frontmatter (Quarto Typst)
+::: {.callout-tip}
+## Font installation
 
-Reference YAML for the starter template:
+For the rendered PDF to use **Archivo + Source Serif 4 + IBM Plex Mono**
+(the lab's brand fonts), install them on your system. On macOS / Linux,
+the simplest path is to download from Google Fonts and drop the `.ttf`
+files into `~/.fonts/` (Linux) or `~/Library/Fonts/` (macOS), then run
+`fc-cache -f` (Linux only).
+
+If the fonts aren't installed, Typst falls back gracefully to system
+defaults — the layout still renders, but visual fidelity to the rest
+of the lab system isn't preserved. Quarto will print warnings like
+`unknown font family: archivo` to flag this.
+:::
+
+## YAML frontmatter
+
+The starter template uses minimal YAML so Quarto's default article
+wrapper doesn't fight the body's page-size `#set` rule:
 
 ```yaml
 ---
-title: "Your Poster Title Goes Here"
-authors:
-  - name: "Naim U. Rashid, PhD"
-    affiliations: "UNC Gillings School of Global Public Health"
-  - name: "Co-author Name"
-    affiliations: "Affiliation"
 format:
-  poster-typst:
-    size: "48x36"      # landscape; or "36x48" for portrait
-    poster-authors: "Authors as above"
-    departments: "Department of Biostatistics, UNC Lineberger"
-    institution-logo: "RLlogoA.png"
-    footer-text: "Rashid Lab · UNC Chapel Hill"
-    keywords: "precision oncology, adaptive trials, biostatistics"
-    num-columns: 3
-    univ-logo-scale: 100
-    title-font-size: "90pt"
-    body-font-size: "26pt"
-    sectionhead-font-size: "40pt"
+  typst:
+    keep-typ: true
+keep-md: false
 ---
 ```
 
+`keep-typ: true` is optional — it preserves the generated `.typ` file
+alongside the PDF, useful for debugging layout issues.
+
+All page setup, brand tokens, title block, and footer live in the
+Typst code blocks below the YAML. See
+[`assets/branding/poster-template.qmd`](../assets/branding/poster-template.qmd)
+for the full source.
+
 ## Color & font setup in Typst
 
-Add this block at the top of your poster's body (before the first `#`
-heading) to wire the lab tokens into Typst:
+The starter template includes this block at the top of the body. Adapt
+the page dimensions for portrait or different conferences as needed:
 
 ```typst
-#let rl-navy = rgb("#13294B")
-#let rl-navy-deep = rgb("#0B1D3A")
-#let rl-carolina = rgb("#4B9CD3")
-#let rl-carolina-deep = rgb("#2E6A9F")
-#let rl-graphite = rgb("#5B6670")
-#let rl-ink = rgb("#1A202C")
-#let rl-fog = rgb("#F4F6F8")
-#let rl-mist = rgb("#E6EAEF")
+#set page(
+  width: 48in,
+  height: 36in,
+  margin: (top: 1.0in, bottom: 0.8in, left: 1.0in, right: 1.0in),
+  fill: white,
+)
 
-#set text(font: "Archivo", fill: rl-ink)
+#let rl-navy          = rgb("#13294B")
+#let rl-navy-deep     = rgb("#0B1D3A")
+#let rl-carolina      = rgb("#4B9CD3")
+#let rl-carolina-deep = rgb("#2E6A9F")
+#let rl-graphite      = rgb("#5B6670")
+#let rl-ink           = rgb("#1A202C")
+#let rl-fog           = rgb("#F4F6F8")
+#let rl-mist          = rgb("#E6EAEF")
+
+#set text(font: "Archivo", fill: rl-ink, size: 26pt)
 #show heading: set text(font: "Archivo", weight: "semibold", fill: rl-navy)
-#show heading.where(level: 1): set text(font: "Source Serif 4", weight: "semibold", size: 90pt)
+#show heading.where(level: 2): set text(size: 40pt)
+#show heading.where(level: 3): set text(size: 30pt)
 #show raw: set text(font: "IBM Plex Mono", size: 0.95em)
 #show link: set text(fill: rl-carolina-deep)
+#show emph: set text(font: "Source Serif 4", style: "italic")
 ```
 
 ## Print prep checklist
