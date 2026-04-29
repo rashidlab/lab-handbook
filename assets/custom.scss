@@ -77,16 +77,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-// Homepage-only gradient background
+// Homepage — flat tone, no gradient. Decorative gradients aren't part
+// of the academic register; the content speaks first.
 body.homepage {
-  background: linear-gradient(180deg, $primary-pale 0%, white 400px);
+  background: $rl-paper;
 }
 
-// Main content area - floating card effect (homepage only)
+// Homepage content area — hairline-bounded card, no lift shadow.
 body.homepage .page-layout-full .content {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  background: $rl-paper;
+  border: 1px solid $rl-mist;
+  border-radius: 6px;             // --rl-radius-md
+  box-shadow: 0 1px 2px rgba(19, 41, 75, 0.06);  // --rl-shadow-sm
   margin: 1.5rem auto;
   padding: 2.5rem;
   max-width: 1100px;
@@ -127,19 +129,8 @@ h2 {
   padding-bottom: 0.5rem;
   border-bottom: none;
   margin-bottom: 1.25rem;
-  position: relative;
-  padding-left: 1rem;
-
-  &::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.2rem;
-    bottom: 0.7rem;
-    width: 4px;
-    background: linear-gradient(180deg, $primary 0%, $primary-light 100%);
-    border-radius: 2px;
-  }
+  // No decorative gradient bar. The serif heading + ample margin carries
+  // the section break — see naimurashid.github.io/_sass/custom/_typography.scss.
 }
 
 h3 {
@@ -157,11 +148,10 @@ p {
 // ============================================
 
 .navbar {
-  background: rgba(255, 255, 255, 0.95) !important;
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid $gray-200;
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+  background: $rl-paper !important;
+  border-bottom: 1px solid $rl-mist;
   padding: 0.75rem 0;
+  // No blur backdrop, no decorative shadow — hairline only.
 }
 
 .navbar-brand {
@@ -185,11 +175,11 @@ p {
   color: $gray-600 !important;
   transition: color 0.15s ease;
   padding: 0.5rem 1rem !important;
-  border-radius: 6px;
+  border-radius: 3px;             // --rl-radius-sm
 
   &:hover {
-    color: $primary !important;
-    background: rgba($primary, 0.05);
+    color: $rl-carolina-deep !important;
+    background: transparent;       // No pill background; color change only.
   }
 }
 
@@ -198,52 +188,43 @@ p {
 // ============================================
 
 .hero-card {
-  background: white;
-  border: 1px solid $gray-200;
-  border-radius: 16px;
+  background: $rl-paper;
+  border: 1px solid $rl-mist;
+  border-radius: 6px;             // --rl-radius-md
   padding: 1.75rem;
   height: 100%;
-  transition: all 0.25s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
   position: relative;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 2px rgba(19, 41, 75, 0.06);  // --rl-shadow-sm
 
   &:hover {
-    border-color: $primary-light;
-    box-shadow: 0 12px 32px rgba($primary, 0.12);
-    transform: translateY(-4px);
+    border-color: #CED4DA;        // --rl-border-strong
+    box-shadow: 0 1px 3px rgba(19, 41, 75, 0.08);  // --rl-shadow-md
   }
 
-  &.hero-dashboard {
-    border-top: 4px solid $primary;
-  }
-  &.hero-meetings {
-    border-top: 4px solid $success;
-  }
-  &.hero-handbook {
-    border-top: 4px solid $secondary;
-  }
+  // Variant accents: 3px Carolina-tone left border (replaces 4px decorative
+  // top stripe). Matches the .card-primary / .card-secondary pattern from
+  // naimurashid.github.io's _sass/custom/_cards.scss.
+  &.hero-dashboard { border-left: 3px solid $rl-carolina; }
+  &.hero-meetings  { border-left: 3px solid $success; }
+  &.hero-handbook  { border-left: 3px solid $secondary; }
 }
 
 .hero-card-icon {
   width: 56px;
   height: 56px;
-  border-radius: 14px;
+  border-radius: 3px;             // --rl-radius-sm
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 1.25rem;
   font-size: 1.75rem;
+  background: $rl-fog;            // Subtle fill, no per-variant gradient.
 
-  &.icon-dashboard {
-    background: linear-gradient(135deg, rgba($primary, 0.15) 0%, rgba($primary, 0.05) 100%);
-  }
-
-  &.icon-meetings {
-    background: linear-gradient(135deg, rgba($success, 0.15) 0%, rgba($success, 0.05) 100%);
-  }
-
+  &.icon-dashboard,
+  &.icon-meetings,
   &.icon-handbook {
-    background: linear-gradient(135deg, rgba($secondary, 0.15) 0%, rgba($secondary, 0.05) 100%);
+    background: $rl-fog;
   }
 }
 
@@ -307,21 +288,19 @@ p {
 }
 
 .quick-link {
-  background: linear-gradient(135deg, $gray-50 0%, white 100%);
-  border: 1px solid $gray-200;
-  border-radius: 12px;
+  background: $rl-paper;
+  border: 1px solid $rl-mist;
+  border-radius: 3px;             // --rl-radius-sm
   padding: 1.25rem;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: border-color 0.15s ease, color 0.15s ease;
 
   &:hover {
-    background: white;
-    border-color: $primary-light;
-    box-shadow: 0 8px 24px rgba($primary, 0.1);
-    transform: translateY(-2px);
+    border-color: #CED4DA;        // --rl-border-strong
+    box-shadow: none;             // No lift shadow.
 
     .quick-link-title {
-      color: $primary;
+      color: $rl-carolina-deep;
     }
   }
 }
@@ -347,8 +326,9 @@ p {
 
 .resource-section {
   margin: 2rem 0;
-  background: $gray-50;
-  border-radius: 12px;
+  background: $rl-paper;
+  border: 1px solid $rl-mist;
+  border-radius: 6px;             // --rl-radius-md
   padding: 1.5rem;
 }
 
@@ -441,29 +421,31 @@ p {
 
 .btn {
   font-weight: 600;
-  border-radius: 10px;
+  border-radius: 3px;             // --rl-radius-sm
   padding: 0.65rem 1.35rem;
-  transition: all 0.2s ease;
+  transition: background 0.15s ease, border-color 0.15s ease;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, $primary 0%, darken($primary, 5%) 100%);
-  border: none;
-  box-shadow: 0 2px 8px rgba($primary, 0.3);
+  background: $rl-carolina-deep;
+  border: 1px solid $rl-carolina-deep;
+  box-shadow: none;
 
   &:hover {
-    background: linear-gradient(135deg, darken($primary, 5%) 0%, darken($primary, 10%) 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba($primary, 0.35);
+    background: $rl-navy;
+    border-color: $rl-navy;
+    box-shadow: none;
   }
 }
 
 .btn-success {
-  background: linear-gradient(135deg, $success 0%, darken($success, 5%) 100%);
-  border: none;
+  background: $success;
+  border: 1px solid $success;
+  box-shadow: none;
 
   &:hover {
-    background: linear-gradient(135deg, darken($success, 5%) 0%, darken($success, 10%) 100%);
+    background: darken($success, 8%);
+    border-color: darken($success, 8%);
   }
 }
 
@@ -485,8 +467,7 @@ p {
 .table {
   --bs-table-striped-bg: #{$gray-50};
   font-size: 0.95rem;
-  border-radius: 8px;
-  overflow: hidden;
+  // No border-radius on tables — tabular content, not card-like.
 
   th {
     font-weight: 600;
@@ -509,9 +490,9 @@ p {
 // ============================================
 
 pre.sourceCode {
-  background: $gray-100;
-  border: 1px solid $gray-200;
-  border-radius: 10px;
+  background: $rl-fog;
+  border: 1px solid $rl-mist;
+  border-radius: 6px;             // --rl-radius-md
   padding: 1rem;
 }
 
@@ -603,7 +584,7 @@ code {
 
 .section-divider {
   height: 1px;
-  background: linear-gradient(to right, $gray-200, transparent 80%);
+  background: $rl-mist;           // Plain hairline rule, no gradient fade.
   margin: 3rem 0;
   border: none;
 }
@@ -620,19 +601,19 @@ code {
   display: inline-flex;
   align-items: center;
   padding: 0.6rem 1.1rem;
-  background: white;
-  border: 1px solid $gray-200;
-  border-radius: 8px;
+  background: $rl-paper;
+  border: 1px solid $rl-mist;
+  border-radius: 3px;             // --rl-radius-sm
   font-size: 0.9rem;
   font-weight: 500;
   color: $gray-700;
   text-decoration: none;
-  transition: all 0.15s ease;
+  transition: border-color 0.15s ease, color 0.15s ease;
 
   &:hover {
-    border-color: $primary-light;
-    color: $primary;
-    box-shadow: 0 4px 12px rgba($primary, 0.1);
+    border-color: $rl-carolina-deep;
+    color: $rl-carolina-deep;
+    box-shadow: none;
   }
 }
 
@@ -721,10 +702,10 @@ code {
 
 // Learning path indicator box (appears at top of pages)
 .learning-path-indicator {
-  background: linear-gradient(135deg, $gray-50 0%, rgba($primary, 0.03) 100%);
-  border: 1px solid $gray-200;
-  border-left: 4px solid $primary;
-  border-radius: 8px;
+  background: $rl-fog;
+  border: 1px solid $rl-mist;
+  border-left: 3px solid $rl-carolina;
+  border-radius: 6px;             // --rl-radius-md
   padding: 1rem 1.25rem;
   margin-bottom: 1.5rem;
   display: flex;
@@ -813,8 +794,8 @@ code {
     .phase-number {
       width: 36px;
       height: 36px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, $primary 0%, darken($primary, 10%) 100%);
+      border-radius: 50%;          // Circular numerals are fine — not card-like.
+      background: $rl-carolina-deep;
       color: white;
       font-weight: 700;
       font-size: 1rem;
@@ -871,19 +852,19 @@ code {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, $success 0%, darken($success, 8%) 100%);
+  background: $success;
+  border: 1px solid $success;
   color: white;
   font-weight: 600;
   font-size: 1rem;
   padding: 0.85rem 1.5rem;
-  border-radius: 10px;
+  border-radius: 3px;             // --rl-radius-sm
   text-decoration: none;
-  box-shadow: 0 4px 12px rgba($success, 0.25);
-  transition: all 0.2s ease;
+  transition: background 0.15s ease, border-color 0.15s ease;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba($success, 0.3);
+    background: darken($success, 8%);
+    border-color: darken($success, 8%);
     color: white;
   }
 
@@ -955,10 +936,10 @@ code {
 // ============================================
 
 .callout-prereq {
-  background: linear-gradient(135deg, rgba($warning, 0.06) 0%, rgba($warning, 0.02) 100%);
+  background: rgba($warning, 0.04);
   border: 1px solid rgba($warning, 0.2);
-  border-left: 4px solid $warning;
-  border-radius: 8px;
+  border-left: 3px solid $warning;
+  border-radius: 6px;             // --rl-radius-md
   padding: 0.85rem 1.1rem;
   margin-bottom: 1.5rem;
 
@@ -1223,16 +1204,15 @@ code {
 }
 
 // =============================================================================
-// RASHID LAB — TOKEN EMISSION + NEUTRALIZE OVERRIDES
-// Added April 2026 to align with naimurashid.github.io. Emits the --rl-*
-// custom properties at runtime so components can reference them, and
-// neutralizes the most visible pre-token decorative chrome (homepage
-// gradient bg, floating-card lift shadow, hover translateY effects).
+// RASHID LAB — RUNTIME TOKEN EMISSION
+// Emits the --rl-* custom properties at runtime so any rule (including
+// rules from third-party Quarto/Bootstrap CSS we don't control) can
+// reference them via var(--rl-*). The Sass-time tokens defined in the
+// /*-- scss:defaults --*/ block at the top of this file are how the
+// rules above resolve their values; this :root block makes those same
+// values available to inline styles and to other CSS that loads later.
 //
-// This block intentionally lives at the bottom of the file so it wins
-// the cascade against the legacy rules above. As individual sections
-// of the legacy rules are refactored to use the new tokens directly,
-// the corresponding override here can be removed.
+// Mirrors naimurashid.github.io's _sass/custom/_tokens.scss — keep in sync.
 // =============================================================================
 
 @import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap");
@@ -1297,148 +1277,10 @@ code {
 
 // ---- Neutralize legacy decorative chrome ------------------------------------
 
-// Drop the homepage gradient background — flat tone matches the site register.
-body.homepage {
-  background: var(--rl-bg);
-}
-
-// The "floating card" content wrapper had a 0 4px 24px lift shadow and 16px
-// radius pill. Site uses hairline borders + small token shadow.
-body.homepage .page-layout-full .content {
-  background: var(--rl-bg);
-  border: 1px solid var(--rl-border);
-  border-radius: var(--rl-radius-md);
-  box-shadow: var(--rl-shadow-sm);
-}
-
-// Drop translateY hover lifts site-wide. Cards transition border + shadow only.
+// Belt-and-suspenders: drop translateY hover lifts site-wide. The legacy
+// rules above no longer apply translate, but third-party Quarto/Bootstrap
+// rules can still introduce them — this pins all hover transforms to none.
 *:hover {
   transform: none !important;
-}
-
-// h2 had a 4px linear-gradient navy bar (::before). Site uses no decorative
-// rule — the eyebrow + heading composition carries the section break.
-h2::before {
-  display: none !important;
-}
-h2 {
-  padding-left: 0;
-}
-
-// Navbar — drop blur backdrop + decorative shadow; hairline only.
-.navbar {
-  background: var(--rl-bg) !important;
-  backdrop-filter: none;
-  border-bottom: 1px solid var(--rl-border);
-  box-shadow: none;
-}
-
-// Nav link hover: color only, no pill background.
-.nav-link:hover {
-  background: transparent !important;
-  color: var(--rl-link) !important;
-}
-
-// Hero cards: drop 16px radius pills, kill decorative top border stripes,
-// kill lift shadow + translate hover.
-.hero-card {
-  border-radius: var(--rl-radius-md);
-  box-shadow: var(--rl-shadow-sm);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-
-  &:hover {
-    box-shadow: var(--rl-shadow-md);
-    border-color: var(--rl-border-strong);
-  }
-
-  &.hero-dashboard,
-  &.hero-meetings,
-  &.hero-handbook {
-    border-top: 1px solid var(--rl-border);
-    border-left: 3px solid var(--rl-carolina);
-  }
-  &.hero-meetings { border-left-color: #2E8B6D; }
-  &.hero-handbook { border-left-color: var(--rl-navy); }
-}
-
-// Hero card icon tiles: replace gradient backgrounds with subtle fog tone,
-// drop 14px radius pill.
-.hero-card-icon {
-  border-radius: var(--rl-radius-sm);
-  background: var(--rl-bg-subtle) !important;
-
-  &.icon-dashboard,
-  &.icon-meetings,
-  &.icon-handbook {
-    background: var(--rl-bg-subtle);
-  }
-}
-
-// Quick link tiles: drop gradient bg, drop 12px radius, kill lift shadow.
-.quick-link {
-  background: var(--rl-bg) !important;
-  border-radius: var(--rl-radius-sm);
-  transition: border-color 0.15s ease, color 0.15s ease;
-
-  &:hover {
-    background: var(--rl-bg) !important;
-    border-color: var(--rl-border-strong);
-    box-shadow: none;
-  }
-}
-
-// Resource sections: replace fog-block with hairline-bounded card.
-.resource-section {
-  background: var(--rl-bg);
-  border: 1px solid var(--rl-border);
-  border-radius: var(--rl-radius-md);
-}
-
-// External link chips: small radius, no lift shadow on hover.
-.external-link {
-  border-radius: var(--rl-radius-sm);
-
-  &:hover {
-    box-shadow: none;
-    border-color: var(--rl-link);
-    color: var(--rl-link);
-  }
-}
-
-// Section divider: plain hairline, no fade gradient.
-.section-divider {
-  background: var(--rl-border);
-}
-
-// Buttons: solid fill, small radius, no lift shadow.
-.btn {
-  border-radius: var(--rl-radius-sm);
-}
-.btn-primary {
-  background: var(--rl-carolina-deep);
-  border: 1px solid var(--rl-carolina-deep);
-  box-shadow: none;
-
-  &:hover {
-    background: var(--rl-navy);
-    border-color: var(--rl-navy);
-    box-shadow: none;
-  }
-}
-.btn-success {
-  background: #2E8B6D;
-  border: 1px solid #2E8B6D;
-  box-shadow: none;
-
-  &:hover {
-    background: #246F58;
-    border-color: #246F58;
-  }
-}
-
-// Table radius: drop the 8px pill — tables are tabular, not card-like.
-.table {
-  border-radius: 0;
-  overflow: visible;
 }
 
