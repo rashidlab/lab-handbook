@@ -5,7 +5,6 @@ project:
     - bash scripts/generate-template-trees.sh
   resources:
     - robots.txt
-    - talks/*.html
 
 website:
   title: "Rashid Lab"
@@ -127,11 +126,6 @@ website:
     - title: "Projects"
       contents:
         - projects/index.qmd
-
-    - title: "Talks"
-      contents:
-        - talks/index.qmd
-        - talks/ras-inhibitor-era-trial-design.qmd
 
     - title: "Learning Materials"
       contents:
