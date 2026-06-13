@@ -1,0 +1,17 @@
+---
+title: "Talks"
+subtitle: "Selected talks from the Rashid Lab"
+---
+
+This page collects selected talks given by the lab. Slides are embedded for browser viewing; PDFs are available for download.
+
+## 2026
+
+| Talk | Venue | Materials |
+|------|-------|-----------|
+| [Adaptive Trial Design for the RAS-Inhibitor Era](ras-inhibitor-era-trial-design.qmd) | NCI GI SPORE Meeting 2026 | [View slides](ras-era-adaptive-trials.html) · [PDF](../assets/downloads/ras-era-adaptive-trials.pdf) |
+| [Staying in the Driver's Seat](../claude-code/code-ownership.qmd) | StatsUp.AI / ASA Webinar | [Guide](../claude-code/code-ownership.qmd) · [PDF](../assets/downloads/staying-in-the-drivers-seat.pdf) |
+
+## Past
+
+*Earlier talks will be added as they are migrated.*
