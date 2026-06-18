@@ -1,0 +1,105 @@
+---
+title: "Literature search, PDF acquisition, and bibliography building with Claude"
+---
+
+The acquisition and verification front end of the literature workflow: find papers, get the PDFs
+(including the awkward paywalled ones), check references, and build a clean `.bib`. The PDFs and
+`.bib` you produce here feed the RAG in
+[Papers RAG for manuscript writing](papers-rag-for-manuscript-writing.md).
+
+Pipeline: **search -> download (with fallbacks) -> name + .bib -> build RAG -> write and verify**.
+
+## 1. MCP servers for literature search
+
+The `papers` MCP server (configured in `~/.claude.json`) already searches and downloads from
+arXiv, PubMed, bioRxiv/medRxiv, Semantic Scholar, Crossref, Scopus, Springer, Wiley, ScienceDirect,
+and Google Scholar through one tool surface (`mcp__papers__search_papers`, `search_pubmed`,
+`search_arxiv`, `search_google_scholar`, `get_paper_by_doi`, `download_paper`).
+
+To add more (or set this up fresh), see [MCP servers](../claude-code/advanced/mcp-servers.qmd) for
+the mechanics. In brief:
+
+```bash
+claude mcp add <name> -- <command-to-launch-the-server>   # or edit ~/.claude.json / project .mcp.json
+```
+
+- Project-scoped servers live in the project's `.mcp.json`; user-scoped in `~/.claude.json`.
+- **Restart Claude Code** to load a new server; run `/mcp` to confirm it connected (from mobile/web
+  `/mcp` returns a status summary).
+- claude.ai also offers connectors (e.g. a PubMed connector) usable from the desktop/app.
+
+Pick by need: the multi-source `papers` server covers most cases; add a dedicated PubMed/arXiv
+server only if you want behavior the `papers` server does not give you.
+
+## 2. Batch downloading PDFs
+
+Once a search returns hits, download them in bulk rather than one at a time:
+
+- Collect the identifiers (arXiv IDs / DOIs) from the search results, then call
+  `mcp__papers__download_paper` for each, saving into a `papers/` folder.
+- **Name each PDF by its citation key** (e.g. `smith2021lme.pdf`) so provenance is obvious and the
+  RAG can attach bibliographic metadata.
+- Ask Claude to iterate over a DOI/ID list (or a `.bib`/CSV) and download each, skipping ones
+  already present (dedup by citation key). Mind source rate limits; space out large batches.
+- Record what succeeded and what did not; the failures go to the Chrome fallback below.
+
+## 3. Claude in Chrome for the ones that will not download
+
+Some publisher PDFs cannot be fetched by the `papers` server (paywalls, bot blocks, JS gates). For
+those, use [Claude in Chrome](../claude-code/advanced/index.qmd) (the `claude-in-chrome` MCP) to
+drive an authenticated browser session:
+
+1. Authenticate first (VPN or library proxy, step 4), and log in to the publisher if needed.
+2. Have Claude navigate to the article page, locate the **PDF / Download** link, and save the file
+   into `papers/` under the citation key.
+3. Capture the DOI/metadata from the page at the same time for the `.bib`.
+
+Caveats: respect publisher terms (download only what you are licensed to, for your own use); avoid
+triggering CAPTCHAs/dialogs (Claude in Chrome cannot dismiss modal dialogs); do a few at a time.
+
+## 4. UNC library VPN / proxy (access to paywalled journals)
+
+Paywalled journals resolve once you are on the UNC network:
+
+- Connect the **UNC VPN** (the campus VPN client) before downloading, or
+- Use the **library proxy / EZProxy** link (the library's "find it" / link resolver prepends the
+  proxy so off-campus access works).
+
+With the VPN/proxy up, publisher PDF links work in the browser, so the Chrome fallback (step 3) and
+direct `download_paper` calls succeed for licensed content. (Adjust to your institution's VPN/proxy
+if you are not at UNC.)
+
+## 5. Checking references and building the .bib
+
+**Build the .bib from DOIs.** Two reliable routes:
+
+- Crossref content negotiation: `https://api.crossref.org/works/<DOI>/transform/application/x-bibtex`
+  returns a BibTeX entry for a DOI.
+- `mcp__papers__get_paper_by_doi` to fetch metadata, then format a BibTeX entry.
+
+Assemble one entry per downloaded paper, keyed by the **same citation key as the PDF filename**;
+dedup by DOI; keep it in the project (the `.bib` is committed even though the PDFs are not).
+
+**Verify references (catch fabricated or mis-attributed citations).** This is where the RAG pays
+off:
+
+- Every DOI in the `.bib` should resolve (a non-resolving DOI is a red flag for an invented
+  citation).
+- For each non-trivial in-text claim, run the RAG's `find_evidence`/`check_claim`
+  ([papers RAG doc](papers-rag-for-manuscript-writing.md)) and confirm the cited source actually
+  supports it, in context. Cite the page-anchored passage, not the model's paraphrase.
+- Keep a short `CITATIONS.md`: claim -> citation key -> supporting page/snippet. This is the audit
+  trail and the guard against the "plausible but fake reference" failure mode.
+
+## Lab-fit
+
+- **Data not in git:** `papers/` PDFs (copyright + size) are gitignored; the `.bib`, `CITATIONS.md`,
+  and any download scripts are committed (lab data-storage standard).
+- **Verified sources:** the manuscript cites from retrieved, page-anchored passages, the same way it
+  reads computed values from code rather than hardcoding them.
+
+## Caveats
+
+- Respect copyright and publisher license terms; keep downloaded PDFs local, do not redistribute.
+- Search recall varies by source; combine the `papers` server's backends rather than trusting one.
+- The RAG reduces the chance of an unsupported citation; it does not replace reading the source.

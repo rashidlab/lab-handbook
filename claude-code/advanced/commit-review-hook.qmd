@@ -1,0 +1,83 @@
+---
+title: "Recipe: automatic post-commit code/prose review (codex, Claude fallback)"
+---
+
+A worked [hooks](hooks.qmd) example: after **every git commit**, a read-only reviewer looks at that
+one commit (HEAD vs its parent) and returns findings to both you and Claude. The primary reviewer is
+`codex`; if codex is rate-limited it falls back to a headless `claude` review of the same diff. It
+is **advisory only**: Claude is told not to auto-fix, but to assess, present, and propose a plan you
+approve.
+
+- Wiring: `~/.claude/settings.json` (`hooks.PostToolUse`, matcher `Bash`).
+- Script: `~/.claude/hooks/codex-commit-review.sh` (+ a companion `*.README.md`).
+
+## Wiring
+
+```jsonc
+// ~/.claude/settings.json
+"hooks": {
+  "PostToolUse": [
+    { "matcher": "Bash",
+      "hooks": [
+        { "type": "command",
+          "command": "bash \"$HOME/.claude/hooks/codex-commit-review.sh\"",
+          "timeout": 600,
+          "statusMessage": "codex reviewing the commit..." } ] } ]
+}
+```
+
+The hook runs after every `Bash` tool call; the script decides whether to act.
+
+## When it fires
+
+1. The command string contains `git commit` (so `git add ... && git commit ...` and `--amend` both
+   qualify; `--dry-run`/`--help` skipped).
+2. HEAD is **< 30 seconds old**, confirming a commit was actually created (a failed/no-op commit
+   leaves HEAD older, so nothing fires).
+
+It also needs `jq`, `codex` on PATH (the script prepends the nvm node bin), and a `claude` binary for
+the fallback. It **always exits 0**: a review can never break the turn.
+
+## The review (codex, read-only)
+
+```bash
+codex exec --sandbox read-only -c approval_policy=never --skip-git-repo-check -o <file> "$PROMPT"
+```
+
+Read-only sandbox (cannot mutate the repo) and non-interactive (cannot hang). One retry with
+`danger-full-access` only if codex's `bwrap` network namespace fails (`RTM_NEWADDR`), safe because
+the prompt is strictly read-only.
+
+The prompt: scope to HEAD-vs-parent (`git show HEAD`, changed hunks only); prioritize manuscripts,
+slide decks, R, C/C++, and plan files; flag correctness regressions (code) and accuracy/consistency/
+convention drift (prose); learn project rules from `CLAUDE.md`/`AGENTS.md`/`README`/`docs/`; output
+concise `- [severity] title -- path:line` lines.
+
+## Claude fallback
+
+If codex is empty or matches `usage limit|rate limit|quota|try again at|429|ERROR:|stream error`, the
+script re-reviews the same `git show HEAD` diff (capped ~200k chars) with
+`claude -p ... --model claude-sonnet-4-6 --permission-mode plan` (no tools). The label becomes
+`claude (codex fallback)` and a caveat is attached: treat it as a **same-model-family mechanical
+safety net**, not an independent review, and re-run codex later. Override the model with
+`CLAUDE_REVIEW_MODEL`.
+
+## What you and Claude receive
+
+One JSON object: `systemMessage` shows you the banner + review; `hookSpecificOutput.additionalContext`
+feeds Claude the **protocol note**: assess each finding, discard false positives, present the genuine
+ones, propose a fix plan, then **wait for your decision** (no auto-editing).
+
+## Good to know
+
+- **Amends re-trigger the review.** Each `--amend` is a new HEAD < 30s old, so iterating on one
+  commit spawns a fresh review each time.
+- Treat fallback findings as a net, not gospel: in practice it both catches real bugs and recycles
+  occasional false positives. Verify before acting.
+- The script header comment says `timeout: 300` while settings sets `600`; settings wins.
+
+## Tuning
+
+- `export CLAUDE_REVIEW_MODEL=claude-opus-4-8` for a stronger (still non-independent) fallback.
+- Edit `REVIEW_PROMPT` in the script to change priority file types or severity guidance.
+- Disable: comment out the `PostToolUse`/`Bash` block in `~/.claude/settings.json`.

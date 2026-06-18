@@ -1,0 +1,92 @@
+---
+title: "Remote control: drive Claude Code from your phone or another device"
+---
+
+Remote Control lets you continue a **local** Claude Code session from your phone, tablet, or any
+browser (claude.ai/code or the Claude mobile app). Claude keeps running on your machine the whole
+time, so your filesystem, MCP servers, tools, and project config stay available. Start a long task
+at your desk (a refactor, a simulation, a Longleaf job kickoff), then monitor and steer it from the
+couch or between meetings.
+
+It is distinct from Claude Code on the web (which runs in Anthropic's cloud): Remote Control runs
+on your machine, web/mobile are just a window into it.
+
+## Requirements
+
+- Claude Code **v2.1.51+** (`claude --version`). Push notifications need v2.1.110+.
+- A claude.ai subscription (Pro, Max, Team, Enterprise). **API keys are not supported**; sign in
+  with `/login` (claude.ai option), and unset `ANTHROPIC_API_KEY` if set.
+- Run `claude` once in the project directory to accept the workspace-trust dialog.
+- On Team/Enterprise, an admin must enable the Remote Control toggle in Claude Code admin settings.
+
+## Start a session
+
+```bash
+# Server mode: one process, multiple on-demand sessions; prints a URL, spacebar shows a QR code
+claude remote-control
+
+# Interactive + remote at once (type locally AND control remotely); optional name
+claude --remote-control "Sim refactor"
+
+# From inside a running session, carry over the conversation
+/remote-control
+```
+
+In the VS Code extension, type `/remote-control` (or `/rc`). Useful server-mode flags:
+`--name "..."`, `--spawn worktree` (each session gets its own [git worktree](../advanced/index.qmd)),
+`--capacity N`, `--sandbox`.
+
+## Connect from your phone or another device
+
+Once a session is active:
+
+- **Scan the QR code** (press spacebar in server mode, or open the `/rc active` status panel) to
+  open it in the Claude mobile app.
+- **Open the session URL** in any browser to land on claude.ai/code.
+- **Open the Claude app and tap "Code"** to find the session by name (a computer icon with a green
+  dot means it is online). Conversation stays in sync across terminal, browser, and phone.
+
+No app yet? Run `/mobile` in Claude Code for a download QR (iOS/Android).
+
+To make every interactive session remote-controllable automatically: `/config` then set
+**Enable Remote Control for all sessions** to `true` (Desktop app: Settings -> Claude Code ->
+Enable remote control by default).
+
+## Push notifications to your phone
+
+With Remote Control active, Claude can push to your phone when a long task finishes or when it
+needs a decision. Set up: install the Claude app, sign in with the **same** account, allow OS
+notifications, then in the terminal run `/config` and enable **Push when Claude decides** and/or
+**Push when actions required**. You can also ask in a prompt, e.g. "notify me when the tests
+finish." (If `/config` shows "No mobile registered," open the app once to refresh its token.)
+
+## Related: Dispatch from the phone to Claude Desktop
+
+A companion feature: from the Claude **mobile app** you can message a task that spawns a session on
+your **Desktop** app (pair the app with Desktop first). Use Dispatch to fire off work while away;
+use Remote Control to steer work already running. Both keep Claude on your machine.
+
+## How it is secured
+
+Your machine makes **outbound HTTPS only** and never opens inbound ports. Traffic goes through the
+Anthropic API over TLS using multiple short-lived, single-purpose credentials. Nothing moves to the
+cloud; the remote surfaces are just views into the local session.
+
+## Lab uses
+
+- Kick off a long Longleaf job or a multi-hour simulation at your desk, then check progress and
+  answer Claude's permission prompts from your phone (see [HPC usage](hpc-usage.qmd)).
+- Approve or redirect a refactor between meetings without returning to your terminal.
+- Pair with [scheduled tasks](reference.qmd) and Dispatch for away-from-desk workflows.
+
+## Limitations worth knowing
+
+- **The local process must stay running** (terminal/VS Code open); closing it ends the session.
+- One remote session per interactive process; use **server mode** for multiple concurrent sessions.
+- A network outage longer than ~10 minutes times the session out (restart with
+  `claude remote-control`).
+- Starting an **ultraplan** session disconnects Remote Control (both use the claude.ai/code surface).
+- Interactive-picker commands (`/resume`, `/plugin`) are local-only; text-output commands
+  (`/context`, `/usage`, and `/mcp` as a summary) work from mobile/web.
+
+Reference: <https://code.claude.com/docs/en/remote-control>.
