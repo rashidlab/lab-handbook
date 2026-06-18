@@ -58,6 +58,7 @@ website:
         - claude-code/installation.qmd
         - claude-code/first-session.qmd
         - claude-code/daily-workflow.qmd
+        - claude-code/remote-control.qmd
         - claude-code/lab-integration.qmd
         - claude-code/hpc-usage.qmd
         - section: "Advanced"
@@ -67,10 +68,17 @@ website:
             - claude-code/advanced/skills.qmd
             - claude-code/advanced/agents.qmd
             - claude-code/advanced/hooks.qmd
+            - claude-code/advanced/commit-review-hook.qmd
             - claude-code/advanced/mcp-servers.qmd
             - claude-code/advanced/enforcing-standards.qmd
         - claude-code/troubleshooting.qmd
         - claude-code/reference.qmd
+
+    - title: "Computing"
+      contents:
+        - computing/index.qmd
+        - computing/literature-search-and-bibliography.qmd
+        - computing/papers-rag-for-manuscript-writing.md
 
     - title: "Lab Meetings"
       contents:
