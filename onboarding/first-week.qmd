@@ -32,7 +32,7 @@ A checklist for your first two weeks in the lab. Don't worry about finishing eve
   - `#computing` - Technical help
   - `#papers` - Literature discussion
   - `#random` - Social
-- [ ] Add lab meeting to calendar (every two weeks, Thursday 9:30am)
+- [ ] Add lab meeting to calendar (every two weeks, Thursday 10:30am)
 
 ### Orientation (Days 3-5) — Must do
 

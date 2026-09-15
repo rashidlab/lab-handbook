@@ -12,7 +12,7 @@ This directory contains committed meeting notes for all lab meetings.
 |-----|-----|------|
 | **Tuesday 5pm** | Meeting Lead | Create the Discussion thread with agenda |
 | **Wednesday 5pm** | Everyone | Add your agenda items to the thread |
-| **Thursday 9:30-11am** | Everyone | Attend lab meeting |
+| **Thursday 10:30am-12pm** | Everyone | Attend lab meeting |
 | **Thursday EOD** | Meeting Lead | Post notes to Discussion AND commit here |
 
 ---

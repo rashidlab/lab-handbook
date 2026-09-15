@@ -432,7 +432,7 @@ Here's how these tools work together in a typical workflow:
 └────────────────────────────────────────────────────────────┘
                           ↓
 ┌────────────────────────────────────────────────────────────┐
-│ THURSDAY 9:30am: Meeting happens                           │
+│ THURSDAY 10:30am: Meeting happens                          │
 │ Lead takes notes                                           │
 │ Action items identified                                    │
 └────────────────────────────────────────────────────────────┘

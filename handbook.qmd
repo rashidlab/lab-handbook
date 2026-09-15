@@ -167,6 +167,6 @@ Longleaf HPC access, Slurm job submission, and environment setup.
 ## Key Conventions
 - **Data manipulation:** Base R + `data.table` (not tidyverse)
 - **Version control:** Git + GitHub for everything
-- **Meetings:** Every two weeks, Thursdays 9:30am, agendas via GitHub Discussions
+- **Meetings:** Every two weeks, Thursdays 10:30am, agendas via GitHub Discussions
 - **HPC:** Run production work on Longleaf
 :::

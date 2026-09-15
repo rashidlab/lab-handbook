@@ -202,7 +202,7 @@ lab-handbook/
 Lab meetings use GitHub Discussions:
 - **Category:** Lab Meetings
 - **Thread format:** `Lab Meeting - YYYY-MM-DD`
-- **Workflow:** Agenda (Tue) → Contributions (Wed) → Meeting (Thu 9:30-11am) → Notes (Thu EOD)
+- **Workflow:** Agenda (Tue) → Contributions (Wed) → Meeting (Thu 10:30am-12pm) → Notes (Thu EOD)
 
 ### Automated Reminders
 

@@ -76,7 +76,7 @@ jobs:
                 {"name": "Presenter(s)", "value": "@${{ steps.get-meeting.outputs.presenters }}"}
               ],
               "markdown": true,
-              "text": "**Reminder:** Lab meeting is **tomorrow at 9:30am**!\n\nPlease add your agenda items to the Discussion thread by **5pm today**.\n\nIf you have:\n- Research updates\n- Questions for the group\n- Announcements\n- Items for discussion\n\n...add them now!"
+              "text": "**Reminder:** Lab meeting is **tomorrow at 10:30am**!\n\nPlease add your agenda items to the Discussion thread by **5pm today**.\n\nIf you have:\n- Research updates\n- Questions for the group\n- Announcements\n- Items for discussion\n\n...add them now!"
             }],
             "potentialAction": [{
               "@type": "OpenUri",

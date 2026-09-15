@@ -38,7 +38,7 @@ The [First Two Weeks Checklist](first-week.qmd) has all of this with day-by-day 
 Graduate students in the lab typically balance coursework and research. Here's a rough sketch of what a typical week looks like:
 
 - **Research time** varies by year: during coursework semesters, expect ~10-15 hours/week on research, ramping up after comps
-- **Lab meetings** are every two weeks (Thursdays 9:30am) — attendance is expected
+- **Lab meetings** are every two weeks (Thursdays 10:30am) — attendance is expected
 - **1:1s with Dr. Rashid** are biweekly (30 min) — come prepared with updates and questions
 - **Core hours** are roughly 10am-4pm for availability, but schedules are otherwise flexible
 - **Remote work** is fine — just communicate your availability on Teams

@@ -15,7 +15,7 @@ The meeting lead should copy this template when creating the biweekly Discussion
 ## Lab Meeting - [DATE]
 
 **Lead:** @[github-username]
-**Time:** Thursday [DATE] 9:30-11:00 AM
+**Time:** Thursday [DATE] 10:30 AM-12:00 PM
 **Location:** [Room / Teams Link]
 
 ---
