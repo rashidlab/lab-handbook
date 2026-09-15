@@ -27,6 +27,21 @@ The meeting lead role rotates biweekly. Meetings are held **Thursdays at 9:30am*
 | Aug 13 | Tyler Humpherys | Research Update |
 | Aug 27 | Andrew Walther | Research Update |
 
+### Fall 2026 Schedule (in person, LCCC 20-023)
+
+| Date | Meeting Lead | Type |
+|------|--------------|------|
+| Oct 1 | Naim Rashid | Fall Kickoff + Alex Akushevich introduction |
+| Oct 8 | Amber Young | Research Update |
+| Oct 22 | Dinelka Nanayakkara | Research Update |
+| Nov 5 | Jialiu Xie | Research Update |
+| Nov 19 | Tyler Humpherys | Research Update |
+| Dec 3 | Andrew Walther | Research Update |
+
+No meetings Sep 17, Sep 24, Oct 15, Nov 26, Dec 17, Dec 24, or Dec 31 (PI travel, fall break,
+Thanksgiving, and winter break). Dec 10 (exam week) is open as an optional make-up slot. Spring
+2027 resumes after classes begin Jan 6.
+
 ::: {.callout-note}
 ## Updating the Schedule
 Edit this file and submit a PR, or post in `#general` Teams channel to request changes.
@@ -41,6 +56,7 @@ Edit this file and submit a PR, or post in `#general` Teams channel to request c
 | Jialiu Xie | [@jialiux22](https://github.com/jialiux22) |
 | Tyler Humpherys | [@tylerbhumpherys](https://github.com/tylerbhumpherys) |
 | Andrew Walther | [@andrew-walther](https://github.com/andrew-walther) |
+| Alex Akushevich | [@alexakus](https://github.com/alexakus) |
 
 ## How Rotation Works
 
@@ -80,6 +96,26 @@ See the [Lab Meetings Guide](meetings.qmd#leader-walkthrough) for the complete s
 | May 25 | Memorial Day (no classes) |
 | Jun 19 | Juneteenth (no classes) |
 | Jul 3 | Independence Day observed (no classes) |
+
+### Key Dates - Fall 2026
+
+| Date | Event |
+|------|-------|
+| Aug 17 | Fall classes begin |
+| Sep 7 | Labor Day (no classes) |
+| Sep 16-18 | PI at ASA RISW, Rockville MD (no meeting Sep 17) |
+| Sep 21 | Well-being day (no classes) |
+| Sep 23-25 | PI at ADAPT in-person meeting, Arlington VA (no meeting Sep 24) |
+| Oct 6 | Well-being day (no classes) |
+| Oct 12 | University Day |
+| Oct 15-16 | Fall break (no meeting Oct 15) |
+| Nov 25-27 | Thanksgiving recess (no meeting Nov 26) |
+| Dec 2 | Last day of classes |
+| Dec 3 - Dec 11 | Reading days and exams |
+| Dec 13 | Fall Commencement |
+| Dec 13-21 | PI at IMS ICSDS, Split, Croatia (no meeting Dec 17) |
+| Dec 24, Dec 31 | Winter break (no meetings) |
+| Jan 6, 2027 | Spring classes begin |
 
 ### No-Meeting Weeks
 

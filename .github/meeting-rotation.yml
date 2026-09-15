@@ -1,127 +1,140 @@
 # Meeting Rotation Schedule
 # This file is read by GitHub Actions to determine who to remind
-#
-# Format:
-#   - date: YYYY-MM-DD (Thursday meeting date)
-#     lead: GitHub username (without @)
-#     lead_email: Email for Teams mention
-#     presenters: List of presenters
-#
-# To update: Edit this file and commit. Workflows read it automatically.
+# Auto-generated from students.yml + lab.yml on 2026-08-27
 
 lab_members:
-  - name: "Amber Young"
-    github: "ayoung31"
-    email: "ayoung31@unc.edu"
-  - name: "Dinelka Nanayakkara"
-    github: "dinelka97"
-    email: "dinelka97@unc.edu"
-  - name: "Jialiu Xie"
-    github: "jialiux22"
-    email: "jialiux22@unc.edu"
-  - name: "Tyler Humpherys"
-    github: "tylerbhumpherys"
-    email: "tylerbhumpherys@unc.edu"
-  - name: "Andrew Walther"
-    github: "andrew-walther"
-    email: "andrew-walther@unc.edu"
-
-# Upcoming meetings (biweekly, Thursdays 9:30am)
+- name: Amber Young
+  github: ayoung31
+  email: ayoung31@unc.edu
+- name: Dinelka Nanayakkara
+  github: dinelka97
+  email: dinelka97@unc.edu
+- name: Jialiu Xie
+  github: jialiux22
+  email: jialiux2@live.unc.edu
+- name: Tyler Humpherys
+  github: tylerbhumpherys
+  email: tylerben@unc.edu
+- name: Andrew Walther
+  github: andrew-walther
+  email: awalther@unc.edu
+- name: Alex Akushevich
+  github: alexakus
+  email: aku@unc.edu
 meetings:
-  - date: "2026-02-12"
-    lead: "naim-rashid"
-    presenters:
-      - "naim-rashid"
-    topic: "Orientation"
-
-  - date: "2026-02-26"
-    lead: "dinelka97"
-    presenters:
-      - "dinelka97"
-    topic: "Research Update"
-
-  - date: "2026-03-12"
-    lead: "jialiux22"
-    presenters:
-      - "jialiux22"
-    topic: "Research Update"
-
-  - date: "2026-04-09"
-    lead: "andrew-walther"
-    presenters:
-      - "andrew-walther"
-    topic: "Research Update"
-
-  - date: "2026-04-16"
-    lead: "tylerbhumpherys"
-    presenters:
-      - "tylerbhumpherys"
-    topic: "Research Update"
-
-  - date: "2026-04-23"
-    lead: "ayoung31"
-    presenters:
-      - "ayoung31"
-    topic: "Research Update"
-
-  - date: "2026-05-07"
-    lead: "dinelka97"
-    presenters:
-      - "dinelka97"
-    topic: "Research Update"
-
-  - date: "2026-05-21"
-    lead: "jialiux22"
-    presenters:
-      - "jialiux22"
-    topic: "Research Update"
-
-  - date: "2026-06-04"
-    lead: "tylerbhumpherys"
-    presenters:
-      - "tylerbhumpherys"
-    topic: "Research Update"
-
-  - date: "2026-06-18"
-    lead: "andrew-walther"
-    presenters:
-      - "andrew-walther"
-    topic: "Research Update"
-
-  - date: "2026-07-02"
-    lead: "ayoung31"
-    presenters:
-      - "ayoung31"
-    topic: "Research Update"
-
-  - date: "2026-07-16"
-    lead: "dinelka97"
-    presenters:
-      - "dinelka97"
-    topic: "Research Update"
-
-  - date: "2026-08-06"
-    lead: "jialiux22"
-    presenters:
-      - "jialiux22"
-    topic: "Research Update"
-
-  - date: "2026-08-13"
-    lead: "tylerbhumpherys"
-    presenters:
-      - "tylerbhumpherys"
-    topic: "Research Update"
-
-  - date: "2026-08-27"
-    lead: "andrew-walther"
-    presenters:
-      - "andrew-walther"
-    topic: "Research Update"
-
-# Skip these dates (holidays, breaks, conferences)
+- date: '2026-02-12'
+  lead: naim-rashid
+  presenters:
+  - naim-rashid
+  topic: Orientation
+- date: '2026-02-26'
+  lead: dinelka97
+  presenters:
+  - dinelka97
+  topic: Research Update
+- date: '2026-03-12'
+  lead: jialiux22
+  presenters:
+  - jialiux22
+  topic: Research Update
+- date: '2026-04-09'
+  lead: andrew-walther
+  presenters:
+  - andrew-walther
+  topic: Research Update
+- date: '2026-04-16'
+  lead: tylerbhumpherys
+  presenters:
+  - tylerbhumpherys
+  topic: Research Update
+- date: '2026-04-23'
+  lead: ayoung31
+  presenters:
+  - ayoung31
+  topic: Research Update
+- date: '2026-05-07'
+  lead: dinelka97
+  presenters:
+  - dinelka97
+  topic: Research Update
+- date: '2026-05-21'
+  lead: jialiux22
+  presenters:
+  - jialiux22
+  topic: Research Update
+- date: '2026-06-04'
+  lead: tylerbhumpherys
+  presenters:
+  - tylerbhumpherys
+  topic: Research Update
+- date: '2026-06-18'
+  lead: andrew-walther
+  presenters:
+  - andrew-walther
+  topic: Research Update
+- date: '2026-07-02'
+  lead: ayoung31
+  presenters:
+  - ayoung31
+  topic: Research Update
+- date: '2026-07-16'
+  lead: dinelka97
+  presenters:
+  - dinelka97
+  topic: Research Update
+- date: '2026-08-06'
+  lead: jialiux22
+  presenters:
+  - jialiux22
+  topic: Research Update
+- date: '2026-08-13'
+  lead: tylerbhumpherys
+  presenters:
+  - tylerbhumpherys
+  topic: Research Update
+- date: '2026-08-27'
+  lead: andrew-walther
+  presenters:
+  - andrew-walther
+  topic: Research Update
+- date: '2026-10-01'
+  lead: naim-rashid
+  presenters:
+  - naim-rashid
+  - alexakus
+  topic: Fall Kickoff + New Member Introduction
+- date: '2026-10-08'
+  lead: ayoung31
+  presenters:
+  - ayoung31
+  topic: Research Update
+- date: '2026-10-22'
+  lead: dinelka97
+  presenters:
+  - dinelka97
+  topic: Research Update
+- date: '2026-11-05'
+  lead: jialiux22
+  presenters:
+  - jialiux22
+  topic: Research Update
+- date: '2026-11-19'
+  lead: tylerbhumpherys
+  presenters:
+  - tylerbhumpherys
+  topic: Research Update
+- date: '2026-12-03'
+  lead: andrew-walther
+  presenters:
+  - andrew-walther
+  topic: Research Update
 skip_dates:
-  - "2026-03-19"  # Spring break (Mar 14-22)
-  - "2026-05-01"  # Finals/reading period
-
-# Teams channel webhook (stored in secrets, referenced here for documentation)
-# Secret name: MS_TEAMS_WEBHOOK_URI
+- '2026-03-19'
+- '2026-05-01'
+- '2026-09-17'
+- '2026-09-24'
+- '2026-10-15'
+- '2026-11-26'
+- '2026-12-17'
+- '2026-12-24'
+- '2026-12-31'
