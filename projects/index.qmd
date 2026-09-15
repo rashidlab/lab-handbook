@@ -64,9 +64,9 @@ Use [GitHub Topics](https://github.com/rashidlab?q=topic:student-project) to fil
 
 | Project | Description | Status | Topics |
 |---------|-------------|--------|--------|
-| *TBD* | Research area to be determined | Planning | |
+| Virtual cell models | AI virtual cell and digital twin models predicting single-cell responses to genetic and drug perturbations, combining foundation-model and mechanistic approaches (co-advised with David Zhang) | Planning | virtual-cell, single-cell, foundation-models, digital-twin |
 
-**Research areas:** TBD
+**Research areas:** Virtual cell models, single-cell perturbation prediction, multimodal foundation models
 
 ---
 
