@@ -23,31 +23,31 @@ members:
   - name: "Dinelka Nanayakkara"
     github: "dinelka97"
     role: "PhD Student"
-    year: 1
+    year: 2
     focus: ""
 
   - name: "Jialiu Xie"
     github: "jialiux22"
     role: "PhD Student"
-    year: 1
+    year: 4
     focus: ""
 
   - name: "Tyler Humpherys"
     github: "tylerbhumpherys"
     role: "PhD Student"
-    year: 1
+    year: 3
     focus: ""
 
   - name: "Andrew Walther"
     github: "andrew-walther"
     role: "PhD Student"
-    year: 1
+    year: 6
     focus: ""
 
   - name: "Alex Akushevich"
     github: "alexakus"
     role: "PhD Student"
-    year: 1
+    year: 4
     focus: "AI virtual cell and digital twin models: predicting single-cell responses to genetic and drug perturbations by combining foundation-model and mechanistic approaches, extending toward virtual tissue simulation (co-advised with David Zhang)"
     linkedin: "https://www.linkedin.com/in/alex-akushevich"
 

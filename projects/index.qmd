@@ -40,7 +40,7 @@ Use [GitHub Topics](https://github.com/rashidlab?q=topic:student-project) to fil
 
 ---
 
-### Dinelka Nanayakkara (Year 1)
+### Dinelka Nanayakkara (Year 2)
 
 | Project | Description | Status | Topics |
 |---------|-------------|--------|--------|
@@ -50,7 +50,7 @@ Use [GitHub Topics](https://github.com/rashidlab?q=topic:student-project) to fil
 
 ---
 
-### Jialiu Xie (Year 1)
+### Jialiu Xie (Year 4)
 
 | Project | Description | Status | Topics |
 |---------|-------------|--------|--------|
@@ -60,7 +60,7 @@ Use [GitHub Topics](https://github.com/rashidlab?q=topic:student-project) to fil
 
 ---
 
-### Alex Akushevich (Year 1)
+### Alex Akushevich (Year 4)
 
 | Project | Description | Status | Topics |
 |---------|-------------|--------|--------|
