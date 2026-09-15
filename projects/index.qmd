@@ -40,16 +40,6 @@ Use [GitHub Topics](https://github.com/rashidlab?q=topic:student-project) to fil
 
 ---
 
-### Amber Young (Year 1)
-
-| Project | Description | Status | Topics |
-|---------|-------------|--------|--------|
-| *Biomarker Discovery* | Biomarker discovery and validation in oncology | Active | `biomarkers`, `applied-paper` |
-
-**Research areas:** Biomarker discovery, oncology
-
----
-
 ### Dinelka Nanayakkara (Year 1)
 
 | Project | Description | Status | Topics |
@@ -61,6 +51,16 @@ Use [GitHub Topics](https://github.com/rashidlab?q=topic:student-project) to fil
 ---
 
 ### Jialiu Xie (Year 1)
+
+| Project | Description | Status | Topics |
+|---------|-------------|--------|--------|
+| *TBD* | Research area to be determined | Planning | |
+
+**Research areas:** TBD
+
+---
+
+### Alex Akushevich (Year 1)
 
 | Project | Description | Status | Topics |
 |---------|-------------|--------|--------|

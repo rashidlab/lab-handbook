@@ -1,11 +1,8 @@
 # Meeting Rotation Schedule
 # This file is read by GitHub Actions to determine who to remind
-# Auto-generated from students.yml + lab.yml on 2026-08-27
+# Auto-generated from students.yml + lab.yml on 2026-09-15
 
 lab_members:
-- name: Amber Young
-  github: ayoung31
-  email: ayoung31@unc.edu
 - name: Dinelka Nanayakkara
   github: dinelka97
   email: dinelka97@unc.edu

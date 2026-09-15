@@ -20,12 +20,6 @@ pi:
   role: "Principal Investigator"
 
 members:
-  - name: "Amber Young"
-    github: "ayoung31"
-    role: "PhD Student"
-    year: 1
-    focus: ""  # Research focus area
-
   - name: "Dinelka Nanayakkara"
     github: "dinelka97"
     role: "PhD Student"
@@ -49,3 +43,16 @@ members:
     role: "PhD Student"
     year: 1
     focus: ""
+
+  - name: "Alex Akushevich"
+    github: "alexakus"
+    role: "PhD Student"
+    year: 1
+    focus: ""
+    linkedin: "https://www.linkedin.com/in/alex-akushevich"
+
+alumni:
+  - name: "Amber Young"
+    github: "ayoung31"
+    role: "PhD Student"
+    graduated: "Summer 2026"
