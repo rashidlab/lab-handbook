@@ -19,7 +19,7 @@ This directory contains committed meeting notes for all lab meetings.
 
 ## For Everyone: Adding Agenda Items
 
-**By Thursday 5pm**, reply to the week's Discussion thread with your items:
+**By Wednesday 5pm**, reply to the week's Discussion thread with your items:
 
 ```markdown
 ### [Your Name] - Agenda Item

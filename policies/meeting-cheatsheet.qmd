@@ -16,7 +16,7 @@ Agenda         Contributions    Meeting         Notes
   - Title: "Lab Meeting - YYYY-MM-DD"
   - Category: Lab Meetings
 - [ ] Copy agenda template from meeting-templates.qmd
-- [ ] Fill in: date, your name, presenter name, Teams link
+- [ ] Fill in: date, your name, presenter name
 - [ ] Post reminder in Teams #general
 
 ## Wednesday

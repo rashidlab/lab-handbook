@@ -8,7 +8,7 @@
 
 ## Meetings
 
-- **Lab meetings**: Biweekly Thursdays, 9:00 AM
+- **Lab meetings**: Biweekly Thursdays, 10:30am-12:00pm, LCCC 20-023
 - **1:1 meetings**: Scheduled individually with PI
 
 ## Code & Data

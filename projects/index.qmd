@@ -54,9 +54,9 @@ Use [GitHub Topics](https://github.com/rashidlab?q=topic:student-project) to fil
 
 | Project | Description | Status | Topics |
 |---------|-------------|--------|--------|
-| *TBD* | Research area to be determined | Planning | |
+| *TBD* | Project to be determined | Planning | |
 
-**Research areas:** TBD
+**Research areas:** Multi-omics integration and biomarker analysis
 
 ---
 

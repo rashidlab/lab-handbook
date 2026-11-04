@@ -72,7 +72,7 @@ For last-minute emergencies, message Dr. Rashid and post in Teams immediately.
    - Replace `[DATE]` with the meeting date
    - Replace `@[github-username]` with your GitHub username
    - Add the confirmed presenter(s) to the Research Updates section
-   - Add the Teams meeting link or room number
+   - Add the room (LCCC 20-023)
 
 4. Click **Start discussion**
 

@@ -63,7 +63,6 @@ Edit this file and submit a PR, or post in `#general` Teams channel to request c
 
 | Name | GitHub |
 |------|--------|
-| Amber Young | [@ayoung31](https://github.com/ayoung31) |
 | Dinelka Nanayakkara | [@dinelka97](https://github.com/dinelka97) |
 | Jialiu Xie | [@jialiux22](https://github.com/jialiux22) |
 | Tyler Humpherys | [@tylerbhumpherys](https://github.com/tylerbhumpherys) |

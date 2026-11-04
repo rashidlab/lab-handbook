@@ -47,7 +47,7 @@ jobs:
               return;
             }
 
-            // Find meeting for this Friday
+            // Find meeting for this Thursday
             const meeting = config.meetings.find(m => m.date === thursdayStr);
 
             if (!meeting) {
