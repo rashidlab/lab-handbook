@@ -33,13 +33,26 @@ The meeting lead role rotates biweekly. Meetings are held **Thursdays 10:30am to
 |------|--------------|------|
 | Oct 1 | Alex Akushevich | New Member Introduction |
 | Oct 22 | Dinelka Nanayakkara | Research Update |
-| Nov 5 | Jialiu Xie | Research Update |
-| Nov 19 | Tyler Humpherys | Research Update |
+| Nov 19 | Tyler Humpherys and Jialiu Xie | Research Updates |
 | Dec 3 | Andrew Walther | Research Update |
 
-No meetings Sep 17, Sep 24, Oct 15, Nov 26, Dec 17, Dec 24, or Dec 31 (PI travel, fall break,
+No meetings Sep 17, Sep 24, Oct 15, Nov 5, Nov 26, Dec 17, Dec 24, or Dec 31 (PI travel, fall break,
 Thanksgiving, and winter break). Oct 8 and Dec 10 are open as optional make-up slots. Amber
 Young graduated in summer 2026. Spring 2027 resumes after classes begin Jan 6.
+
+### Spring 2027 Schedule (in person, LCCC 20-023)
+
+| Date | Meeting Lead | Type |
+|------|--------------|------|
+| Jan 14 | Alex Akushevich | Research Update |
+| Jan 28 | Dinelka Nanayakkara | Research Update |
+| Feb 11 | Jialiu Xie | Research Update |
+| Feb 25 | Tyler Humpherys | Research Update |
+| Mar 25 | Andrew Walther | Research Update |
+| Apr 8 | Alex Akushevich | Research Update |
+| Apr 22 | Dinelka Nanayakkara | Research Update |
+
+No meetings Mar 11 (spring break), Mar 18 (PI return from ENAR), or Apr 1. Classes end Apr 26.
 
 ::: {.callout-note}
 ## Updating the Schedule

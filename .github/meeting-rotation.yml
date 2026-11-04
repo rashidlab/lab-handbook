@@ -5,7 +5,7 @@
 lab_members:
 - name: Dinelka Nanayakkara
   github: dinelka97
-  email: dinelka97@unc.edu
+  email: dinelka@unc.edu
 - name: Jialiu Xie
   github: jialiux22
   email: jialiux2@live.unc.edu
@@ -104,20 +104,51 @@ meetings:
   presenters:
   - dinelka97
   topic: Research Update
-- date: '2026-11-05'
-  lead: jialiux22
-  presenters:
-  - jialiux22
-  topic: Research Update
 - date: '2026-11-19'
   lead: tylerbhumpherys
   presenters:
   - tylerbhumpherys
-  topic: Research Update
+  - jialiux22  # moved from Nov 5 (cancelled, PI travel)
+  topic: Research Updates
 - date: '2026-12-03'
   lead: andrew-walther
   presenters:
   - andrew-walther
+  topic: Research Update
+- date: '2027-01-14'
+  lead: alexakus
+  presenters:
+  - alexakus
+  topic: Research Update
+- date: '2027-01-28'
+  lead: dinelka97
+  presenters:
+  - dinelka97
+  topic: Research Update
+- date: '2027-02-11'
+  lead: jialiux22
+  presenters:
+  - jialiux22
+  topic: Research Update
+- date: '2027-02-25'
+  lead: tylerbhumpherys
+  presenters:
+  - tylerbhumpherys
+  topic: Research Update
+- date: '2027-03-25'
+  lead: andrew-walther
+  presenters:
+  - andrew-walther
+  topic: Research Update
+- date: '2027-04-08'
+  lead: alexakus
+  presenters:
+  - alexakus
+  topic: Research Update
+- date: '2027-04-22'
+  lead: dinelka97
+  presenters:
+  - dinelka97
   topic: Research Update
 skip_dates:
 - '2026-03-19'
@@ -125,7 +156,9 @@ skip_dates:
 - '2026-09-17'
 - '2026-09-24'
 - '2026-10-15'
+- '2026-11-05'
 - '2026-11-26'
 - '2026-12-17'
 - '2026-12-24'
 - '2026-12-31'
+- '2027-03-11'
