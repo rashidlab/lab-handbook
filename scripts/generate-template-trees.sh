@@ -13,9 +13,9 @@
 
 set -eo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-HANDBOOK_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-PARENT_DIR="$(cd "$HANDBOOK_DIR/.." && pwd)"
+SCRIPT_DIR="$(cd -- "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
+HANDBOOK_DIR="$(cd -- "$SCRIPT_DIR/.." >/dev/null && pwd)"
+PARENT_DIR="$(cd -- "$HANDBOOK_DIR/.." >/dev/null && pwd)"
 GENERATED_DIR="$HANDBOOK_DIR/_generated"
 ANNOTATIONS="$SCRIPT_DIR/tree-annotations.yml"
 BUILD_TREE="$SCRIPT_DIR/build_tree.py"
@@ -41,7 +41,7 @@ generate_tree() {
   fi
 
   # Collect paths, excluding .git, .claude, .gitkeep
-  (cd "$repo_path" && find . \
+  (cd -- "$repo_path" >/dev/null && find . \
     -not -path './.git/*' \
     -not -path './.git' \
     -not -path './.claude/*' \
