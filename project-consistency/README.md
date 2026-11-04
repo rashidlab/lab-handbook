@@ -303,6 +303,6 @@ cp -r lab-handbook/project-consistency/templates/R/ my-project/R/
 
 ## Related Documentation
 
-- [Coding Standards](../coding-standards/README.md) - General code quality
-- [Targets Pipeline Guide](../coding-standards/targets-pipeline.md) - Workflow automation
+- [Coding Standards](../coding-standards/index.qmd) - General code quality
+- [Targets Pipeline Guide](../coding-standards/targets-pipeline.qmd) - Workflow automation
 - Package management via DESCRIPTION files

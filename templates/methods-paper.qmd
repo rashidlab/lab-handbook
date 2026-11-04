@@ -312,5 +312,5 @@ echo "Data ready. Run 'make all' to reproduce results."
 ## Contact
 
 - First Author (email@unc.edu)
-- [Lab Website](https://rashidlab.org)
+- [Lab GitHub](https://github.com/rashidlab)
 ````

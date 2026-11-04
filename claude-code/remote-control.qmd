@@ -33,7 +33,7 @@ claude --remote-control "Sim refactor"
 ```
 
 In the VS Code extension, type `/remote-control` (or `/rc`). Useful server-mode flags:
-`--name "..."`, `--spawn worktree` (each session gets its own [git worktree](../advanced/index.qmd)),
+`--name "..."`, `--spawn worktree` (each session gets its own git worktree),
 `--capacity N`, `--sandbox`.
 
 ## Connect from your phone or another device

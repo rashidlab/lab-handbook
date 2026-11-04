@@ -40,7 +40,6 @@ When creating a new repository for your research, use this format:
 - `tylerbhumpherys-pancreatic-rl`
 - `andrew-walther-spatial-spillover`
 - `dinelka97-biomarker-validation`
-- `ayoung31-survival-methods`
 - `jialiux22-adaptive-enrichment`
 
 **Avoid:**

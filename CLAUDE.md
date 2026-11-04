@@ -146,8 +146,8 @@ lab-handbook/
 ├── .github/
 │   ├── workflows/           # GitHub Actions
 │   │   ├── publish.yml      # Deploy to GitHub Pages
-│   │   ├── meeting-reminder-lead.yml      # Wed reminder to lead
-│   │   ├── meeting-reminder-contribute.yml # Thu reminder to all
+│   │   ├── meeting-reminder-lead.yml      # Tue reminder to lead
+│   │   ├── meeting-reminder-contribute.yml # Wed reminder to all
 │   │   └── action-items-reminder.yml      # Mon action items
 │   └── meeting-rotation.yml # Meeting schedule config
 └── assets/                  # CSS and styling

@@ -16,7 +16,7 @@ The meeting lead should copy this template when creating the biweekly Discussion
 
 **Lead:** @[github-username]
 **Time:** Thursday [DATE] 10:30 AM-12:00 PM
-**Location:** [Room / Teams Link]
+**Location:** LCCC 20-023
 
 ---
 
@@ -271,8 +271,7 @@ The lab-handbook repository includes GitHub Actions workflows that send reminder
 | Reminder | When | Recipients |
 |----------|------|------------|
 | Create agenda thread | Tuesday 9am | Meeting lead |
-| Add agenda items | Wednesday 9am | All lab members |
-| Meeting tomorrow | Wednesday 5pm | All lab members |
+| Add agenda items (meeting tomorrow) | Wednesday 9am | All lab members |
 | Action items due | Monday 9am | Assignees with items due that week |
 
 ### Setup Requirements
